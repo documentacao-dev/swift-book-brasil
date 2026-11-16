@@ -1,4 +1,4 @@
-# Tipos opacos e tipos boxed
+# Tipos opacos e tipos de protocolo boxed
 
 Oculte detalhes de implementação sobre o tipo de um valor.
 
@@ -10,9 +10,9 @@ um módulo e o código que chama o módulo,
 porque o tipo concreto do valor de retorno pode continuar privado.
 
 Uma função ou método que retorna um tipo opaco
-oculta as informações de tipo do seu valor de retorno.
+oculta as informações de tipo do valor de retorno.
 Em vez de informar um tipo concreto como tipo de retorno da função,
-o valor de retorno é descrito pelos protocolos que ele aceita.
+o valor de retorno é descrito pelos protocolos que ele oferece.
 Tipos opacos preservam a identidade de tipo:
 o compilador tem acesso às informações de tipo,
 mas quem usa o módulo não tem.
@@ -119,7 +119,7 @@ print(flippedTriangle.draw())
   ```
 -->
 
-Essa abordagem de definir uma estrutura `JoinedShape<T: Shape, U: Shape>`
+Essa abordagem de definir um struct `JoinedShape<T: Shape, U: Shape>`
 que une duas formas verticalmente, como mostra o código abaixo,
 resulta em tipos como `JoinedShape<Triangle, FlippedShape<Triangle>>`
 ao unir um triângulo com um triângulo invertido.
@@ -172,7 +172,7 @@ O código dentro do módulo
 poderia montar a mesma forma de várias maneiras,
 e o código externo que usa a forma
 não deveria precisar lidar com os detalhes de implementação sobre a lista de transformações.
-Tipos wrapper como `JoinedShape` e `FlippedShape`
+Tipos que encapsulam outros, como `JoinedShape` e `FlippedShape`,
 não importam para quem usa o módulo,
 e eles não deveriam ficar visíveis.
 A interface pública do módulo
@@ -184,7 +184,7 @@ e essas operações retornam outro valor do tipo `Shape`.
 Você pode pensar em um tipo opaco como o inverso de um tipo genérico.
 Tipos genéricos permitem que o código que chama uma função
 escolha o tipo dos parâmetros e do valor de retorno dessa função,
-de um jeito abstraído da implementação da função.
+sem depender da implementação da função.
 Por exemplo, a função do código a seguir
 retorna um tipo que depende de quem a chama:
 
@@ -209,7 +209,7 @@ que todos os tipos `Comparable` compartilham.
 
 Os papéis se invertem em uma função com tipo de retorno opaco.
 Um tipo opaco permite que a implementação da função escolha o tipo
-do valor que ela retorna, de um jeito abstraído do código que chama a função.
+do valor que ela retorna, sem depender do código que chama a função.
 Por exemplo, a função do exemplo a seguir retorna um trapézio
 sem expor o tipo subjacente dessa forma.
 
@@ -283,7 +283,7 @@ com isso, a função
 retorna um valor de algum tipo específico que está em conformidade com o protocolo `Shape`,
 sem especificar nenhum tipo concreto em particular.
 Escrever `makeTrapezoid()` dessa forma permite expressar
-o aspecto fundamental da sua interface pública ---
+o aspecto fundamental de sua interface pública ---
 o valor que ela retorna é uma forma ---
 sem tornar os tipos específicos que compõem a forma
 parte da interface pública.
@@ -355,14 +355,14 @@ que as operações genéricas de forma retornam
 em um tipo de retorno opaco,
 o que impede que esses tipos fiquem visíveis.
 As duas funções são genéricas porque os tipos de que dependem são genéricos,
-e os parâmetros de tipo da função
+e os parâmetros genéricos da função
 repassam as informações de tipo que `FlippedShape` e `JoinedShape` precisam.
 
 Se uma função com tipo de retorno opaco
 retorna a partir de vários pontos,
 todos os valores de retorno possíveis precisam ter o mesmo tipo.
 Em uma função genérica,
-esse tipo de retorno pode usar os parâmetros de tipo genérico da função,
+esse tipo de retorno pode usar os parâmetros genéricos da função,
 mas continua precisando ser um único tipo.
 Por exemplo,
 aqui está uma versão *inválida* da função que inverte formas,
@@ -605,7 +605,7 @@ Neste caso,
 um tipo de protocolo boxed é a única abordagem
 que permite que quem usa `VerticalShapes` misture formas de tipos diferentes.
 
-Você pode usar um cast com `as`
+Você pode usar uma conversão com `as`
 quando souber o tipo subjacente de um valor boxed.
 Por exemplo:
 
@@ -677,7 +677,7 @@ o valor que `protoFlip(_:)` retorna não é obrigado
 a sempre ter o mesmo tipo ---
 ele só precisa estar em conformidade com o protocolo `Shape`.
 Dito de outra forma,
-`protoFlip(_:)` faz com quem chama um contrato de API muito mais frouxo
+`protoFlip(_:)` estabelece com quem a chama um contrato de API muito mais frouxo
 do que `flip(_:)` faz.
 Ela se reserva a flexibilidade de retornar valores de vários tipos:
 
@@ -971,7 +971,7 @@ você pode passar duas formas diferentes ---
 neste caso, um triângulo e um trapézio.
 
 Diferente da sintaxe para parâmetros de tipo genérico nomeados,
-descrita em <doc:Generics>,
+descrita no capítulo <doc:Generics>,
 essa sintaxe mais leve não pode incluir
 uma cláusula `where` genérica nem restrições de mesmo tipo (`==`).
 Além disso,

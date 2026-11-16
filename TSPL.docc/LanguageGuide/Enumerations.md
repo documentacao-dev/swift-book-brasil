@@ -2,31 +2,31 @@
 
 Modele tipos personalizados que definem uma lista de valores possíveis.
 
-Uma *enumeração* define um tipo comum para um grupo de valores relacionados
+Um *enum* define um tipo comum para um grupo de valores relacionados
 e permite trabalhar com esses valores de forma segura em relação aos tipos no seu código.
 
 Se você conhece C,
-sabe que as enumerações em C associam nomes relacionados a um conjunto de valores inteiros.
-As enumerações em Swift são bem mais flexíveis
-e não precisam fornecer um valor para cada caso da enumeração.
-Se um valor (conhecido como *raw value*) for fornecido para cada caso da enumeração,
+sabe que os enums em C associam nomes relacionados a um conjunto de valores inteiros.
+Os enums em Swift são bem mais flexíveis
+e não precisam fornecer um valor para cada caso do enum.
+Se um valor (conhecido como *raw value*) for fornecido para cada caso do enum,
 esse valor pode ser uma string, um caractere,
 ou um valor de qualquer tipo inteiro ou de ponto flutuante.
 
-Como alternativa, os casos da enumeração podem especificar
+Como alternativa, os casos do enum podem especificar
 *associated values* de *qualquer* tipo, armazenados junto com cada caso,
 assim como as uniões ou variantes fazem em outras linguagens.
-Você pode definir um conjunto comum de casos relacionados como parte de uma mesma enumeração,
+Você pode definir um conjunto comum de casos relacionados como parte de um mesmo enum,
 e cada um deles pode ter um conjunto diferente de valores de tipos apropriados associados a ele.
 
-As enumerações em Swift são tipos de primeira classe por direito próprio.
+Os enums em Swift são tipos de primeira classe por direito próprio.
 Elas adotam muitos recursos tradicionalmente exclusivos de classes,
 como propriedades computadas, que fornecem informações adicionais sobre
-o valor atual da enumeração,
+o valor atual do enum,
 e métodos de instância, que oferecem funcionalidades relacionadas
-aos valores que a enumeração representa.
-Enumerações também podem definir inicializadores para fornecer um caso inicial;
-podem receber uma extension para ampliar sua funcionalidade além da implementação original;
+aos valores que o enum representa.
+Enums também podem definir inicializadores para fornecer um caso inicial;
+podem ser estendidos com uma extension para ampliar sua funcionalidade além da implementação original;
 e podem adotar protocolos para fornecer funcionalidades padrão.
 
 Para saber mais sobre esses recursos, veja
@@ -38,9 +38,9 @@ Para saber mais sobre esses recursos, veja
   are hashable and equatable by default (and what that means in practice)
 -->
 
-## Sintaxe de enumeração
+## Sintaxe de enum
 
-Você introduz uma enumeração com a palavra-chave `enum`
+Você introduz um enum com a palavra-chave `enum`
 e coloca a definição inteira entre um par de chaves:
 
 ```swift
@@ -83,18 +83,18 @@ enum CompassPoint {
   ```
 -->
 
-Os valores definidos em uma enumeração
+Os valores definidos em um enum
 (como `north`, `south`, `east` e `west`)
-são os seus *casos da enumeração*.
-Você usa a palavra-chave `case` para introduzir novos casos da enumeração.
+são os *casos do enum*.
+Você usa a palavra-chave `case` para introduzir novos casos do enum.
 
-> Nota: Os casos de enumeração em Swift não recebem um valor inteiro por padrão,
+> Nota: Os casos de enum em Swift não recebem um valor inteiro por padrão,
 > diferentemente de linguagens como C e Objective-C.
 > No exemplo de `CompassPoint` acima,
 > `north`, `south`, `east` e `west`
 > não são implicitamente iguais a
 > `0`, `1`, `2` e `3`.
-> Em vez disso, cada caso da enumeração é um valor por direito próprio,
+> Em vez disso, cada caso do enum é um valor por direito próprio,
 > com o tipo explicitamente definido como `CompassPoint`.
 
 Vários casos podem aparecer em uma mesma linha, separados por vírgulas:
@@ -115,11 +115,11 @@ enum Planet {
   ```
 -->
 
-Cada definição de enumeração cria um novo tipo.
+Cada definição de enum cria um novo tipo.
 Como outros tipos em Swift, os nomes delas
 (como `CompassPoint` e `Planet`)
 começam com letra maiúscula.
-Dê aos tipos de enumeração nomes no singular, e não no plural,
+Dê aos tipos enum nomes no singular, e não no plural,
 para que eles se leiam como algo autoevidente:
 
 ```swift
@@ -153,11 +153,11 @@ directionToHead = .east
 
 O tipo de `directionToHead` já é conhecido,
 então você pode omitir o tipo ao atribuir o valor.
-Isso deixa o código muito legível quando você trabalha com valores de enumeração de tipo explícito.
+Isso deixa o código muito legível quando você trabalha com valores de enum de tipo explícito.
 
-## Comparando valores de enumeração com uma instrução switch
+## Comparando valores de enum com uma instrução switch
 
-Você pode comparar valores individuais de enumeração com uma instrução `switch`:
+Você pode comparar valores individuais de enum com uma instrução `switch`:
 
 ```swift
 directionToHead = .south
@@ -204,13 +204,13 @@ imprima `"Watch out for penguins"`.”
 …e assim por diante.
 
 Como descrito em <doc:ControlFlow>,
-uma instrução `switch` precisa ser exaustiva ao considerar os casos de uma enumeração.
+uma instrução `switch` precisa ser exaustiva ao considerar os casos de um enum.
 Se o `case` para `.west` for omitido,
 este código não compila,
 porque não considera a lista completa de casos de `CompassPoint`.
-Exigir exaustividade garante que casos de enumeração não sejam omitidos por acidente.
+Exigir exaustividade garante que casos de enum não sejam omitidos por acidente.
 
-Quando não for adequado fornecer um `case` para cada caso da enumeração,
+Quando não for adequado fornecer um `case` para cada caso do enum,
 você pode fornecer um caso `default` para cobrir os casos que não foram tratados explicitamente:
 
 ```swift
@@ -239,14 +239,14 @@ default:
   ```
 -->
 
-## Percorrendo os casos da enumeração
+## Percorrendo os casos do enum
 
-Em algumas enumerações,
-é útil ter uma coleção com todos os casos da enumeração.
+Em alguns enums,
+é útil ter uma coleção com todos os casos do enum.
 Você habilita isso
-escrevendo `: CaseIterable` depois do nome da enumeração.
+escrevendo `: CaseIterable` depois do nome do enum.
 O Swift expõe uma coleção com todos os casos
-como a propriedade `allCases` do tipo da enumeração.
+como a propriedade `allCases` do tipo do enum.
 Veja um exemplo:
 
 ```swift
@@ -273,9 +273,9 @@ print("\(numberOfChoices) beverages available")
 
 No exemplo acima,
 você escreve `Beverage.allCases` para acessar uma coleção
-que contém todos os casos da enumeração `Beverage`.
+que contém todos os casos do enum `Beverage`.
 Você pode usar `allCases` como qualquer outra coleção:
-os elementos da coleção são instâncias do tipo da enumeração,
+os elementos da coleção são instâncias do tipo do enum,
 então, neste caso, são valores de `Beverage`.
 O exemplo acima conta quantos casos existem,
 e o exemplo abaixo usa um laço `for`-`in` para percorrer todos os casos.
@@ -306,14 +306,14 @@ for beverage in Beverage.allCases {
 -->
 
 A sintaxe usada nos exemplos acima
-marca a enumeração como conformando ao protocolo
+marca o enum como em conformidade com o protocolo
 [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable).
 Para saber mais sobre protocolos, veja <doc:Protocols>.
 
 ## Associated values
 
-Os exemplos da seção anterior mostram que os casos de uma enumeração são
-um valor definido (e tipado) por direito próprio.
+Os exemplos da seção anterior mostram que os casos de um enum são
+valores definidos (e tipados) por direito próprio.
 Você pode atribuir a uma constante ou variável `Planet.earth`
 e verificar esse valor depois.
 No entanto, às vezes é útil armazenar
@@ -321,9 +321,9 @@ valores de outros tipos junto com esses valores de caso.
 Essa informação adicional é chamada de *associated value*,
 e ela varia cada vez que você usa esse caso como valor no seu código.
 
-Você pode definir enumerações em Swift para armazenar associated values de qualquer tipo,
-e os tipos de valor podem ser diferentes para cada caso da enumeração, se necessário.
-Enumerações como essas são conhecidas como
+Você pode definir enums em Swift para armazenar associated values de qualquer tipo,
+e os tipos de valor podem ser diferentes para cada caso do enum, se necessário.
+Enums como esses são conhecidos como
 *discriminated unions*, *tagged unions* ou *variants*
 em outras linguagens de programação.
 
@@ -347,7 +347,7 @@ Para um sistema de controle de estoque, é conveniente armazenar códigos UPC
 como uma tupla de quatro inteiros,
 e códigos QR como uma string de qualquer tamanho.
 
-Em Swift, uma enumeração para definir códigos de barras de produtos de qualquer um dos dois tipos pode ser assim:
+Em Swift, um enum para definir códigos de barras de produtos de qualquer um dos dois tipos pode ser assim:
 
 ```swift
 enum Barcode {
@@ -369,7 +369,7 @@ enum Barcode {
 
 Você pode ler isso assim:
 
-“Defina um tipo de enumeração chamado `Barcode`,
+“Defina um tipo enum chamado `Barcode`,
 que pode receber um valor `upc`
 com um associated value do tipo (`Int`, `Int`, `Int`, `Int`),
 ou um valor `qrCode` com um associated value do tipo `String`.”
@@ -451,7 +451,7 @@ case .qrCode(let productCode):
   ```
 -->
 
-Se todos os associated values de um caso da enumeração
+Se todos os associated values de um caso do enum
 forem extraídos como constantes, ou se todos forem extraídos como variáveis,
 você pode colocar uma única anotação `let` ou `var` antes do nome do caso, para deixar o código mais curto:
 
@@ -479,7 +479,7 @@ case let .qrCode(productCode):
   ```
 -->
 
-Quando você está comparando apenas um caso de uma enumeração ---
+Quando você compara apenas um caso de um enum ---
 por exemplo,
 para extrair o associated value dele ---
 você pode usar uma instrução `if`-`case`
@@ -503,14 +503,14 @@ veja <doc:ControlFlow#Patterns>.
 ## Raw values
 
 O exemplo do código de barras em <doc:Enumerations#Associated-Values>
-mostra como os casos de uma enumeração podem declarar que armazenam
+mostra como os casos de um enum podem declarar que armazenam
 associated values de tipos diferentes.
 Como alternativa aos associated values,
-os casos de enumeração podem vir preenchidos com valores padrão
+os casos de enum podem vir preenchidos com valores padrão
 (chamados de *raw values*),
 que são todos do mesmo tipo.
 
-Veja um exemplo que armazena valores ASCII brutos junto com casos de enumeração nomeados:
+Veja um exemplo que armazena valores ASCII brutos junto com casos de enum nomeados:
 
 ```swift
 enum ASCIIControlCharacter: Character {
@@ -532,29 +532,29 @@ enum ASCIIControlCharacter: Character {
   ```
 -->
 
-Aqui, os raw values de uma enumeração chamada `ASCIIControlCharacter`
+Aqui, os raw values de um enum chamado `ASCIIControlCharacter`
 são definidos como do tipo `Character`,
 e recebem alguns dos caracteres de controle ASCII mais comuns.
 Valores de `Character` são descritos em <doc:StringsAndCharacters>.
 
 Raw values podem ser
 strings, caracteres ou qualquer tipo numérico inteiro ou de ponto flutuante.
-Cada raw value precisa ser único dentro da declaração da enumeração.
+Cada raw value precisa ser único dentro da declaração do enum.
 
 Embora você possa usar tanto raw values quanto associated values
-para dar a uma enumeração um valor adicional,
+para dar a um enum um valor adicional,
 é importante entender a diferença entre eles.
-Você escolhe o raw value de um caso da enumeração
+Você escolhe o raw value de um caso do enum
 quando define esse caso no seu código,
 como os três códigos ASCII acima.
 O raw value de um caso específico é sempre o mesmo.
 Já os associated values você escolhe ao criar uma nova constante ou variável
-usando um dos casos da enumeração,
+usando um dos casos do enum,
 e pode escolher um valor diferente cada vez que fizer isso.
 
 ### Raw values atribuídos implicitamente
 
-Quando você trabalha com enumerações que armazenam raw values inteiros ou string,
+Quando você trabalha com enums que armazenam raw values inteiros ou string,
 não precisa atribuir explicitamente um raw value a cada caso.
 Quando não atribui, o Swift define os valores automaticamente.
 
@@ -562,7 +562,7 @@ Por exemplo, quando raw values são inteiros,
 o valor implícito de cada caso é um a mais que o do caso anterior.
 Se o primeiro caso não tiver um valor definido, o valor dele é `0`.
 
-A enumeração abaixo é um refinamento da enumeração `Planet` vista antes,
+O enum abaixo é um refinamento do enum `Planet` visto antes,
 com raw values inteiros para representar a ordem de cada planeta a partir do sol:
 
 ```swift
@@ -588,7 +588,7 @@ No exemplo acima,
 Quando strings são usadas como raw values,
 o valor implícito de cada caso é o texto do nome desse caso.
 
-A enumeração abaixo é um refinamento da enumeração `CompassPoint` vista antes,
+O enum abaixo é um refinamento do enum `CompassPoint` visto antes,
 com raw values string para representar o nome de cada direção:
 
 ```swift
@@ -610,7 +610,7 @@ enum CompassPoint: String {
 No exemplo acima,
 `CompassPoint.south` tem o raw value implícito `"south"`, e assim por diante.
 
-Você acessa o raw value de um caso da enumeração pela propriedade `rawValue`:
+Você acessa o raw value de um caso do enum pela propriedade `rawValue`:
 
 ```swift
 let earthsOrder = Planet.earth.rawValue
@@ -636,11 +636,11 @@ let sunsetDirection = CompassPoint.west.rawValue
 
 ### Inicializando a partir de um raw value
 
-Se você definir uma enumeração com um tipo de raw value,
-a enumeração recebe automaticamente um inicializador
+Se você definir um enum com um tipo de raw value,
+o enum recebe automaticamente um inicializador
 que aceita um valor do tipo do raw value (como um parâmetro chamado `rawValue`)
-e retorna um caso da enumeração ou `nil`.
-Você pode usar esse inicializador para tentar criar uma nova instância da enumeração.
+e retorna um caso do enum ou `nil`.
+Você pode usar esse inicializador para tentar criar uma nova instância do enum.
 
 Este exemplo identifica Urano pelo seu raw value `7`:
 
@@ -662,16 +662,16 @@ let possiblePlanet = Planet(rawValue: 7)
 -->
 
 No entanto, nem todo valor `Int` possível vai encontrar um planeta correspondente.
-Por isso, o inicializador de raw value sempre retorna um caso de enumeração *opcional*.
+Por isso, o inicializador de raw value sempre retorna um caso de enum *optional*.
 No exemplo acima, `possiblePlanet` é do tipo `Planet?`,
-ou “`Planet` opcional.”
+ou “`Planet` optional.”
 
 > Nota: O inicializador de raw value é um inicializador falhável,
-> porque nem todo raw value vai retornar um caso da enumeração.
+> porque nem todo raw value vai retornar um caso do enum.
 > Para mais informações, veja <doc:Declarations#Failable-Initializers>.
 
 Se você tentar encontrar um planeta na posição `11`,
-o valor `Planet` opcional retornado pelo inicializador de raw value será `nil`:
+o `Planet` optional retornado pelo inicializador de raw value será `nil`:
 
 ```swift
 let positionToFind = 11
@@ -708,8 +708,8 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 -->
 
 Este exemplo usa optional binding para tentar acessar um planeta com raw value `11`.
-A instrução `if let somePlanet = Planet(rawValue: 11)` cria um `Planet` opcional
-e atribui a `somePlanet` o valor desse `Planet` opcional, se ele puder ser obtido.
+A instrução `if let somePlanet = Planet(rawValue: 11)` cria um `Planet` optional
+e atribui a `somePlanet` o valor desse `Planet` optional, se ele puder ser obtido.
 Neste caso, não é possível obter um planeta na posição `11`,
 então o ramo `else` é executado.
 
@@ -718,16 +718,16 @@ então o ramo `else` é executado.
   is together, and the union bits (aka Associated Values) come last.
 -->
 
-## Enumerações recursivas
+## Enums recursivos
 
-Uma *enumeração recursiva* é uma enumeração
-que tem outra instância da própria enumeração
+Um *enum recursivo* é um enum
+que tem outra instância do próprio enum
 como associated value de um ou mais casos.
-Você indica que um caso da enumeração é recursivo
+Você indica que um caso do enum é recursivo
 escrevendo `indirect` antes dele,
 o que diz ao compilador para inserir a camada de indireção necessária.
 
-Por exemplo, veja uma enumeração que armazena expressões aritméticas simples:
+Por exemplo, veja um enum que armazena expressões aritméticas simples:
 
 ```swift
 enum ArithmeticExpression {
@@ -749,8 +749,8 @@ enum ArithmeticExpression {
   ```
 -->
 
-Você também pode escrever `indirect` antes do início da enumeração
-para habilitar a indireção em todos os casos da enumeração que têm associated value:
+Você também pode escrever `indirect` antes do início do enum
+para habilitar a indireção em todos os casos do enum que têm associated value:
 
 ```swift
 indirect enum ArithmeticExpression {
@@ -772,7 +772,7 @@ indirect enum ArithmeticExpression {
   ```
 -->
 
-Essa enumeração pode armazenar três tipos de expressões aritméticas:
+Esse enum pode armazenar três tipos de expressões aritméticas:
 um número simples,
 a soma de duas expressões
 e a multiplicação de duas expressões.
@@ -783,10 +783,10 @@ Por exemplo, a expressão `(5 + 4) * 2`
 tem um número do lado direito da multiplicação
 e outra expressão do lado esquerdo.
 Como os dados são aninhados,
-a enumeração usada para armazená-los também precisa aceitar aninhamento ---
-ou seja, a enumeração precisa ser recursiva.
-O código abaixo mostra a enumeração recursiva `ArithmeticExpression`
-sendo criada para `(5 + 4) * 2`:
+o enum usado para armazená-los também precisa aceitar aninhamento ---
+ou seja, o enum precisa ser recursivo.
+O código abaixo mostra o enum recursivo `ArithmeticExpression`
+sendo criado para `(5 + 4) * 2`:
 
 ```swift
 let five = ArithmeticExpression.number(5)

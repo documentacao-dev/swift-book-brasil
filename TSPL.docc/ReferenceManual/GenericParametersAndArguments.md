@@ -136,7 +136,7 @@ struct AnotherStruct<let x: Int, T, each U> {
 ```
 
 O valor de um parâmetro genérico inteiro em um tipo
-é acessível como uma constante estática desse tipo,
+é acessível como um membro constante estático desse tipo,
 com a mesma visibilidade do próprio tipo.
 O valor de um parâmetro genérico inteiro em uma função
 é acessível como uma constante dentro da função.
@@ -166,7 +166,7 @@ someFunction(s: s1)  // Prints "12"
 
 ### Cláusulas where genéricas
 
-Você pode especificar requisitos adicionais para os parâmetros de tipo e para os seus tipos associados
+Você pode especificar requisitos adicionais para os parâmetros de tipo e para seus tipos associados
 incluindo uma cláusula `where` genérica logo antes da chave de abertura
 do corpo de um tipo ou função.
 Uma cláusula `where` genérica é formada pela palavra-chave `where`,
@@ -182,13 +182,13 @@ Embora a cláusula `where` genérica ofereça açúcar sintático para expressar
 restrições simples sobre parâmetros de tipo
 (por exemplo, `<T: Comparable>` é equivalente a `<T> where T: Comparable` e assim por diante),
 você pode usá-la para impor restrições mais complexas sobre parâmetros de tipo
-e sobre os seus tipos associados. Por exemplo,
+e sobre seus tipos associados. Por exemplo,
 você pode restringir os tipos associados de parâmetros de tipo para que estejam em conformidade com protocolos.
 Por exemplo, `<S: Sequence> where S.Iterator.Element: Equatable`
 especifica que `S` está em conformidade com o protocolo `Sequence`
 e que o tipo associado `S.Iterator.Element`
 está em conformidade com o protocolo `Equatable`.
-Essa restrição garante que cada elemento da sequência seja comparável com `==`.
+Essa restrição garante que cada elemento da sequência possa ser comparado por igualdade, com `==`.
 Parâmetros genéricos inteiros não podem ter requisitos de protocolo nem de superclasse.
 
 Você também pode especificar o requisito de que dois tipos sejam idênticos,

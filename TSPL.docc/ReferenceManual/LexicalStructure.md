@@ -567,12 +567,12 @@ com os protocolos da biblioteca padrão do Swift listados na tabela abaixo.
 | ------- | ------------ | -------- |
 | Inteiro | `Int` | `ExpressibleByIntegerLiteral` |
 | Ponto flutuante | `Double` | `ExpressibleByFloatLiteral` |
-| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` para literais de string que contêm apenas um único escalar Unicode, `ExpressibleByExtendedGraphemeClusterLiteral` para literais de string que contêm apenas um único grapheme cluster estendido |
+| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` para literais de string que contêm apenas um único escalar Unicode, `ExpressibleByExtendedGraphemeClusterLiteral` para literais de string que contêm apenas um único cluster de grafemas estendido |
 | Expressão regular | `Regex` | Nenhum |
 | Booleano | `Bool` | `ExpressibleByBooleanLiteral` |
 
 Por exemplo, na declaração `let str = "Hello, world"`,
-o tipo inferido padrão da string literal `"Hello, world"` é `String`.
+o tipo inferido padrão do literal de string `"Hello, world"` é `String`.
 Além disso, `Int8` está em conformidade com o protocolo `ExpressibleByIntegerLiteral`,
 e por isso pode ser usado na anotação de tipo do literal inteiro `42`
 na declaração `let x: Int8 = 42`.
@@ -1126,7 +1126,7 @@ você deve usar a sintaxe de delimitadores estendidos.
 
 ## Operadores
 
-A biblioteca padrão do Swift define diversos operadores para o seu uso,
+A biblioteca padrão do Swift define diversos operadores para uso geral,
 muitos dos quais são discutidos em <doc:BasicOperators>
 e <doc:AdvancedOperators>.
 Esta seção descreve quais caracteres podem ser usados para definir operadores personalizados.
@@ -1249,7 +1249,7 @@ também são considerados espaço em branco.
 Se o operador predefinido `!` ou `?` não tiver espaço em branco à esquerda,
 ele é tratado como operador pós-fixo,
 independentemente de ter ou não espaço em branco à direita.
-Para usar o `?` como operador de encadeamento opcional,
+Para usar o `?` como operador de optional chaining,
 ele não pode ter espaço em branco à esquerda.
 Para usá-lo no operador condicional ternário (`?` `:`),
 ele deve ter espaço em branco dos dois lados.

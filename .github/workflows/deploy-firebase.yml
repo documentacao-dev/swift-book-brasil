@@ -26,7 +26,7 @@ jobs:
       checks: write
     steps:
       - name: Dependências
-        run: apt-get update && apt-get install -y --no-install-recommends python3 git gawk nodejs npm
+        run: apt-get update && apt-get install -y --no-install-recommends python3 git gawk xz-utils ca-certificates
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -39,6 +39,9 @@ jobs:
         run: python3 tool/traducao/verificar.py
       - name: Build do livro
         run: tool/site/build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: FirebaseExtended/action-hosting-deploy@v0
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
         with:

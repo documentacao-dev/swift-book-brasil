@@ -1,37 +1,37 @@
-# Patterns
+# Padrões
 
-Match and destructure values.
+Corresponda e desestruture valores.
 
-A *pattern* represents the structure of a single value
-or a composite value.
-For example, the structure of a tuple `(1, 2)` is a comma-separated list of two
-elements. Because patterns represent the structure of a value rather than any
-one particular value, you can match them with a variety of values.
-For instance, the pattern `(x, y)` matches the tuple `(1, 2)` and any other
-two-element tuple. In addition to matching a pattern with a value,
-you can extract part or all of a composite value and bind each part
-to a constant or variable name.
+Um *padrão* representa a estrutura de um único valor
+ou de um valor composto.
+Por exemplo, a estrutura da tupla `(1, 2)` é uma lista de dois
+elementos separados por vírgula. Como padrões representam a estrutura de um valor
+e não um valor específico, você pode compará-los com vários valores.
+Por exemplo, o padrão `(x, y)` corresponde à tupla `(1, 2)` e a qualquer
+outra tupla de dois elementos. Além de comparar um padrão com um valor,
+você pode extrair parte ou todo um valor composto e vincular cada parte
+a um nome de constante ou de variável.
 
-In Swift, there are two basic kinds of patterns:
-those that successfully match any kind of value,
-and those that may fail to match a specified value at runtime.
+No Swift, há dois tipos básicos de padrões:
+os que correspondem com sucesso a qualquer tipo de valor,
+e os que podem não corresponder a um valor especificado em tempo de execução.
 
-The first kind of pattern is used for destructuring values
-in simple variable, constant, and optional bindings.
-These include wildcard patterns, identifier patterns,
-and any value binding or tuple patterns containing
-them. You can specify a type annotation for these patterns
-to constrain them to match only values of a certain type.
+O primeiro tipo de padrão é usado para desestruturar valores em
+vinculações simples de variável, de constante e de optional binding.
+Eles incluem padrões curinga, padrões de identificador
+e qualquer padrão de vinculação de valor ou de tupla que contenha
+esses padrões. Você pode especificar uma anotação de tipo para esses padrões
+para restringi-los a corresponder apenas a valores de um determinado tipo.
 
-The second kind of pattern is used for full pattern matching,
-where the values you're trying to match against may not be there at runtime.
-These include enumeration case patterns, optional patterns, expression patterns,
-and type-casting patterns. You use these patterns in a case label of a `switch`
-statement, a `catch` clause of a `do` statement,
-or in the case condition of an `if`, `while`,
-`guard`, or `for`-`in` statement.
+O segundo tipo de padrão é usado para a correspondência completa de padrões,
+em que os valores com os quais você está comparando podem não estar presentes em tempo de execução.
+Eles incluem padrões de caso de enumeração, padrões optional, padrões de expressão
+e padrões de conversão de tipo. Você usa esses padrões em um rótulo case
+de uma instrução `switch`, em uma cláusula `catch` de uma instrução `do`,
+ou na condição case de uma instrução `if`, `while`,
+`guard` ou `for`-`in`.
 
-> Grammar of a pattern:
+> Gramática de um padrão:
 >
 > *pattern* → *wildcard-pattern* *type-annotation*_?_ \
 > *pattern* → *identifier-pattern* *type-annotation*_?_ \
@@ -42,12 +42,12 @@ or in the case condition of an `if`, `while`,
 > *pattern* → *type-casting-pattern* \
 > *pattern* → *expression-pattern*
 
-## Wildcard Pattern
+## Padrão curinga
 
-A *wildcard pattern* matches and ignores any value and consists of an underscore
-(`_`). Use a wildcard pattern when you don't care about the values being
-matched against. For example, the following code iterates through the closed range `1...3`,
-ignoring the current value of the range on each iteration of the loop:
+Um *padrão curinga* corresponde a qualquer valor e o ignora, e é formado
+por um sublinhado (`_`). Use um padrão curinga quando não se importa com os valores
+que estão sendo comparados. Por exemplo, o código a seguir percorre o intervalo fechado `1...3`,
+ignorando o valor atual do intervalo em cada iteração do laço:
 
 ```swift
 for _ in 1...3 {
@@ -65,16 +65,16 @@ for _ in 1...3 {
   ```
 -->
 
-> Grammar of a wildcard pattern:
+> Gramática de um padrão curinga:
 >
 > *wildcard-pattern* → **`_`**
 
-## Identifier Pattern
+## Padrão de identificador
 
-An *identifier pattern* matches any value and binds the matched value to a
-variable or constant name.
-For example, in the following constant declaration, `someValue` is an identifier pattern
-that matches the value `42` of type `Int`:
+Um *padrão de identificador* corresponde a qualquer valor e vincula
+o valor correspondido a um nome de variável ou de constante.
+Por exemplo, na declaração de constante a seguir, `someValue` é um padrão de identificador
+que corresponde ao valor `42` do tipo `Int`:
 
 ```swift
 let someValue = 42
@@ -88,28 +88,29 @@ let someValue = 42
   ```
 -->
 
-When the match succeeds, the value `42` is bound (assigned)
-to the constant name `someValue`.
+Quando a correspondência dá certo, o valor `42` é vinculado (atribuído)
+ao nome da constante `someValue`.
 
-When the pattern on the left-hand side of a variable or constant declaration
-is an identifier pattern,
-the identifier pattern is implicitly a subpattern of a value-binding pattern.
+Quando o padrão do lado esquerdo de uma declaração de variável ou de constante
+é um padrão de identificador,
+o padrão de identificador é implicitamente um subpadrão de um padrão de vinculação de valor.
 
-> Grammar of an identifier pattern:
+> Gramática de um padrão de identificador:
 >
 > *identifier-pattern* → *identifier*
 
-## Value-Binding Pattern
+## Padrão de vinculação de valor
 
-A *value-binding pattern* binds matched values to variable or constant names.
-Value-binding patterns that bind a matched value to the name of a constant
-begin with the `let` keyword; those that bind to the name of variable
-begin with the `var` keyword.
+Um *padrão de vinculação de valor* vincula valores correspondidos
+a nomes de variáveis ou de constantes.
+Padrões de vinculação de valor que vinculam um valor correspondido
+ao nome de uma constante começam com a palavra-chave `let`;
+os que vinculam ao nome de uma variável começam com a palavra-chave `var`.
 
-Identifiers patterns within a value-binding pattern
-bind new named variables or constants to their matching values. For example,
-you can decompose the elements of a tuple and bind the value of each element to a
-corresponding identifier pattern.
+Padrões de identificador dentro de um padrão de vinculação de valor
+vinculam novas variáveis ou constantes nomeadas aos seus valores correspondentes.
+Por exemplo, você pode decompor os elementos de uma tupla
+e vincular o valor de cada elemento a um padrão de identificador correspondente.
 
 ```swift
 let point = (3, 2)
@@ -135,11 +136,12 @@ case let (x, y):
   ```
 -->
 
-In the example above, `let` distributes to each identifier pattern in the
-tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
-`case let (x, y):` and `case (let x, let y):` match the same values.
+No exemplo acima, `let` se distribui a cada padrão de identificador
+do padrão de tupla `(x, y)`. Por causa desse comportamento,
+os casos `case let (x, y):` e `case (let x, let y):` do `switch`
+correspondem aos mesmos valores.
 
-> Grammar of a value-binding pattern:
+> Gramática de um padrão de vinculação de valor:
 >
 > *value-binding-pattern* → **`var`** *pattern* | **`let`** *pattern*
 
@@ -151,23 +153,23 @@ tuple pattern `(x, y)`. Because of this behavior, the `switch` cases
   "Variable pattern" is ambiguous between those two meanings.
 -->
 
-## Tuple Pattern
+## Padrão de tupla
 
-A *tuple pattern* is a comma-separated list of zero or more patterns, enclosed in
-parentheses. Tuple patterns match values of corresponding tuple types.
+Um *padrão de tupla* é uma lista, separada por vírgulas, de zero ou mais padrões,
+delimitada por parênteses. Padrões de tupla correspondem a valores
+de tipos de tupla correspondentes.
 
-You can constrain a tuple pattern to match certain kinds of tuple types
-by using type annotations.
-For example, the tuple pattern `(x, y): (Int, Int)` in the constant declaration
-`let (x, y): (Int, Int) = (1, 2)` matches only tuple types in which
-both elements are of type `Int`.
+Você pode restringir um padrão de tupla para corresponder a certos tipos de tupla
+usando anotações de tipo.
+Por exemplo, o padrão de tupla `(x, y): (Int, Int)` na declaração de constante
+`let (x, y): (Int, Int) = (1, 2)` corresponde apenas a tipos de tupla
+em que os dois elementos são do tipo `Int`.
 
-When a tuple pattern is used as the pattern in a `for`-`in` statement
-or in a variable or constant declaration, it can contain only wildcard patterns,
-identifier patterns, optional patterns, or other tuple patterns that contain those.
-For example,
-the following code isn't valid because the element `0` in the tuple pattern `(x, 0)` is
-an expression pattern:
+Quando um padrão de tupla é usado como padrão em uma instrução `for`-`in`
+ou em uma declaração de variável ou de constante, ele só pode conter padrões curinga,
+padrões de identificador, padrões optional ou outros padrões de tupla que contenham esses.
+Por exemplo, o código a seguir não é válido, porque o elemento `0`
+do padrão de tupla `(x, 0)` é um padrão de expressão:
 
 ```swift
 let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
@@ -193,9 +195,9 @@ for (x, 0) in points {
   ```
 -->
 
-The parentheses around a tuple pattern that contains a single element have no effect.
-The pattern matches values of that single element's type. For example, the following are
-equivalent:
+Os parênteses em volta de um padrão de tupla que contém um único elemento não têm efeito.
+O padrão corresponde a valores do tipo desse único elemento. Por exemplo,
+os trechos a seguir são equivalentes:
 
 <!--
   This test needs to be compiled.
@@ -231,32 +233,29 @@ let (a): Int = 2 // a: Int = 2
   ```
 -->
 
-> Grammar of a tuple pattern:
+> Gramática de um padrão de tupla:
 >
 > *tuple-pattern* → **`(`** *tuple-pattern-element-list*_?_ **`)`** \
 > *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
-## Enumeration Case Pattern
+## Padrão de caso de enumeração
 
-An *enumeration case pattern* matches a case of an existing enumeration type.
-Enumeration case patterns appear in `switch` statement
-case labels and in the case conditions of `if`, `while`, `guard`, and `for`-`in`
-statements.
+Um *padrão de caso de enumeração* corresponde a um caso de um tipo de enumeração existente.
+Padrões de caso de enumeração aparecem em rótulos case de instruções `switch`
+e nas condições case das instruções `if`, `while`, `guard` e `for`-`in`.
 
-If the enumeration case you're trying to match has any associated values,
-the corresponding enumeration case pattern must specify a tuple pattern that contains
-one element for each associated value. For an example that uses a `switch` statement
-to match enumeration cases containing associated values,
-see <doc:Enumerations#Associated-Values>.
+Se o caso de enumeração que você está tentando corresponder tiver valores associados,
+o padrão de caso de enumeração correspondente deve especificar um padrão de tupla
+que contenha um elemento para cada valor associado. Para um exemplo que usa uma instrução
+`switch` para corresponder casos de enumeração com valores associados,
+veja <doc:Enumerations#Associated-Values>.
 
-An enumeration case pattern also matches
-values of that case wrapped in an optional.
-This simplified syntax lets you omit an optional pattern.
-Note that,
-because `Optional` is implemented as an enumeration,
-`.none` and `.some` can appear
-in the same switch as the cases of the enumeration type.
+Um padrão de caso de enumeração também corresponde a valores
+desse caso embrulhados em um optional.
+Essa sintaxe simplificada permite omitir um padrão optional.
+Observe que, como `Optional` é implementado como uma enumeração,
+`.none` e `.some` podem aparecer no mesmo `switch` que os casos do tipo de enumeração.
 
 ```swift
 enum SomeEnum { case left, right }
@@ -290,20 +289,19 @@ case nil:
   ```
 -->
 
-> Grammar of an enumeration case pattern:
+> Gramática de um padrão de caso de enumeração:
 >
 > *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
 
-## Optional Pattern
+## Padrão optional
 
-An *optional pattern* matches values wrapped in a `some(Wrapped)` case
-of an `Optional<Wrapped>` enumeration.
-Optional patterns consist of an identifier pattern followed immediately by a question mark
-and appear in the same places as enumeration case patterns.
+Um *padrão optional* corresponde a valores embrulhados em um caso `some(Wrapped)`
+de uma enumeração `Optional<Wrapped>`.
+Padrões optional são formados por um padrão de identificador seguido imediatamente
+de um ponto de interrogação, e aparecem nos mesmos lugares que os padrões de caso de enumeração.
 
-Because optional patterns are syntactic sugar for `Optional`
-enumeration case patterns,
-the following are equivalent:
+Como padrões optional são açúcar sintático para padrões de caso de enumeração de `Optional`,
+os trechos a seguir são equivalentes:
 
 ```swift
 let someOptional: Int? = 42
@@ -337,9 +335,8 @@ if case let x? = someOptional {
   ```
 -->
 
-The optional pattern provides a convenient way to
-iterate over an array of optional values in a `for`-`in` statement,
-executing the body of the loop only for non-`nil` elements.
+O padrão optional oferece uma forma prática de percorrer um array de valores optional
+em uma instrução `for`-`in`, executando o corpo do laço apenas para os elementos diferentes de `nil`.
 
 ```swift
 let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
@@ -367,57 +364,52 @@ for case let number? in arrayOfOptionalInts {
   ```
 -->
 
-> Grammar of an optional pattern:
+> Gramática de um padrão optional:
 >
 > *optional-pattern* → *identifier-pattern* **`?`**
 
-## Type-Casting Patterns
+## Padrões de conversão de tipo
 
-There are two type-casting patterns, the `is` pattern and the `as` pattern.
-The `is` pattern appears only in `switch` statement
-case labels. The `is` and `as` patterns have the following form:
+Há dois padrões de conversão de tipo: o padrão `is` e o padrão `as`.
+O padrão `is` aparece apenas em rótulos case de instruções `switch`.
+Os padrões `is` e `as` têm a seguinte forma:
 
 ```swift
 is <#type#>
 <#pattern#> as <#type#>
 ```
 
-The `is` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `is` pattern --- or a subclass of that type.
-The `is` pattern behaves like the `is` operator in that they both perform a type cast
-but discard the returned type.
+O padrão `is` corresponde a um valor se o tipo desse valor em tempo de execução
+for o mesmo tipo especificado do lado direito do padrão `is` --- ou uma subclasse desse tipo.
+O padrão `is` se comporta como o operador `is`, pois os dois realizam uma conversão de tipo,
+mas descartam o tipo retornado.
 
-The `as` pattern matches a value if the type of that value at runtime is the same as
-the type specified in the right-hand side of the `as` pattern --- or a subclass of that type.
-If the match succeeds,
-the type of the matched value is cast to the *pattern* specified in the right-hand side
-of the `as` pattern.
+O padrão `as` corresponde a um valor se o tipo desse valor em tempo de execução
+for o mesmo tipo especificado do lado direito do padrão `as` --- ou uma subclasse desse tipo.
+Se a correspondência der certo, o tipo do valor correspondido é convertido
+para o *padrão* especificado do lado direito do padrão `as`.
 
-For an example that uses a `switch` statement
-to match values with `is` and `as` patterns,
-see <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
+Para um exemplo que usa uma instrução `switch` para corresponder valores
+com padrões `is` e `as`, veja <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>.
 
-> Grammar of a type casting pattern:
+> Gramática de um padrão de conversão de tipo:
 >
 > *type-casting-pattern* → *is-pattern* | *as-pattern* \
 > *is-pattern* → **`is`** *type* \
 > *as-pattern* → *pattern* **`as`** *type*
 
-## Expression Pattern
+## Padrão de expressão
 
-An *expression pattern* represents the value of an expression.
-Expression patterns appear only in `switch` statement
-case labels.
+Um *padrão de expressão* representa o valor de uma expressão.
+Padrões de expressão aparecem apenas em rótulos case de instruções `switch`.
 
-The expression represented by the expression pattern
-is compared with the value of an input expression
-using the pattern-matching operator (`~=`) from the Swift standard library.
-The matches succeeds
-if the `~=` operator returns `true`. By default, the `~=` operator compares
-two values of the same type using the `==` operator.
-It can also match a value with a range of values,
-by checking whether the value is contained within the range,
-as the following example shows.
+A expressão representada pelo padrão de expressão é comparada com o valor
+de uma expressão de entrada usando o operador de correspondência de padrões (`~=`)
+da biblioteca padrão do Swift.
+A correspondência dá certo se o operador `~=` retornar `true`.
+Por padrão, o operador `~=` compara dois valores do mesmo tipo usando o operador `==`.
+Ele também pode corresponder um valor a um intervalo de valores,
+verificando se o valor está contido no intervalo, como mostra o exemplo a seguir.
 
 ```swift
 let point = (1, 2)
@@ -449,9 +441,10 @@ default:
   ```
 -->
 
-You can overload the `~=` operator to provide custom expression matching behavior.
-For example, you can rewrite the above example to compare the `point` expression
-with a string representations of points.
+Você pode sobrecarregar o operador `~=` para oferecer um comportamento
+de correspondência de expressões personalizado.
+Por exemplo, você pode reescrever o exemplo acima para comparar a expressão `point`
+com representações em string de pontos.
 
 ```swift
 // Overload the ~= operator to match a string with an integer.
@@ -485,7 +478,7 @@ default:
   ```
 -->
 
-> Grammar of an expression pattern:
+> Gramática de um padrão de expressão:
 >
 > *expression-pattern* → *expression*
 
@@ -498,3 +491,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

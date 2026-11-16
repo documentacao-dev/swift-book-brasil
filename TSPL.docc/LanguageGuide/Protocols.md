@@ -5,10 +5,10 @@ Defina requisitos que os tipos em conformidade devem implementar.
 Um *protocolo* define um modelo de
 métodos, propriedades e outros requisitos
 adequados a uma tarefa ou funcionalidade específica.
-O protocolo pode então ser *adotado* por uma classe, estrutura ou enumeração
+O protocolo pode então ser *adotado* por uma classe, struct ou enum
 para fornecer a implementação real desses requisitos.
-Qualquer tipo que satisfaça os requisitos de um protocolo é dito
-*em conformidade* com esse protocolo.
+Qualquer tipo que satisfaça os requisitos de um protocolo diz-se que está
+*em conformidade* com ele.
 
 Além de especificar os requisitos que os tipos em conformidade devem implementar,
 você pode estender um protocolo para implementar alguns desses requisitos
@@ -26,7 +26,7 @@ ou para implementar funcionalidades adicionais de que os tipos em conformidade p
 -->
 ## Sintaxe de protocolos
 
-Você define protocolos de um jeito muito parecido com classes, estruturas e enumerações:
+Você define protocolos de um jeito muito parecido com classes, structs e enums:
 
 ```swift
 protocol SomeProtocol {
@@ -109,7 +109,7 @@ uma propriedade armazenada constante nem por uma propriedade computada somente d
 Se o protocolo exige apenas que a propriedade seja de leitura,
 o requisito pode ser atendido por qualquer tipo de propriedade,
 e é válido que a propriedade também seja de escrita,
-caso isso seja útil para o seu próprio código.
+se isso for útil para o seu código.
 
 Requisitos de propriedade são sempre declarados como propriedades variáveis,
 precedidas da palavra-chave `var`.
@@ -180,7 +180,7 @@ ele apenas especifica que o tipo deve ser capaz de fornecer um nome completo par
 O protocolo estabelece que qualquer tipo `FullyNamed` deve ter
 uma propriedade de instância somente de leitura chamada `fullName`, do tipo `String`.
 
-Aqui está um exemplo de uma estrutura simples que adota e está em conformidade com
+Aqui está um exemplo de uma struct simples que adota e está em conformidade com
 o protocolo `FullyNamed`:
 
 ```swift
@@ -204,7 +204,7 @@ let john = Person(fullName: "John Appleseed")
   ```
 -->
 
-Este exemplo define uma estrutura chamada `Person`,
+Este exemplo define uma struct chamada `Person`,
 que representa uma pessoa específica com nome.
 Ela declara que adota o protocolo `FullyNamed`
 na primeira linha da sua definição.
@@ -213,7 +213,7 @@ Cada instância de `Person` tem uma única propriedade armazenada chamada `fullN
 do tipo `String`.
 Isso corresponde ao único requisito do protocolo `FullyNamed`,
 e significa que `Person` está em conformidade com o protocolo corretamente.
-(O Swift informa um erro em tempo de compilação se um requisito do protocolo não for atendido.)
+(O Swift emite um erro em tempo de compilação se um requisito do protocolo não for atendido.)
 
 Aqui está uma classe mais complexa, que também adota e está em conformidade com o protocolo `FullyNamed`:
 
@@ -256,7 +256,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 Esta classe implementa o requisito de propriedade `fullName` como
 uma propriedade computada somente de leitura para uma nave estelar.
-Cada instância da classe `Starship` armazena um `name` obrigatório e um `prefix` opcional.
+Cada instância da classe `Starship` armazena um `name` obrigatório e um `prefix` optional.
 A propriedade `fullName` usa o valor de `prefix`, se ele existir,
 e o coloca no início de `name` para criar um nome completo para a nave.
 
@@ -376,7 +376,7 @@ print("And another one: \(generator.random())")
 ## Requisitos de métodos mutantes
 
 Às vezes é necessário que um método modifique (ou *mute*) a instância à qual ele pertence.
-Para métodos de instância em tipos por valor (ou seja, estruturas e enumerações),
+Para métodos de instância em tipos de valor (ou seja, structs e enums),
 você coloca a palavra-chave `mutating` antes da palavra-chave `func` do método
 para indicar que o método pode modificar a instância à qual pertence
 e quaisquer propriedades dessa instância.
@@ -386,13 +386,13 @@ Se você define um requisito de método de instância em um protocolo
 que deve modificar instâncias de qualquer tipo que adote o protocolo,
 marque o método com a palavra-chave `mutating`
 como parte da definição do protocolo.
-Isso permite que estruturas e enumerações adotem o protocolo
+Isso permite que structs e enums adotem o protocolo
 e satisfaçam esse requisito de método.
 
 > Nota: Se você marca um requisito de método de instância do protocolo como `mutating`,
 > não precisa escrever a palavra-chave `mutating` ao escrever
 > a implementação desse método em uma classe.
-> A palavra-chave `mutating` é usada apenas por estruturas e enumerações.
+> A palavra-chave `mutating` é usada apenas por structs e enums.
 
 O exemplo a seguir define um protocolo chamado `Togglable`,
 que define um único requisito de método de instância chamado `toggle`.
@@ -421,15 +421,15 @@ protocol Togglable {
   ```
 -->
 
-Se você implementar o protocolo `Togglable` para uma estrutura ou enumeração,
-essa estrutura ou enumeração pode estar em conformidade com o protocolo
+Se você implementar o protocolo `Togglable` para uma struct ou um enum,
+esse enum ou essa struct pode estar em conformidade com o protocolo
 fornecendo uma implementação do método `toggle()`
 que também seja marcada como `mutating`.
 
-O exemplo a seguir define uma enumeração chamada `OnOffSwitch`.
-Essa enumeração alterna entre dois estados,
-indicados pelos casos de enumeração `on` e `off`.
-A implementação de `toggle` da enumeração é marcada como `mutating`,
+O exemplo a seguir define um enum chamado `OnOffSwitch`.
+Esse enum alterna entre dois estados,
+indicados pelos casos de enum `on` e `off`.
+A implementação de `toggle` do enum é marcada como `mutating`,
 para corresponder aos requisitos do protocolo `Togglable`:
 
 ```swift
@@ -668,7 +668,7 @@ como definido em <doc:Initialization#Failable-Initializers>.
 Um requisito de inicializador falhível pode ser atendido por
 um inicializador falhível ou não falhível em um tipo em conformidade.
 Um requisito de inicializador não falhível pode ser atendido por
-um inicializador não falhível ou por um inicializador falhível de desembrulhamento implícito.
+um inicializador não falhível ou por um inicializador falhível com unwrap implícito.
 
 <!--
   - test: `failableRequirementCanBeSatisfiedByFailableInitializer`
@@ -756,7 +756,7 @@ Todos os exemplos de protocolo acima exigem alguns métodos ou propriedades,
 mas a declaração de um protocolo não precisa incluir nenhum requisito.
 Você também pode usar um protocolo para descrever requisitos *semânticos*,
 ou seja, requisitos sobre como os valores desses tipos se comportam
-e sobre as operações que eles suportam.
+e sobre as operações que eles aceitam.
 <!--
 Avoiding the term "marker protocol",
 which more specifically refers to @_marker on a protocol.
@@ -797,11 +797,11 @@ struct MyStruct: Copyable {
 extension MyStruct: BitwiseCopyable { }
 ```
 
-O código acima define uma nova estrutura.
+O código acima define uma nova struct.
 Como `Copyable` tem apenas requisitos semânticos,
-não há nenhum código na declaração da estrutura para adotar o protocolo.
+não há nenhum código na declaração da struct para adotar o protocolo.
 Da mesma forma, como `BitwiseCopyable` tem apenas requisitos semânticos,
-a extensão que adota esse protocolo tem um corpo vazio.
+a extension que adota esse protocolo tem um corpo vazio.
 
 Normalmente você não precisa escrever a conformidade com esses protocolos:
 em vez disso, o Swift adiciona a conformidade automaticamente para você,
@@ -867,13 +867,13 @@ that cannot be optimized away.
 ## Delegação
 
 *Delegação* é um padrão de design que permite
-que uma classe ou estrutura transfira (ou *delegue*)
+que uma classe ou struct transfira (ou *delegue*)
 algumas das suas responsabilidades para uma instância de outro tipo.
 Esse padrão é implementado definindo
 um protocolo que encapsula as responsabilidades delegadas,
 de modo que um tipo em conformidade (conhecido como delegado)
 tenha a garantia de fornecer a funcionalidade que foi delegada.
-A delegação pode ser usada para reagir a uma ação específica,
+Você pode usar a delegação para reagir a uma ação específica,
 ou para obter dados de uma fonte externa sem precisar conhecer
 o tipo subjacente dessa fonte.
 
@@ -932,7 +932,7 @@ Como o protocolo `DiceGame.Delegate`
 é sempre usado no contexto de um jogo de dados,
 ele fica aninhado dentro da classe `DiceGame`.
 Protocolos podem ser aninhados
-dentro de declarações de tipo como estruturas e classes,
+dentro de declarações de tipo como structs e classes,
 desde que a declaração externa não seja genérica.
 Para informações sobre tipos aninhados, veja <doc:NestedTypes>.
 
@@ -953,8 +953,8 @@ no método `play(rounds:)` acima.
 A classe `DiceGame` chama os métodos do delegado quando
 um novo jogo começa, uma nova rodada começa ou o jogo termina.
 
-Como a propriedade `delegate` é um `DiceGame.Delegate` *opcional*,
-o método `play(rounds:)` usa encadeamento opcional toda vez que chama um método do delegado,
+Como a propriedade `delegate` é um *optional* `DiceGame.Delegate`,
+o método `play(rounds:)` usa optional chaining toda vez que chama um método do delegado,
 como discutido em <doc:OptionalChaining>.
 Se a propriedade `delegate` for nil,
 essas chamadas ao delegado são ignoradas.
@@ -1018,16 +1018,16 @@ game.play(rounds: 3)
 // Player 2 won!
 ```
 
-## Adicionando conformidade a um protocolo com uma extensão
+## Adicionando conformidade a um protocolo com uma extension
 
 Você pode estender um tipo existente para adotar e estar em conformidade com um novo protocolo,
 mesmo que não tenha acesso ao código-fonte do tipo existente.
-Extensões podem adicionar novas propriedades, métodos e subscritos a um tipo existente,
+Extensions podem adicionar novas propriedades, métodos e subscripts a um tipo existente,
 e por isso conseguem acrescentar qualquer requisito que um protocolo possa exigir.
-Para mais informações sobre extensões, veja <doc:Extensions>.
+Para mais informações sobre extensions, veja <doc:Extensions>.
 
 > Nota: Instâncias existentes de um tipo adotam e passam a estar em conformidade com um protocolo automaticamente
-> quando essa conformidade é adicionada ao tipo da instância em uma extensão.
+> quando essa conformidade é adicionada ao tipo da instância em uma extension.
 
 Por exemplo, este protocolo, chamado `TextRepresentable`, pode ser implementado por
 qualquer tipo que tenha uma forma de ser representado como texto.
@@ -1077,11 +1077,11 @@ extension Dice: TextRepresentable {
   ```
 -->
 
-Essa extensão adota o novo protocolo exatamente da mesma forma
+Essa extension adota o novo protocolo exatamente da mesma forma
 como se `Dice` tivesse fornecido essa conformidade na implementação original.
-O nome do protocolo é informado depois do nome do tipo, separado por dois-pontos,
+Você escreve o nome do protocolo depois do nome do tipo, separado por dois-pontos,
 e uma implementação de todos os requisitos do protocolo
-é fornecida dentro das chaves da extensão.
+é fornecida dentro das chaves da extension.
 
 Qualquer instância de `Dice` agora pode ser tratada como `TextRepresentable`:
 
@@ -1136,10 +1136,10 @@ como quando o parâmetro genérico do tipo está em conformidade com o protocolo
 Você pode fazer um tipo genérico estar em conformidade condicionalmente com um protocolo
 listando restrições ao estender o tipo.
 Escreva essas restrições depois do nome do protocolo que você está adotando,
-usando uma cláusula genérica `where`.
-Para mais informações sobre cláusulas genéricas `where`, veja <doc:Generics#Generic-Where-Clauses>.
+usando uma cláusula `where` de generics.
+Para mais informações sobre cláusulas `where` de generics, veja <doc:Generics#Generic-Where-Clauses>.
 
-A extensão a seguir
+A extension a seguir
 faz instâncias de `Array` estarem em conformidade com o protocolo `TextRepresentable`
 sempre que elas armazenam elementos de um tipo que está em conformidade com `TextRepresentable`.
 
@@ -1171,11 +1171,11 @@ print(myDice.textualDescription)
   ```
 -->
 
-### Declarando a adoção de um protocolo com uma extensão
+### Declarando a adoção de um protocolo com uma extension
 
 Se um tipo já está em conformidade com todos os requisitos de um protocolo,
 mas ainda não declarou que adota esse protocolo,
-você pode fazê-lo adotar o protocolo com uma extensão vazia:
+você pode fazê-lo adotar o protocolo com uma extension vazia:
 
 ```swift
 struct Hamster {
@@ -1259,9 +1259,9 @@ para implementar você mesmo os requisitos do protocolo.
 O Swift fornece uma implementação sintetizada de `Equatable`
 para os seguintes tipos personalizados:
 
-- Estruturas que têm apenas propriedades armazenadas que estão em conformidade com o protocolo `Equatable`
-- Enumerações que têm apenas valores associados que estão em conformidade com o protocolo `Equatable`
-- Enumerações que não têm valores associados
+- Structs que têm apenas propriedades armazenadas que estão em conformidade com o protocolo `Equatable`
+- Enums que têm apenas valores associados que estão em conformidade com o protocolo `Equatable`
+- Enums que não têm valores associados
 
 Para receber uma implementação sintetizada de `==`,
 declare a conformidade com `Equatable`
@@ -1269,9 +1269,9 @@ no arquivo que contém a declaração original,
 sem implementar você mesmo um operador `==`.
 O protocolo `Equatable` fornece uma implementação padrão de `!=`.
 
-O exemplo a seguir define uma estrutura `Vector3D`
+O exemplo a seguir define uma struct `Vector3D`
 para um vetor de posição tridimensional `(x, y, z)`,
-parecida com a estrutura `Vector2D`.
+parecida com a struct `Vector2D`.
 Como as propriedades `x`, `y` e `z` são todas de um tipo `Equatable`,
 `Vector3D` recebe implementações sintetizadas
 dos operadores de equivalência.
@@ -1318,9 +1318,9 @@ if twoThreeFour == anotherTwoThreeFour {
 O Swift fornece uma implementação sintetizada de `Hashable`
 para os seguintes tipos personalizados:
 
-- Estruturas que têm apenas propriedades armazenadas que estão em conformidade com o protocolo `Hashable`
-- Enumerações que têm apenas valores associados que estão em conformidade com o protocolo `Hashable`
-- Enumerações que não têm valores associados
+- Structs que têm apenas propriedades armazenadas que estão em conformidade com o protocolo `Hashable`
+- Enums que têm apenas valores associados que estão em conformidade com o protocolo `Hashable`
+- Enums que não têm valores associados
 
 Para receber uma implementação sintetizada de `hash(into:)`,
 declare a conformidade com `Hashable`
@@ -1328,17 +1328,17 @@ no arquivo que contém a declaração original,
 sem implementar você mesmo um método `hash(into:)`.
 
 O Swift fornece uma implementação sintetizada de `Comparable`
-para enumerações que não têm valor bruto (raw value).
-Se a enumeração tiver valores associados,
+para enums que não têm raw value.
+Se o enum tiver valores associados,
 todos eles devem estar em conformidade com o protocolo `Comparable`.
 Para receber uma implementação sintetizada de `<`,
 declare a conformidade com `Comparable`
-no arquivo que contém a declaração original da enumeração,
+no arquivo que contém a declaração original do enum,
 sem implementar você mesmo um operador `<`.
 A implementação padrão do protocolo `Comparable`
 de `<=`, `>` e `>=` fornece os demais operadores de comparação.
 
-O exemplo a seguir define uma enumeração `SkillLevel`
+O exemplo a seguir define um enum `SkillLevel`
 com casos para iniciantes, intermediários e especialistas.
 Os especialistas são classificados adicionalmente pelo número de estrelas que têm.
 
@@ -1462,7 +1462,7 @@ https://github.com/apple/swift-system/pull/112
 -->
 
 O código acima mostra parte de um invólucro (wrapper) em torno de descritores de arquivo POSIX.
-A estrutura `FileDescriptor`
+A struct `FileDescriptor`
 satisfaz todos os requisitos do protocolo `Sendable`,
 o que normalmente a tornaria enviável (sendable).
 No entanto,
@@ -1473,7 +1473,7 @@ e valores inteiros sejam enviáveis,
 torná-la não enviável pode ajudar a evitar certos tipos de erro.
 
 Outra forma de suprimir a conformidade implícita
-é com uma extensão que você marca como indisponível:
+é com uma extension que você marca como indisponível:
 
 ```swift
 @available(*, unavailable)
@@ -1502,14 +1502,14 @@ Quando você escreve `~Sendable` em um lugar do seu código,
 como no exemplo anterior,
 outro trecho do programa ainda pode
 estender o tipo `FileDescriptor` para adicionar a conformidade com `Sendable`.
-Já a extensão indisponível deste exemplo
+Já a extension indisponível deste exemplo
 suprime a conformidade implícita com `Sendable`
-e também impede que qualquer extensão em outro lugar do seu código
+e também impede que qualquer extension em outro lugar do seu código
 adicione a conformidade com `Sendable` ao tipo.
 
 > Nota:
 > Além dos protocolos discutidos acima,
-> atores distribuídos (distributed actors) estão em conformidade implicitamente com o protocolo [`Codable`][].
+> distributed actors estão em conformidade implicitamente com o protocolo [`Codable`][].
 
 [`Codable`]: https://developer.apple.com/documentation/swift/codable
 
@@ -1660,7 +1660,7 @@ extension SnakesAndLadders: PrettyTextRepresentable {
   ```
 -->
 
-Esta extensão declara que adota o protocolo `PrettyTextRepresentable`
+Esta extension declara que adota o protocolo `PrettyTextRepresentable`
 e fornece uma implementação da propriedade `prettyTextualDescription`
 para o tipo `SnakesAndLadders`.
 Tudo o que é `PrettyTextRepresentable` também precisa ser `TextRepresentable`,
@@ -1700,7 +1700,7 @@ print(game.prettyTextualDescription)
 
 ## Protocolos exclusivos de classes
 
-Você pode limitar a adoção de um protocolo a tipos classe (e não a estruturas ou enumerações)
+Você pode limitar a adoção de um protocolo a tipos classe (e não a structs ou enums)
 adicionando o protocolo `AnyObject` à lista de herança de um protocolo.
 
 ```swift
@@ -1721,7 +1721,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 -->
 
 No exemplo acima, `SomeClassOnlyProtocol` só pode ser adotado por tipos classe.
-É um erro de compilação escrever a definição de uma estrutura ou enumeração
+É um erro de compilação escrever a definição de uma struct ou de um enum
 que tente adotar `SomeClassOnlyProtocol`.
 
 > Nota: Use um protocolo exclusivo de classes quando o comportamento definido pelos requisitos desse protocolo
@@ -1813,7 +1813,7 @@ button.display()
 
 No exemplo acima, `Widget` só pode ser adotado por subclasses de `Renderer`.
 Como o protocolo garante que todo tipo em conformidade é uma subclasse de `Renderer`,
-a extensão do protocolo `Widget` pode chamar `render(_:)` diretamente.
+a extension do protocolo `Widget` pode chamar `render(_:)` diretamente.
 Um requisito de superclasse é mais restritivo do que usar `AnyObject`:
 ele limita a conformidade a uma hierarquia de classes específica,
 e não a qualquer tipo classe.
@@ -1887,7 +1887,7 @@ o protocolo `Named`
 tem um único requisito: uma propriedade `String` de leitura chamada `name`.
 O protocolo `Aged`
 tem um único requisito: uma propriedade `Int` de leitura chamada `age`.
-Os dois protocolos são adotados por uma estrutura chamada `Person`.
+Os dois protocolos são adotados por uma struct chamada `Person`.
 
 O exemplo também define uma função `wishHappyBirthday(to:)`.
 O tipo do parâmetro `celebrator` é `Named & Aged`,
@@ -1972,7 +1972,7 @@ que não estivesse em conformidade com o protocolo `Named`,
 chamar `beginConcert(in:)` com uma instância desse tipo
 também seria inválido.
 
-## Verificando a conformidade a um protocolo
+## Verificando a conformidade com um protocolo
 
 Você pode usar os operadores `is` e `as`, descritos em <doc:TypeCasting>,
 para verificar a conformidade com um protocolo e para converter para um protocolo específico.
@@ -1982,7 +1982,7 @@ segue exatamente a mesma sintaxe de verificar e converter para um tipo:
 - O operador `is` retorna `true` se uma instância está em conformidade com um protocolo
   e retorna `false` se não estiver.
 - A versão `as?` do operador de conversão descendente retorna
-  um valor opcional do tipo do protocolo,
+  um valor optional do tipo do protocolo,
   e esse valor é `nil` se a instância não estiver em conformidade com o protocolo.
 - A versão `as!` do operador de conversão descendente força a conversão para o tipo do protocolo
   e dispara um erro em tempo de execução se a conversão não der certo.
@@ -2128,10 +2128,10 @@ for object in objects {
 -->
 
 Sempre que um objeto do array está em conformidade com o protocolo `HasArea`,
-o valor opcional retornado pelo operador `as?` é desembrulhado, com vinculação opcional,
+o optional retornado pelo operador `as?` passa por unwrap, com optional binding,
 em uma constante chamada `objectWithArea`.
-A constante `objectWithArea` é conhecida como sendo do tipo `HasArea`,
-então a sua propriedade `area` pode ser acessada e impressa de forma segura em relação aos tipos.
+A constante `objectWithArea` tem o tipo `HasArea`,
+então a propriedade `area` pode ser acessada e impressa com segurança de tipos.
 
 Observe que os objetos originais não são alterados pelo processo de conversão.
 Eles continuam sendo um `Circle`, um `Country` e um `Animal`.
@@ -2179,26 +2179,26 @@ que interopere com Objective-C.
 Tanto o protocolo quanto o requisito opcional
 devem ser marcados com o atributo `@objc`.
 Observe que protocolos `@objc` só podem ser adotados por classes,
-e não por estruturas ou enumerações.
+e não por structs ou enums.
 
 Quando você usa um método ou propriedade em um requisito opcional,
-o tipo dele se torna automaticamente opcional.
+o tipo dele se torna automaticamente um optional.
 Por exemplo,
 um método do tipo `(Int) -> String` se torna `((Int) -> String)?`.
 Observe que o tipo de função inteiro
-é envolvido pelo opcional,
+é envolvido pelo optional,
 e não o valor de retorno do método.
 
-Um requisito opcional de protocolo pode ser chamado com encadeamento opcional,
+Um requisito opcional de protocolo pode ser chamado com optional chaining,
 para levar em conta a possibilidade de o requisito não ter sido implementado
 por um tipo em conformidade com o protocolo.
-Você verifica se um método opcional foi implementado
+Você verifica se um método optional foi implementado
 escrevendo um ponto de interrogação depois do nome do método na chamada,
 como em `someOptionalMethod?(someArgument)`.
-Para informações sobre encadeamento opcional, veja <doc:OptionalChaining>.
+Para informações sobre optional chaining, veja <doc:OptionalChaining>.
 
 O exemplo a seguir define uma classe contadora de inteiros chamada `Counter`,
-que usa uma fonte de dados externa para fornecer o valor do seu incremento.
+que usa uma fonte de dados externa para fornecer o valor do incremento.
 Essa fonte de dados é definida pelo protocolo `CounterDataSource`,
 que tem dois requisitos opcionais:
 
@@ -2234,7 +2234,7 @@ um valor de incremento adequado para uma instância de `Counter`.
 > Embora seja tecnicamente permitido, isso não resultaria em uma fonte de dados muito boa.
 
 A classe `Counter`, definida abaixo,
-tem uma propriedade opcional `dataSource` do tipo `CounterDataSource?`:
+tem uma propriedade `dataSource` optional do tipo `CounterDataSource?`:
 
 ```swift
 class Counter {
@@ -2273,39 +2273,38 @@ A classe `Counter` também define um método chamado `increment`,
 que incrementa a propriedade `count` toda vez que o método é chamado.
 
 O método `increment()` primeiro tenta obter um valor de incremento
-procurando uma implementação do método `increment(forCount:)` na sua fonte de dados.
-O método `increment()` usa encadeamento opcional para tentar chamar `increment(forCount:)`,
+procurando uma implementação do método `increment(forCount:)` na fonte de dados dela.
+O método `increment()` usa optional chaining para tentar chamar `increment(forCount:)`,
 e passa o valor atual de `count` como único argumento do método.
 
-Observe que *dois* níveis de encadeamento opcional estão em jogo aqui.
+Observe que *dois* níveis de optional chaining estão em jogo aqui.
 Primeiro, é possível que `dataSource` seja `nil`,
 por isso `dataSource` tem um ponto de interrogação depois do nome para indicar que
 `increment(forCount:)` deve ser chamado somente se `dataSource` não for `nil`.
 Segundo, mesmo que `dataSource` *exista*,
 não há garantia de que ele implemente `increment(forCount:)`,
 porque é um requisito opcional.
-Aqui, a possibilidade de `increment(forCount:)` não ser implementado
-também é tratada pelo encadeamento opcional.
+Aqui, o optional chaining também cobre a possibilidade de `increment(forCount:)` não estar implementado.
 A chamada a `increment(forCount:)` acontece
 somente se `increment(forCount:)` existir,
 ou seja, se não for `nil`.
 É por isso que `increment(forCount:)` também é escrito com um ponto de interrogação depois do nome.
 
 Como a chamada a `increment(forCount:)` pode falhar por qualquer um desses dois motivos,
-a chamada retorna um valor `Int` *opcional*.
+a chamada retorna um `Int` *optional*.
 Isso vale mesmo que `increment(forCount:)` seja definido como retornando
-um valor `Int` não opcional na definição de `CounterDataSource`.
-Mesmo havendo duas operações de encadeamento opcional, uma depois da outra,
-o resultado continua envolvido em um único opcional.
-Para mais informações sobre o uso de várias operações de encadeamento opcional,
+um `Int` que não é optional na definição de `CounterDataSource`.
+Mesmo havendo duas operações de optional chaining, uma depois da outra,
+o resultado continua envolvido em um único optional.
+Para mais informações sobre o uso de várias operações de optional chaining,
 veja <doc:OptionalChaining#Linking-Multiple-Levels-of-Chaining>.
 
-Depois de chamar `increment(forCount:)`, o `Int` opcional que ele retorna
-é desembrulhado em uma constante chamada `amount`, usando vinculação opcional.
-Se o `Int` opcional contiver um valor,
+Depois de chamar `increment(forCount:)`, o `Int` optional que ele retorna
+passa por unwrap em uma constante chamada `amount`, usando optional binding.
+Se o `Int` optional contiver um valor,
 ou seja, se o delegado e o método existirem,
 e o método tiver retornado um valor,
-o `amount` desembrulhado é somado à propriedade armazenada `count`,
+o `amount` depois do unwrap é somado à propriedade armazenada `count`,
 e o incremento está concluído.
 
 Se *não* for possível obter um valor do método `increment(forCount:)`,
@@ -2314,8 +2313,8 @@ seja porque a fonte de dados não implementa `increment(forCount:)`,
 o método `increment()` tenta obter um valor
 da propriedade `fixedIncrement` da fonte de dados.
 A propriedade `fixedIncrement` também é um requisito opcional,
-então o valor dela é um `Int` opcional,
-mesmo que `fixedIncrement` esteja definido como uma propriedade `Int` não opcional
+então o valor dela é um `Int` optional,
+mesmo que `fixedIncrement` esteja definido como uma propriedade `Int` que não é optional
 na definição do protocolo `CounterDataSource`.
 
 Aqui está uma implementação simples de `CounterDataSource` em que a fonte de dados
@@ -2378,7 +2377,7 @@ a cada vez que `increment()` é chamado.
 
 Aqui está uma fonte de dados mais complexa, chamada `TowardsZeroSource`,
 que faz uma instância de `Counter` contar para cima ou para baixo em direção a zero
-a partir do seu valor atual de `count`:
+a partir do valor atual de `count`:
 
 ```swift
 class TowardsZeroSource: NSObject, CounterDataSource {
@@ -2413,7 +2412,7 @@ class TowardsZeroSource: NSObject, CounterDataSource {
 -->
 
 A classe `TowardsZeroSource` implementa
-o método opcional `increment(forCount:)` do protocolo `CounterDataSource`
+o método optional `increment(forCount:)` do protocolo `CounterDataSource`
 e usa o valor do argumento `count` para descobrir em que direção contar.
 Se `count` já for zero, o método retorna `0`
 para indicar que nenhuma contagem adicional deve acontecer.
@@ -2454,10 +2453,10 @@ for _ in 1...5 {
   ```
 -->
 
-## Extensões de protocolos
+## Extensions de protocolo
 
 Protocolos podem ser estendidos para fornecer implementações de métodos,
-inicializadores, subscritos e propriedades computadas aos tipos em conformidade.
+inicializadores, subscripts e propriedades computadas aos tipos em conformidade.
 Isso permite definir comportamento nos próprios protocolos,
 em vez de em cada conformidade individual de cada tipo ou em uma função global.
 
@@ -2486,7 +2485,7 @@ extension RandomNumberGenerator {
   ```
 -->
 
-Ao criar uma extensão sobre o protocolo,
+Ao criar uma extension sobre o protocolo,
 todos os tipos em conformidade ganham automaticamente essa implementação de método
 sem nenhuma modificação adicional.
 
@@ -2517,25 +2516,25 @@ print("And here's a random Boolean: \(generator.randomBool())")
   the variable that already exists from a previous testcode block.
 -->
 
-Extensões de protocolo podem adicionar implementações aos tipos em conformidade,
+Extensions de protocolo podem adicionar implementações aos tipos em conformidade,
 mas não podem fazer um protocolo estender ou herdar de outro protocolo.
 A herança de protocolos é sempre especificada na própria declaração do protocolo.
 
 ### Fornecendo implementações padrão
 
-Você pode usar extensões de protocolo para fornecer uma implementação padrão
+Você pode usar extensions de protocolo para fornecer uma implementação padrão
 para qualquer requisito de método ou propriedade computada desse protocolo.
-Se um tipo em conformidade fornecer a sua própria implementação de um método ou propriedade obrigatórios,
-essa implementação será usada no lugar da fornecida pela extensão.
+Se um tipo em conformidade fornecer a própria implementação de um método ou propriedade obrigatórios,
+essa implementação será usada no lugar da fornecida pela extension.
 
-> Nota: Requisitos de protocolo com implementações padrão fornecidas por extensões
+> Nota: Requisitos de protocolo com implementações padrão fornecidas por extensions
 > são diferentes dos requisitos opcionais de protocolo.
 > Embora os tipos em conformidade não precisem fornecer a própria implementação de nenhum dos dois,
-> requisitos com implementação padrão podem ser chamados sem encadeamento opcional.
+> requisitos com implementação padrão podem ser chamados sem optional chaining.
 
 Por exemplo, o protocolo `PrettyTextRepresentable`,
 que herda do protocolo `TextRepresentable`,
-pode fornecer uma implementação padrão da sua propriedade obrigatória `prettyTextualDescription`
+pode fornecer uma implementação padrão da propriedade obrigatória `prettyTextualDescription`,
 que simplesmente retorna o resultado de acessar a propriedade `textualDescription`:
 
 ```swift
@@ -2587,17 +2586,17 @@ extension PrettyTextRepresentable  {
   to prevent someone from overriding it in a conforming type.
 -->
 
-### Adicionando restrições a extensões de protocolo
+### Adicionando restrições a extensions de protocolo
 
-Ao definir uma extensão de protocolo,
+Ao definir uma extension de protocolo,
 você pode especificar restrições que os tipos em conformidade
-devem satisfazer antes que os métodos e propriedades da extensão fiquem disponíveis.
+devem satisfazer antes que os métodos e propriedades da extension fiquem disponíveis.
 Você escreve essas restrições depois do nome do protocolo que está estendendo,
-usando uma cláusula genérica `where`.
-Para mais informações sobre cláusulas genéricas `where`, veja <doc:Generics#Generic-Where-Clauses>.
+usando uma cláusula `where` de generics.
+Para mais informações sobre cláusulas `where` de generics, veja <doc:Generics#Generic-Where-Clauses>.
 
 Por exemplo,
-você pode definir uma extensão do protocolo `Collection`
+você pode definir uma extension do protocolo `Collection`
 que se aplica a qualquer coleção cujos elementos estejam em conformidade
 com o protocolo `Equatable`.
 Ao restringir os elementos de uma coleção ao protocolo `Equatable`,
@@ -2677,7 +2676,7 @@ print(differentNumbers.allEqual())
   ```
 -->
 
-> Nota: Se um tipo em conformidade satisfizer os requisitos de várias extensões com restrições
+> Nota: Se um tipo em conformidade satisfizer os requisitos de várias extensions com restrições
 > que fornecem implementações para o mesmo método ou propriedade,
 > o Swift usa a implementação correspondente às restrições mais específicas.
 

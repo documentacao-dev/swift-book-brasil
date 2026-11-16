@@ -3,22 +3,22 @@
 Defina e chame funções que fazem parte de uma instância ou de um tipo.
 
 *Métodos* são funções associadas a um tipo específico.
-Classes, estruturas e enumerações podem definir métodos de instância,
+Classes, structs e enums podem definir métodos de instância,
 que encapsulam tarefas e funcionalidades específicas para trabalhar com uma instância de um determinado tipo.
-Classes, estruturas e enumerações também podem definir métodos de tipo,
+Classes, structs e enums também podem definir métodos de tipo,
 que estão associados ao próprio tipo.
 Métodos de tipo são parecidos com os métodos de classe do Objective-C.
 
-O fato de estruturas e enumerações poderem definir métodos em Swift
+O fato de structs e enums poderem definir métodos em Swift
 é uma diferença importante em relação ao C e ao Objective-C.
 Em Objective-C, classes são os únicos tipos que podem definir métodos.
-Em Swift, você escolhe se vai definir uma classe, uma estrutura ou uma enumeração,
+Em Swift, você escolhe se vai definir uma classe, uma struct ou um enum,
 e ainda tem a flexibilidade de definir métodos no tipo que criar.
 
 ## Métodos de instância
 
 *Métodos de instância* são funções que pertencem às instâncias de
-uma determinada classe, estrutura ou enumeração.
+uma determinada classe, struct ou enum.
 Eles sustentam a funcionalidade dessas instâncias,
 seja fornecendo formas de acessar e modificar propriedades da instância,
 seja fornecendo funcionalidades relacionadas à finalidade da instância.
@@ -119,7 +119,7 @@ porque métodos são apenas funções associadas a um tipo.
 Toda instância de um tipo tem uma propriedade implícita chamada `self`,
 que é exatamente equivalente à própria instância.
 Você usa a propriedade `self` para se referir à instância atual
-dentro dos seus próprios métodos de instância.
+dentro dos próprios métodos de instância.
 
 O método `increment()` do exemplo acima poderia ter sido escrito assim:
 
@@ -146,7 +146,7 @@ func increment() {
   NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 -->
 
-Na prática, você não precisa escrever `self` no seu código com muita frequência.
+Na prática, você não precisa escrever `self` no código com muita frequência.
 Se você não escrever `self` explicitamente,
 o Swift entende que você está se referindo a uma propriedade ou método da instância atual
 sempre que usar, dentro de um método, o nome de uma propriedade ou método conhecido.
@@ -199,19 +199,19 @@ o Swift entenderia que os dois usos de `x` se referem ao parâmetro do método c
 
 ### Modificando tipos de valor dentro de métodos de instância
 
-Estruturas e enumerações são *tipos de valor*.
-Por padrão, as propriedades de um tipo de valor não podem ser modificadas dentro dos seus métodos de instância.
+Structs e enums são *tipos de valor*.
+Por padrão, as propriedades de um tipo de valor não podem ser modificadas dentro dos métodos de instância dele.
 
 <!--
   TODO: find out why.  once I actually know why, explain it.
 -->
 
-No entanto, se você precisar modificar as propriedades da sua estrutura ou enumeração
+No entanto, se você precisar modificar as propriedades da struct ou do enum
 dentro de um método específico,
 pode optar pelo comportamento *mutating* para esse método.
 O método pode então mutar (ou seja, alterar)
 suas propriedades de dentro do método,
-e as alterações que ele fizer são gravadas de volta na estrutura original quando o método terminar.
+e as alterações que ele fizer são gravadas de volta na struct original quando o método terminar.
 O método também pode atribuir uma instância completamente nova à propriedade implícita `self`,
 e essa nova instância substituirá a existente quando o método terminar.
 
@@ -250,14 +250,14 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
   ```
 -->
 
-A estrutura `Point` acima define um método `mutating` chamado `moveBy(x:y:)`,
+A struct `Point` acima define um método `mutating` chamado `moveBy(x:y:)`,
 que move uma instância de `Point` em certa quantidade.
 Em vez de retornar um novo ponto,
 esse método de fato modifica o ponto sobre o qual é chamado.
-A palavra-chave `mutating` é adicionada à sua definição
+A palavra-chave `mutating` é adicionada à definição dele
 para permitir que ele modifique suas propriedades.
 
-Observe que você não pode chamar um método `mutating` em uma constante de tipo estrutura,
+Observe que você não pode chamar um método `mutating` em uma constante de tipo struct,
 porque as propriedades dela não podem ser alteradas, mesmo que sejam propriedades variáveis,
 como descrito em <doc:Properties#Stored-Properties-of-Constant-Structure-Instances>:
 
@@ -329,13 +329,13 @@ struct Point {
   ```
 -->
 
-Esta versão do método `mutating` `moveBy(x:y:)` cria uma nova estrutura
+Esta versão do método `mutating` `moveBy(x:y:)` cria uma nova struct
 cujos valores de `x` e `y` são definidos como a posição de destino.
 O resultado final de chamar esta versão alternativa do método
 será exatamente o mesmo de chamar a versão anterior.
 
-Métodos `mutating` de enumerações podem definir o parâmetro implícito `self` como
-outro caso da mesma enumeração:
+Métodos `mutating` de enums podem definir o parâmetro implícito `self` como
+outro caso do mesmo enum:
 
 ```swift
 enum TriStateSwitch {
@@ -383,10 +383,10 @@ ovenLight.next()
   ```
 -->
 
-Este exemplo define uma enumeração para um interruptor de três estados.
+Este exemplo define um enum para um interruptor de três estados.
 O interruptor percorre três estados de energia diferentes
 (`off`, `low` e `high`)
-cada vez que seu método `next()` é chamado.
+cada vez que o método `next()` é chamado.
 
 ## Métodos de tipo
 
@@ -400,7 +400,7 @@ Classes podem usar a palavra-chave `class` no lugar,
 para permitir que subclasses sobrescrevam a implementação desse método da superclasse.
 
 > Nota: No Objective-C, você só pode definir métodos em nível de tipo para classes do Objective-C.
-> No Swift, você pode definir métodos de tipo para todas as classes, estruturas e enumerações.
+> No Swift, você pode definir métodos de tipo para todas as classes, structs e enums.
 > Cada método de tipo é explicitamente restrito ao tipo que ele atende.
 
 Métodos de tipo são chamados com sintaxe de ponto, como métodos de instância.
@@ -440,10 +440,10 @@ De modo geral, quaisquer nomes de métodos e propriedades não qualificados que 
 dentro do corpo de um método de tipo se referirão a outros métodos e propriedades de nível de tipo.
 Um método de tipo pode chamar outro método de tipo pelo nome dele,
 sem precisar prefixá-lo com o nome do tipo.
-Da mesma forma, métodos de tipo de estruturas e enumerações podem acessar propriedades de tipo
+Da mesma forma, métodos de tipo de structs e enums podem acessar propriedades de tipo
 usando o nome da propriedade, sem prefixo com o nome do tipo.
 
-O exemplo abaixo define uma estrutura chamada `LevelTracker`,
+O exemplo abaixo define uma struct chamada `LevelTracker`,
 que acompanha o progresso de um jogador pelos diferentes níveis ou fases de um jogo.
 É um jogo para um jogador,
 mas pode guardar informações de vários jogadores em um único dispositivo.
@@ -451,7 +451,7 @@ mas pode guardar informações de vários jogadores em um único dispositivo.
 Todos os níveis do jogo (exceto o nível um) estão bloqueados quando o jogo é jogado pela primeira vez.
 Sempre que um jogador termina um nível,
 esse nível é desbloqueado para todos os jogadores do dispositivo.
-A estrutura `LevelTracker` usa propriedades e métodos de tipo
+A struct `LevelTracker` usa propriedades e métodos de tipo
 para acompanhar quais níveis do jogo foram desbloqueados.
 Ela também acompanha o nível atual de um jogador individual.
 
@@ -509,7 +509,7 @@ struct LevelTracker {
   ```
 -->
 
-A estrutura `LevelTracker` mantém o registro do nível mais alto que qualquer jogador desbloqueou.
+A struct `LevelTracker` mantém o registro do nível mais alto que qualquer jogador desbloqueou.
 Esse valor fica armazenado em uma propriedade de tipo chamada `highestUnlockedLevel`.
 
 `LevelTracker` também define duas funções de tipo para trabalhar com
@@ -538,7 +538,7 @@ essa função é marcada com o atributo `@discardableResult`.
 Para mais informações sobre esse atributo,
 veja <doc:Attributes>.
 
-A estrutura `LevelTracker` é usada com a classe `Player`, mostrada abaixo,
+A struct `LevelTracker` é usada com a classe `Player`, mostrada abaixo,
 para acompanhar e atualizar o progresso de um jogador individual:
 
 ```swift

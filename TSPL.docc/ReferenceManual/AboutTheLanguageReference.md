@@ -20,7 +20,7 @@ segue algumas convenções:
 - Uma seta (→) marca as produções da gramática e pode ser lida como “pode consistir em”.
 - Categorias sintáticas são indicadas por texto em *itálico* e aparecem dos dois lados
   de uma regra de produção da gramática.
-- Palavras literais e pontuação são indicadas por texto em **negrito com fonte monoespaçada**
+- Palavras literais e pontuação são indicadas por texto em **`negrito com fonte monoespaçada`**
   e aparecem apenas do lado direito de uma regra de produção da gramática.
 - Produções alternativas são separadas por barras verticais (|). Quando as produções alternativas são longas demais para ler com facilidade,
   elas são divididas em várias regras de produção, em novas linhas.

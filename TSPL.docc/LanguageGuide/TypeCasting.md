@@ -98,7 +98,7 @@ class Song: MediaItem {
   ```
 -->
 
-O último trecho cria uma constante chamada `library`,
+O último trecho cria uma constante array chamada `library`,
 que contém duas instâncias de `Movie` e três instâncias de `Song`.
 O tipo do array `library` é inferido
 ao inicializá-lo com o conteúdo de um literal de array.
@@ -209,7 +209,7 @@ com um *operador de conversão de tipo* (`as?` ou `as!`).
 
 Como o downcast pode falhar,
 o operador de conversão de tipo vem em duas formas diferentes.
-A forma condicional, `as?`, retorna um valor opcional do tipo para o qual você está tentando fazer o downcast.
+A forma condicional, `as?`, retorna um valor optional do tipo para o qual você está tentando fazer o downcast.
 A forma forçada, `as!`, tenta o downcast e faz unwrap forçado do resultado
 em uma única ação composta.
 
@@ -278,14 +278,14 @@ O exemplo começa tentando fazer o downcast do `item` atual para `Movie`.
 Como `item` é uma instância de `MediaItem`, é possível que ele *seja* um `Movie`;
 da mesma forma, também é possível que seja um `Song`,
 ou mesmo apenas um `MediaItem` da base.
-Por causa dessa incerteza, a forma `as?` do operador de conversão de tipo retorna um valor *opcional*
+Por causa dessa incerteza, a forma `as?` do operador de conversão de tipo retorna um valor *optional*
 ao tentar fazer o downcast para um tipo de subclasse.
-O resultado de `item as? Movie` é do tipo `Movie?`, ou “`Movie` opcional”.
+O resultado de `item as? Movie` é do tipo `Movie?`, ou “`Movie` optional”.
 
 O downcast para `Movie` falha quando aplicado às
 instâncias de `Song` no array `library`.
 Para lidar com isso, o exemplo acima usa optional binding
-para verificar se o `Movie` opcional realmente contém um valor
+para verificar se o `Movie` optional realmente contém um valor
 (ou seja, para descobrir se o downcast deu certo).
 Esse optional binding é escrito como “`if let movie = item as? Movie`”,
 que pode ser lido assim:
@@ -293,15 +293,15 @@ que pode ser lido assim:
 “Tente acessar `item` como um `Movie`.
 Se isso der certo,
 defina uma nova constante temporária chamada `movie` com
-o valor armazenado no `Movie` opcional retornado.”
+o valor armazenado no `Movie` optional retornado.”
 
 Se o downcast der certo, as propriedades de `movie` são então usadas
-para imprimir uma descrição dessa instância de `Movie`, incluindo o nome do seu `director`.
+para imprimir uma descrição dessa instância de `Movie`, incluindo o nome do `director`.
 Um princípio semelhante é usado para verificar instâncias de `Song`
 e imprimir uma descrição apropriada (incluindo o nome do `artist`)
 sempre que um `Song` for encontrado na biblioteca.
 
-> Nota: A conversão não modifica a instância nem altera os seus valores.
+> Nota: A conversão não modifica a instância nem altera os valores dela.
 > A instância subjacente continua a mesma; ela simplesmente é tratada e acessada
 > como uma instância do tipo para o qual foi convertida.
 
@@ -326,7 +326,7 @@ O Swift oferece dois tipos especiais para trabalhar com tipos não específicos:
 
 Use `Any` e `AnyObject` somente quando precisar explicitamente
 do comportamento e dos recursos que eles oferecem.
-É sempre melhor ser específico quanto aos tipos com os quais você espera trabalhar no seu código.
+É sempre melhor ser específico quanto aos tipos com os quais você espera trabalhar no código.
 
 Aqui está um exemplo de uso de `Any` para trabalhar com uma mistura de tipos diferentes,
 incluindo tipos de função e tipos que não são de classe.
@@ -453,11 +453,11 @@ for thing in things {
   ```
 -->
 
-> Nota: O tipo `Any` representa valores de qualquer tipo, incluindo tipos opcionais.
-> O Swift mostra um aviso se você usar um valor opcional
+> Nota: O tipo `Any` representa valores de qualquer tipo, incluindo tipos optional.
+> O Swift mostra um aviso se você usar um valor optional
 > onde um valor do tipo `Any` é esperado.
-> Se você realmente precisar usar um valor opcional como um valor `Any`,
-> pode usar o operador `as` para converter explicitamente o opcional para `Any`,
+> Se você realmente precisar usar um valor optional como um valor `Any`,
+> pode usar o operador `as` para converter explicitamente o optional para `Any`,
 > como mostrado abaixo.
 >
 > ```swift

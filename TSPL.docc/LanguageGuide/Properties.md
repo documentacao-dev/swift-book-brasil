@@ -5,7 +5,7 @@ Acesse valores armazenados e calculados que fazem parte de uma instância ou de 
 *Propriedades* associam valores a uma classe, struct ou enum específico.
 Propriedades armazenadas guardam valores constantes e variáveis como parte de uma instância,
 enquanto propriedades computadas calculam um valor (em vez de armazená-lo).
-Propriedades computadas são oferecidas por classes, structs e enums.
+Classes, structs e enums oferecem propriedades computadas.
 Propriedades armazenadas são oferecidas apenas por classes e structs.
 
 <!--
@@ -263,7 +263,7 @@ a esse array de dados `String`.
 Parte da funcionalidade da classe `DataManager`
 é a capacidade de importar dados de um arquivo.
 Essa funcionalidade é oferecida pela classe `DataImporter`,
-que se presume demorar um tempo considerável para ser inicializada.
+que supostamente leva um tempo considerável para ser inicializada.
 Isso pode acontecer porque uma instância de `DataImporter` precisa abrir um arquivo
 e ler o conteúdo dele para a memória quando é inicializada.
 
@@ -307,7 +307,7 @@ print(manager.importer.filename)
 ### Propriedades armazenadas e variáveis de instância
 
 Se você tem experiência com Objective-C,
-pode saber que ele oferece *duas* formas
+talvez você saiba que ele oferece *duas* formas
 de armazenar valores e referências como parte de uma instância de classe.
 Além de propriedades,
 você pode usar variáveis de instância como armazenamento de apoio para os valores guardados em uma propriedade.
@@ -438,7 +438,7 @@ e move o quadrado para a nova posição.
 ### Declaração abreviada do setter
 
 Se o setter de uma propriedade computada não define um nome para o novo valor a ser atribuído,
-é usado o nome padrão `newValue`.
+o Swift usa o nome padrão `newValue`.
 Aqui está uma versão alternativa da struct `Rect`
 que aproveita essa notação abreviada:
 
@@ -599,7 +599,7 @@ Este exemplo define uma nova struct chamada `Cuboid`,
 que representa uma caixa retangular 3D com as propriedades `width`, `height` e `depth`.
 Essa struct também tem uma propriedade computada somente leitura chamada `volume`,
 que calcula e retorna o volume atual do paralelepípedo.
-Não faz sentido que `volume` seja definível,
+Não faz sentido que o valor de `volume` possa ser definido,
 porque seria ambíguo saber quais valores de `width`, `height` e `depth`
 deveriam ser usados para um determinado valor de `volume`.
 Ainda assim, é útil que um `Cuboid` ofereça uma propriedade computada somente leitura
@@ -703,7 +703,7 @@ Sobrescrever propriedades é descrito em <doc:Inheritance#Overriding>.
   ```
 -->
 
-Você tem a opção de definir um ou ambos os observadores em uma propriedade:
+Você pode definir um ou ambos os observadores em uma propriedade:
 
 - `willSet` é chamado logo antes de o valor ser armazenado.
 - `didSet` é chamado imediatamente depois que o novo valor é armazenado.
@@ -1040,7 +1040,7 @@ print(rectangle.height)
 As propriedades `height` e `width` recebem seus valores iniciais
 da definição de `TwelveOrLess`, que define `TwelveOrLess.number` como zero.
 O setter de `TwelveOrLess` aceita 10 como valor válido,
-então armazenar o número 10 em `rectangle.height` acontece como escrito.
+então armazenar o número 10 em `rectangle.height` funciona normalmente.
 No entanto, 24 é maior do que `TwelveOrLess` permite,
 então tentar armazenar 24 faz `rectangle.height` ser definido como 12, o maior valor permitido.
 
@@ -1753,7 +1753,7 @@ Propriedades de tipo são úteis para definir valores universais para
 *todas* as instâncias de um tipo específico,
 como uma propriedade constante que todas as instâncias podem usar
 (como uma constante static em C),
-ou uma propriedade variável que armazena um valor global a todas as instâncias desse tipo
+ou uma propriedade variável que armazena um valor global para todas as instâncias desse tipo
 (como uma variável static em C).
 
 Propriedades de tipo armazenadas podem ser variáveis ou constantes.
@@ -1776,7 +1776,7 @@ Em C e Objective-C, você define constantes e variáveis associadas a um tipo
 como variáveis estáticas *globais*.
 No Swift, porém, propriedades de tipo são escritas como parte da definição do tipo,
 dentro das chaves externas do tipo,
-e cada propriedade de tipo fica explicitamente vinculada ao tipo que ela serve.
+e cada propriedade de tipo fica explicitamente vinculada ao tipo a que dá suporte.
 
 Você define propriedades de tipo com a palavra-chave `static`.
 Para propriedades de tipo computadas de tipos classe,
@@ -1958,11 +1958,11 @@ struct AudioChannel {
   ```
 -->
 
-A struct `AudioChannel` define duas propriedades de tipo armazenadas para cumprir sua função.
-A primeira, `thresholdLevel`, define o valor limite máximo que um nível de áudio pode assumir.
+A struct `AudioChannel` define duas propriedades de tipo armazenadas para dar suporte às suas funcionalidades.
+A primeira, `thresholdLevel`, define o valor limite máximo que um nível de áudio pode ter.
 Este é um valor constante de `10` para todas as instâncias de `AudioChannel`.
 Se um sinal de áudio chegar com um valor maior que `10`,
-ele será limitado a este valor limite (como descrito abaixo).
+ele é limitado a esse valor limite (como descrito abaixo).
 
 A segunda propriedade de tipo é
 uma propriedade armazenada variável chamada `maxInputLevelForAllChannels`.

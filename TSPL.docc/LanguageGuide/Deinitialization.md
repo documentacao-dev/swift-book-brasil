@@ -1,28 +1,28 @@
-# Deinitialization
+# Desinicialização
 
-Release resources that require custom cleanup.
+Libere recursos que precisam de uma limpeza personalizada.
 
-A *deinitializer* is called immediately before a class instance is deallocated.
-You write deinitializers with the `deinit` keyword,
-similar to how initializers are written with the `init` keyword.
-Deinitializers are only available on class types.
+Um *desinicializador* é chamado logo antes de uma instância de classe ser desalocada.
+Você escreve desinicializadores com a palavra-chave `deinit`,
+do mesmo jeito que escreve inicializadores com a palavra-chave `init`.
+Desinicializadores só estão disponíveis em tipos classe.
 
-## How Deinitialization Works
+## Como a desinicialização funciona
 
-Swift automatically deallocates your instances when they're no longer needed,
-to free up resources.
-Swift handles the memory management of instances through
-*automatic reference counting* (*ARC*),
-as described in <doc:AutomaticReferenceCounting>.
-Typically you don't need to perform manual cleanup when your instances are deallocated.
-However, when you are working with your own resources,
-you might need to perform some additional cleanup yourself.
-For example, if you create a custom class to open a file and write some data to it,
-you might need to close the file before the class instance is deallocated.
+O Swift desaloca automaticamente suas instâncias quando elas não são mais necessárias,
+para liberar recursos.
+O Swift gerencia a memória das instâncias por meio da
+*contagem automática de referências* (*ARC*),
+como descrito em <doc:AutomaticReferenceCounting>.
+Normalmente, você não precisa fazer uma limpeza manual quando suas instâncias são desalocadas.
+No entanto, quando você trabalha com recursos próprios,
+pode ser necessário fazer alguma limpeza adicional por conta própria.
+Por exemplo, se você cria uma classe personalizada para abrir um arquivo e gravar alguns dados nele,
+talvez precise fechar o arquivo antes de a instância da classe ser desalocada.
 
-Class definitions can have at most one deinitializer per class.
-The deinitializer doesn't take any parameters
-and is written without parentheses:
+Uma definição de classe pode ter no máximo um desinicializador por classe.
+O desinicializador não recebe parâmetros
+e é escrito sem parênteses:
 
 ```swift
 deinit {
@@ -42,28 +42,28 @@ deinit {
   ```
 -->
 
-Deinitializers are called automatically, just before instance deallocation takes place.
-You aren't allowed to call a deinitializer yourself.
-Superclass deinitializers are inherited by their subclasses,
-and the superclass deinitializer is called automatically at the end of
-a subclass deinitializer implementation.
-Superclass deinitializers are always called,
-even if a subclass doesn't provide its own deinitializer.
+Os desinicializadores são chamados automaticamente, logo antes de a instância ser desalocada.
+Você não pode chamar um desinicializador por conta própria.
+Os desinicializadores da superclasse são herdados pelas subclasses,
+e o desinicializador da superclasse é chamado automaticamente no fim
+da implementação do desinicializador da subclasse.
+Os desinicializadores da superclasse são sempre chamados,
+mesmo quando uma subclasse não fornece um desinicializador próprio.
 
-Because an instance isn't deallocated until after its deinitializer is called,
-a deinitializer can access all properties of the instance it's called on
-and can modify its behavior based on those properties
-(such as looking up the name of a file that needs to be closed).
+Como a instância só é desalocada depois que o desinicializador é chamado,
+um desinicializador pode acessar todas as propriedades da instância à qual pertence
+e pode modificar seu comportamento com base nessas propriedades
+(por exemplo, procurando o nome de um arquivo que precisa ser fechado).
 
-## Deinitializers in Action
+## Desinicializadores na prática
 
-Here's an example of a deinitializer in action.
-This example defines two new types, `Bank` and `Player`, for a simple game.
-The `Bank` class manages a made-up currency,
-which can never have more than 10,000 coins in circulation.
-There can only ever be one `Bank` in the game,
-and so the `Bank` is implemented as a class with type properties and methods
-to store and manage its current state:
+Veja um exemplo de desinicializador em ação.
+Este exemplo define dois novos tipos, `Bank` e `Player`, para um jogo simples.
+A classe `Bank` gerencia uma moeda fictícia,
+que nunca pode ter mais de 10.000 moedas em circulação.
+Só pode existir um `Bank` no jogo,
+por isso o `Bank` é implementado como uma classe com propriedades e métodos de tipo
+para armazenar e gerenciar o seu estado atual:
 
 ```swift
 class Bank {
@@ -97,21 +97,22 @@ class Bank {
   ```
 -->
 
-`Bank` keeps track of the current number of coins it holds with its `coinsInBank` property.
-It also offers two methods --- `distribute(coins:)` and `receive(coins:)` ---
-to handle the distribution and collection of coins.
+O `Bank` mantém o controle da quantidade atual de moedas que tem,
+com a propriedade `coinsInBank`.
+Ele também oferece dois métodos, `distribute(coins:)` e `receive(coins:)`,
+para cuidar da distribuição e do recolhimento de moedas.
 
-The `distribute(coins:)` method checks that there are enough coins in the bank before distributing them.
-If there aren't enough coins,
-`Bank` returns a smaller number than the number that was requested
-(and returns zero if no coins are left in the bank).
-It returns an integer value to indicate the actual number of coins that were provided.
+O método `distribute(coins:)` verifica se há moedas suficientes no banco antes de distribuí-las.
+Se não houver moedas suficientes,
+o `Bank` retorna um número menor do que o que foi solicitado
+(e retorna zero se não restar nenhuma moeda no banco).
+Ele retorna um valor inteiro para indicar a quantidade real de moedas fornecidas.
 
-The `receive(coins:)` method simply adds the received number of coins back into the bank's coin store.
+O método `receive(coins:)` simplesmente soma o número de moedas recebidas de volta ao estoque do banco.
 
-The `Player` class describes a player in the game.
-Each player has a certain number of coins stored in their purse at any time.
-This is represented by the player's `coinsInPurse` property:
+A classe `Player` descreve um jogador do jogo.
+Cada jogador tem, a qualquer momento, certa quantidade de moedas guardada na bolsa.
+Isso é representado pela propriedade `coinsInPurse` do jogador:
 
 ```swift
 class Player {
@@ -147,17 +148,17 @@ class Player {
   ```
 -->
 
-Each `Player` instance is initialized with a starting allowance of
-a specified number of coins from the bank during initialization,
-although a `Player` instance may receive fewer than that number
-if not enough coins are available.
+Cada instância de `Player` é inicializada com uma mesada inicial,
+um número determinado de moedas retiradas do banco durante a inicialização,
+embora uma instância de `Player` possa receber menos do que isso
+se não houver moedas suficientes disponíveis.
 
-The `Player` class defines a `win(coins:)` method,
-which retrieves a certain number of coins from the bank
-and adds them to the player's purse.
-The `Player` class also implements a deinitializer,
-which is called just before a `Player` instance is deallocated.
-Here, the deinitializer simply returns all of the player's coins to the bank:
+A classe `Player` define um método `win(coins:)`,
+que retira certo número de moedas do banco
+e as adiciona à bolsa do jogador.
+A classe `Player` também implementa um desinicializador,
+que é chamado logo antes de uma instância de `Player` ser desalocada.
+Aqui, o desinicializador simplesmente devolve todas as moedas do jogador ao banco:
 
 ```swift
 var playerOne: Player? = Player(coins: 100)
@@ -179,14 +180,14 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
   ```
 -->
 
-A new `Player` instance is created, with a request for 100 coins if they're available.
-This `Player` instance is stored in an optional `Player` variable called `playerOne`.
-An optional variable is used here, because players can leave the game at any point.
-The optional lets you track whether there's currently a player in the game.
+Uma nova instância de `Player` é criada, pedindo 100 moedas, se estiverem disponíveis.
+Essa instância de `Player` é guardada em uma variável opcional de `Player` chamada `playerOne`.
+Aqui usamos uma variável opcional porque jogadores podem sair do jogo a qualquer momento.
+O optional permite saber se há um jogador no jogo no momento.
 
-Because `playerOne` is an optional, it's qualified with an exclamation point (`!`)
-when its `coinsInPurse` property is accessed to print its default number of coins,
-and whenever its `win(coins:)` method is called:
+Como `playerOne` é um optional, ele recebe um ponto de exclamação (`!`)
+ao ter a propriedade `coinsInPurse` acessada para imprimir sua quantidade padrão de moedas,
+e sempre que o método `win(coins:)` é chamado:
 
 ```swift
 playerOne!.win(coins: 2_000)
@@ -208,9 +209,9 @@ print("The bank now only has \(Bank.coinsInBank) coins left")
   ```
 -->
 
-Here, the player has won 2,000 coins.
-The player's purse now contains 2,100 coins,
-and the bank has only 7,900 coins left.
+Aqui, o jogador ganhou 2.000 moedas.
+A bolsa do jogador agora contém 2.100 moedas,
+e o banco tem apenas 7.900 moedas restantes.
 
 ```swift
 playerOne = nil
@@ -232,15 +233,14 @@ print("The bank now has \(Bank.coinsInBank) coins")
   ```
 -->
 
-The player has now left the game.
-This is indicated by setting the optional `playerOne` variable to `nil`,
-meaning “no `Player` instance.”
-At the point that this happens,
-the `playerOne` variable's reference to the `Player` instance is broken.
-No other properties or variables are still referring to the `Player` instance,
-and so it's deallocated in order to free up its memory.
-Just before this happens, its deinitializer is called automatically,
-and its coins are returned to the bank.
+O jogador agora saiu do jogo.
+Isso é indicado ao definir a variável opcional `playerOne` como `nil`,
+o que significa “nenhuma instância de `Player`”.
+Nesse momento, a referência da variável `playerOne` à instância de `Player` é desfeita.
+Nenhuma outra propriedade ou variável ainda se refere à instância de `Player`,
+então ela é desalocada para liberar sua memória.
+Logo antes disso acontecer, seu desinicializador é chamado automaticamente,
+e suas moedas voltam para o banco.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -251,3 +251,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

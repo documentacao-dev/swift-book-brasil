@@ -1,47 +1,36 @@
-# Error Handling
+# Tratamento de erros
 
-Respond to and recover from errors.
+Responda a erros e recupere-se deles.
 
-*Error handling* is the process of responding to
-and recovering from error conditions in your program.
-Swift provides first-class support for
-throwing, catching, propagating, and manipulating
-recoverable errors at runtime.
+*Tratamento de erros* é o processo de responder a condições de erro no seu programa e de se recuperar delas.
+O Swift tem suporte de primeira classe para lançar, capturar, propagar e manipular erros recuperáveis em tempo de execução.
 
-Some operations
-aren't guaranteed to always complete execution or produce a useful output.
-Optionals are used to represent the absence of a value,
-but when an operation fails,
-it's often useful to understand what caused the failure,
-so that your code can respond accordingly.
+Algumas operações não têm garantia de sempre terminar a execução ou de produzir uma saída útil.
+Os optionals representam a ausência de um valor, mas, quando uma operação falha,
+costuma ser útil entender o que causou a falha,
+para que o seu código possa reagir de acordo.
 
-As an example, consider the task of reading and processing data from a file on disk.
-There are a number of ways this task can fail, including
-the file not existing at the specified path,
-the file not having read permissions, or
-the file not being encoded in a compatible format.
-Distinguishing among these different situations
-allows a program to resolve some errors
-and to communicate to the user any errors it can't resolve.
+Como exemplo, considere a tarefa de ler e processar dados de um arquivo em disco.
+Essa tarefa pode falhar de várias maneiras, incluindo
+o arquivo não existir no caminho especificado,
+o arquivo não ter permissão de leitura ou
+o arquivo não estar codificado em um formato compatível.
+Distinguir essas situações diferentes permite que um programa resolva alguns erros
+e comunique ao usuário os erros que não consegue resolver.
 
-> Note: Error handling in Swift interoperates with error handling patterns
-> that use the `NSError` class in Cocoa and Objective-C.
-> For more information about this class,
-> see [Handling Cocoa Errors in Swift](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
+> Nota: O tratamento de erros no Swift interopera com os padrões de tratamento de erros
+> que usam a classe `NSError` no Cocoa e no Objective-C.
+> Para mais informações sobre essa classe,
+> veja [Tratamento de erros do Cocoa em Swift](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift).
 
-## Representing and Throwing Errors
+## Representando e lançando erros
 
-In Swift, errors are represented by
-values of types that conform to the `Error` protocol.
-This empty protocol indicates that a type
-can be used for error handling.
+No Swift, erros são representados por valores de tipos que estão em conformidade com o protocolo `Error`.
+Esse protocolo vazio indica que um tipo pode ser usado para tratamento de erros.
 
-Swift enumerations are particularly well suited to modeling
-a group of related error conditions,
-with associated values allowing for additional information
-about the nature of an error to be communicated.
-For example, here's how you might represent the error conditions
-of operating a vending machine inside a game:
+Enumerações do Swift são especialmente adequadas para modelar um grupo de condições de erro relacionadas,
+com valores associados que permitem comunicar informações adicionais sobre a natureza do erro.
+Por exemplo, veja como você poderia representar as condições de erro de operar uma máquina de venda dentro de um jogo:
 
 ```swift
 enum VendingMachineError: Error {
@@ -63,12 +52,9 @@ enum VendingMachineError: Error {
   ```
 -->
 
-Throwing an error lets you indicate that something unexpected happened
-and the normal flow of execution can't continue.
-You use a `throw` statement to throw an error.
-For example,
-the following code throws an error to indicate
-that five additional coins are needed by the vending machine:
+Lançar um erro permite indicar que algo inesperado aconteceu e que o fluxo normal da execução não pode continuar.
+Você usa a instrução `throw` para lançar um erro.
+Por exemplo, o código a seguir lança um erro para indicar que a máquina de venda precisa de cinco moedas adicionais:
 
 ```swift
 throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
@@ -83,48 +69,38 @@ throw VendingMachineError.insufficientFunds(coinsNeeded: 5)
   ```
 -->
 
-## Handling Errors
+## Tratando erros
 
-When an error is thrown,
-some surrounding piece of code must be responsible
-for handling the error ---
-for example, by correcting the problem,
-trying an alternative approach,
-or informing the user of the failure.
+Quando um erro é lançado, algum trecho de código ao redor precisa ser responsável por tratá-lo:
+por exemplo, corrigindo o problema, tentando uma abordagem alternativa ou informando o usuário sobre a falha.
 
-There are four ways to handle errors in Swift.
-You can propagate the error from a function to the code that calls that function,
-handle the error using a `do`-`catch` statement,
-handle the error as an optional value,
-or assert that the error will not occur.
-Each approach is described in a section below.
+Há quatro maneiras de tratar erros no Swift.
+Você pode propagar o erro de uma função para o código que chama essa função,
+tratar o erro com uma instrução `do`-`catch`,
+tratá-lo como um valor optional
+ou afirmar que o erro não vai ocorrer.
+Cada abordagem é descrita em uma seção abaixo.
 
-When a function throws an error,
-it changes the flow of your program,
-so it's important that you can quickly identify places in your code that can throw errors.
-To identify these places in your code, write the `try` keyword ---
-or the `try?` or `try!` variation ---
-before a piece of code that calls a function, method, or initializer that can throw an error.
-These keywords are described in the sections below.
+Quando uma função lança um erro, o fluxo do programa muda,
+então é importante identificar rapidamente os pontos do código que podem lançar erros.
+Para marcar esses pontos, escreva a palavra-chave `try` (ou a variação `try?` ou `try!`)
+antes do trecho de código que chama uma função, um método ou um inicializador que pode lançar um erro.
+Essas palavras-chave são descritas nas seções abaixo.
 
-> Note: Error handling in Swift resembles exception handling in other languages,
-> with the use of the `try`, `catch` and `throw` keywords.
-> Unlike exception handling in many languages ---
-> including Objective-C ---
-> error handling in Swift doesn't involve unwinding the call stack,
-> a process that can be computationally expensive.
-> As such, the performance characteristics
-> of a `throw` statement
-> are comparable to those of a `return` statement.
+> Nota: O tratamento de erros no Swift lembra o tratamento de exceções em outras linguagens,
+> com o uso das palavras-chave `try`, `catch` e `throw`.
+> Diferente do tratamento de exceções em muitas linguagens,
+> incluindo o Objective-C,
+> o tratamento de erros no Swift não envolve desfazer a pilha de chamadas,
+> um processo que pode ser caro em termos computacionais.
+> Por isso, o desempenho de uma instrução `throw` é comparável ao de uma instrução `return`.
 
-### Propagating Errors Using Throwing Functions
+### Propagando erros com funções que lançam
 
-To indicate that a function, method, or initializer can throw an error,
-you write the `throws` keyword in the function's declaration
-after its parameters.
-A function marked with `throws` is called a *throwing function*.
-If the function specifies a return type,
-you write the `throws` keyword before the return arrow (`->`).
+Para indicar que uma função, um método ou um inicializador pode lançar um erro,
+escreva a palavra-chave `throws` na declaração, depois dos parâmetros.
+Uma função marcada com `throws` é chamada de *função que lança*.
+Se a função especifica um tipo de retorno, escreva `throws` antes da seta de retorno (`->`).
 
 <!--
   TODO Add discussion of throwing initializers
@@ -181,19 +157,14 @@ func cannotThrowErrors() -> String
   for throwing and nonthrowing functions.
 -->
 
-A throwing function propagates errors that are thrown inside of it
-to the scope from which it's called.
+Uma função que lança propaga os erros lançados dentro dela para o escopo de onde ela é chamada.
 
-> Note: Only throwing functions can propagate errors.
-> Any errors thrown inside a nonthrowing function
-> must be handled inside the function.
+> Nota: Somente funções que lançam podem propagar erros.
+> Qualquer erro lançado dentro de uma função que não lança precisa ser tratado dentro da própria função.
 
-In the example below,
-the `VendingMachine` class has a `vend(itemNamed:)` method
-that throws an appropriate `VendingMachineError`
-if the requested item isn't available,
-is out of stock,
-or has a cost that exceeds the current deposited amount:
+No exemplo abaixo, a classe `VendingMachine` tem um método `vend(itemNamed:)` que lança um `VendingMachineError` apropriado
+se o item pedido não estiver disponível, estiver esgotado
+ou tiver um custo maior que o valor depositado no momento:
 
 ```swift
 struct Item {
@@ -280,21 +251,18 @@ class VendingMachine {
   ```
 -->
 
-The implementation of the `vend(itemNamed:)` method
-uses `guard` statements to exit the method early and throw appropriate errors
-if any of the requirements for purchasing a snack aren't met.
-Because a `throw` statement immediately transfers program control,
-an item will be vended only if all of these requirements are met.
+A implementação do método `vend(itemNamed:)` usa instruções `guard` para sair do método logo no início
+e lançar os erros apropriados se algum dos requisitos para comprar um lanche não for atendido.
+Como uma instrução `throw` transfere o controle do programa imediatamente,
+um item só é liberado se todos esses requisitos forem atendidos.
 
-Because the `vend(itemNamed:)` method propagates any errors it throws,
-any code that calls this method must either handle the errors ---
-using a `do`-`catch` statement, `try?`, or `try!` ---
-or continue to propagate them.
-For example,
-the `buyFavoriteSnack(person:vendingMachine:)` in the example below
-is also a throwing function,
-and any errors that the `vend(itemNamed:)` method throws will
-propagate up to the point where the `buyFavoriteSnack(person:vendingMachine:)` function is called.
+Como o método `vend(itemNamed:)` propaga os erros que lança,
+qualquer código que chame esse método precisa tratar os erros
+(com uma instrução `do`-`catch`, `try?` ou `try!`)
+ou continuar propagando-os.
+Por exemplo, a função `buyFavoriteSnack(person:vendingMachine:)`, do exemplo abaixo,
+também é uma função que lança,
+e os erros que `vend(itemNamed:)` lança sobem até o ponto em que `buyFavoriteSnack(person:vendingMachine:)` é chamada.
 
 ```swift
 let favoriteSnacks = [
@@ -328,17 +296,14 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
   ```
 -->
 
-In this example,
-the `buyFavoriteSnack(person: vendingMachine:)` function looks up a given person's favorite snack
-and tries to buy it for them by calling the `vend(itemNamed:)` method.
-Because the `vend(itemNamed:)` method can throw an error,
-it's called with the `try` keyword in front of it.
+Neste exemplo, a função `buyFavoriteSnack(person: vendingMachine:)` procura o lanche favorito de uma pessoa
+e tenta comprá-lo para ela chamando o método `vend(itemNamed:)`.
+Como o método `vend(itemNamed:)` pode lançar um erro, ele é chamado com a palavra-chave `try` na frente.
 
-Throwing initializers can propagate errors in the same way as throwing functions.
-For example,
-the initializer for the `PurchasedSnack` structure in the listing below
-calls a throwing function as part of the initialization process,
-and it handles any errors that it encounters by propagating them to its caller.
+Inicializadores que lançam podem propagar erros da mesma forma que funções que lançam.
+Por exemplo, o inicializador da struct `PurchasedSnack`, na listagem abaixo,
+chama uma função que lança como parte do processo de inicialização
+e trata os erros que encontra propagando-os para quem o chamou.
 
 ```swift
 struct PurchasedSnack {
@@ -379,15 +344,13 @@ struct PurchasedSnack {
   ```
 -->
 
-### Handling Errors Using Do-Catch
+### Tratando erros com do-catch
 
-You use a `do`-`catch` statement to handle errors
-by running a block of code.
-If an error is thrown by the code in the `do` clause,
-it's matched against the `catch` clauses
-to determine which one of them can handle the error.
+Você usa uma instrução `do`-`catch` para tratar erros executando um bloco de código.
+Se um erro for lançado pelo código na cláusula `do`, ele é comparado com as cláusulas `catch`
+para determinar qual delas pode tratá-lo.
 
-Here is the general form of a `do`-`catch` statement:
+Esta é a forma geral de uma instrução `do`-`catch`:
 
 ```swift
 do {
@@ -404,13 +367,11 @@ do {
 }
 ```
 
-You write a pattern after `catch` to indicate what errors
-that clause can handle.
-If a `catch` clause doesn't have a pattern,
-the clause matches any error
-and binds the error to a local constant named `error`.
-For more information about pattern matching,
-see <doc:Patterns>.
+Você escreve um padrão depois de `catch` para indicar quais erros aquela cláusula pode tratar.
+Se uma cláusula `catch` não tiver padrão, ela corresponde a qualquer erro
+e vincula o erro a uma constante local chamada `error`.
+Para mais informações sobre correspondência de padrões,
+veja <doc:Patterns>.
 
 <!--
   TODO: Call out the reasoning why we don't let you
@@ -418,8 +379,7 @@ see <doc:Patterns>.
   the errors in an given enum without a general catch/default.
 -->
 
-For example, the following code matches against all three cases
-of the `VendingMachineError` enumeration.
+Por exemplo, o código a seguir corresponde aos três casos da enumeração `VendingMachineError`.
 
 ```swift
 var vendingMachine = VendingMachine()
@@ -461,37 +421,23 @@ do {
   ```
 -->
 
-In the above example,
-the `buyFavoriteSnack(person:vendingMachine:)` function is called in a `try` expression,
-because it can throw an error.
-If an error is thrown,
-execution immediately transfers to the `catch` clauses,
-which decide whether to allow propagation to continue.
-If no pattern is matched, the error gets caught by the final `catch`
-clause and is bound to a local `error` constant.
-If no error is thrown,
-the remaining statements in the `do` statement are executed.
+No exemplo acima, a função `buyFavoriteSnack(person:vendingMachine:)` é chamada em uma expressão `try`,
+porque pode lançar um erro.
+Se um erro for lançado, a execução passa imediatamente para as cláusulas `catch`,
+que decidem se a propagação deve continuar.
+Se nenhum padrão corresponder, o erro é capturado pela última cláusula `catch`
+e vinculado a uma constante local `error`.
+Se nenhum erro for lançado, as demais instruções do bloco `do` são executadas.
 
-The `catch` clauses don't have to handle every possible error
-that the code in the `do` clause can throw.
-If none of the `catch` clauses handle the error,
-the error propagates to the surrounding scope.
-However, the propagated error
-must be handled by *some* surrounding scope.
-In a nonthrowing function,
-an enclosing `do`-`catch` statement
-must handle the error.
-In a throwing function,
-either an enclosing `do`-`catch` statement
-or the caller
-must handle the error.
-If the error propagates to the top-level scope
-without being handled,
-you'll get a runtime error.
+As cláusulas `catch` não precisam tratar todos os erros possíveis que o código da cláusula `do` pode lançar.
+Se nenhuma das cláusulas `catch` tratar o erro, ele se propaga para o escopo ao redor.
+No entanto, o erro propagado precisa ser tratado por *algum* escopo ao redor.
+Em uma função que não lança, uma instrução `do`-`catch` que a envolve precisa tratar o erro.
+Em uma função que lança, precisa tratar o erro uma instrução `do`-`catch` que a envolve ou quem a chamou.
+Se o erro chegar ao escopo de nível superior sem ser tratado, você terá um erro de tempo de execução.
 
-For example, the above example can be written so any
-error that isn't a `VendingMachineError` is instead
-caught by the calling function:
+Por exemplo, o exemplo acima pode ser escrito de modo que qualquer erro que não seja um `VendingMachineError`
+seja capturado pela função que a chamou:
 
 ```swift
 func nourish(with item: String) throws {
@@ -531,17 +477,13 @@ do {
   ```
 -->
 
-In the `nourish(with:)` function,
-if `vend(itemNamed:)` throws an error that's
-one of the cases of the `VendingMachineError` enumeration,
-`nourish(with:)` handles the error by printing a message.
-Otherwise,
-`nourish(with:)` propagates the error to its call site.
-The error is then caught by the general `catch` clause.
+Na função `nourish(with:)`, se `vend(itemNamed:)` lançar um erro que seja um dos casos da enumeração `VendingMachineError`,
+`nourish(with:)` trata o erro imprimindo uma mensagem.
+Caso contrário, `nourish(with:)` propaga o erro para o ponto em que foi chamada.
+Então, o erro é capturado pela cláusula `catch` geral.
 
-Another way to catch several related errors
-is to list them after `catch`, separated by commas.
-For example:
+Outra forma de capturar vários erros relacionados é listá-los depois de `catch`, separados por vírgulas.
+Por exemplo:
 
 ```swift
 func eat(item: String) throws {
@@ -577,20 +519,17 @@ func eat(item: String) throws {
   FIXME the catch clause is getting indented oddly in HTML output if I hard wrap it
 -->
 
-The `eat(item:)` function lists the vending machine errors to catch,
-and its error text corresponds to the items in that list.
-If any of the three listed errors are thrown,
-this `catch` clause handles them by printing a message.
-Any other errors are propagated to the surrounding scope,
-including any vending-machine errors that might be added later.
+A função `eat(item:)` lista os erros da máquina de venda que devem ser capturados,
+e o texto dela corresponde aos itens dessa lista.
+Se qualquer um dos três erros listados for lançado, esta cláusula `catch` os trata imprimindo uma mensagem.
+Quaisquer outros erros são propagados para o escopo ao redor,
+incluindo erros da máquina de venda que possam ser adicionados no futuro.
 
-### Converting Errors to Optional Values
+### Convertendo erros em valores optional
 
-You use `try?` to handle an error by converting it to an optional value.
-If an error is thrown while evaluating the `try?` expression,
-the value of the expression is `nil`.
-For example,
-in the following code `x` and `y` have the same value and behavior:
+Você usa `try?` para tratar um erro convertendo-o em um valor optional.
+Se um erro for lançado durante a avaliação da expressão `try?`, o valor da expressão é `nil`.
+Por exemplo, no código a seguir `x` e `y` têm o mesmo valor e o mesmo comportamento:
 
 ```swift
 func someThrowingFunction() throws -> Int {
@@ -631,18 +570,14 @@ do {
   ```
 -->
 
-If `someThrowingFunction()` throws an error,
-the value of `x` and `y` is `nil`.
-Otherwise, the value of `x` and `y` is the value that the function returned.
-Note that `x` and `y` are an optional of whatever type `someThrowingFunction()` returns.
-Here the function returns an integer, so `x` and `y` are optional integers.
+Se `someThrowingFunction()` lançar um erro, o valor de `x` e de `y` é `nil`.
+Caso contrário, o valor de `x` e de `y` é o valor que a função retornou.
+Observe que `x` e `y` são optionals do tipo que `someThrowingFunction()` retorna.
+Aqui a função retorna um inteiro, então `x` e `y` são optionals de inteiros.
 
-Using `try?` lets you write concise error handling code
-when you want to handle all errors in the same way.
-For example,
-the following code
-uses several approaches to fetch data,
-or returns `nil` if all of the approaches fail.
+Usar `try?` permite escrever código de tratamento de erros conciso quando você quer tratar todos os erros da mesma forma.
+Por exemplo, o código a seguir usa várias abordagens para buscar dados
+ou retorna `nil` se todas elas falharem.
 
 ```swift
 func fetchData() -> Data? {
@@ -667,21 +602,19 @@ func fetchData() -> Data? {
   ```
 -->
 
-### Disabling Error Propagation
+### Desativando a propagação de erros
 
-Sometimes you know a throwing function or method
-won't, in fact, throw an error at runtime.
-On those occasions,
-you can write `try!` before the expression to disable error propagation
-and wrap the call in a runtime assertion that no error will be thrown.
-If an error actually is thrown, you'll get a runtime error.
+Às vezes você sabe que uma função ou um método que lança não vai, na prática, lançar um erro em tempo de execução.
+Nessas ocasiões, você pode escrever `try!` antes da expressão para desativar a propagação de erros,
+envolvendo a chamada em uma verificação de tempo de execução de que nenhum erro será lançado.
+Se um erro for de fato lançado, você terá um erro de tempo de execução.
 
-For example, the following code uses a `loadImage(atPath:)` function,
-which loads the image resource at a given path
-or throws an error if the image can't be loaded.
-In this case, because the image is shipped with the application,
-no error will be thrown at runtime,
-so it's appropriate to disable error propagation.
+Por exemplo, o código a seguir usa uma função `loadImage(atPath:)`,
+que carrega o recurso de imagem em um caminho dado
+ou lança um erro se a imagem não puder ser carregada.
+Neste caso, como a imagem é distribuída com o aplicativo,
+nenhum erro será lançado em tempo de execução,
+então é apropriado desativar a propagação de erros.
 
 ```swift
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
@@ -699,57 +632,39 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   ```
 -->
 
-## Specifying the Error Type
+## Especificando o tipo de erro
 
-All of the examples above use the most common kind of error handling,
-where the errors that your code throws
-can be values of any type that conforms to the `Error` protocol.
-This approach matches the reality that
-you don't know ahead of time every error that could happen
-while the code is running,
-especially when propagating errors thrown somewhere else.
-It also reflects the fact that errors can change over time.
-New versions of a library ---
-including libraries that your dependencies use ---
-can throw new errors,
-and the rich complexity of real-world user configurations
-can expose failure modes that weren't visible during development or testing.
-The error handling code in the examples above
-always includes a default case to handle errors
-that don't have a specific `catch` clause.
+Todos os exemplos acima usam o tipo mais comum de tratamento de erros,
+em que os erros que o seu código lança podem ser valores de qualquer tipo que esteja em conformidade com o protocolo `Error`.
+Essa abordagem reflete a realidade de que você não sabe antecipadamente todos os erros que podem acontecer
+enquanto o código roda, especialmente ao propagar erros lançados em outro lugar.
+Ela também reflete o fato de que os erros mudam com o tempo.
+Novas versões de uma biblioteca, incluindo bibliotecas usadas pelas suas dependências,
+podem lançar erros novos, e a complexidade das configurações reais dos usuários
+pode expor falhas que não apareceram durante o desenvolvimento ou os testes.
+O código de tratamento de erros dos exemplos acima sempre inclui um caso padrão
+para tratar erros que não têm uma cláusula `catch` específica.
 
-Most Swift code doesn't specify the type for the errors it throws.
-However,
-you might limit code to throwing errors of only one specific type
-in the following special cases:
+A maioria do código Swift não especifica o tipo dos erros que lança.
+No entanto, você pode limitar o código a lançar erros de apenas um tipo específico nos seguintes casos especiais:
 
-- When running code on an embedded system
-  that doesn't support dynamic allocation of memory.
-  Throwing an instance of `any Error` or another boxed protocol type
-  requires allocating memory at runtime to store the error.
-  In contrast,
-  throwing an error of a specific type
-  lets Swift avoid heap allocation for errors.
+- Ao executar código em um sistema embarcado que não aceita alocação dinâmica de memória.
+  Lançar uma instância de `any Error` ou de outro tipo de protocolo empacotado exige alocar memória em tempo de execução
+  para armazenar o erro.
+  Já lançar um erro de um tipo específico permite ao Swift evitar a alocação na heap para os erros.
 
-- When the errors are an implementation detail of some unit of code,
-  like a library,
-  and aren't part of the interface to that code.
-  Because the errors come from only the library,
-  and not from other dependencies or the library's clients,
-  you can make an exhaustive list of all possible failures.
-  And because these errors are an implementation detail of the library,
-  they're always handled within that library.
+- Quando os erros são um detalhe de implementação de alguma unidade de código, como uma biblioteca,
+  e não fazem parte da interface desse código.
+  Como os erros vêm somente da biblioteca, e não de outras dependências ou dos clientes dela,
+  você pode fazer uma lista exaustiva de todas as falhas possíveis.
+  E, como esses erros são um detalhe de implementação da biblioteca, eles são sempre tratados dentro dela.
 
-- In code that only propagates errors described by generic parameters,
-  like a function that takes a closure argument
-  and propagates any errors from that closure.
-  For a comparison between propagating a specific error type
-  and using `rethrows`,
-  see <doc:Declarations#Rethrowing-Functions-and-Methods>.
+- Em código que apenas propaga erros descritos por parâmetros genéricos,
+  como uma função que recebe um argumento closure e propaga quaisquer erros desse closure.
+  Para uma comparação entre propagar um tipo de erro específico e usar `rethrows`,
+  veja <doc:Declarations#Rethrowing-Functions-and-Methods>.
 
-For example,
-consider code that summarizes ratings
-and uses the following error type:
+Por exemplo, considere um código que resume avaliações e usa o seguinte tipo de erro:
 
 ```swift
 enum StatisticsError: Error {
@@ -758,13 +673,11 @@ enum StatisticsError: Error {
 }
 ```
 
-To specify that a function throws only `StatisticsError` values as its errors,
-you write `throws(StatisticsError)` instead of only `throws`
-when declaring the function.
-This syntax is also called *typed throws*
-because you write the error type after `throws` in the declaration.
-For example,
-the function below throws `StatisticsError` values as its errors.
+Para especificar que uma função lança apenas valores de `StatisticsError` como erros,
+você escreve `throws(StatisticsError)` em vez de só `throws` ao declarar a função.
+Essa sintaxe também é chamada de *typed throws*,
+porque você escreve o tipo do erro depois de `throws` na declaração.
+Por exemplo, a função abaixo lança valores de `StatisticsError` como erros.
 
 ```swift
 func summarize(_ ratings: [Int]) throws(StatisticsError) {
@@ -780,26 +693,19 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 }
 ```
 
-In the code above,
-the `summarize(_:)` function summarizes a list of ratings
-expressed on a scale of 1 to 3.
-This function throws an instance of `StatisticsError` if the input isn't valid.
-Both places in the code above that throw an error
-omit the type of the error
-because the function's error type is already defined.
-You can use the short form, `throw .noRatings`,
-instead of writing `throw StatisticsError.noRatings`
-when throwing an error in a function like this.
+No código acima, a função `summarize(_:)` resume uma lista de avaliações em uma escala de 1 a 3.
+Essa função lança uma instância de `StatisticsError` se a entrada não for válida.
+Os dois lugares do código acima que lançam um erro omitem o tipo do erro,
+porque o tipo de erro da função já está definido.
+Você pode usar a forma abreviada `throw .noRatings`,
+em vez de escrever `throw StatisticsError.noRatings`,
+ao lançar um erro em uma função assim.
 
-When you write a specific error type at the start of the function,
-Swift checks that you don't throw any other errors.
-For example,
-if you tried to use `VendingMachineError` from examples earlier in this chapter
-in the `summarize(_:)` function above,
-that code would produce an error at compile time.
+Quando você escreve um tipo de erro específico no início da função, o Swift verifica se você não lança nenhum outro erro.
+Por exemplo, se você tentasse usar `VendingMachineError`, dos exemplos anteriores deste capítulo,
+na função `summarize(_:)` acima, esse código produziria um erro em tempo de compilação.
 
-You can call a function that uses typed throws
-from within a regular throwing function:
+Você pode chamar uma função que usa typed throws dentro de uma função que lança comum:
 
 ```swift
 func someThrowingFunction() throws {
@@ -808,10 +714,10 @@ func someThrowingFunction() throws {
 }
 ```
 
-The code above doesn't specify an error type for `someThrowingFunction()`,
-so it throws `any Error`.
-You could also write the error type explicitly as `throws(any Error)`;
-the code below is equivalent to the code above:
+O código acima não especifica um tipo de erro para `someThrowingFunction()`,
+então ela lança `any Error`.
+Você também poderia escrever o tipo de erro explicitamente como `throws(any Error)`;
+o código abaixo é equivalente ao código acima:
 
 ```swift
 func someThrowingFunction() throws(any Error) {
@@ -820,26 +726,23 @@ func someThrowingFunction() throws(any Error) {
 }
 ```
 
-In this code,
-`someThrowingFunction()` propagates any errors that `summarize(_:)` throws.
-The errors from `summarize(_:)` are always `StatisticsError` values,
-which is also a valid error for `someThrowingFunction()` to throw.
+Neste código, `someThrowingFunction()` propaga quaisquer erros que `summarize(_:)` lança.
+Os erros de `summarize(_:)` são sempre valores de `StatisticsError`,
+que também é um erro válido para `someThrowingFunction()` lançar.
 
-Just like you can write a function that never returns
-with a return type of `Never`,
-you can write a function that never throws with `throws(Never)`:
+Assim como você pode escrever uma função que nunca retorna, com tipo de retorno `Never`,
+você pode escrever uma função que nunca lança, com `throws(Never)`:
 
 ```swift
 func nonThrowingFunction() throws(Never) {
   // ...
 }
 ```
-This function can't throw because
-it's impossible to create a value of type `Never` to throw.
+Essa função não pode lançar erros, porque é impossível criar um valor do tipo `Never` para lançar.
 
-In addition to specifying a function's error type,
-you can also write a specific error type for a `do`-`catch` statement.
-For example:
+Além de especificar o tipo de erro de uma função,
+você também pode escrever um tipo de erro específico para uma instrução `do`-`catch`.
+Por exemplo:
 
 ```swift
 let ratings = []
@@ -856,34 +759,24 @@ do throws(StatisticsError) {
 // Prints "No ratings available".
 ```
 
-In this code,
-writing `do throws(StatisticsError)` indicates that
-the `do`-`catch` statement throws `StatisticsError` values as its errors.
-Like other `do`-`catch` statements,
-the `catch` clause can either handle every possible error
-or propagate unhandled errors for some surrounding scope to handle.
-This code handles all of the errors,
-using a `switch` statement with one case for each enumeration value.
-Like other `catch` clauses that don't have a pattern,
-the clause matches any error
-and binds the error to a local constant named `error`.
-Because the `do`-`catch` statement throws `StatisticsError` values,
-`error` is a value of type `StatisticsError`.
+Neste código, escrever `do throws(StatisticsError)` indica que a instrução `do`-`catch`
+lança valores de `StatisticsError` como erros.
+Como em outras instruções `do`-`catch`, a cláusula `catch` pode tratar todos os erros possíveis
+ou propagar os erros não tratados para algum escopo ao redor tratar.
+Este código trata todos os erros, usando uma instrução `switch` com um caso para cada valor da enumeração.
+Como outras cláusulas `catch` sem padrão, esta corresponde a qualquer erro
+e vincula o erro a uma constante local chamada `error`.
+Como a instrução `do`-`catch` lança valores de `StatisticsError`,
+`error` é um valor do tipo `StatisticsError`.
 
-The `catch` clause above uses a `switch` statement
-to match and handle each possible error.
-If you tried to add a new case to `StatisticsError`
-without updating the error-handling code,
-Swift would give you an error
-because the `switch` statement wouldn't be exhaustive anymore.
-For a library that catches all of its own errors,
-you could use this approach to ensure any new errors
-get corresponding new code to handle them.
+A cláusula `catch` acima usa uma instrução `switch` para corresponder e tratar cada erro possível.
+Se você tentasse adicionar um novo caso a `StatisticsError` sem atualizar o código de tratamento de erros,
+o Swift daria um erro, porque a instrução `switch` deixaria de ser exaustiva.
+Para uma biblioteca que captura todos os próprios erros, você poderia usar essa abordagem
+para garantir que qualquer erro novo ganhe código correspondente para tratá-lo.
 
-If a function or `do` block throws errors of only a single type,
-Swift infers that this code is using typed throws.
-Using this shorter syntax,
-you could write the `do`-`catch` example above as follows:
+Se uma função ou um bloco `do` lançar erros de apenas um tipo, o Swift infere que esse código está usando typed throws.
+Com essa sintaxe mais curta, você poderia escrever o exemplo de `do`-`catch` acima da seguinte forma:
 
 ```swift
 let ratings = []
@@ -900,37 +793,26 @@ do {
 // Prints "No ratings available".
 ```
 
-Even though the `do`-`catch` block above
-doesn't specify what type of error it throws,
-Swift infers that it throws `StatisticsError`.
-You can explicitly write `throws(any Error)`
-to avoid letting Swift infer typed throws.
+Mesmo que o bloco `do`-`catch` acima não especifique o tipo de erro que lança,
+o Swift infere que ele lança `StatisticsError`.
+Você pode escrever explicitamente `throws(any Error)` para impedir que o Swift infira typed throws.
 
-## Specifying Cleanup Actions
+## Especificando ações de limpeza
 
-You use a `defer` statement to execute a set of statements
-just before code execution leaves the current block of code.
-This statement lets you do any necessary cleanup
-that should be performed regardless
-of *how* execution leaves the current block of code ---
-whether it leaves because an error was thrown
-or because of a statement such as `return` or `break`.
-For example, you can use a `defer` statement
-to ensure that file descriptors are closed
-and manually allocated memory is freed.
+Você usa uma instrução `defer` para executar um conjunto de instruções logo antes de a execução deixar o bloco de código atual.
+Essa instrução permite fazer qualquer limpeza necessária, que deve acontecer independentemente de *como* a execução deixa o bloco atual:
+seja porque um erro foi lançado, seja por causa de uma instrução como `return` ou `break`.
+Por exemplo, você pode usar `defer` para garantir que descritores de arquivo sejam fechados
+e que memória alocada manualmente seja liberada.
 
-A `defer` statement defers execution until the current scope is exited.
-This statement consists of the `defer` keyword and the statements to be executed later.
-The deferred statements may not contain any code
-that would transfer control out of the statements,
-such as a `break` or a `return` statement,
-or by throwing an error.
-Deferred actions are executed in the reverse of
-the order that they're written in your source code.
-That is, the code in the first `defer` statement executes last,
-the code in the second `defer` statement executes second to last,
-and so on.
-The last `defer` statement in source code order executes first.
+Uma instrução `defer` adia a execução até que o escopo atual seja encerrado.
+Essa instrução é formada pela palavra-chave `defer` e pelas instruções que devem ser executadas depois.
+As instruções adiadas não podem conter código que transfira o controle para fora delas,
+como uma instrução `break` ou `return`, nem lançar um erro.
+As ações adiadas são executadas na ordem inversa da que foram escritas no código-fonte.
+Ou seja, o código da primeira instrução `defer` é executado por último,
+o da segunda é executado penúltimo, e assim por diante.
+A última instrução `defer` na ordem do código-fonte é executada primeiro.
 
 ```swift
 func processFile(filename: String) throws {
@@ -973,14 +855,11 @@ func processFile(filename: String) throws {
   ```
 -->
 
-The above example uses a `defer` statement
-to ensure that the `open(_:)` function
-has a corresponding call to `close(_:)`.
+O exemplo acima usa uma instrução `defer` para garantir que a função `open(_:)`
+tenha uma chamada correspondente a `close(_:)`.
 
-You can use a `defer` statement
-even when no error handling code is involved.
-For more information,
-see <doc:ControlFlow#Deferred-Actions>.
+Você pode usar `defer` mesmo quando não há código de tratamento de erros envolvido.
+Para mais informações, veja <doc:ControlFlow#Deferred-Actions>.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -991,3 +870,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

@@ -1,29 +1,29 @@
-# Nested Types
+# Tipos aninhados
 
-Define types inside the scope of another type.
+Defina tipos dentro do escopo de outro tipo.
 
-Enumerations are often created to support a specific class or structure's functionality.
-Similarly, it can be convenient to define utility structures
-purely for use within the context of a more complex type,
-and protocols that are normally used in conjunction with a specific type.
-To accomplish this, Swift enables you to define *nested types*,
-whereby you nest supporting types like enumerations, structures, and protocols
-within the definition of the type they support.
+Enumerações costumam ser criadas para dar suporte à funcionalidade de uma classe ou struct específica.
+Da mesma forma, pode ser conveniente definir estruturas utilitárias
+usadas apenas no contexto de um tipo mais complexo,
+além de protocolos normalmente usados em conjunto com um tipo específico.
+Para isso, o Swift permite definir *tipos aninhados*,
+em que você aninha tipos de apoio, como enumerações, structs e protocolos,
+dentro da definição do tipo que eles apoiam.
 
-To nest a type within another type,
-write its definition within the outer braces of the type it supports.
-Types can be nested to as many levels as are required.
+Para aninhar um tipo dentro de outro,
+escreva a definição dele dentro das chaves externas do tipo que ele apoia.
+Os tipos podem ser aninhados em quantos níveis forem necessários.
 
-## Nested Types in Action
+## Tipos aninhados na prática
 
-The example below defines a structure called `BlackjackCard`,
-which models a playing card as used in the game of Blackjack.
-The `BlackjackCard` structure contains two nested enumeration types
-called `Suit` and `Rank`.
+O exemplo abaixo define uma struct chamada `BlackjackCard`,
+que modela uma carta de baralho usada no jogo de Blackjack.
+A struct `BlackjackCard` contém dois tipos de enumeração aninhados,
+chamados `Suit` e `Rank`.
 
-In Blackjack, the Ace cards have a value of either one or eleven.
-This feature is represented by a structure called `Values`,
-which is nested within the `Rank` enumeration:
+No Blackjack, o Ás tem valor um ou onze.
+Essa característica é representada por uma struct chamada `Values`,
+que é aninhada dentro da enumeração `Rank`:
 
 ```swift
 struct BlackjackCard {
@@ -107,41 +107,41 @@ struct BlackjackCard {
   ```
 -->
 
-The `Suit` enumeration describes the four common playing card suits,
-together with a raw `Character` value to represent their symbol.
+A enumeração `Suit` descreve os quatro naipes comuns de cartas,
+junto com um valor bruto do tipo `Character` que representa o símbolo de cada um.
 
-The `Rank` enumeration describes the thirteen possible playing card ranks,
-together with a raw `Int` value to represent their face value.
-(This raw `Int` value isn't used for the Jack, Queen, King, and Ace cards.)
+A enumeração `Rank` descreve as treze possíveis graduações de cartas,
+junto com um valor bruto do tipo `Int` que representa o valor de face.
+(Esse valor bruto `Int` não é usado para as cartas Valete, Dama, Rei e Ás.)
 
-As mentioned above, the `Rank` enumeration defines
-a further nested structure of its own, called `Values`.
-This structure encapsulates the fact that most cards have one value,
-but the Ace card has two values.
-The `Values` structure defines two properties to represent this:
+Como mencionado acima, a enumeração `Rank` define
+uma struct aninhada própria, chamada `Values`.
+Essa struct encapsula o fato de que a maioria das cartas tem um valor,
+mas o Ás tem dois.
+A struct `Values` define duas propriedades para representar isso:
 
-- `first`, of type `Int`
-- `second`, of type `Int?`, or “optional `Int`”
+- `first`, do tipo `Int`
+- `second`, do tipo `Int?`, ou “`Int` optional”
 
-`Rank` also defines a computed property, `values`,
-which returns an instance of the `Values` structure.
-This computed property considers the rank of the card
-and initializes a new `Values` instance with appropriate values based on its rank.
-It uses special values for `jack`, `queen`, `king`, and `ace`.
-For the numeric cards, it uses the rank's raw `Int` value.
+`Rank` também define uma propriedade computada, `values`,
+que retorna uma instância da struct `Values`.
+Essa propriedade computada considera a graduação da carta
+e inicializa uma nova instância de `Values` com os valores adequados para essa graduação.
+Ela usa valores especiais para `jack`, `queen`, `king` e `ace`.
+Para as cartas numéricas, usa o valor bruto `Int` da graduação.
 
-The `BlackjackCard` structure itself has two properties --- `rank` and `suit`.
-It also defines a computed property called `description`,
-which uses the values stored in `rank` and `suit` to build
-a description of the name and value of the card.
-The `description` property uses optional binding to check whether there's
-a second value to display, and if so,
-inserts additional description detail for that second value.
+A própria struct `BlackjackCard` tem duas propriedades: `rank` e `suit`.
+Ela também define uma propriedade computada chamada `description`,
+que usa os valores armazenados em `rank` e `suit` para montar
+uma descrição do nome e do valor da carta.
+A propriedade `description` usa optional binding para verificar se há
+um segundo valor a exibir e, se houver,
+inclui um detalhe adicional na descrição para esse segundo valor.
 
-Because `BlackjackCard` is a structure with no custom initializers,
-it has an implicit memberwise initializer,
-as described in <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
-You can use this initializer to initialize a new constant called `theAceOfSpades`:
+Como `BlackjackCard` é uma struct sem inicializadores personalizados,
+ela tem um inicializador memberwise implícito,
+como descrito em <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
+Você pode usar esse inicializador para criar uma nova constante chamada `theAceOfSpades`:
 
 ```swift
 let theAceOfSpades = BlackjackCard(rank: .ace, suit: .spades)
@@ -159,17 +159,17 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
   ```
 -->
 
-Even though `Rank` and `Suit` are nested within `BlackjackCard`,
-their type can be inferred from context,
-and so the initialization of this instance is able to refer to the enumeration cases
-by their case names (`.ace` and `.spades`) alone.
-In the example above, the `description` property correctly reports that
-the Ace of Spades has a value of `1` or `11`.
+Mesmo que `Rank` e `Suit` estejam aninhados dentro de `BlackjackCard`,
+o tipo deles pode ser inferido pelo contexto,
+então a inicialização dessa instância consegue se referir aos casos da enumeração
+apenas pelos nomes dos casos (`.ace` e `.spades`).
+No exemplo acima, a propriedade `description` informa corretamente
+que o Ás de Espadas tem valor `1` ou `11`.
 
-## Referring to Nested Types
+## Referindo-se a tipos aninhados
 
-To use a nested type outside of its definition context,
-prefix its name with the name of the type it's nested within:
+Para usar um tipo aninhado fora do contexto em que ele é definido,
+coloque antes do nome dele o nome do tipo em que ele está aninhado:
 
 ```swift
 let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
@@ -186,9 +186,9 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
   ```
 -->
 
-For the example above,
-this enables the names of `Suit`, `Rank`, and `Values` to be kept deliberately short,
-because their names are naturally qualified by the context in which they're defined.
+No exemplo acima,
+isso permite que os nomes de `Suit`, `Rank` e `Values` sejam mantidos propositalmente curtos,
+porque o contexto em que eles são definidos já os qualifica naturalmente.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -199,3 +199,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

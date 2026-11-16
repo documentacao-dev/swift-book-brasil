@@ -1,48 +1,47 @@
-# About the Language Reference
+# Sobre a referência da linguagem
 
-Read the notation that the formal grammar uses.
+Leia a notação que a gramática formal usa.
 
-This part of the book describes the formal grammar of the Swift programming language.
-The grammar described here is intended to help you understand the language in more
-detail, rather than to allow you to directly implement a parser or compiler.
+Esta parte do livro descreve a gramática formal da linguagem de programação Swift.
+A gramática descrita aqui serve para ajudar você a entender a linguagem
+com mais detalhes, e não para permitir que você implemente diretamente um parser ou um compilador.
 
-The Swift language is relatively small, because many common types, functions, and operators
-that appear virtually everywhere in Swift code
-are actually defined in the Swift standard library. Although these types, functions,
-and operators aren't part of the Swift language itself,
-they're used extensively in the discussions and code examples in this part of the book.
+A linguagem Swift é relativamente pequena, porque vários tipos, funções e operadores comuns
+que aparecem praticamente em todo código Swift
+são, na verdade, definidos na biblioteca padrão do Swift. Embora esses tipos, funções
+e operadores não façam parte da própria linguagem Swift,
+eles são usados extensivamente nas discussões e nos exemplos de código desta parte do livro.
 
-## How to Read the Grammar
+## Como ler a gramática
 
-The notation used to describe the formal grammar of the Swift programming language
-follows a few conventions:
+A notação usada para descrever a gramática formal da linguagem de programação Swift
+segue algumas convenções:
 
-- An arrow (→) is used to mark grammar productions and can be read as "can consist of."
-- Syntactic categories are indicated by *italic* text and appear on both sides
-  of a grammar production rule.
-- Literal words and punctuation are indicated by **`boldface constant width`** text
-  and appear only on the right-hand side of a grammar production rule.
-- Alternative grammar productions are separated by vertical
-  bars (|). When alternative productions are too long to read easily,
-  they're broken into multiple grammar production rules on new lines.
-- In a few cases, regular font text is used to describe the right-hand side
-  of a grammar production rule.
-- Optional syntactic categories and literals are marked by a trailing
-  question mark, *?*.
+- Uma seta (→) marca as produções da gramática e pode ser lida como “pode consistir em”.
+- Categorias sintáticas são indicadas por texto em *itálico* e aparecem dos dois lados
+  de uma regra de produção da gramática.
+- Palavras literais e pontuação são indicadas por texto em **negrito com fonte monoespaçada**
+  e aparecem apenas do lado direito de uma regra de produção da gramática.
+- Produções alternativas são separadas por barras verticais (|). Quando as produções alternativas são longas demais para ler com facilidade,
+  elas são divididas em várias regras de produção, em novas linhas.
+- Em alguns casos, texto em fonte regular é usado para descrever o lado direito
+  de uma regra de produção da gramática.
+- Categorias sintáticas e literais opcionais são marcadas por um ponto de interrogação
+  no final, *?*.
 
-As an example, the grammar of a getter-setter block is defined as follows:
+Como exemplo, a gramática de um bloco getter-setter é definida assim:
 
-> Grammar of a getter-setter block:
+> Gramática de um bloco getter-setter:
 >
 > *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** | **`{`** *setter-clause* *getter-clause* **`}`**
 
-This definition indicates that a getter-setter block can consist of a getter clause
-followed by an optional setter clause, enclosed in braces,
-*or* a setter clause followed by a getter clause, enclosed in braces.
-The grammar production above is equivalent to the following two productions,
-where the alternatives are spelled out explicitly:
+Essa definição indica que um bloco getter-setter pode consistir em uma cláusula getter
+seguida por uma cláusula setter opcional, delimitadas por chaves,
+*ou* em uma cláusula setter seguida por uma cláusula getter, delimitadas por chaves.
+A produção acima equivale a estas duas produções,
+em que as alternativas são escritas explicitamente:
 
-> Grammar of a getter-setter block:
+> Gramática de um bloco getter-setter:
 >
 >
 > *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
@@ -57,3 +56,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

@@ -16,7 +16,7 @@ como os tipos que representam números, caracteres e strings,
 são na verdade tipos nomeados,
 definidos e implementados na biblioteca padrão do Swift usando structs.
 Como são tipos nomeados,
-você pode estender o comportamento deles para atender às necessidades do seu programa,
+você pode estender o comportamento deles para atender às necessidades do programa,
 usando uma declaração de extension,
 discutida em <doc:Extensions> e <doc:Declarations#Extension-Declaration>.
 
@@ -206,7 +206,7 @@ sem precisar escrever uma closure explícita ao chamar a função.
 Para um exemplo de parâmetro de tipo de função autoclosure,
 veja <doc:Closures#Autoclosures>.
 
-Um tipo de função pode ter parâmetros variádicos no seu *tipo de parâmetro*.
+Um tipo de função pode ter parâmetros variádicos no *tipo de parâmetro* dele.
 Sintaticamente,
 um parâmetro variádico consiste em um nome de tipo base seguido imediatamente por três pontos (`...`),
 como em `Int...`. Um parâmetro variádico é tratado como um array que contém elementos
@@ -353,7 +353,7 @@ Escrever `throws` sem especificar um tipo
 Omitir `throws` é o mesmo que escrever `throws(Never)`.
 O tipo de erro que uma função lança
 pode ser qualquer tipo que esteja em conformidade com `Error`,
-incluindo tipos genéricos, tipos de protocolo encapsulados e tipos opacos.
+incluindo tipos genéricos, tipos de protocolo boxed e tipos opacos.
 
 O tipo de erro que uma função lança faz parte do tipo dessa função,
 e uma relação de subtipo entre tipos de erro
@@ -377,8 +377,8 @@ Como consequência dessas relações de subtipo:
 
 Se você usar um tipo associado ou um parâmetro de tipo genérico
 como tipo de erro lançado em um tipo de função,
-então esse tipo associado ou parâmetro de tipo genérico
-passa a ser exigido implicitamente como conforme ao protocolo `Error`.
+então é implicitamente exigido que esse tipo associado ou parâmetro de tipo genérico
+esteja em conformidade com o protocolo `Error`.
 
 Funções que lançam erros e funções que relançam erros são descritas em
 <doc:Declarations#Throwing-Functions-and-Methods>
@@ -486,7 +486,7 @@ os dois parâmetros de `takesTwoFunctions(first:second:)` são funções.
 Nenhum dos dois é marcado com `@escaping`,
 então ambos são nonescaping como resultado.
 
-As quatro chamadas de função marcadas com "Erro" no exemplo acima
+As quatro chamadas de função marcadas com "Error" no exemplo acima
 causam erros do compilador.
 Como os parâmetros `first` e `second` são funções nonescaping,
 eles não podem ser passados como argumentos para outro parâmetro de função nonescaping.
@@ -495,7 +495,7 @@ não causam erro do compilador.
 Essas chamadas não violam a restrição
 porque `external` não é um dos parâmetros de `takesTwoFunctions(first:second:)`.
 
-Se você precisar evitar essa restrição, marque um dos parâmetros como escaping,
+Se você precisar contornar essa restrição, marque um dos parâmetros como escaping,
 ou converta temporariamente um dos parâmetros de função nonescaping
 em uma função escaping usando a função `withoutActuallyEscaping(_:do:)`.
 Para informações sobre como evitar acesso conflitante à memória,
@@ -627,7 +627,7 @@ O subscript retorna um valor optional do tipo de valor do dicionário.
 Se a chave especificada não estiver contida no dicionário,
 o subscript retorna `nil`.
 
-A chave de um dicionário deve estar em conformidade com o protocolo `Hashable`
+O tipo da chave de um dicionário deve estar em conformidade com o protocolo `Hashable`
 da biblioteca padrão do Swift.
 
 <!--
@@ -677,7 +677,7 @@ que são usados para representar valores que podem ou não estar presentes.
 Qualquer tipo pode ser declarado explicitamente como optional
 (ou convertido implicitamente para um tipo optional).
 Se você não fornecer um valor inicial ao declarar uma variável
-ou propriedade optional, o valor dela assume automaticamente `nil`.
+ou propriedade optional, o valor dela é automaticamente `nil`.
 
 <!--
   TODO Add a link to the Optional Enum Reference page.
@@ -724,14 +724,14 @@ veja <doc:TheBasics#Optionals>.
 >
 > *optional-type* → *type* **`?`**
 
-## Tipo optional implicitamente desembrulhado
+## Tipo implicitly unwrapped optional
 
 A linguagem Swift define o `!` pós-fixado como açúcar sintático para
 o tipo nomeado `Optional<Wrapped>`, que é definido na biblioteca padrão do Swift,
-com o comportamento adicional de ser desembrulhado automaticamente quando é acessado.
-Se você tentar usar um optional implicitamente desembrulhado com valor `nil`,
+com o comportamento adicional de ser feito unwrap automaticamente quando é acessado.
+Se você tentar usar um implicitly unwrapped optional com valor `nil`,
 receberá um erro de tempo de execução.
-Com exceção do comportamento de desembrulhamento implícito,
+Com exceção do comportamento de unwrap implícito,
 as duas declarações a seguir são equivalentes:
 
 ```swift
@@ -741,10 +741,10 @@ var explicitlyUnwrappedString: Optional<String>
 
 Observe que não pode haver espaço em branco entre o tipo e o `!`.
 
-Como o desembrulhamento implícito altera o significado da declaração que contém esse tipo,
+Como o unwrap implícito altera o significado da declaração que contém esse tipo,
 tipos optional aninhados dentro de um tipo tupla ou de um tipo genérico,
 como os tipos dos elementos de um dicionário ou de um array,
-não podem ser marcados como implicitamente desembrulhados.
+não podem ser marcados como implicitly unwrapped.
 Por exemplo:
 
 ```swift
@@ -755,26 +755,26 @@ let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
 let implicitlyUnwrappedArray: [Int]!                  // OK
 ```
 
-Como optionals implicitamente desembrulhados
+Como implicitly unwrapped optionals
 têm o mesmo tipo `Optional<Wrapped>` dos optionals comuns,
-você pode usar optionals implicitamente desembrulhados
+você pode usar implicitly unwrapped optionals
 em todos os mesmos lugares do seu código em que pode usar optionals.
-Por exemplo, você pode atribuir valores de optionals implicitamente desembrulhados
+Por exemplo, você pode atribuir valores de implicitly unwrapped optionals
 a variáveis, constantes e propriedades optional, e vice-versa.
 
 Assim como com optionals, se você não fornecer um valor inicial ao declarar uma
-variável ou propriedade optional implicitamente desembrulhada,
-o valor dela assume automaticamente `nil`.
+variável ou propriedade implicitly unwrapped optional,
+o valor dela é `nil` automaticamente por padrão.
 
 Use optional chaining para executar, de forma condicional, uma operação
-sobre uma expressão optional implicitamente desembrulhada.
+sobre uma expressão implicitly unwrapped optional.
 Se o valor for `nil`, nenhuma operação é executada
 e, portanto, nenhum erro de tempo de execução é gerado.
 
-Para mais informações sobre tipos optional implicitamente desembrulhados,
+Para mais informações sobre tipos implicitly unwrapped optional,
 veja <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
-> Gramática de um tipo optional implicitamente desembrulhado:
+> Gramática de um tipo implicitly unwrapped optional:
 >
 > *implicitly-unwrapped-optional-type* → *type* **`!`**
 
@@ -942,13 +942,13 @@ func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
 >
 > *opaque-type* → **`some`** *type*
 
-## Tipo de protocolo encapsulado
+## Tipo de protocolo boxed
 
-Um *tipo de protocolo encapsulado* define um tipo
+Um *tipo de protocolo boxed* define um tipo
 que está em conformidade com um protocolo ou com uma composição de protocolos,
-com a capacidade de esse tipo conforme variar enquanto o programa está em execução.
+com a capacidade de o tipo em conformidade variar enquanto o programa está em execução.
 
-Tipos de protocolo encapsulados têm a seguinte forma:
+Tipos de protocolo boxed têm a seguinte forma:
 
 ```swift
 any <#constraint#>
@@ -960,19 +960,19 @@ um metatipo de um tipo de protocolo
 ou um metatipo de um tipo de composição de protocolos.
 
 Em tempo de execução,
-uma instância de um tipo de protocolo encapsulado
+uma instância de um tipo de protocolo boxed
 pode conter um valor de qualquer tipo que satisfaça a *restrição*.
 Esse comportamento contrasta com o funcionamento dos tipos opacos,
-em que existe um tipo conforme específico conhecido em tempo de compilação.
+em que existe um tipo em conformidade específico, conhecido em tempo de compilação.
 O nível adicional de indireção usado
-ao trabalhar com um tipo de protocolo encapsulado
-é chamado de *encapsulamento* (boxing).
-O encapsulamento normalmente exige uma alocação de memória separada para o armazenamento
+ao trabalhar com um tipo de protocolo boxed
+é chamado de *boxing*.
+O boxing normalmente exige uma alocação de memória separada para o armazenamento
 e um nível adicional de indireção para o acesso,
 o que tem um custo de desempenho em tempo de execução.
 
 Aplicar `any` aos tipos `Any` ou `AnyObject` não tem efeito,
-porque esses tipos já são tipos de protocolo encapsulados.
+porque esses tipos já são tipos de protocolo boxed.
 
 <!--
   - test: `any-any-does-nothing`
@@ -1006,7 +1006,7 @@ Contrast P.Type with (any P.Type) and (any P).Type
 https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
-> Gramática de um tipo de protocolo encapsulado:
+> Gramática de um tipo de protocolo boxed:
 >
 > *boxed-protocol-type* → **`any`** *type*
 

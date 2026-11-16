@@ -124,7 +124,7 @@ the *statements* in a `while` statement can be executed zero or more times.
 The value of the *condition*
 must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+as discussed in <doc:TheBasics#Optional-binding>.
 
 > Grammar of a while statement:
 >
@@ -234,7 +234,7 @@ if <#condition 1#> {
 The value of any condition in an `if` statement
 must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+as discussed in <doc:TheBasics#Optional-binding>.
 
 > Grammar of an if statement:
 >
@@ -257,7 +257,7 @@ guard <#condition#> else {
 The value of any condition in a `guard` statement
 must be of type `Bool` or a type bridged to `Bool`.
 The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+as discussed in <doc:TheBasics#Optional-binding>.
 
 Any constants or variables assigned a value
 from an optional binding declaration in a `guard` statement condition
@@ -537,7 +537,7 @@ You can nest labeled statements, but the name of each statement label must be un
 
 For more information and to see examples
 of how to use statement labels,
-see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
+see <doc:ControlFlow#Instruções-rotuladas> in <doc:ControlFlow>.
 
 <!--
   - test: `backtick-identifier-is-legal-label`
@@ -606,7 +606,7 @@ In both cases, program control is then transferred to the first line
 of code following the enclosing loop or `switch` statement, if any.
 
 For examples of how to use a `break` statement,
-see <doc:ControlFlow#Break> and <doc:ControlFlow#Labeled-Statements>
+see <doc:ControlFlow#Break> and <doc:ControlFlow#Instruções-rotuladas>
 in <doc:ControlFlow>.
 
 > Grammar of a break statement:
@@ -642,7 +642,7 @@ the increment expression is still evaluated after the `continue` statement is ex
 because the increment expression is evaluated after the execution of the loop's body.
 
 For examples of how to use a `continue` statement,
-see <doc:ControlFlow#Continue> and <doc:ControlFlow#Labeled-Statements>
+see <doc:ControlFlow#Continue> and <doc:ControlFlow#Instruções-rotuladas>
 in <doc:ControlFlow>.
 
 > Grammar of a continue statement:
@@ -666,7 +666,7 @@ It also can't transfer control into a case block
 whose pattern contains value binding patterns.
 
 For an example of how to use a `fallthrough` statement in a `switch` statement,
-see <doc:ControlFlow#Control-Transfer-Statements>
+see <doc:ControlFlow#Instruções-de-transferência-de-controle>
 in <doc:ControlFlow>.
 
 > Grammar of a fallthrough statement:

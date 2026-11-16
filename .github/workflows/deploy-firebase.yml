@@ -1,0 +1,48 @@
+name: Deploy swift.documentacao.dev
+
+# Build do livro com o Swift-DocC (tool/site/build.sh) e deploy no site
+# Firebase swift-documentacao (projeto transliteradu).
+# Precisa do secret FIREBASE_SERVICE_ACCOUNT.
+
+on:
+  push:
+    branches: [main]
+    paths: ['TSPL.docc/**', 'tool/**', 'bin/**', 'firebase.json', '.github/workflows/deploy-firebase.yml']
+  pull_request:
+    paths: ['TSPL.docc/**', 'tool/**', 'firebase.json']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    container: swift:6.2
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+    steps:
+      - name: Dependências
+        run: apt-get update && apt-get install -y --no-install-recommends python3 git gawk nodejs npm
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Buscar o upstream (o verificar.py compara com o inglês)
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git remote add upstream https://github.com/swiftlang/swift-book.git
+          git fetch --quiet upstream
+      - name: Conferir traduções
+        run: python3 tool/traducao/verificar.py
+      - name: Build do livro
+        run: tool/site/build.sh
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: transliteradu
+          channelId: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'live' }}

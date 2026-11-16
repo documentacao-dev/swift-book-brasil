@@ -1,49 +1,49 @@
-# About Swift
+# Sobre o Swift
 
-Understand the high-level goals of the language.
+Entenda os objetivos de alto nível da linguagem.
 
-Swift is a fantastic way to write software
-for phones, tablets, desktops, servers,
-or anything else that runs code.
-It's a safe and fast programming language
-that combines the best in modern language thinking
-with wisdom from a diverse open source community.
+Swift é uma ótima forma de escrever software
+para celulares, tablets, computadores, servidores,
+ou qualquer outra coisa que execute código.
+É uma linguagem de programação segura e rápida
+que combina o melhor do pensamento moderno sobre linguagens
+com a sabedoria de uma comunidade diversa de código aberto.
 
-Swift is friendly to new programmers,
-without sacrificing the power and flexibility
-that experienced programmers need.
-It's an industrial-quality programming language
-that's as expressive and enjoyable as a scripting language.
-The compiler is optimized for performance
-and the language is optimized for development,
-without compromising on either.
+Swift é acessível para quem está começando a programar,
+sem abrir mão do poder e da flexibilidade
+de que programadores experientes precisam.
+É uma linguagem de programação de qualidade industrial
+tão expressiva e agradável quanto uma linguagem de script.
+O compilador é otimizado para desempenho,
+e a linguagem é otimizada para o desenvolvimento,
+sem comprometer nenhum dos dois.
 
-Swift defines away large classes of common programming errors
-by adopting modern programming patterns:
+Swift elimina grandes classes de erros comuns de programação
+ao adotar padrões modernos de programação:
 
-- Variables are always initialized before use.
-- Array indices are checked for out-of-bounds errors.
-- Integers are checked for overflow.
-- Optionals ensure that `nil` values are handled explicitly.
-- Memory is managed automatically.
-- Error handling allows controlled recovery from unexpected failures.
+- Variáveis são sempre inicializadas antes do uso.
+- Índices de array são verificados para impedir acesso fora dos limites.
+- Inteiros são verificados quanto a estouro.
+- Optionals garantem que valores `nil` sejam tratados explicitamente.
+- A memória é gerenciada automaticamente.
+- O tratamento de erros permite a recuperação controlada de falhas inesperadas.
 
-Swift code is compiled and optimized to get the most out of modern hardware.
-The syntax and standard library have been designed
-based on the guiding principle that
-the obvious way to write your code should also perform the best.
-Its combination of safety and speed make Swift an excellent choice for
-everything from "Hello, world!" to an entire operating system.
+O código Swift é compilado e otimizado para tirar o máximo do hardware moderno.
+A sintaxe e a biblioteca padrão foram projetadas
+com base no princípio de que
+a forma óbvia de escrever seu código também deve ser a de melhor desempenho.
+Essa combinação de segurança e velocidade torna o Swift uma excelente escolha para
+tudo, desde "Hello, world!" até um sistema operacional inteiro.
 
-Swift combines a modern, lightweight syntax
-that's familiar for developers coming from other popular languages
-with powerful features like type inference and pattern matching,
-allowing complex ideas to be expressed in a clear and concise manner.
-As a result, code is easier to read, write, and maintain.
+Swift combina uma sintaxe moderna e leve,
+familiar para desenvolvedores que vêm de outras linguagens populares,
+com recursos poderosos como inferência de tipos e correspondência de padrões,
+permitindo expressar ideias complexas de forma clara e concisa.
+Como resultado, o código é mais fácil de ler, escrever e manter.
 
-Swift continues to evolve with thoughtful new features and powerful capabilities.
-The goals for Swift are ambitious.
-We can’t wait to see what you create with it.
+Swift continua evoluindo com novos recursos bem pensados e cada vez mais poderosos.
+Os objetivos do Swift são ambiciosos.
+Mal podemos esperar para ver o que você vai criar com ele.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -54,3 +54,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

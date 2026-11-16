@@ -1,71 +1,71 @@
 # Closures
 
-Group code that executes together, without creating a named function.
+Agrupe código que é executado em conjunto, sem criar uma função nomeada.
 
-*Closures* are self-contained blocks of functionality
-that can be passed around and used in your code.
-Closures in Swift are similar
-to closures, anonymous functions, lambdas, and blocks
-in other programming languages.
+*Closures* são blocos de funcionalidade autocontidos
+que podem ser passados e usados no seu código.
+Closures em Swift são semelhantes
+a closures, funções anônimas, lambdas e blocos
+de outras linguagens de programação.
 
-Closures can capture and store references to any constants and variables
-from the context in which they're defined.
-This is known as *closing over* those constants and variables.
-Swift handles all of the memory management of capturing for you.
+Closures podem capturar e armazenar referências a quaisquer constantes e variáveis
+do contexto em que são definidas.
+Isso é conhecido como *fechar sobre* essas constantes e variáveis.
+O Swift cuida de todo o gerenciamento de memória dessa captura para você.
 
-> Note: Don't worry if you aren't familiar with the concept of capturing.
-> It's explained in detail below in <doc:Closures#Capturing-Values>.
+> Nota: Não se preocupe se você não estiver familiarizado com o conceito de captura.
+> Ele é explicado em detalhes abaixo, em <doc:Closures#Capturando-valores>.
 
-Global and nested functions, as introduced in <doc:Functions>,
-are actually special cases of closures.
-Closures take one of three forms:
+Funções globais e aninhadas, como apresentadas em <doc:Functions>,
+são, na verdade, casos especiais de closures.
+Closures assumem uma de três formas:
 
-- Global functions are closures that have a name
-  and don't capture any values.
-- Nested functions are closures that have a name
-  and can capture values from their enclosing function.
-- Closure expressions are unnamed closures written in a lightweight syntax
-  that can capture values from their surrounding context.
+- Funções globais são closures que têm nome
+  e não capturam nenhum valor.
+- Funções aninhadas são closures que têm nome
+  e podem capturar valores da função que as envolve.
+- Expressões de closure são closures sem nome, escritas em uma sintaxe leve
+  e que podem capturar valores do contexto ao redor.
 
-Swift's closure expressions have a clean, clear style,
-with optimizations that encourage brief, clutter-free syntax in common scenarios.
-These optimizations include:
+As expressões de closure do Swift têm um estilo limpo e claro,
+com otimizações que incentivam uma sintaxe breve e sem excesso de ruído em cenários comuns.
+Essas otimizações incluem:
 
-- Inferring parameter and return value types from context
-- Implicit returns from single-expression closures
-- Shorthand argument names
-- Trailing closure syntax
+- Inferência dos tipos dos parâmetros e do valor de retorno pelo contexto
+- Retorno implícito de closures de expressão única
+- Nomes abreviados de argumento
+- Sintaxe de *trailing closure*
 
-## Closure Expressions
+## Expressões de closure
 
-Nested functions, as introduced in <doc:Functions#Nested-Functions>,
-are a convenient means of naming and defining self-contained blocks of code
-as part of a larger function.
-However, it's sometimes useful to write shorter versions of function-like constructs
-without a full declaration and name.
-This is particularly true when you work with functions or methods that take functions
-as one or more of their arguments.
+Funções aninhadas, como apresentadas em <doc:Functions#Funções-aninhadas>,
+são uma forma prática de nomear e definir blocos de código autocontidos
+como parte de uma função maior.
+No entanto, às vezes é útil escrever versões mais curtas de construções semelhantes a funções
+sem uma declaração completa e sem nome.
+Isso é especialmente verdadeiro quando você trabalha com funções ou métodos que recebem funções
+como um ou mais de seus argumentos.
 
-*Closure expressions* are a way to write inline closures in a brief, focused syntax.
-Closure expressions provide several syntax optimizations
-for writing closures in a shortened form without loss of clarity or intent.
-The closure expression examples below illustrate these optimizations
-by refining a single example of the `sorted(by:)` method over several iterations,
-each of which expresses the same functionality in a more succinct way.
+*Expressões de closure* são uma forma de escrever closures inline com uma sintaxe breve e objetiva.
+Elas oferecem várias otimizações de sintaxe
+para escrever closures de forma reduzida, sem perda de clareza ou de intenção.
+Os exemplos de expressões de closure abaixo ilustram essas otimizações
+refinando um único exemplo do método `sorted(by:)` em várias iterações,
+cada uma expressando a mesma funcionalidade de forma mais sucinta.
 
-### The Sorted Method
+### O método `sorted(by:)`
 
-Swift's standard library provides a method called `sorted(by:)`,
-which sorts an array of values of a known type,
-based on the output of a sorting closure that you provide.
-Once it completes the sorting process,
-the `sorted(by:)` method returns a new array of the same type and size as the old one,
-with its elements in the correct sorted order.
-The original array isn't modified by the `sorted(by:)` method.
+A biblioteca padrão do Swift fornece um método chamado `sorted(by:)`,
+que ordena um array de valores de um tipo conhecido,
+com base na saída de uma closure de ordenação que você fornece.
+Ao concluir o processo de ordenação,
+o método `sorted(by:)` retorna um novo array do mesmo tipo e tamanho do anterior,
+com os elementos na ordem correta.
+O array original não é modificado pelo método `sorted(by:)`.
 
-The closure expression examples below use the `sorted(by:)` method
-to sort an array of `String` values in reverse alphabetical order.
-Here's the initial array to be sorted:
+Os exemplos de expressão de closure abaixo usam o método `sorted(by:)`
+para ordenar um array de valores `String` em ordem alfabética inversa.
+Aqui está o array inicial a ser ordenado:
 
 ```swift
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -79,19 +79,19 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
   ```
 -->
 
-The `sorted(by:)` method accepts a closure that takes two arguments
-of the same type as the array's contents,
-and returns a `Bool` value to say whether the first value should appear
-before or after the second value once the values are sorted.
-The sorting closure needs to return `true`
-if the first value should appear *before* the second value,
-and `false` otherwise.
+O método `sorted(by:)` aceita uma closure que recebe dois argumentos
+do mesmo tipo do conteúdo do array,
+e retorna um valor `Bool` que indica se o primeiro valor deve aparecer
+antes ou depois do segundo valor depois de ordenados.
+A closure de ordenação precisa retornar `true`
+se o primeiro valor deve aparecer *antes* do segundo valor,
+e `false` caso contrário.
 
-This example is sorting an array of `String` values,
-and so the sorting closure needs to be a function of type `(String, String) -> Bool`.
+Este exemplo ordena um array de valores `String`,
+então a closure de ordenação precisa ser uma função do tipo `(String, String) -> Bool`.
 
-One way to provide the sorting closure is to write a normal function of the correct type,
-and to pass it in as an argument to the `sorted(by:)` method:
+Uma forma de fornecer a closure de ordenação é escrever uma função normal do tipo correto
+e passá-la como argumento para o método `sorted(by:)`:
 
 ```swift
 func backward(_ s1: String, _ s2: String) -> Bool {
@@ -114,24 +114,24 @@ var reversedNames = names.sorted(by: backward)
   ```
 -->
 
-If the first string (`s1`) is greater than the second string (`s2`),
-the `backward(_:_:)` function will return `true`,
-indicating that `s1` should appear before `s2` in the sorted array.
-For characters in strings,
-“greater than” means “appears later in the alphabet than”.
-This means that the letter `"B"` is “greater than” the letter `"A"`,
-and the string `"Tom"` is greater than the string `"Tim"`.
-This gives a reverse alphabetical sort,
-with `"Barry"` being placed before `"Alex"`, and so on.
+Se a primeira string (`s1`) for maior que a segunda string (`s2`),
+a função `backward(_:_:)` retornará `true`,
+indicando que `s1` deve aparecer antes de `s2` no array ordenado.
+Para caracteres em strings,
+“maior que” significa “aparece depois no alfabeto que”.
+Isso quer dizer que a letra `"B"` é “maior que” a letra `"A"`,
+e a string `"Tom"` é maior que a string `"Tim"`.
+Isso resulta em uma ordenação alfabética inversa,
+com `"Barry"` posicionado antes de `"Alex"`, e assim por diante.
 
-However, this is a rather long-winded way to write
-what is essentially a single-expression function (`a > b`).
-In this example, it would be preferable to write the sorting closure inline,
-using closure expression syntax.
+No entanto, essa é uma forma bem prolixa de escrever
+o que é essencialmente uma função de expressão única (`a > b`).
+Neste exemplo, seria preferível escrever a closure de ordenação inline,
+usando a sintaxe de expressão de closure.
 
-### Closure Expression Syntax
+### Sintaxe de expressão de closure
 
-Closure expression syntax has the following general form:
+A sintaxe de expressão de closure tem a seguinte forma geral:
 
 ```swift
 { (<#parameters#>) -> <#return type#> in
@@ -139,14 +139,13 @@ Closure expression syntax has the following general form:
 }
 ```
 
-The *parameters* in closure expression syntax
-can be in-out parameters,
-but they can't have a default value.
-Variadic parameters can be used if you name the variadic parameter.
-Tuples can also be used as parameter types and return types.
+Os *parâmetros* na sintaxe de expressão de closure
+podem ser parâmetros in-out,
+mas não podem ter valor padrão.
+Parâmetros variádicos podem ser usados se você nomear o parâmetro variádico.
+Tuplas também podem ser usadas como tipos de parâmetro e de retorno.
 
-The example below shows a closure expression version of the `backward(_:_:)` function
-from above:
+O exemplo abaixo mostra uma versão em expressão de closure da função `backward(_:_:)` acima:
 
 ```swift
 reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
@@ -165,20 +164,20 @@ reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
   ```
 -->
 
-Note that the declaration of parameters and return type for this inline closure
-is identical to the declaration from the `backward(_:_:)` function.
-In both cases, it's written as `(s1: String, s2: String) -> Bool`.
-However, for the inline closure expression,
-the parameters and return type are written *inside* the curly braces,
-not outside of them.
+Observe que a declaração de parâmetros e do tipo de retorno desta closure inline
+é idêntica à declaração da função `backward(_:_:)`.
+Nos dois casos, é escrita como `(s1: String, s2: String) -> Bool`.
+No entanto, na expressão de closure inline,
+os parâmetros e o tipo de retorno são escritos *dentro* das chaves,
+e não fora delas.
 
-The start of the closure's body is introduced by the `in` keyword.
-This keyword indicates that
-the definition of the closure's parameters and return type has finished,
-and the body of the closure is about to begin.
+O início do corpo da closure é indicado pela palavra-chave `in`.
+Ela sinaliza que
+a definição dos parâmetros e do tipo de retorno da closure terminou,
+e que o corpo da closure está prestes a começar.
 
-Because the body of the closure is so short,
-it can even be written on a single line:
+Como o corpo da closure é tão curto,
+ele pode até ser escrito em uma única linha:
 
 ```swift
 reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
@@ -193,22 +192,22 @@ reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1
   ```
 -->
 
-This illustrates that the overall call to the `sorted(by:)` method has remained the same.
-A pair of parentheses still wrap the entire argument for the method.
-However, that argument is now an inline closure.
+Isso mostra que a chamada geral ao método `sorted(by:)` continua a mesma.
+Um par de parênteses ainda envolve todo o argumento do método.
+Só que esse argumento agora é uma closure inline.
 
-### Inferring Type From Context
+### Inferência de tipo pelo contexto
 
-Because the sorting closure is passed as an argument to a method,
-Swift can infer the types of its parameters
-and the type of the value it returns.
-The `sorted(by:)` method is being called on an array of strings,
-so its argument must be a function of type `(String, String) -> Bool`.
-This means that the `(String, String)` and `Bool` types don't need to be written
-as part of the closure expression's definition.
-Because all of the types can be inferred,
-the return arrow (`->`) and the parentheses around the names of the parameters
-can also be omitted:
+Como a closure de ordenação é passada como argumento de um método,
+o Swift consegue inferir os tipos de seus parâmetros
+e o tipo do valor que ela retorna.
+O método `sorted(by:)` é chamado em um array de strings,
+então seu argumento precisa ser uma função do tipo `(String, String) -> Bool`.
+Isso significa que os tipos `(String, String)` e `Bool` não precisam ser escritos
+como parte da definição da expressão de closure.
+Como todos os tipos podem ser inferidos,
+a seta de retorno (`->`) e os parênteses em volta dos nomes dos parâmetros
+também podem ser omitidos:
 
 ```swift
 reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
@@ -223,24 +222,24 @@ reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
   ```
 -->
 
-It's always possible to infer the parameter types and return type
-when passing a closure to a function or method as an inline closure expression.
-As a result, you never need to write an inline closure in its fullest form
-when the closure is used as a function or method argument.
+É sempre possível inferir os tipos dos parâmetros e o tipo de retorno
+ao passar uma closure para uma função ou método como expressão de closure inline.
+Por isso, você nunca precisa escrever uma closure inline na sua forma mais completa
+quando ela é usada como argumento de função ou método.
 
-Nonetheless, you can still make the types explicit if you wish,
-and doing so is encouraged if it avoids ambiguity for readers of your code.
-In the case of the `sorted(by:)` method,
-the purpose of the closure is clear from the fact that sorting is taking place,
-and it's safe for a reader to assume that
-the closure is likely to be working with `String` values,
-because it's assisting with the sorting of an array of strings.
+Mesmo assim, você ainda pode deixar os tipos explícitos se quiser,
+e isso é recomendado quando evita ambiguidade para quem lê seu código.
+No caso do método `sorted(by:)`,
+a finalidade da closure fica clara pelo fato de que a ordenação está acontecendo,
+e é seguro que o leitor presuma que
+a closure provavelmente trabalha com valores `String`,
+já que ela ajuda na ordenação de um array de strings.
 
-### Implicit Returns from Single-Expression Closures
+### Retorno implícito de closures de expressão única
 
-Single-expression closures can implicitly return the result of their single expression
-by omitting the `return` keyword from their declaration,
-as in this version of the previous example:
+Closures de expressão única podem retornar implicitamente o resultado da sua única expressão,
+omitindo a palavra-chave `return` da declaração,
+como nesta versão do exemplo anterior:
 
 ```swift
 reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
@@ -255,26 +254,26 @@ reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
   ```
 -->
 
-Here, the function type of the `sorted(by:)` method's argument
-makes it clear that a `Bool` value must be returned by the closure.
-Because the closure's body contains a single expression (`s1 > s2`)
-that returns a `Bool` value,
-there's no ambiguity, and the `return` keyword can be omitted.
+Aqui, o tipo de função do argumento do método `sorted(by:)`
+deixa claro que a closure precisa retornar um valor `Bool`.
+Como o corpo da closure contém uma única expressão (`s1 > s2`)
+que retorna um valor `Bool`,
+não há ambiguidade, e a palavra-chave `return` pode ser omitida.
 
-### Shorthand Argument Names
+### Nomes abreviados de argumento
 
-Swift automatically provides shorthand argument names to inline closures,
-which can be used to refer to the values of the closure's arguments
-by the names `$0`, `$1`, `$2`, and so on.
+O Swift fornece automaticamente nomes abreviados de argumento para closures inline,
+que podem ser usados para se referir aos valores dos argumentos da closure
+pelos nomes `$0`, `$1`, `$2` e assim por diante.
 
-If you use these shorthand argument names within your closure expression,
-you can omit the closure's argument list from its definition.
-The type of the shorthand argument names
-is inferred from the expected function type,
-and the highest numbered shorthand argument you use
-determines the number of arguments that the closure takes.
-The `in` keyword can also be omitted,
-because the closure expression is made up entirely of its body:
+Se você usar esses nomes abreviados de argumento dentro da sua expressão de closure,
+pode omitir a lista de argumentos da definição da closure.
+O tipo dos nomes abreviados de argumento
+é inferido do tipo de função esperado,
+e o maior número de argumento abreviado que você usar
+determina quantos argumentos a closure recebe.
+A palavra-chave `in` também pode ser omitida,
+porque a expressão de closure é formada inteiramente pelo seu corpo:
 
 ```swift
 reversedNames = names.sorted(by: { $0 > $1 } )
@@ -289,12 +288,12 @@ reversedNames = names.sorted(by: { $0 > $1 } )
   ```
 -->
 
-Here, `$0` and `$1` refer to the closure's first and second `String` arguments.
-Because `$1` is the shorthand argument with highest number,
-the closure is understood to take two arguments.
-Because the `sorted(by:)` function here expects a closure
-whose arguments are both strings,
-the shorthand arguments `$0` and `$1` are both of type `String`.
+Aqui, `$0` e `$1` se referem ao primeiro e ao segundo argumentos `String` da closure.
+Como `$1` é o argumento abreviado de maior número,
+entende-se que a closure recebe dois argumentos.
+Como a função `sorted(by:)` aqui espera uma closure
+cujos argumentos são ambos strings,
+os argumentos abreviados `$0` e `$1` são ambos do tipo `String`.
 
 <!--
   - test: `closure-syntax-arity-inference`
@@ -310,16 +309,16 @@ the shorthand arguments `$0` and `$1` are both of type `String`.
   ```
 -->
 
-### Operator Methods
+### Métodos de operador
 
-There's actually an even *shorter* way to write the closure expression above.
-Swift's `String` type defines its string-specific implementation of
-the greater-than operator (`>`)
-as a method that has two parameters of type `String`,
-and returns a value of type `Bool`.
-This exactly matches the method type needed by the `sorted(by:)` method.
-Therefore, you can simply pass in the greater-than operator,
-and Swift will infer that you want to use its string-specific implementation:
+Existe, na verdade, uma forma ainda *mais* curta de escrever a expressão de closure acima.
+O tipo `String` do Swift define sua implementação específica para strings
+do operador de maior que (`>`)
+como um método que tem dois parâmetros do tipo `String`
+e retorna um valor do tipo `Bool`.
+Isso corresponde exatamente ao tipo de método exigido pelo método `sorted(by:)`.
+Por isso, você pode simplesmente passar o operador de maior que,
+e o Swift vai inferir que você quer usar a implementação específica para strings:
 
 ```swift
 reversedNames = names.sorted(by: >)
@@ -334,20 +333,20 @@ reversedNames = names.sorted(by: >)
   ```
 -->
 
-For more about operator methods, see <doc:AdvancedOperators#Operator-Methods>.
+Para saber mais sobre métodos de operador, veja <doc:AdvancedOperators#Operator-Methods>.
 
-## Trailing Closures
+## Trailing closures
 
-If you need to pass a closure expression to a function as the function's final argument
-and the closure expression is long,
-it can be useful to write it as a *trailing closure* instead.
-You write a trailing closure after the function call's parentheses,
-even though the trailing closure is still an argument to the function.
-When you use the trailing closure syntax,
-you don't write the argument label for the first closure
-as part of the function call.
-A function call can include multiple trailing closures;
-however, the first few examples below use a single trailing closure.
+Se você precisar passar uma expressão de closure para uma função como último argumento dela
+e a expressão de closure for longa,
+pode ser útil escrevê-la como uma *trailing closure*.
+Você escreve a trailing closure depois dos parênteses da chamada da função,
+mesmo que ela continue sendo um argumento da função.
+Ao usar a sintaxe de trailing closure,
+você não escreve o rótulo do argumento da primeira closure
+como parte da chamada da função.
+Uma chamada de função pode incluir várias trailing closures;
+no entanto, os primeiros exemplos abaixo usam uma única trailing closure.
 
 ```swift
 func someFunctionThatTakesAClosure(closure: () -> Void) {
@@ -389,8 +388,8 @@ someFunctionThatTakesAClosure() {
   ```
 -->
 
-The string-sorting closure from the <doc:Closures#Closure-Expression-Syntax> section above
-can be written outside of the `sorted(by:)` method's parentheses as a trailing closure:
+A closure de ordenação de strings da seção <doc:Closures#Sintaxe-de-expressão-de-closure> acima
+pode ser escrita fora dos parênteses do método `sorted(by:)` como uma trailing closure:
 
 ```swift
 reversedNames = names.sorted() { $0 > $1 }
@@ -405,10 +404,10 @@ reversedNames = names.sorted() { $0 > $1 }
   ```
 -->
 
-If a closure expression is provided as the function's or method's only argument
-and you provide that expression as a trailing closure,
-you don't need to write a pair of parentheses `()`
-after the function or method's name when you call the function:
+Se uma expressão de closure for o único argumento de uma função ou método
+e você fornecer essa expressão como trailing closure,
+não precisa escrever um par de parênteses `()`
+depois do nome da função ou método ao chamá-la:
 
 ```swift
 reversedNames = names.sorted { $0 > $1 }
@@ -423,23 +422,23 @@ reversedNames = names.sorted { $0 > $1 }
   ```
 -->
 
-Trailing closures are most useful when the closure is sufficiently long that
-it isn't possible to write it inline on a single line.
-As an example, Swift's `Array` type has a `map(_:)` method,
-which takes a closure expression as its single argument.
-The closure is called once for each item in the array,
-and returns an alternative mapped value (possibly of some other type) for that item.
-You specify
-the nature of the mapping and the type of the returned value
-by writing code in the closure that you pass to `map(_:)`.
+Trailing closures são mais úteis quando a closure é longa o suficiente
+para que não seja possível escrevê-la inline em uma única linha.
+Por exemplo, o tipo `Array` do Swift tem um método `map(_:)`,
+que recebe uma expressão de closure como seu único argumento.
+A closure é chamada uma vez para cada item do array,
+e retorna um valor mapeado alternativo (possivelmente de outro tipo) para esse item.
+Você especifica
+a natureza do mapeamento e o tipo do valor retornado
+escrevendo o código na closure que passa para `map(_:)`.
 
-After applying the provided closure to each array element,
-the `map(_:)` method returns a new array containing all of the new mapped values,
-in the same order as their corresponding values in the original array.
+Depois de aplicar a closure fornecida a cada elemento do array,
+o método `map(_:)` retorna um novo array com todos os novos valores mapeados,
+na mesma ordem dos valores correspondentes no array original.
 
-Here's how you can use the `map(_:)` method with a trailing closure
-to convert an array of `Int` values into an array of `String` values.
-The array `[16, 58, 510]` is used to create the new array
+Veja como usar o método `map(_:)` com uma trailing closure
+para converter um array de valores `Int` em um array de valores `String`.
+O array `[16, 58, 510]` é usado para criar o novo array
 `["OneSix", "FiveEight", "FiveOneZero"]`:
 
 ```swift
@@ -462,12 +461,12 @@ let numbers = [16, 58, 510]
   ```
 -->
 
-The code above creates a dictionary of mappings between
-the integer digits and English-language versions of their names.
-It also defines an array of integers, ready to be converted into strings.
+O código acima cria um dicionário de correspondências entre
+os dígitos inteiros e as versões em inglês dos seus nomes.
+Ele também define um array de inteiros, pronto para ser convertido em strings.
 
-You can now use the `numbers` array to create an array of `String` values,
-by passing a closure expression to the array's `map(_:)` method as a trailing closure:
+Agora você pode usar o array `numbers` para criar um array de valores `String`,
+passando uma expressão de closure para o método `map(_:)` do array como trailing closure:
 
 ```swift
 let strings = numbers.map { (number) -> String in
@@ -502,56 +501,56 @@ let strings = numbers.map { (number) -> String in
   ```
 -->
 
-The `map(_:)` method calls the closure expression once for each item in the array.
-You don't need to specify the type of the closure's input parameter, `number`,
-because the type can be inferred from the values in the array to be mapped.
+O método `map(_:)` chama a expressão de closure uma vez para cada item do array.
+Você não precisa especificar o tipo do parâmetro de entrada da closure, `number`,
+porque o tipo pode ser inferido dos valores do array a ser mapeado.
 
-In this example,
-the variable `number` is initialized with the value of the closure's `number` parameter,
-so that the value can be modified within the closure body.
-(The parameters to functions and closures are always constants.)
-The closure expression also specifies a return type of `String`,
-to indicate the type that will be stored in the mapped output array.
+Neste exemplo,
+a variável `number` é inicializada com o valor do parâmetro `number` da closure,
+para que o valor possa ser modificado dentro do corpo da closure.
+(Os parâmetros de funções e closures são sempre constantes.)
+A expressão de closure também especifica um tipo de retorno `String`,
+para indicar o tipo que será armazenado no array de saída mapeado.
 
-The closure expression builds a string called `output` each time it's called.
-It calculates the last digit of `number` by using the remainder operator (`number % 10`),
-and uses this digit to look up an appropriate string in the `digitNames` dictionary.
-The closure can be used to create a string representation of any integer greater than zero.
+A expressão de closure monta uma string chamada `output` a cada vez que é chamada.
+Ela calcula o último dígito de `number` usando o operador de resto (`number % 10`),
+e usa esse dígito para buscar uma string apropriada no dicionário `digitNames`.
+A closure pode ser usada para criar uma representação em string de qualquer inteiro maior que zero.
 
-> Note: The call to the `digitNames` dictionary's subscript
-> is followed by an exclamation point (`!`),
-> because dictionary subscripts return an optional value
-> to indicate that the dictionary lookup can fail if the key doesn't exist.
-> In the example above, it's guaranteed that `number % 10`
-> will always be a valid subscript key for the `digitNames` dictionary,
-> and so an exclamation point is used to force-unwrap the `String` value
-> stored in the subscript's optional return value.
+> Nota: A chamada à subscript do dicionário `digitNames`
+> é seguida de um ponto de exclamação (`!`),
+> porque subscripts de dicionário retornam um valor opcional
+> para indicar que a busca pode falhar se a chave não existir.
+> No exemplo acima, é garantido que `number % 10`
+> sempre será uma chave válida para o dicionário `digitNames`,
+> por isso um ponto de exclamação é usado para forçar o unwrap do valor `String`
+> armazenado no retorno opcional da subscript.
 
-The string retrieved from the `digitNames` dictionary
-is added to the *front* of `output`,
-effectively building a string version of the number in reverse.
-(The expression `number % 10` gives a value of
-`6` for `16`, `8` for `58`, and `0` for `510`.)
+A string obtida do dicionário `digitNames`
+é adicionada no *início* de `output`,
+construindo efetivamente uma versão em string do número de trás para frente.
+(A expressão `number % 10` resulta em
+`6` para `16`, `8` para `58` e `0` para `510`.)
 
-The `number` variable is then divided by `10`.
-Because it's an integer, it's rounded down during the division,
-so `16` becomes `1`, `58` becomes `5`, and `510` becomes `51`.
+Em seguida, a variável `number` é dividida por `10`.
+Como é um inteiro, o resultado é arredondado para baixo na divisão,
+então `16` vira `1`, `58` vira `5` e `510` vira `51`.
 
-The process is repeated until `number` is equal to `0`,
-at which point the `output` string is returned by the closure,
-and is added to the output array by the `map(_:)` method.
+O processo se repete até que `number` seja igual a `0`,
+momento em que a closure retorna a string `output`,
+e o método `map(_:)` a adiciona ao array de saída.
 
-The use of trailing closure syntax in the example above
-neatly encapsulates the closure's functionality
-immediately after the function that closure supports,
-without needing to wrap the entire closure within
-the `map(_:)` method's outer parentheses.
+O uso da sintaxe de trailing closure no exemplo acima
+encapsula de forma organizada a funcionalidade da closure
+logo depois da função que ela auxilia,
+sem precisar envolver toda a closure entre os parênteses externos
+do método `map(_:)`.
 
-If a function takes multiple closures,
-you omit the argument label for the first trailing closure
-and you label the remaining trailing closures.
-For example,
-the function below loads a picture for a photo gallery:
+Se uma função recebe várias closures,
+você omite o rótulo do argumento da primeira trailing closure
+e rotula as trailing closures restantes.
+Por exemplo,
+a função abaixo carrega uma foto para uma galeria:
 
 ```swift
 func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
@@ -582,12 +581,12 @@ func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: 
   ```
 -->
 
-When you call this function to load a picture,
-you provide two closures.
-The first closure is a completion handler
-that displays a picture after a successful download.
-The second closure is an error handler
-that displays an error to the user.
+Ao chamar essa função para carregar uma foto,
+você fornece duas closures.
+A primeira closure é um completion handler
+que exibe a foto depois de um download bem-sucedido.
+A segunda closure é um handler de erro
+que exibe um erro para o usuário.
 
 ```swift
 loadPicture(from: someServer) { picture in
@@ -615,41 +614,40 @@ loadPicture(from: someServer) { picture in
   ```
 -->
 
-In this example,
-the `loadPicture(from:completion:onFailure:)` function
-dispatches its network task into the background,
-and calls one of the two completion handlers when the network task finishes.
-Writing the function this way lets you cleanly separate the code
-that's responsible for handling a network failure
-from the code that updates the user interface after a successful download,
-instead of using just one closure that handles both circumstances.
+Neste exemplo,
+a função `loadPicture(from:completion:onFailure:)` envia sua tarefa de rede para o segundo plano
+e chama um dos dois completion handlers quando a tarefa de rede termina.
+Escrever a função dessa forma permite separar com clareza o código
+responsável por tratar uma falha de rede
+do código que atualiza a interface depois de um download bem-sucedido,
+em vez de usar apenas uma closure que trata as duas situações.
 
-> Note: Completion handlers can become hard to read,
-> especially when you have to nest multiple handlers.
-> An alternate approach is to use asynchronous code,
-> as described in <doc:Concurrency>.
+> Nota: Completion handlers podem ficar difíceis de ler,
+> especialmente quando é preciso aninhar vários handlers.
+> Uma abordagem alternativa é usar código assíncrono,
+> como descrito em <doc:Concurrency>.
 
-## Capturing Values
+## Capturando valores
 
-A closure can *capture* constants and variables
-from the surrounding context in which it's defined.
-The closure can then refer to and modify
-the values of those constants and variables from within its body,
-even if the original scope that defined the constants and variables no longer exists.
+Uma closure pode *capturar* constantes e variáveis
+do contexto ao redor em que é definida.
+A closure pode então se referir e modificar
+os valores dessas constantes e variáveis dentro do seu corpo,
+mesmo que o escopo original que definiu as constantes e variáveis não exista mais.
 
-In Swift, the simplest form of a closure that can capture values is a nested function,
-written within the body of another function.
-A nested function can capture any of its outer function's arguments
-and can also capture any constants and variables defined within the outer function.
+No Swift, a forma mais simples de closure que pode capturar valores é uma função aninhada,
+escrita dentro do corpo de outra função.
+Uma função aninhada pode capturar qualquer um dos argumentos da função externa
+e também qualquer constante ou variável definida dentro da função externa.
 
-Here's an example of a function called `makeIncrementer`,
-which contains a nested function called `incrementer`.
-The nested `incrementer()` function captures two values,
-`runningTotal` and `amount`,
-from its surrounding context.
-After capturing these values,
-`incrementer` is returned by `makeIncrementer` as a closure
-that increments `runningTotal` by `amount` each time it's called.
+Aqui está um exemplo de uma função chamada `makeIncrementer`,
+que contém uma função aninhada chamada `incrementer`.
+A função aninhada `incrementer()` captura dois valores,
+`runningTotal` e `amount`,
+do contexto ao redor.
+Depois de capturar esses valores,
+`incrementer` é retornada por `makeIncrementer` como uma closure
+que incrementa `runningTotal` em `amount` cada vez que é chamada.
 
 ```swift
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
@@ -677,28 +675,28 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
   ```
 -->
 
-The return type of `makeIncrementer` is `() -> Int`.
-This means that it returns a *function*, rather than a simple value.
-The function it returns has no parameters,
-and returns an `Int` value each time it's called.
-To learn how functions can return other functions,
-see <doc:Functions#Function-Types-as-Return-Types>.
+O tipo de retorno de `makeIncrementer` é `() -> Int`.
+Isso significa que ela retorna uma *função*, e não um valor simples.
+A função que ela retorna não tem parâmetros
+e retorna um valor `Int` cada vez que é chamada.
+Para saber como funções podem retornar outras funções,
+veja <doc:Functions#Tipos-de-função-como-tipos-de-retorno>.
 
-The `makeIncrementer(forIncrement:)` function defines an integer variable called `runningTotal`,
-to store the current running total of the incrementer that will be returned.
-This variable is initialized with a value of `0`.
+A função `makeIncrementer(forIncrement:)` define uma variável inteira chamada `runningTotal`,
+para armazenar o total acumulado atual do incrementador que será retornado.
+Essa variável é inicializada com o valor `0`.
 
-The `makeIncrementer(forIncrement:)` function has a single `Int` parameter
-with an argument label of `forIncrement`, and a parameter name of `amount`.
-The argument value passed to this parameter specifies
-how much `runningTotal` should be incremented by
-each time the returned incrementer function is called.
-The `makeIncrementer` function defines a nested function called `incrementer`,
-which performs the actual incrementing.
-This function simply adds `amount` to `runningTotal`, and returns the result.
+A função `makeIncrementer(forIncrement:)` tem um único parâmetro `Int`
+com o rótulo de argumento `forIncrement` e o nome de parâmetro `amount`.
+O valor do argumento passado a esse parâmetro especifica
+de quanto `runningTotal` deve ser incrementado
+cada vez que a função incrementadora retornada é chamada.
+A função `makeIncrementer` define uma função aninhada chamada `incrementer`,
+que faz o incremento de fato.
+Essa função simplesmente soma `amount` a `runningTotal` e retorna o resultado.
 
-When considered in isolation,
-the nested `incrementer()` function might seem unusual:
+Considerada isoladamente,
+a função aninhada `incrementer()` pode parecer incomum:
 
 ```swift
 func incrementer() -> Int {
@@ -720,24 +718,24 @@ func incrementer() -> Int {
   ```
 -->
 
-The `incrementer()` function doesn't have any parameters,
-and yet it refers to `runningTotal` and `amount` from within its function body.
-It does this by capturing a *reference* to `runningTotal` and `amount`
-from the surrounding function and using them within its own function body.
-Capturing by reference ensures that `runningTotal` and `amount` don't disappear
-when the call to `makeIncrementer` ends,
-and also ensures that `runningTotal` is available
-the next time the `incrementer` function is called.
+A função `incrementer()` não tem parâmetros,
+mas se refere a `runningTotal` e `amount` dentro do corpo da função.
+Ela faz isso capturando uma *referência* a `runningTotal` e `amount`
+da função externa e usando essas referências dentro do seu próprio corpo.
+Capturar por referência garante que `runningTotal` e `amount` não desapareçam
+quando a chamada a `makeIncrementer` terminar,
+e também garante que `runningTotal` esteja disponível
+na próxima vez que a função `incrementer` for chamada.
 
-> Note: As an optimization,
-> Swift may instead capture and store a *copy* of a value
-> if that value isn't mutated by a closure,
-> and if the value isn't mutated after the closure is created.
+> Nota: Como otimização,
+> o Swift pode, em vez disso, capturar e armazenar uma *cópia* de um valor
+> se esse valor não for modificado por uma closure,
+> e se o valor não for modificado depois que a closure é criada.
 >
-> Swift also handles all memory management involved in disposing of
-> variables when they're no longer needed.
+> O Swift também cuida de todo o gerenciamento de memória envolvido no descarte de
+> variáveis quando elas não são mais necessárias.
 
-Here's an example of `makeIncrementer` in action:
+Veja um exemplo de `makeIncrementer` em funcionamento:
 
 ```swift
 let incrementByTen = makeIncrementer(forIncrement: 10)
@@ -751,10 +749,10 @@ let incrementByTen = makeIncrementer(forIncrement: 10)
   ```
 -->
 
-This example sets a constant called `incrementByTen`
-to refer to an incrementer function that adds `10` to
-its `runningTotal` variable each time it's called.
-Calling the function multiple times shows this behavior in action:
+Este exemplo define uma constante chamada `incrementByTen`
+para se referir a uma função incrementadora que soma `10` à
+sua variável `runningTotal` cada vez que é chamada.
+Chamar a função várias vezes mostra esse comportamento em ação:
 
 ```swift
 incrementByTen()
@@ -789,8 +787,8 @@ incrementByTen()
   Tracking bug is <rdar://problem/35301593>
 -->
 
-If you create a second incrementer,
-it will have its own stored reference to a new, separate `runningTotal` variable:
+Se você criar um segundo incrementador,
+ele terá sua própria referência armazenada para uma nova variável `runningTotal`, separada:
 
 ```swift
 let incrementBySeven = makeIncrementer(forIncrement: 7)
@@ -810,9 +808,9 @@ incrementBySeven()
   ```
 -->
 
-Calling the original incrementer (`incrementByTen`) again
-continues to increment its own `runningTotal` variable,
-and doesn't affect the variable captured by `incrementBySeven`:
+Chamar o incrementador original (`incrementByTen`) de novo
+continua incrementando a sua própria variável `runningTotal`,
+e não afeta a variável capturada por `incrementBySeven`:
 
 ```swift
 incrementByTen()
@@ -830,29 +828,29 @@ incrementByTen()
   ```
 -->
 
-> Note: If you assign a closure to a property of a class instance,
-> and the closure captures that instance by referring to the instance or its members,
-> you will create a strong reference cycle between the closure and the instance.
-> Swift uses *capture lists* to break these strong reference cycles.
-> For more information, see <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures>.
+> Nota: Se você atribuir uma closure a uma propriedade de uma instância de classe,
+> e a closure capturar essa instância ao se referir a ela ou aos seus membros,
+> você criará um ciclo de referência forte entre a closure e a instância.
+> O Swift usa *listas de captura* para quebrar esses ciclos de referência forte.
+> Para mais informações, veja <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures>.
 
-## Closures Are Reference Types
+## Closures são tipos de referência
 
-In the example above,
-`incrementBySeven` and `incrementByTen` are constants,
-but the closures these constants refer to are still able to increment
-the `runningTotal` variables that they have captured.
-This is because functions and closures are *reference types*.
+No exemplo acima,
+`incrementBySeven` e `incrementByTen` são constantes,
+mas as closures a que essas constantes se referem ainda conseguem incrementar
+as variáveis `runningTotal` que capturaram.
+Isso acontece porque funções e closures são *tipos de referência*.
 
-Whenever you assign a function or a closure to a constant or a variable,
-you are actually setting that constant or variable to be
-a *reference* to the function or closure.
-In the example above,
-it's the choice of closure that `incrementByTen` *refers to* that's constant,
-and not the contents of the closure itself.
+Sempre que você atribui uma função ou uma closure a uma constante ou variável,
+você está, na verdade, fazendo essa constante ou variável
+ser uma *referência* à função ou closure.
+No exemplo acima,
+é a escolha da closure *à qual* `incrementByTen` se refere que é constante,
+e não o conteúdo da própria closure.
 
-This also means that if you assign a closure to two different constants or variables,
-both of those constants or variables refer to the same closure.
+Isso também significa que, se você atribuir uma closure a duas constantes ou variáveis diferentes,
+ambas as constantes ou variáveis se referem à mesma closure.
 
 ```swift
 let alsoIncrementByTen = incrementByTen
@@ -880,29 +878,28 @@ incrementByTen()
   ```
 -->
 
-The example above shows that calling `alsoIncrementByTen`
-is the same as calling `incrementByTen`.
-Because both of them refer to the same closure,
-they both increment and return the same running total.
+O exemplo acima mostra que chamar `alsoIncrementByTen`
+é o mesmo que chamar `incrementByTen`.
+Como ambas se referem à mesma closure,
+as duas incrementam e retornam o mesmo total acumulado.
 
-## Escaping Closures
+## Escaping closures
 
-A closure is said to *escape* a function
-when the closure is passed as an argument to the function,
-but is called after the function returns.
-When you declare a function that takes a closure as one of its parameters,
-you can write `@escaping` before the parameter's type
-to indicate that the closure is allowed to escape.
+Diz-se que uma closure *escapa* de uma função
+quando a closure é passada como argumento para a função,
+mas é chamada depois que a função retorna.
+Ao declarar uma função que recebe uma closure como um de seus parâmetros,
+você pode escrever `@escaping` antes do tipo do parâmetro
+para indicar que a closure tem permissão para escapar.
 
-One way that a closure can escape
-is by being stored in a variable that's defined outside the function.
-As an example,
-many functions that start an asynchronous operation
-take a closure argument as a completion handler.
-The function returns after it starts the operation,
-but the closure isn't called until the operation is completed ---
-the closure needs to escape, to be called later.
-For example:
+Uma forma de a closure escapar
+é ser armazenada em uma variável definida fora da função.
+Por exemplo,
+muitas funções que iniciam uma operação assíncrona
+recebem um argumento de closure como completion handler.
+A função retorna depois de iniciar a operação,
+mas a closure só é chamada quando a operação termina:
+a closure precisa escapar para ser chamada depois. Por exemplo:
 
 ```swift
 var completionHandlers: [() -> Void] = []
@@ -922,31 +919,30 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
   ```
 -->
 
-The `someFunctionWithEscapingClosure(_:)` function takes a closure as its argument
-and adds it to an array that's declared outside the function.
-If you didn't mark the parameter of this function with `@escaping`,
-you would get a compile-time error.
+A função `someFunctionWithEscapingClosure(_:)` recebe uma closure como argumento
+e a adiciona a um array declarado fora da função.
+Se você não marcasse o parâmetro dessa função com `@escaping`,
+receberia um erro de compilação.
 
-An escaping closure that refers to `self`
-needs special consideration if `self` refers to an instance of a class.
-Capturing `self` in an escaping closure
-makes it easy to accidentally create a strong reference cycle.
-For information about reference cycles,
-see <doc:AutomaticReferenceCounting>.
+Uma escaping closure que se refere a `self`
+precisa de atenção especial se `self` for uma instância de classe.
+Capturar `self` em uma escaping closure
+facilita a criação acidental de um ciclo de referência forte.
+Para informações sobre ciclos de referência, veja <doc:AutomaticReferenceCounting>.
 
-Normally, a closure captures variables implicitly
-by using them in the body of the closure,
-but in this case you need to be explicit.
-If you want to capture `self`,
-write `self` explicitly when you use it,
-or include `self` in the closure's capture list.
-Writing `self` explicitly lets you express your intent,
-and reminds you to confirm that there isn't a reference cycle.
-For example, in the code below,
-the closure passed to `someFunctionWithEscapingClosure(_:)`
-refers to `self` explicitly.
-In contrast, the closure passed to `someFunctionWithNonescapingClosure(_:)`
-is a nonescaping closure, which means it can refer to `self` implicitly.
+Normalmente, uma closure captura variáveis implicitamente
+ao usá-las no corpo da closure,
+mas nesse caso você precisa ser explícito.
+Se você quiser capturar `self`,
+escreva `self` explicitamente ao usá-lo,
+ou inclua `self` na lista de captura da closure.
+Escrever `self` explicitamente deixa clara a sua intenção
+e lembra você de confirmar que não há um ciclo de referência.
+Por exemplo, no código abaixo,
+a closure passada para `someFunctionWithEscapingClosure(_:)`
+se refere a `self` explicitamente.
+Já a closure passada para `someFunctionWithNonescapingClosure(_:)`
+é uma nonescaping closure, o que significa que ela pode se referir a `self` implicitamente.
 
 ```swift
 func someFunctionWithNonescapingClosure(closure: () -> Void) {
@@ -998,9 +994,9 @@ print(instance.x)
   ```
 -->
 
-Here's a version of `doSomething()` that captures `self`
-by including it in the closure's capture list,
-and then refers to `self` implicitly:
+Aqui está uma versão de `doSomething()` que captura `self`
+incluindo-o na lista de captura da closure,
+e depois se refere a `self` implicitamente:
 
 ```swift
 class SomeOtherClass {
@@ -1034,13 +1030,13 @@ class SomeOtherClass {
   ```
 -->
 
-If `self` is an instance of a structure or an enumeration,
-you can always refer to `self` implicitly.
-However,
-an escaping closure can't capture a mutable reference to `self`
-when `self` is an instance of a structure or an enumeration.
-Structures and enumerations don’t allow shared mutability,
-as discussed in <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+Se `self` for uma instância de uma struct ou de um enum,
+você sempre pode se referir a `self` implicitamente.
+No entanto,
+uma escaping closure não pode capturar uma referência mutável a `self`
+quando `self` é uma instância de uma struct ou de um enum.
+Structs e enums não permitem mutabilidade compartilhada,
+como discutido em <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 
 ```swift
 struct SomeStruct {
@@ -1079,12 +1075,11 @@ struct SomeStruct {
   ```
 -->
 
-The call to the `someFunctionWithEscapingClosure` function
-in the example above is an error
-because it's inside a mutating method,
-so `self` is mutable.
-That violates the rule that escaping closures can't capture
-a mutable reference to `self` for structures.
+A chamada à função `someFunctionWithEscapingClosure` no exemplo acima
+é um erro porque está dentro de um método `mutating`,
+então `self` é mutável.
+Isso viola a regra de que escaping closures não podem capturar
+uma referência mutável a `self` em structs.
 
 <!--
   - test: `noescape-closure-as-argument`
@@ -1128,28 +1123,28 @@ a mutable reference to `self` for structures.
 
 ## Autoclosures
 
-An *autoclosure* is a closure that's automatically created
-to wrap an expression that's being passed as an argument to a function.
-It doesn't take any arguments,
-and when it's called, it returns the value
-of the expression that's wrapped inside of it.
-This syntactic convenience lets you omit braces around a function's parameter
-by writing a normal expression instead of an explicit closure.
+Uma *autoclosure* é uma closure criada automaticamente
+para envolver uma expressão que está sendo passada como argumento para uma função.
+Ela não recebe nenhum argumento,
+e, quando é chamada, retorna o valor
+da expressão que está envolvida dentro dela.
+Essa conveniência sintática permite omitir as chaves em volta do parâmetro de uma função
+ao escrever uma expressão normal em vez de uma closure explícita.
 
-It's common to *call* functions that take autoclosures,
-but it's not common to *implement* that kind of function.
-For example,
-the `assert(condition:message:file:line:)` function
-takes an autoclosure for its `condition` and `message` parameters;
-its `condition` parameter is evaluated only in debug builds
-and its `message` parameter is evaluated only if `condition` is `false`.
+É comum *chamar* funções que recebem autoclosures,
+mas não é comum *implementar* esse tipo de função.
+Por exemplo,
+a função `assert(condition:message:file:line:)` recebe uma autoclosure
+nos parâmetros `condition` e `message`;
+o parâmetro `condition` só é avaliado em builds de depuração,
+e o parâmetro `message` só é avaliado se `condition` for `false`.
 
-An autoclosure lets you delay evaluation,
-because the code inside isn't run until you call the closure.
-Delaying evaluation is useful for code
-that has side effects or is computationally expensive,
-because it lets you control when that code is evaluated.
-The code below shows how a closure delays evaluation.
+Uma autoclosure permite adiar a avaliação,
+porque o código dentro dela não é executado até que você chame a closure.
+Adiar a avaliação é útil para código
+que tem efeitos colaterais ou que é computacionalmente caro,
+porque permite controlar quando esse código é avaliado.
+O código abaixo mostra como uma closure adia a avaliação.
 
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -1199,18 +1194,18 @@ print(customersInLine.count)
   TODO: It may be worth describing the differences between ``lazy`` and autoclousures.
 -->
 
-Even though the first element of the `customersInLine` array is removed
-by the code inside the closure,
-the array element isn't removed until the closure is actually called.
-If the closure is never called,
-the expression inside the closure is never evaluated,
-which means the array element is never removed.
-Note that the type of `customerProvider` isn't `String`
-but `() -> String` ---
-a function with no parameters that returns a string.
+Mesmo que o primeiro elemento do array `customersInLine` seja removido
+pelo código dentro da closure,
+o elemento do array não é removido até que a closure seja de fato chamada.
+Se a closure nunca for chamada,
+a expressão dentro dela nunca é avaliada,
+o que significa que o elemento do array nunca é removido.
+Observe que o tipo de `customerProvider` não é `String`,
+mas `() -> String`:
+uma função sem parâmetros que retorna uma string.
 
-You get the same behavior of delayed evaluation
-when you pass a closure as an argument to a function.
+Você obtém o mesmo comportamento de avaliação adiada
+quando passa uma closure como argumento para uma função.
 
 ```swift
 // customersInLine is ["Alex", "Ewa", "Barry", "Daniella"]
@@ -1236,17 +1231,17 @@ serve(customer: { customersInLine.remove(at: 0) } )
   ```
 -->
 
-The `serve(customer:)` function in the listing above
-takes an explicit closure that returns a customer's name.
-The version of `serve(customer:)` below
-performs the same operation but, instead of taking an explicit closure,
-it takes an autoclosure
-by marking its parameter's type with the `@autoclosure` attribute.
-Now you can call the function
-as if it took a `String` argument instead of a closure.
-The argument is automatically converted to a closure,
-because the `customerProvider` parameter's type is marked
-with the `@autoclosure` attribute.
+A função `serve(customer:)` no código acima
+recebe uma closure explícita que retorna o nome de um cliente.
+A versão de `serve(customer:)` abaixo
+faz a mesma operação, mas, em vez de receber uma closure explícita,
+recebe uma autoclosure
+ao marcar o tipo do seu parâmetro com o atributo `@autoclosure`.
+Agora você pode chamar a função
+como se ela recebesse um argumento `String` em vez de uma closure.
+O argumento é convertido automaticamente em uma closure,
+porque o tipo do parâmetro `customerProvider` é marcado
+com o atributo `@autoclosure`.
 
 ```swift
 // customersInLine is ["Ewa", "Barry", "Daniella"]
@@ -1272,13 +1267,13 @@ serve(customer: customersInLine.remove(at: 0))
   ```
 -->
 
-> Note: Overusing autoclosures can make your code hard to understand.
-> The context and function name should make it clear
-> that evaluation is being deferred.
+> Nota: Usar autoclosures em excesso pode tornar seu código difícil de entender.
+> O contexto e o nome da função devem deixar claro
+> que a avaliação está sendo adiada.
 
-If you want an autoclosure that's allowed to escape,
-use both the `@autoclosure` and `@escaping` attributes.
-The `@escaping` attribute is described above in <doc:Closures#Escaping-Closures>.
+Se você quiser uma autoclosure que possa escapar,
+use os atributos `@autoclosure` e `@escaping` juntos.
+O atributo `@escaping` é descrito acima, em <doc:Closures#Escaping-closures>.
 
 ```swift
 // customersInLine is ["Barry", "Daniella"]
@@ -1322,16 +1317,16 @@ for customerProvider in customerProviders {
   ```
 -->
 
-In the code above,
-instead of calling the closure passed to it
-as its `customerProvider` argument,
-the `collectCustomerProviders(_:)` function
-appends the closure to the `customerProviders` array.
-The array is declared outside the scope of the function,
-which means the closures in the array can be executed after the function returns.
-As a result,
-the value of the `customerProvider` argument
-must be allowed to escape the function's scope.
+No código acima,
+em vez de chamar a closure passada para ele
+como seu argumento `customerProvider`,
+a função `collectCustomerProviders(_:)`
+adiciona a closure ao array `customerProviders`.
+O array é declarado fora do escopo da função,
+o que significa que as closures do array podem ser executadas depois que a função retorna.
+Como resultado,
+o valor do argumento `customerProvider`
+precisa poder escapar do escopo da função.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -1342,3 +1337,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

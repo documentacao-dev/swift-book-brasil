@@ -28,16 +28,16 @@ Review the recent changes to this book.
 - Updated for Swift 6.2.1.
 - Added the <doc:GenericParametersAndArguments#Integer-Generic-Parameters> section
   with information about generic parameters that have a numeric value.
-- Added information to the <doc:TheBasics#Integers>
-  and <doc:TheBasics#Floating-Point-Numbers> sections
+- Added information to the <doc:TheBasics#Inteiros>
+  and <doc:TheBasics#Números-de-ponto-flutuante> sections
   about choosing between integers and floating-point numbers.
 
 **2025-09-15**
 
 - Updated for Swift 6.2.
-- Added the <doc:TheBasics#Memory-Safety> section
+- Added the <doc:TheBasics#Segurança-de-memória> section
   with information about issues that Swift helps you prevent.
-- Added the <doc:ControlFlow#Patterns> section
+- Added the <doc:ControlFlow#Padrões> section
   with information about the `if case` syntax.
 - Added information about the main actor, isolation, and global actors
   to the <doc:Concurrency> chapter.
@@ -83,7 +83,7 @@ Review the recent changes to this book.
 - Updated for Swift 5.9.2.
 - Added information about the `borrowing` and `consuming` modifiers
   to the <doc:Declarations#Parameter-Modifiers> section.
-- Added information in <doc:TheBasics#Declaring-Constants-and-Variables>
+- Added information in <doc:TheBasics#Declarando-constantes-e-variáveis>
   about setting a constant's value after its declaration.
 - Added more information about tasks, task groups, and task cancellation
   to the <doc:Concurrency> chapter.
@@ -117,7 +117,7 @@ Review the recent changes to this book.
 **2023-03-30**
 
 - Updated for Swift 5.8.
-- Added the <doc:ControlFlow#Deferred-Actions> section,
+- Added the <doc:ControlFlow#Ações-adiadas> section,
   showing `defer` outside of error handling.
 - Adopted Swift-DocC for publication.
 - Minor corrections and additions throughout.
@@ -132,9 +132,9 @@ Review the recent changes to this book.
 - Added the <doc:LexicalStructure#Regular-Expression-Literals> section
   with information about creating a regular expression.
 - Added information about the short form of `if`-`let`
-  to the <doc:TheBasics#Optional-Binding> section.
+  to the <doc:TheBasics#Optional-binding> section.
 - Added information about `#unavailable`
-  to the <doc:ControlFlow#Checking-API-Availability> section.
+  to the <doc:ControlFlow#Verificando-a-disponibilidade-de-APIs> section.
 
 **2022-03-14**
 
@@ -164,7 +164,7 @@ Review the recent changes to this book.
 - Added the <doc:Expressions#Implicit-Conversion-to-a-Pointer-Type> section
   with information about how in-out parameters
   can be implicitly converted to unsafe pointers in a function call.
-- Updated the <doc:Functions#Variadic-Parameters>
+- Updated the <doc:Functions#Parâmetros-variádicos>
   and <doc:Declarations#Function-Declaration> sections,
   now that a function can have multiple variadic parameters.
 - Updated the <doc:Expressions#Implicit-Member-Expression> section,
@@ -174,7 +174,7 @@ Review the recent changes to this book.
 
 - Updated for Swift 5.3.
 - Added information about multiple trailing closures
-  to the <doc:Closures#Trailing-Closures> section,
+  to the <doc:Closures#Trailing-closures> section,
   and added information about how trailing closures are matched to parameters
   to the <doc:Expressions#Function-Call-Expression> section.
 - Added information about synthesized implementations
@@ -188,7 +188,7 @@ Review the recent changes to this book.
   to the <doc:Attributes#main> section.
 - Added `#filePath` to the <doc:Expressions#Literal-Expression> section,
   and updated the discussion of `#file`.
-- Updated the <doc:Closures#Escaping-Closures> section,
+- Updated the <doc:Closures#Escaping-closures> section,
   now that closures can refer to `self` implicitly in more scenarios.
 - Updated the <doc:ErrorHandling#Handling-Errors-Using-Do-Catch>
   and <doc:Statements#Do-Statement> sections,
@@ -216,7 +216,7 @@ Review the recent changes to this book.
   now that subscripts support parameters with default values.
 - Updated the <doc:Types#Self-Type> section,
   now that the `Self` can be used in more contexts.
-- Updated the <doc:TheBasics#Implicitly-Unwrapped-Optionals> section
+- Updated the <doc:TheBasics#Optionals-com-unwrap-implícito> section
   to make it clearer that an implicitly unwrapped optional value
   can be used as either an optional or non-optional value.
 
@@ -232,7 +232,7 @@ Review the recent changes to this book.
 - Added information about enumerations and structures
   that are frozen for library evolution
   to the <doc:Attributes#frozen> section.
-- Added the <doc:Functions#Functions-With-an-Implicit-Return>
+- Added the <doc:Functions#Funções-com-retorno-implícito>
   and <doc:Properties#Shorthand-Getter-Declaration> sections
   with information about functions that omit `return`.
 - Added information about using subscripts on types
@@ -254,7 +254,7 @@ Review the recent changes to this book.
 **2019-03-25**
 
 - Updated for Swift 5.0.
-- Added the <doc:StringsAndCharacters#Extended-String-Delimiters> section
+- Added the <doc:StringsAndCharacters#Delimitadores-estendidos-de-string> section
   and updated the <doc:LexicalStructure#String-Literals> section
   with information about extended string delimiters.
 - Added the <doc:Attributes#dynamicCallable> section
@@ -321,7 +321,7 @@ Review the recent changes to this book.
   now that you can use generic `where` clauses
   to constrain associated types.
 - Added information about multiline string literals
-  to the <doc:StringsAndCharacters#String-Literals> section
+  to the <doc:StringsAndCharacters#Literais-de-string> section
   of the <doc:StringsAndCharacters> chapter,
   and to the <doc:LexicalStructure#String-Literals> section
   of the <doc:LexicalStructure> chapter.
@@ -340,7 +340,7 @@ Review the recent changes to this book.
   in <doc:Declarations#Extension-Declaration>
   now that `final` isn't allowed in them.
 - Added information about preconditions and fatal errors
-  to the <doc:TheBasics#Assertions-and-Preconditions> section.
+  to the <doc:TheBasics#Asserções-e-pré-condições> section.
 
 **2017-03-27**
 
@@ -348,7 +348,7 @@ Review the recent changes to this book.
 - Added the <doc:Generics#Extensions-with-a-Generic-Where-Clause> section
   with information about extensions that include requirements.
 - Added examples of iterating over a range
-  to the <doc:ControlFlow#For-In-Loops> section.
+  to the <doc:ControlFlow#Laços-for-in> section.
 - Added an example of failable numeric conversions
   to the <doc:Initialization#Failable-Initializers> section.
 - Added information to the <doc:Attributes#Declaration-Attributes> section
@@ -394,7 +394,7 @@ Review the recent changes to this book.
   to note that it appears in front of a parameter's type
   instead of in front of a parameter's name.
 - Updated the discussion of the `@noescape` and `@autoclosure` attributes
-  in the <doc:Closures#Escaping-Closures> and <doc:Closures#Autoclosures> sections
+  in the <doc:Closures#Escaping-closures> and <doc:Closures#Autoclosures> sections
   and the <doc:Attributes> chapter
   now that they're type attributes, rather than declaration attributes.
 - Added information about operator precedence groups
@@ -412,10 +412,10 @@ Review the recent changes to this book.
   of the <doc:Generics> chapter
   and in the <doc:GenericParametersAndArguments> chapter,
   now that generic `where` clauses are written at the end of a declaration.
-- Updated the discussion in the <doc:Closures#Escaping-Closures> section,
+- Updated the discussion in the <doc:Closures#Escaping-closures> section,
   now that closures are nonescaping by default.
 - Updated the discussion
-  in the <doc:TheBasics#Optional-Binding> section
+  in the <doc:TheBasics#Optional-binding> section
   of the <doc:TheBasics> chapter
   and the <doc:Statements#While-Statement> section
   of the <doc:Statements> chapter,
@@ -447,7 +447,7 @@ Review the recent changes to this book.
 - Updated the discussion in the <doc:Declarations#In-Out-Parameters> section
   to note that only nonescaping closures can capture in-out parameters.
 - Updated the discussion about default parameters
-  in the <doc:Functions#Default-Parameter-Values> section,
+  in the <doc:Functions#Valores-padrão-de-parâmetros> section,
   now that they can't be reordered in function calls.
 - Updated attribute arguments to use a colon
   in the <doc:Attributes> chapter.
@@ -498,7 +498,7 @@ Review the recent changes to this book.
   before the instance is fully initialized
   in the <doc:Initialization#Failable-Initializers> section.
 - Added information about comparing tuples
-  to the <doc:BasicOperators#Comparison-Operators> section.
+  to the <doc:BasicOperators#Operadores-de-comparação> section.
 - Added information about using keywords as external parameter names
   to the <doc:LexicalStructure#Keywords-and-Punctuation> section.
 - Updated the discussion of the `@objc` attribute
@@ -526,10 +526,10 @@ Review the recent changes to this book.
 **2015-10-20**
 
 - Updated for Swift 2.1.
-- Updated the <doc:StringsAndCharacters#String-Interpolation>
+- Updated the <doc:StringsAndCharacters#Interpolação-de-strings>
   and <doc:LexicalStructure#String-Literals> sections
   now that string interpolations can contain string literals.
-- Added the <doc:Closures#Escaping-Closures> section
+- Added the <doc:Closures#Escaping-closures> section
   with information about the `@noescape` attribute.
 - Updated the <doc:Attributes#Declaration-Attributes>
   and <doc:Statements#Conditional-Compilation-Block> sections
@@ -566,12 +566,12 @@ Review the recent changes to this book.
   and the <doc:Declarations#Enumerations-with-Cases-of-Any-Type> section
   of the <doc:Declarations> chapter.
 - Added information about API availability checking
-  to the <doc:ControlFlow#Checking-API-Availability> section
+  to the <doc:ControlFlow#Verificando-a-disponibilidade-de-APIs> section
   of the <doc:ControlFlow> chapter
   and the <doc:Statements#Availability-Condition> section
   of the <doc:Statements> chapter.
 - Added information about the new `guard` statement
-  to the <doc:ControlFlow#Early-Exit> section
+  to the <doc:ControlFlow#Saída-antecipada> section
   of the <doc:ControlFlow> chapter
   and the <doc:Statements#Guard-Statement> section
   of the <doc:Statements> chapter.
@@ -584,14 +584,14 @@ Review the recent changes to this book.
 - Added information about the new optional pattern
   to the <doc:Patterns#Optional-Pattern> section
   of the <doc:Patterns> chapter.
-- Updated the <doc:ControlFlow#Repeat-While> section
+- Updated the <doc:ControlFlow#Repeat-while> section
   with information about the `repeat`-`while` loop.
 - Updated the <doc:StringsAndCharacters> chapter,
   now that `String` no longer conforms
   to the `CollectionType` protocol from the Swift standard library.
 - Added information about the new Swift standard library
   `print(_:separator:terminator)` function
-  to the <doc:TheBasics#Printing-Constants-and-Variables> section.
+  to the <doc:TheBasics#Imprimindo-constantes-e-variáveis> section.
 - Added information about the behavior
   of enumeration cases with `String` raw values
   to the <doc:Enumerations#Implicitly-Assigned-Raw-Values> section
@@ -608,19 +608,19 @@ Review the recent changes to this book.
   with information about the `@convention` attribute.
 - Added an example of using multiple optional bindings
   with a `where` clause
-  to the <doc:TheBasics#Optional-Binding> section.
+  to the <doc:TheBasics#Optional-binding> section.
 - Added information to the <doc:LexicalStructure#String-Literals> section
   about how concatenating string literals using the `+` operator
   happens at compile time.
 - Added information to the <doc:Types#Metatype-Type> section
   about comparing metatype values and using them
   to construct instances with initializer expressions.
-- Added a note to the <doc:TheBasics#Debugging-with-Assertions> section
+- Added a note to the <doc:TheBasics#Depurando-com-asserções> section
   about when user-defined assertions are disabled.
 - Updated the discussion of the `@NSManaged` attribute
   in the <doc:Attributes#Declaration-Attributes> section,
   now that the attribute can be applied to certain instance methods.
-- Updated the <doc:Functions#Variadic-Parameters> section,
+- Updated the <doc:Functions#Parâmetros-variádicos> section,
   now that variadic parameters can be declared in any position
   in a function's parameter list.
 - Added information
@@ -642,7 +642,7 @@ Review the recent changes to this book.
   section about weak references being unsuitable for caching.
 - Updated a note in the <doc:Properties#Type-Properties> section
   to mention that stored type properties are lazily initialized.
-- Updated the <doc:Closures#Capturing-Values> section
+- Updated the <doc:Closures#Capturando-valores> section
   to clarify how variables and constants are captured in closures.
 - Updated the <doc:Attributes#Declaration-Attributes> section
   to describe when you can apply the `@objc` attribute to classes.
@@ -664,14 +664,14 @@ Review the recent changes to this book.
   section about the differences in weak references
   between garbage collected systems and ARC.
 - Updated the
-  <doc:StringsAndCharacters#Special-Characters-in-String-Literals> section
+  <doc:StringsAndCharacters#Caracteres-especiais-em-literais-de-string> section
   with a more precise definition of Unicode scalars.
 
 **2015-04-08**
 
 - Updated for Swift 1.2.
 - Swift now has a native `Set` collection type.
-  For more information, see <doc:CollectionTypes#Sets>.
+  For more information, see <doc:CollectionTypes#Conjuntos>.
 - `@autoclosure` is now an attribute of the parameter declaration,
   not its type.
   There's also a new `@noescape` parameter declaration attribute.
@@ -683,7 +683,7 @@ Review the recent changes to this book.
   For more information,
   see <doc:Protocols#Checking-for-Protocol-Conformance>.
 - Added a new guide section about
-  <doc:StringsAndCharacters#String-Indices>.
+  <doc:StringsAndCharacters#Índices-de-string>.
 - Removed the overflow division (`&/`) and
   overflow remainder (`&%`) operators
   from <doc:AdvancedOperators#Overflow-Operators>.
@@ -691,10 +691,10 @@ Review the recent changes to this book.
   constant property declaration and initialization.
   For more information, see <doc:Declarations#Constant-Declaration>.
 - Updated the definition of Unicode scalars in string literals.
-  See <doc:StringsAndCharacters#Special-Characters-in-String-Literals>.
-- Updated <doc:BasicOperators#Range-Operators> to note that
+  See <doc:StringsAndCharacters#Caracteres-especiais-em-literais-de-string>.
+- Updated <doc:BasicOperators#Operadores-de-intervalo> to note that
   a half-open range with the same start and end index will be empty.
-- Updated <doc:Closures#Closures-Are-Reference-Types> to clarify
+- Updated <doc:Closures#Closures-são-tipos-de-referência> to clarify
   the capturing rules for variables.
 - Updated <doc:AdvancedOperators#Value-Overflow> to clarify
   the overflow behavior of signed and unsigned integers
@@ -716,7 +716,7 @@ Review the recent changes to this book.
   see <doc:Initialization#Assigning-Constant-Properties-During-Initialization>.
 - Multiple optional bindings can now appear in a single `if` statement
   as a comma-separated list of assignment expressions.
-  For more information, see <doc:TheBasics#Optional-Binding>.
+  For more information, see <doc:TheBasics#Optional-binding>.
 - An <doc:Expressions#Optional-Chaining-Expression>
   must appear within a postfix expression.
 - Protocol casts are no longer limited to `@objc` protocols.
@@ -757,10 +757,10 @@ Review the recent changes to this book.
 - Added a new section about
   <doc:Protocols#Initializer-Requirements> in protocols.
 - Added a new section about <doc:Protocols#Class-Only-Protocols>.
-- <doc:TheBasics#Assertions-and-Preconditions> can now use string interpolation.
+- <doc:TheBasics#Asserções-e-pré-condições> can now use string interpolation.
   Removed a note to the contrary.
 - Updated the
-  <doc:StringsAndCharacters#Concatenating-Strings-and-Characters> section
+  <doc:StringsAndCharacters#Concatenando-strings-e-caracteres> section
   to reflect the fact that `String` and `Character` values
   can no longer be combined with the addition operator (`+`)
   or addition assignment operator (`+=`).
@@ -775,11 +775,11 @@ Review the recent changes to this book.
   Instead, make an explicit check against `nil`
   with the `==` or `!=` operators
   to find out if an optional contains a value.
-- Swift now has a <doc:BasicOperators#Nil-Coalescing-Operator>
+- Swift now has a <doc:BasicOperators#Operador-de-coalescência-nula>
   (`a ?? b`), which unwraps an optional's value if it exists,
   or returns a default value if the optional is `nil`.
 - Updated and expanded
-  the <doc:StringsAndCharacters#Comparing-Strings> section
+  the <doc:StringsAndCharacters#Comparando-strings> section
   to reflect and demonstrate that string and character comparison
   and prefix / suffix comparison are now based on
   Unicode canonical equivalence of extended grapheme clusters.
@@ -795,13 +795,13 @@ Review the recent changes to this book.
 - Added a new section about
   <doc:OptionalChaining#Accessing-Subscripts-of-Optional-Type>
   through optional chaining.
-- Updated the <doc:CollectionTypes#Accessing-and-Modifying-an-Array> section
+- Updated the <doc:CollectionTypes#Acessando-e-Modificando-um-Array> section
   to note that you can no longer append a single item to an array
   with the `+=` operator.
   Instead, use the `append(_:)` method,
   or append a single-item array with the `+=` operator.
 - Added a note that the start value `a`
-  for the <doc:BasicOperators#Range-Operators> `a...b` and `a..<b`
+  for the <doc:BasicOperators#Operadores-de-intervalo> `a...b` and `a..<b`
   must not be greater than the end value `b`.
 - Rewrote the <doc:Inheritance> chapter
   to remove its introductory coverage of initializer overrides.
@@ -849,11 +849,11 @@ Review the recent changes to this book.
   to reflect the fact that Swift's `Character` type now represents
   a single Unicode extended grapheme cluster.
   Includes a new section on
-  <doc:StringsAndCharacters#Extended-Grapheme-Clusters>
+  <doc:StringsAndCharacters#Clusters-de-grafemas-estendidos>
   and more information about
-  <doc:StringsAndCharacters#Unicode-Scalar-Values>
-  and <doc:StringsAndCharacters#Comparing-Strings>.
-- Updated the <doc:StringsAndCharacters#String-Literals> section
+  <doc:StringsAndCharacters#Valores-escalares-Unicode>
+  and <doc:StringsAndCharacters#Comparando-strings>.
+- Updated the <doc:StringsAndCharacters#Literais-de-string> section
   to note that Unicode scalars inside string literals
   are now written as `\u{n}`,
   where `n` is a hexadecimal number between 0 and 10FFFF,
@@ -869,32 +869,32 @@ Review the recent changes to this book.
   <doc:Initialization#Initializer-Parameters-Without-Argument-Labels>.
 - Added a new section about
   <doc:Initialization#Required-Initializers>.
-- Added a new section about <doc:Functions#Optional-Tuple-Return-Types>.
-- Updated the <doc:TheBasics#Type-Annotations> section to note that
+- Added a new section about <doc:Functions#Tipos-de-retorno-de-tupla-opcionais>.
+- Updated the <doc:TheBasics#Anotações-de-tipo> section to note that
   multiple related variables can be defined on a single line
   with one type annotation.
 - The `@optional`, `@lazy`, `@final`, and `@required` attributes
   are now the `optional`, `lazy`, `final`, and `required`
   <doc:Declarations#Declaration-Modifiers>.
 - Updated the entire book to refer to `..<` as
-  the <doc:BasicOperators#Half-Open-Range-Operator>
+  the <doc:BasicOperators#Operador-de-intervalo-semiaberto>
   (rather than the “half-closed range operator”).
-- Updated the <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>
+- Updated the <doc:CollectionTypes#Acessando-e-Modificando-um-Dicionário>
   section to note that `Dictionary` now has
   a Boolean `isEmpty` property.
 - Clarified the full list of characters that can be used
   when defining <doc:AdvancedOperators#Custom-Operators>.
 - `nil` and the Booleans `true` and `false` are now <doc:LexicalStructure#Literals>.
 - Swift's `Array` type now has full value semantics.
-  Updated the information about <doc:CollectionTypes#Mutability-of-Collections>
+  Updated the information about <doc:CollectionTypes#Mutabilidade-das-Coleções>
   and <doc:CollectionTypes#Arrays> to reflect the new approach.
   Also clarified the assignment and copy behavior for strings arrays and dictionaries.
-- <doc:CollectionTypes#Array-Type-Shorthand-Syntax> is now written as
+- <doc:CollectionTypes#Sintaxe-Abreviada-do-Tipo-Array> is now written as
   `[SomeType]` rather than `SomeType[]`.
-- Added a new section about <doc:CollectionTypes#Dictionary-Type-Shorthand-Syntax>,
+- Added a new section about <doc:CollectionTypes#Sintaxe-Abreviada-do-Tipo-Dictionary>,
   which is written as `[KeyType: ValueType]`.
-- Added a new section about <doc:CollectionTypes#Hash-Values-for-Set-Types>.
-- Examples of <doc:Closures#Closure-Expressions> now use
+- Added a new section about <doc:CollectionTypes#Valores-de-Hash-para-Tipos-de-Conjunto>.
+- Examples of <doc:Closures#Expressões-de-closure> now use
   the global `sorted(_:_:)` function
   rather than the global `sort(_:_:)` function,
   to reflect the new array value semantics.
@@ -902,7 +902,7 @@ Review the recent changes to this book.
   to clarify that the memberwise structure initializer is made available
   even if a structure's stored properties don't have default values.
 - Updated to `..<` rather than `..`
-  for the <doc:BasicOperators#Half-Open-Range-Operator>.
+  for the <doc:BasicOperators#Operador-de-intervalo-semiaberto>.
 - Added an example of <doc:Generics#Extending-a-Generic-Type>.
 
 <!--

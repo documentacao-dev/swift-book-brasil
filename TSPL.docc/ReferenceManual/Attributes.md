@@ -2902,7 +2902,7 @@ This means that the value is allowed to outlive the lifetime of the call.
 Function type parameters with the `escaping` type attribute
 require explicit use of `self.` for properties or methods.
 For an example of how to use the `escaping` attribute,
-see <doc:Closures#Escaping-Closures>.
+see <doc:Closures#Escaping-closures>.
 
 ### Sendable
 

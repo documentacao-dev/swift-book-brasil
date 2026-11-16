@@ -1,51 +1,51 @@
-# Functions
+# Funções
 
-Define and call functions, label their arguments, and use their return values.
+Defina e chame funções, rotule os argumentos e use os valores de retorno.
 
-*Functions* are self-contained chunks of code that perform a specific task.
-You give a function a name that identifies what it does,
-and this name is used to “call” the function to perform its task when needed.
+*Funções* são trechos de código autocontidos que executam uma tarefa específica.
+Você dá a uma função um nome que identifica o que ela faz,
+e esse nome é usado para “chamar” a função e executar sua tarefa quando necessário.
 
-Swift's unified function syntax is flexible enough to express anything from
-a simple C-style function with no parameter names
-to a complex Objective-C-style method
-with names and argument labels for each parameter.
-Parameters can provide default values to simplify function calls
-and can be passed as in-out parameters,
-which modify a passed variable once the function has completed its execution.
+A sintaxe unificada de funções do Swift é flexível o bastante para expressar desde
+uma função simples no estilo C, sem nomes de parâmetros,
+até um método complexo no estilo Objective-C,
+com nomes e rótulos de argumento para cada parâmetro.
+Parâmetros podem ter valores padrão para simplificar as chamadas de função
+e podem ser passados como parâmetros in-out,
+que modificam uma variável passada depois que a função termina sua execução.
 
-Every function in Swift has a type,
-consisting of the function's parameter types and return type.
-You can use this type like any other type in Swift,
-which makes it easy to pass functions as parameters to other functions,
-and to return functions from functions.
-Functions can also be written within other functions
-to encapsulate useful functionality within a nested function scope.
+Toda função em Swift tem um tipo,
+formado pelos tipos dos seus parâmetros e pelo tipo de retorno.
+Você pode usar esse tipo como qualquer outro tipo em Swift,
+o que facilita passar funções como parâmetros para outras funções
+e retornar funções a partir de outras funções.
+Funções também podem ser escritas dentro de outras funções
+para encapsular funcionalidades úteis no escopo de uma função aninhada.
 
-## Defining and Calling Functions
+## Definindo e chamando funções
 
-When you define a function,
-you can optionally define one or more named, typed values that the function takes as input,
-known as *parameters*.
-You can also optionally define
-a type of value that the function will pass back as output when it's done,
-known as its *return type*.
+Ao definir uma função,
+você pode, opcionalmente, definir um ou mais valores nomeados e tipados que a função recebe como entrada,
+conhecidos como *parâmetros*.
+Você também pode, opcionalmente, definir
+um tipo de valor que a função retorna como saída ao terminar,
+conhecido como seu *tipo de retorno*.
 
-Every function has a *function name*,
-which describes the task that the function performs.
-To use a function, you “call” that function with its name
-and pass it input values (known as *arguments*)
-that match the types of the function's parameters.
-A function's arguments must always be provided in the same order
-as the function's parameter list.
+Toda função tem um *nome de função*,
+que descreve a tarefa que ela executa.
+Para usar uma função, você “chama” essa função pelo nome
+e passa valores de entrada (conhecidos como *argumentos*)
+que correspondam aos tipos dos parâmetros da função.
+Os argumentos de uma função devem sempre ser passados na mesma ordem
+da lista de parâmetros da função.
 
-The function in the example below is called `greet(person:)`,
-because that's what it does ---
-it takes a person's name as input and returns a greeting for that person.
-To accomplish this, you define one input parameter ---
-a `String` value called `person` ---
-and a return type of `String`,
-which will contain a greeting for that person:
+A função do exemplo abaixo se chama `greet(person:)`,
+porque é isso que ela faz: recebe o nome de uma pessoa como entrada
+e retorna uma saudação para essa pessoa.
+Para isso, você define um parâmetro de entrada,
+um valor `String` chamado `person`,
+e um tipo de retorno `String`,
+que conterá uma saudação para essa pessoa:
 
 ```swift
 func greet(person: String) -> String {
@@ -65,17 +65,17 @@ func greet(person: String) -> String {
   ```
 -->
 
-All of this information is rolled up into the function's *definition*,
-which is prefixed with the `func` keyword.
-You indicate the function's return type with the *return arrow* `->`
-(a hyphen followed by a right angle bracket),
-which is followed by the name of the type to return.
+Toda essa informação é reunida na *definição* da função,
+que começa com a palavra-chave `func`.
+Você indica o tipo de retorno com a *seta de retorno* `->`
+(um hífen seguido de um colchete angular à direita),
+que é seguida pelo nome do tipo a ser retornado.
 
-The definition describes what the function does,
-what it expects to receive,
-and what it returns when it's done.
-The definition makes it easy for the function to be called unambiguously
-from elsewhere in your code:
+A definição descreve o que a função faz,
+o que ela espera receber
+e o que retorna ao terminar.
+Essa definição permite que a função seja chamada sem ambiguidade
+de qualquer lugar do seu código:
 
 ```swift
 print(greet(person: "Anna"))
@@ -95,34 +95,34 @@ print(greet(person: "Brian"))
   ```
 -->
 
-You call the `greet(person:)` function
-by passing it a `String` value after the `person` argument label,
-such as `greet(person: "Anna")`.
-Because the function returns a `String` value,
-`greet(person:)` can be wrapped in a call to the `print(_:separator:terminator:)` function
-to print that string and see its return value, as shown above.
+Você chama a função `greet(person:)`
+passando a ela um valor `String` depois do rótulo de argumento `person`,
+como em `greet(person: "Anna")`.
+Como a função retorna um valor `String`,
+`greet(person:)` pode ser envolvida em uma chamada à função `print(_:separator:terminator:)`
+para imprimir essa string e ver seu valor de retorno, como mostrado acima.
 
-> Note: The `print(_:separator:terminator:)` function
-> doesn't have a label for its first argument,
-> and its other arguments are optional because they have a default value.
-> These variations on function syntax are discussed below
-> in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>
-> and <doc:Functions#Default-Parameter-Values>.
+> Nota: A função `print(_:separator:terminator:)`
+> não tem rótulo para o primeiro argumento,
+> e os outros argumentos são opcionais porque têm valor padrão.
+> Essas variações da sintaxe de funções são discutidas abaixo
+> em <doc:Functions#Rótulos-de-argumento-e-nomes-de-parâmetros-de-função>
+> e <doc:Functions#Valores-padrão-de-parâmetros>.
 
-The body of the `greet(person:)` function starts by
-defining a new `String` constant called `greeting`
-and setting it to a simple greeting message.
-This greeting is then passed back out of the function using the `return` keyword.
-In the line of code that says `return greeting`,
-the function finishes its execution and returns the current value of `greeting`.
+O corpo da função `greet(person:)` começa
+definindo uma nova constante `String` chamada `greeting`
+e atribuindo a ela uma mensagem de saudação simples.
+Essa saudação é então retornada pela função com a palavra-chave `return`.
+Na linha `return greeting`,
+a função termina sua execução e retorna o valor atual de `greeting`.
 
-You can call the `greet(person:)` function multiple times with different input values.
-The example above shows what happens if it's called with an input value of `"Anna"`,
-and an input value of `"Brian"`.
-The function returns a tailored greeting in each case.
+Você pode chamar a função `greet(person:)` várias vezes com valores de entrada diferentes.
+O exemplo acima mostra o que acontece quando ela é chamada com o valor de entrada `"Anna"`
+e com o valor de entrada `"Brian"`.
+A função retorna uma saudação personalizada em cada caso.
 
-To make the body of this function shorter,
-you can combine the message creation and the return statement into one line:
+Para deixar o corpo dessa função mais curto,
+você pode combinar a criação da mensagem e a instrução `return` em uma única linha:
 
 ```swift
 func greetAgain(person: String) -> String {
@@ -144,17 +144,17 @@ print(greetAgain(person: "Anna"))
   ```
 -->
 
-## Function Parameters and Return Values
+## Parâmetros e valores de retorno de funções
 
-Function parameters and return values are extremely flexible in Swift.
-You can define anything from a simple utility function with a single unnamed parameter
-to a complex function with expressive parameter names and different parameter options.
+Parâmetros e valores de retorno de funções são extremamente flexíveis em Swift.
+Você pode definir desde uma função utilitária simples, com um único parâmetro sem nome,
+até uma função complexa com nomes de parâmetros expressivos e diferentes opções de parâmetros.
 
-### Functions Without Parameters
+### Funções sem parâmetros
 
-Functions aren't required to define input parameters.
-Here's a function with no input parameters,
-which always returns the same `String` message whenever it's called:
+Funções não são obrigadas a definir parâmetros de entrada.
+Aqui está uma função sem parâmetros de entrada,
+que retorna sempre a mesma mensagem `String` cada vez que é chamada:
 
 ```swift
 func sayHelloWorld() -> String {
@@ -176,19 +176,19 @@ print(sayHelloWorld())
   ```
 -->
 
-The function definition still needs parentheses after the function's name,
-even though it doesn't take any parameters.
-The function name is also followed by
-an empty pair of parentheses when the function is called.
+A definição da função ainda precisa de parênteses depois do nome,
+mesmo que ela não receba parâmetros.
+O nome da função também é seguido de
+um par de parênteses vazios quando ela é chamada.
 
-### Functions With Multiple Parameters
+### Funções com vários parâmetros
 
-Functions can have multiple input parameters,
-which are written within the function's parentheses, separated by commas.
+Funções podem ter vários parâmetros de entrada,
+escritos entre os parênteses da função, separados por vírgulas.
 
-This function takes a person's name
-and whether they have already been greeted as input,
-and returns an appropriate greeting for that person:
+Esta função recebe o nome de uma pessoa
+e se ela já foi cumprimentada, como entrada,
+e retorna uma saudação apropriada para essa pessoa:
 
 ```swift
 func greet(person: String, alreadyGreeted: Bool) -> String {
@@ -218,21 +218,21 @@ print(greet(person: "Tim", alreadyGreeted: true))
   ```
 -->
 
-You call the `greet(person:alreadyGreeted:)` function
-by passing it both a `String` argument value labeled `person`
-and a `Bool` argument value labeled `alreadyGreeted`
-in parentheses, separated by commas.
-Note that this function is distinct from the `greet(person:)` function
-shown in an earlier section.
-Although both functions have names that begin with `greet`,
-the `greet(person:alreadyGreeted:)` function takes two arguments
-but the `greet(person:)` function takes only one.
+Você chama a função `greet(person:alreadyGreeted:)`
+passando a ela um argumento `String` com o rótulo `person`
+e um argumento `Bool` com o rótulo `alreadyGreeted`,
+entre parênteses, separados por vírgulas.
+Note que essa função é diferente da função `greet(person:)`
+mostrada em uma seção anterior.
+Embora as duas funções tenham nomes que começam com `greet`,
+a função `greet(person:alreadyGreeted:)` recebe dois argumentos,
+enquanto a função `greet(person:)` recebe apenas um.
 
-### Functions Without Return Values
+### Funções sem valores de retorno
 
-Functions aren't required to define a return type.
-Here's a version of the `greet(person:)` function,
-which prints its own `String` value rather than returning it:
+Funções não são obrigadas a definir um tipo de retorno.
+Aqui está uma versão da função `greet(person:)`
+que imprime seu próprio valor `String` em vez de retorná-lo:
 
 ```swift
 func greet(person: String) {
@@ -254,17 +254,17 @@ greet(person: "Dave")
   ```
 -->
 
-Because it doesn't need to return a value,
-the function's definition doesn't include the return arrow (`->`)
-or a return type.
+Como ela não precisa retornar um valor,
+a definição da função não inclui a seta de retorno (`->`)
+nem um tipo de retorno.
 
-> Note: Strictly speaking, this version of the `greet(person:)` function *does* still return a value,
-> even though no return value is defined.
-> Functions without a defined return type return a special value of type `Void`.
-> This is simply an empty tuple,
-> which is written as `()`.
+> Nota: Estritamente falando, esta versão da função `greet(person:)` *ainda* retorna um valor,
+> mesmo que nenhum valor de retorno seja definido.
+> Funções sem tipo de retorno definido retornam um valor especial do tipo `Void`.
+> Trata-se simplesmente de uma tupla vazia,
+> escrita como `()`.
 
-The return value of a function can be ignored when it's called:
+O valor de retorno de uma função pode ser ignorado na chamada:
 
 ```swift
 func printAndCount(string: String) -> Int {
@@ -307,20 +307,19 @@ printWithoutCounting(string: "hello, world")
   Tracking bug is <rdar://problem/35301593>
 -->
 
-The first function, `printAndCount(string:)`,
-prints a string, and then returns its character count as an `Int`.
-The second function, `printWithoutCounting(string:)`,
-calls the first function, but ignores its return value.
-When the second function is called,
-the message is still printed by the first function,
-but the returned value isn't used.
+A primeira função, `printAndCount(string:)`,
+imprime uma string e depois retorna sua contagem de caracteres como `Int`.
+A segunda função, `printWithoutCounting(string:)`,
+chama a primeira função, mas ignora seu valor de retorno.
+Quando a segunda função é chamada,
+a mensagem ainda é impressa pela primeira função,
+mas o valor retornado não é usado.
 
-> Note: Return values can be ignored,
-> but a function that says it will return a value must always do so.
-> A function with a defined return type
-> can't allow control to fall out of the bottom of the function
-> without returning a value,
-> and attempting to do so will result in a compile-time error.
+> Nota: Valores de retorno podem ser ignorados,
+> mas uma função que declara que vai retornar um valor deve sempre fazê-lo.
+> Uma função com tipo de retorno definido
+> não pode deixar o controle chegar ao fim do corpo sem retornar um valor,
+> e tentar isso resulta em erro de compilação.
 
 <!--
 FIXME Unless the function is marked @discardableResult,
@@ -332,13 +331,13 @@ like array.removeFirst(...) ---
 otherwise, using `_ = foo()` at the call site is better.
 -->
 
-### Functions with Multiple Return Values
+### Funções com vários valores de retorno
 
-You can use a tuple type as the return type for a function
-to return multiple values as part of one compound return value.
+Você pode usar um tipo de tupla como tipo de retorno de uma função
+para retornar vários valores como parte de um único valor de retorno composto.
 
-The example below defines a function called `minMax(array:)`,
-which finds the smallest and largest numbers in an array of `Int` values:
+O exemplo abaixo define uma função chamada `minMax(array:)`,
+que encontra o menor e o maior número em um array de valores `Int`:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
@@ -374,21 +373,21 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
   ```
 -->
 
-The `minMax(array:)` function returns a tuple containing two `Int` values.
-These values are labeled `min` and `max`
-so that they can be accessed by name when querying the function's return value.
+A função `minMax(array:)` retorna uma tupla contendo dois valores `Int`.
+Esses valores têm os rótulos `min` e `max`
+para que possam ser acessados pelo nome ao consultar o valor de retorno da função.
 
-The body of the `minMax(array:)` function starts by setting
-two working variables called `currentMin` and `currentMax`
-to the value of the first integer in the array.
-The function then iterates over the remaining values in the array
-and checks each value to see if it's smaller or larger than
-the values of `currentMin` and `currentMax` respectively.
-Finally, the overall minimum and maximum values are returned as
-a tuple of two `Int` values.
+O corpo da função `minMax(array:)` começa definindo
+duas variáveis de trabalho chamadas `currentMin` e `currentMax`
+com o valor do primeiro inteiro do array.
+Em seguida, a função percorre os demais valores do array
+e verifica se cada valor é menor ou maior
+que os valores de `currentMin` e `currentMax`, respectivamente.
+Por fim, os valores mínimo e máximo gerais são retornados
+como uma tupla de dois valores `Int`.
 
-Because the tuple's member values are named as part of the function's return type,
-they can be accessed with dot syntax to retrieve the minimum and maximum found values:
+Como os membros da tupla são nomeados como parte do tipo de retorno da função,
+eles podem ser acessados com a sintaxe de ponto para obter o mínimo e o máximo encontrados:
 
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
@@ -406,35 +405,35 @@ print("min is \(bounds.min) and max is \(bounds.max)")
   ```
 -->
 
-Note that the tuple's members don't need to be named
-at the point that the tuple is returned from the function,
-because their names are already specified as part of the function's return type.
+Note que os membros da tupla não precisam ser nomeados
+no momento em que a tupla é retornada pela função,
+porque os nomes já estão especificados como parte do tipo de retorno da função.
 
-#### Optional Tuple Return Types
+#### Tipos de retorno de tupla opcionais
 
-If the tuple type to be returned from a function
-has the potential to have “no value” for the entire tuple,
-you can use an *optional* tuple return type to reflect the fact that
-the entire tuple can be `nil`.
-You write an optional tuple return type by placing a question mark
-after the tuple type's closing parenthesis,
-such as `(Int, Int)?` or `(String, Int, Bool)?`.
+Se o tipo de tupla a ser retornado por uma função
+pode não ter “valor nenhum” para a tupla inteira,
+você pode usar um tipo de retorno de tupla *opcional* para refletir o fato de que
+a tupla inteira pode ser `nil`.
+Você escreve um tipo de retorno de tupla opcional colocando um ponto de interrogação
+depois do parêntese de fechamento do tipo da tupla,
+como `(Int, Int)?` ou `(String, Int, Bool)?`.
 
-> Note: An optional tuple type such as `(Int, Int)?`
-> is different from a tuple that contains optional types
-> such as `(Int?, Int?)`.
-> With an optional tuple type, the entire tuple is optional,
-> not just each individual value within the tuple.
+> Nota: Um tipo de tupla opcional, como `(Int, Int)?`,
+> é diferente de uma tupla que contém tipos opcionais,
+> como `(Int?, Int?)`.
+> Com um tipo de tupla opcional, a tupla inteira é opcional,
+> e não apenas cada valor individual dentro da tupla.
 
-The `minMax(array:)` function above returns a tuple containing two `Int` values.
-However, the function doesn't perform any safety checks on the array it's passed.
-If the `array` argument contains an empty array,
-the `minMax(array:)` function, as defined above,
-will trigger a runtime error when attempting to access `array[0]`.
+A função `minMax(array:)` acima retorna uma tupla contendo dois valores `Int`.
+No entanto, a função não faz nenhuma verificação de segurança no array que recebe.
+Se o argumento `array` for um array vazio,
+a função `minMax(array:)`, como definida acima,
+disparará um erro em tempo de execução ao tentar acessar `array[0]`.
 
-To handle an empty array safely,
-write the `minMax(array:)` function with an optional tuple return type
-and return a value of `nil` when the array is empty:
+Para lidar com um array vazio de forma segura,
+escreva a função `minMax(array:)` com um tipo de retorno de tupla opcional
+e retorne o valor `nil` quando o array estiver vazio:
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
@@ -472,8 +471,8 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
   ```
 -->
 
-You can use optional binding to check whether this version of the `minMax(array:)` function
-returns an actual tuple value or `nil`:
+Você pode usar optional binding para verificar se esta versão da função `minMax(array:)`
+retorna de fato um valor de tupla ou `nil`:
 
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
@@ -493,12 +492,12 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
   ```
 -->
 
-### Functions With an Implicit Return
+### Funções com retorno implícito
 
-If the entire body of the function is a single expression,
-the function implicitly returns that expression.
-For example,
-both functions below have the same behavior:
+Se o corpo inteiro da função for uma única expressão,
+a função retorna essa expressão implicitamente.
+Por exemplo,
+as duas funções abaixo têm o mesmo comportamento:
 
 ```swift
 func greeting(for person: String) -> String {
@@ -532,25 +531,25 @@ print(anotherGreeting(for: "Dave"))
   ```
 -->
 
-The entire definition of the `greeting(for:)` function
-is the greeting message that it returns,
-which means it can use this shorter form.
-The `anotherGreeting(for:)` function returns the same greeting message,
-using the `return` keyword like a longer function.
-Any function that you write as just one `return` line can omit the `return`.
+A definição inteira da função `greeting(for:)`
+é a mensagem de saudação que ela retorna,
+o que significa que ela pode usar esta forma mais curta.
+A função `anotherGreeting(for:)` retorna a mesma mensagem de saudação,
+usando a palavra-chave `return`, como numa função mais longa.
+Qualquer função que você escreva como apenas uma linha `return` pode omitir o `return`.
 
-As you'll see in <doc:Properties#Shorthand-Getter-Declaration>,
-property getters can also use an implicit return.
+Como você verá em <doc:Properties#Shorthand-Getter-Declaration>,
+getters de propriedades também podem usar retorno implícito.
 
-> Note: The code you write as an implicit return value
-> needs to return some value.
-> For example,
-> you can't use `print(13)`
-> as an implicit return value.
-> However, you can use a function that never returns
-> like `fatalError("Oh no!")`
-> as an implicit return value,
-> because Swift knows that the implicit return doesn't happen.
+> Nota: O código que você escreve como valor de retorno implícito
+> precisa retornar algum valor.
+> Por exemplo,
+> você não pode usar `print(13)`
+> como valor de retorno implícito.
+> No entanto, você pode usar uma função que nunca retorna,
+> como `fatalError("Oh no!")`,
+> como valor de retorno implícito,
+> porque o Swift sabe que o retorno implícito não acontece.
 
 <!--
   - test: `implicit-return-print-instead`
@@ -571,15 +570,15 @@ property getters can also use an implicit return.
   ```
 -->
 
-## Function Argument Labels and Parameter Names
+## Rótulos de argumento e nomes de parâmetros de função
 
-Each function parameter has both an *argument label*
-and a *parameter name*.
-The argument label is used when calling the function;
-each argument is written in the function call with its argument label before it.
-The parameter name is used in the implementation of the function.
-By default, parameters
-use their parameter name as their argument label.
+Cada parâmetro de função tem tanto um *rótulo de argumento*
+quanto um *nome de parâmetro*.
+O rótulo de argumento é usado ao chamar a função;
+cada argumento é escrito na chamada da função com seu rótulo de argumento antes dele.
+O nome do parâmetro é usado na implementação da função.
+Por padrão, os parâmetros
+usam seu nome de parâmetro como rótulo de argumento.
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
@@ -601,10 +600,10 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
   ```
 -->
 
-All parameters must have unique names.
-Although it's possible for multiple parameters
-to have the same argument label,
-unique argument labels help make your code more readable.
+Todos os parâmetros devem ter nomes únicos.
+Embora seja possível que vários parâmetros
+tenham o mesmo rótulo de argumento,
+rótulos de argumento únicos ajudam a tornar seu código mais legível.
 
 <!--
   - test: `non-unique-external-name`
@@ -615,10 +614,10 @@ unique argument labels help make your code more readable.
   ```
 -->
 
-### Specifying Argument Labels
+### Especificando rótulos de argumento
 
-You write an argument label before the parameter name,
-separated by a space:
+Você escreve um rótulo de argumento antes do nome do parâmetro,
+separado por um espaço:
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
@@ -638,9 +637,9 @@ func someFunction(argumentLabel parameterName: Int) {
   ```
 -->
 
-Here's a variation of the `greet(person:)` function
-that takes a person's name and hometown
-and returns a greeting:
+Aqui está uma variação da função `greet(person:)`
+que recebe o nome e a cidade natal de uma pessoa
+e retorna uma saudação:
 
 ```swift
 func greet(person: String, from hometown: String) -> String {
@@ -662,14 +661,14 @@ print(greet(person: "Bill", from: "Cupertino"))
   ```
 -->
 
-The use of argument labels can allow a function
-to be called in an expressive, sentence-like manner,
-while still providing a function body that's readable and clear in intent.
+O uso de rótulos de argumento permite que uma função
+seja chamada de forma expressiva, parecida com uma frase,
+mantendo um corpo de função legível e claro em sua intenção.
 
-### Omitting Argument Labels
+### Omitindo rótulos de argumento
 
-If you don't want an argument label for a parameter,
-write an underscore (`_`) instead of an explicit argument label for that parameter.
+Se você não quiser um rótulo de argumento para um parâmetro,
+escreva um sublinhado (`_`) no lugar de um rótulo de argumento explícito para esse parâmetro.
 
 ```swift
 func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
@@ -691,14 +690,14 @@ someFunction(1, secondParameterName: 2)
   ```
 -->
 
-If a parameter has an argument label,
-the argument *must* be labeled when you call the function.
+Se um parâmetro tiver rótulo de argumento,
+o argumento *deve* ser rotulado ao chamar a função.
 
-### Default Parameter Values
+### Valores padrão de parâmetros
 
-You can define a *default value* for any parameter in a function
-by assigning a value to the parameter after that parameter's type.
-If a default value is defined, you can omit that parameter when calling the function.
+Você pode definir um *valor padrão* para qualquer parâmetro de uma função
+atribuindo um valor ao parâmetro depois do tipo desse parâmetro.
+Se um valor padrão for definido, você pode omitir esse parâmetro ao chamar a função.
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
@@ -722,31 +721,30 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   ```
 -->
 
-Place parameters that don't have default values
-at the beginning of a function's parameter list,
-before the parameters that have default values.
-Parameters that don't have default values
-are usually more important to the function's meaning ---
-writing them first makes it easier to recognize
-that the same function is being called,
-regardless of whether any default parameters are omitted.
+Coloque os parâmetros que não têm valores padrão
+no início da lista de parâmetros da função,
+antes dos parâmetros que têm valores padrão.
+Parâmetros sem valores padrão costumam ser mais importantes para o significado da função,
+então escrevê-los primeiro facilita reconhecer
+que a mesma função está sendo chamada,
+independentemente de algum parâmetro padrão ser omitido.
 
-### Variadic Parameters
+### Parâmetros variádicos
 
-A *variadic parameter* accepts zero or more values of a specified type.
-You use a variadic parameter to specify that the parameter can be passed
-a varying number of input values when the function is called.
-Write variadic parameters by inserting three period characters (`...`)
-after the parameter's type name.
+Um *parâmetro variádico* aceita zero ou mais valores de um tipo especificado.
+Você usa um parâmetro variádico para indicar que o parâmetro pode receber
+um número variável de valores de entrada quando a função é chamada.
+Escreva parâmetros variádicos inserindo três pontos (`...`)
+depois do nome do tipo do parâmetro.
 
-The values passed to a variadic parameter are made available within the function's body
-as an array of the appropriate type.
-For example, a variadic parameter with a name of `numbers` and a type of `Double...`
-is made available within the function's body as
-a constant array called `numbers` of type `[Double]`.
+Os valores passados a um parâmetro variádico ficam disponíveis no corpo da função
+como um array do tipo apropriado.
+Por exemplo, um parâmetro variádico com o nome `numbers` e o tipo `Double...`
+fica disponível no corpo da função como
+uma constante array chamada `numbers`, do tipo `[Double]`.
 
-The example below calculates the *arithmetic mean*
-(also known as the *average*) for a list of numbers of any length:
+O exemplo abaixo calcula a *média aritmética*
+(também conhecida como *média*) de uma lista de números de qualquer tamanho:
 
 ```swift
 func arithmeticMean(_ numbers: Double...) -> Double {
@@ -789,13 +787,13 @@ arithmeticMean(3, 8.25, 18.75)
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A function can have multiple variadic parameters.
-The first parameter that comes after a variadic parameter
-must have an argument label.
-The argument label makes it unambiguous
-which arguments are passed to the variadic parameter
-and which arguments are passed to the parameters
-that come after the variadic parameter.
+Uma função pode ter vários parâmetros variádicos.
+O primeiro parâmetro que vem depois de um parâmetro variádico
+deve ter um rótulo de argumento.
+O rótulo de argumento deixa claro
+quais argumentos são passados ao parâmetro variádico
+e quais argumentos são passados aos parâmetros
+que vêm depois do parâmetro variádico.
 
 <!--
   - test: `variadic-parameters-and-labels`
@@ -824,37 +822,37 @@ that come after the variadic parameter.
   ```
 -->
 
-### In-Out Parameters
+### Parâmetros in-out
 
-Function parameters are constants by default.
-Trying to change the value of a function parameter
-from within the body of that function results in a compile-time error.
-This means that you can't change the value of a parameter by mistake.
-If you want a function to modify a parameter's value,
-and you want those changes to persist after the function call has ended,
-define that parameter as an *in-out parameter* instead.
+Parâmetros de função são constantes por padrão.
+Tentar alterar o valor de um parâmetro de função
+dentro do corpo dessa função resulta em erro de compilação.
+Isso significa que você não consegue alterar o valor de um parâmetro por engano.
+Se você quiser que uma função modifique o valor de um parâmetro,
+e quiser que essas mudanças permaneçam depois que a chamada da função terminar,
+defina esse parâmetro como um *parâmetro in-out*.
 
-You write an in-out parameter by placing the `inout` keyword
-right before a parameter's type.
-An in-out parameter has a value that's passed *in* to the function,
-is modified by the function,
-and is passed back *out* of the function to replace the original value.
-For a detailed discussion of the behavior of in-out parameters
-and associated compiler optimizations,
-see <doc:Declarations#In-Out-Parameters>.
+Você escreve um parâmetro in-out colocando a palavra-chave `inout`
+logo antes do tipo do parâmetro.
+Um parâmetro in-out tem um valor que é passado *para dentro* da função,
+é modificado pela função
+e é retornado *para fora* da função, substituindo o valor original.
+Para uma discussão detalhada sobre o comportamento dos parâmetros in-out
+e as otimizações do compilador associadas,
+veja <doc:Declarations#In-Out-Parameters>.
 
-You can only pass a variable as the argument for an in-out parameter.
-You can't pass a constant or a literal value as the argument,
-because constants and literals can't be modified.
-You place an ampersand (`&`) directly before a variable's name
-when you pass it as an argument to an in-out parameter,
-to indicate that it can be modified by the function.
+Você só pode passar uma variável como argumento para um parâmetro in-out.
+Não é possível passar uma constante ou um valor literal como argumento,
+porque constantes e literais não podem ser modificados.
+Você coloca um e comercial (`&`) diretamente antes do nome de uma variável
+quando a passa como argumento para um parâmetro in-out,
+para indicar que ela pode ser modificada pela função.
 
-> Note: In-out parameters can't have default values,
-> and variadic parameters can't be marked as `inout`.
+> Nota: Parâmetros in-out não podem ter valores padrão,
+> e parâmetros variádicos não podem ser marcados como `inout`.
 
-Here's an example of a function called `swapTwoInts(_:_:)`,
-which has two in-out integer parameters called `a` and `b`:
+Aqui está um exemplo de uma função chamada `swapTwoInts(_:_:)`,
+que tem dois parâmetros in-out inteiros chamados `a` e `b`:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
@@ -876,16 +874,16 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
   ```
 -->
 
-The `swapTwoInts(_:_:)` function simply swaps the value of `b` into `a`,
-and the value of `a` into `b`.
-The function performs this swap by storing the value of `a` in
-a temporary constant called `temporaryA`, assigning the value of `b` to `a`,
-and then assigning `temporaryA` to `b`.
+A função `swapTwoInts(_:_:)` simplesmente troca o valor de `b` para `a`,
+e o valor de `a` para `b`.
+Ela faz essa troca armazenando o valor de `a` em
+uma constante temporária chamada `temporaryA`, atribuindo o valor de `b` a `a`
+e depois atribuindo `temporaryA` a `b`.
 
-You can call the `swapTwoInts(_:_:)` function with two variables of type `Int`
-to swap their values.
-Note that the names of `someInt` and `anotherInt` are prefixed with an ampersand
-when they're passed to the `swapTwoInts(_:_:)` function:
+Você pode chamar a função `swapTwoInts(_:_:)` com duas variáveis do tipo `Int`
+para trocar seus valores.
+Observe que os nomes de `someInt` e `anotherInt` são precedidos por um e comercial
+quando são passados à função `swapTwoInts(_:_:)`:
 
 ```swift
 var someInt = 3
@@ -907,28 +905,28 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   ```
 -->
 
-The example above shows that
-the original values of `someInt` and `anotherInt`
-are modified by the `swapTwoInts(_:_:)` function,
-even though they were originally defined outside of the function.
+O exemplo acima mostra que
+os valores originais de `someInt` e `anotherInt`
+são modificados pela função `swapTwoInts(_:_:)`,
+mesmo tendo sido definidos originalmente fora da função.
 
-> Note: In-out parameters aren't the same as returning a value from a function.
-> The `swapTwoInts` example above doesn't define a return type or return a value,
-> but it still modifies the values of `someInt` and `anotherInt`.
-> In-out parameters are an alternative way for a function to have an effect
-> outside of the scope of its function body.
+> Nota: Parâmetros in-out não são o mesmo que retornar um valor de uma função.
+> O exemplo `swapTwoInts` acima não define um tipo de retorno nem retorna um valor,
+> mas ainda assim modifica os valores de `someInt` e `anotherInt`.
+> Parâmetros in-out são uma forma alternativa de uma função produzir um efeito
+> fora do escopo do seu corpo.
 
 <!--
   TODO: you can pass a subproperty of something as an inout reference.
   Would be great to show an example of this as a way to avoid temporary variables.
 -->
 
-## Function Types
+## Tipos de função
 
-Every function has a specific *function type*,
-made up of the parameter types and the return type of the function.
+Toda função tem um *tipo de função* específico,
+formado pelos tipos dos parâmetros e pelo tipo de retorno da função.
 
-For example:
+Por exemplo:
 
 ```swift
 func addTwoInts(_ a: Int, _ b: Int) -> Int {
@@ -956,19 +954,19 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
   ```
 -->
 
-This example defines two simple mathematical functions
-called `addTwoInts` and `multiplyTwoInts`.
-These functions each take two `Int` values,
-and return an `Int` value, which is the result of
-performing an appropriate mathematical operation.
+Este exemplo define duas funções matemáticas simples
+chamadas `addTwoInts` e `multiplyTwoInts`.
+Essas funções recebem cada uma dois valores `Int`
+e retornam um valor `Int`, que é o resultado
+de uma operação matemática apropriada.
 
-The type of both of these functions is `(Int, Int) -> Int`.
-This can be read as:
+O tipo das duas funções é `(Int, Int) -> Int`.
+Isso pode ser lido assim:
 
-“A function that has two parameters, both of type `Int`,
-and that returns a value of type `Int`.”
+“Uma função que tem dois parâmetros, ambos do tipo `Int`,
+e que retorna um valor do tipo `Int`.”
 
-Here's another example, for a function with no parameters or return value:
+Aqui está outro exemplo, para uma função sem parâmetros nem valor de retorno:
 
 ```swift
 func printHelloWorld() {
@@ -988,14 +986,14 @@ func printHelloWorld() {
   ```
 -->
 
-The type of this function is `() -> Void`,
-or “a function that has no parameters, and returns `Void`.”
+O tipo desta função é `() -> Void`,
+ou “uma função que não tem parâmetros e retorna `Void`.”
 
-### Using Function Types
+### Usando tipos de função
 
-You use function types just like any other types in Swift.
-For example, you can define a constant or variable to be of a function type
-and assign an appropriate function to that variable:
+Você usa tipos de função exatamente como qualquer outro tipo em Swift.
+Por exemplo, você pode definir uma constante ou variável com um tipo de função
+e atribuir a essa variável uma função apropriada:
 
 ```swift
 var mathFunction: (Int, Int) -> Int = addTwoInts
@@ -1009,17 +1007,17 @@ var mathFunction: (Int, Int) -> Int = addTwoInts
   ```
 -->
 
-This can be read as:
+Isso pode ser lido assim:
 
-“Define a variable called `mathFunction`,
-which has a type of ‘a function that takes two `Int` values,
-and returns an `Int` value.’
-Set this new variable to refer to the function called `addTwoInts`.”
+“Defina uma variável chamada `mathFunction`,
+que tem o tipo ‘uma função que recebe dois valores `Int`
+e retorna um valor `Int`.’
+Atribua a essa nova variável uma referência à função chamada `addTwoInts`.”
 
-The `addTwoInts(_:_:)` function has the same type as the `mathFunction` variable,
-and so this assignment is allowed by Swift's type-checker.
+A função `addTwoInts(_:_:)` tem o mesmo tipo que a variável `mathFunction`,
+por isso essa atribuição é permitida pelo verificador de tipos do Swift.
 
-You can now call the assigned function with the name `mathFunction`:
+Agora você pode chamar a função atribuída usando o nome `mathFunction`:
 
 ```swift
 print("Result: \(mathFunction(2, 3))")
@@ -1035,8 +1033,8 @@ print("Result: \(mathFunction(2, 3))")
   ```
 -->
 
-A different function with the same matching type can be assigned to the same variable,
-in the same way as for nonfunction types:
+Outra função com o mesmo tipo correspondente pode ser atribuída à mesma variável,
+da mesma forma que para tipos que não são de função:
 
 ```swift
 mathFunction = multiplyTwoInts
@@ -1054,9 +1052,9 @@ print("Result: \(mathFunction(2, 3))")
   ```
 -->
 
-As with any other type,
-you can leave it to Swift to infer the function type
-when you assign a function to a constant or variable:
+Como em qualquer outro tipo,
+você pode deixar que o Swift infira o tipo da função
+ao atribuir uma função a uma constante ou variável:
 
 ```swift
 let anotherMathFunction = addTwoInts
@@ -1078,14 +1076,14 @@ let anotherMathFunction = addTwoInts
   TODO: talk about defining typealiases for function types somewhere?
 -->
 
-### Function Types as Parameter Types
+### Tipos de função como tipos de parâmetro
 
-You can use a function type such as `(Int, Int) -> Int`
-as a parameter type for another function.
-This enables you to leave some aspects of a function's implementation
-for the function's caller to provide when the function is called.
+Você pode usar um tipo de função como `(Int, Int) -> Int`
+como tipo de parâmetro de outra função.
+Isso permite deixar para quem chama a função fornecer alguns aspectos da implementação
+no momento da chamada.
 
-Here's an example to print the results of the math functions from above:
+Aqui está um exemplo para imprimir os resultados das funções matemáticas de antes:
 
 ```swift
 func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
@@ -1107,33 +1105,33 @@ printMathResult(addTwoInts, 3, 5)
   ```
 -->
 
-This example defines a function called `printMathResult(_:_:_:)`, which has three parameters.
-The first parameter is called `mathFunction`, and is of type `(Int, Int) -> Int`.
-You can pass any function of that type as the argument for this first parameter.
-The second and third parameters are called `a` and `b`, and are both of type `Int`.
-These are used as the two input values for the provided math function.
+Este exemplo define uma função chamada `printMathResult(_:_:_:)`, que tem três parâmetros.
+O primeiro parâmetro se chama `mathFunction` e é do tipo `(Int, Int) -> Int`.
+Você pode passar qualquer função desse tipo como argumento para este primeiro parâmetro.
+O segundo e o terceiro parâmetros se chamam `a` e `b`, e são ambos do tipo `Int`.
+Eles são usados como os dois valores de entrada para a função matemática fornecida.
 
-When `printMathResult(_:_:_:)` is called,
-it's passed the `addTwoInts(_:_:)` function, and the integer values `3` and `5`.
-It calls the provided function with the values `3` and `5`, and prints the result of `8`.
+Quando `printMathResult(_:_:_:)` é chamada,
+ela recebe a função `addTwoInts(_:_:)` e os valores inteiros `3` e `5`.
+Ela chama a função fornecida com os valores `3` e `5` e imprime o resultado, `8`.
 
-The role of `printMathResult(_:_:_:)` is to print the result of
-a call to a math function of an appropriate type.
-It doesn't matter what that function's implementation actually does ---
-it matters only that the function is of the correct type.
-This enables `printMathResult(_:_:_:)` to hand off some of its functionality
-to the caller of the function in a type-safe way.
+A função de `printMathResult(_:_:_:)` é imprimir o resultado de
+uma chamada a uma função matemática de um tipo apropriado.
+Não importa o que a implementação dessa função realmente faz:
+o que importa é que a função seja do tipo correto.
+Isso permite que `printMathResult(_:_:_:)` delegue parte de sua funcionalidade
+ao chamador da função, de forma segura em relação aos tipos.
 
-### Function Types as Return Types
+### Tipos de função como tipos de retorno
 
-You can use a function type as the return type of another function.
-You do this by writing a complete function type
-immediately after the return arrow (`->`) of the returning function.
+Você pode usar um tipo de função como tipo de retorno de outra função.
+Para isso, você escreve um tipo de função completo
+logo depois da seta de retorno (`->`) da função que retorna.
 
-The next example defines two simple functions called `stepForward(_:)` and `stepBackward(_:)`.
-The `stepForward(_:)` function returns a value one more than its input value,
-and the `stepBackward(_:)` function returns a value one less than its input value.
-Both functions have a type of `(Int) -> Int`:
+O próximo exemplo define duas funções simples chamadas `stepForward(_:)` e `stepBackward(_:)`.
+A função `stepForward(_:)` retorna um valor uma unidade maior que o valor de entrada,
+e a função `stepBackward(_:)` retorna um valor uma unidade menor que o valor de entrada.
+As duas funções têm o tipo `(Int) -> Int`:
 
 ```swift
 func stepForward(_ input: Int) -> Int {
@@ -1157,10 +1155,10 @@ func stepBackward(_ input: Int) -> Int {
   ```
 -->
 
-Here's a function called `chooseStepFunction(backward:)`,
-whose return type is `(Int) -> Int`.
-The `chooseStepFunction(backward:)` function returns the `stepForward(_:)` function
-or the `stepBackward(_:)` function based on a Boolean parameter called `backward`:
+Aqui está uma função chamada `chooseStepFunction(backward:)`,
+cujo tipo de retorno é `(Int) -> Int`.
+A função `chooseStepFunction(backward:)` retorna a função `stepForward(_:)`
+ou a função `stepBackward(_:)`, com base em um parâmetro booleano chamado `backward`:
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
@@ -1178,8 +1176,8 @@ func chooseStepFunction(backward: Bool) -> (Int) -> Int {
   ```
 -->
 
-You can now use `chooseStepFunction(backward:)` to obtain a function
-that will step in one direction or the other:
+Agora você pode usar `chooseStepFunction(backward:)` para obter uma função
+que dá um passo em uma direção ou na outra:
 
 ```swift
 var currentValue = 3
@@ -1199,15 +1197,15 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
   ```
 -->
 
-The example above determines whether a positive or negative step is needed
-to move a variable called `currentValue` progressively closer to zero.
-`currentValue` has an initial value of `3`,
-which means that `currentValue > 0` returns `true`,
-causing `chooseStepFunction(backward:)` to return the `stepBackward(_:)` function.
-A reference to the returned function is stored in a constant called `moveNearerToZero`.
+O exemplo acima determina se é preciso um passo positivo ou negativo
+para aproximar progressivamente de zero uma variável chamada `currentValue`.
+`currentValue` tem valor inicial `3`,
+o que significa que `currentValue > 0` retorna `true`,
+fazendo com que `chooseStepFunction(backward:)` retorne a função `stepBackward(_:)`.
+Uma referência à função retornada é armazenada em uma constante chamada `moveNearerToZero`.
 
-Now that `moveNearerToZero` refers to the correct function,
-it can be used to count to zero:
+Agora que `moveNearerToZero` se refere à função correta,
+ela pode ser usada para contar até zero:
 
 ```swift
 print("Counting to zero:")
@@ -1241,20 +1239,20 @@ print("zero!")
   ```
 -->
 
-## Nested Functions
+## Funções aninhadas
 
-All of the functions you have encountered so far in this chapter
-have been examples of *global functions*, which are defined at a global scope.
-You can also define functions inside the bodies of other functions,
-known as *nested functions*.
+Todas as funções que você viu até agora neste capítulo
+são exemplos de *funções globais*, definidas em escopo global.
+Você também pode definir funções dentro dos corpos de outras funções,
+conhecidas como *funções aninhadas*.
 
-Nested functions are hidden from the outside world by default,
-but can still be called and used by their enclosing function.
-An enclosing function can also return one of its nested functions
-to allow the nested function to be used in another scope.
+Funções aninhadas são ocultas do mundo externo por padrão,
+mas ainda podem ser chamadas e usadas pela função que as envolve.
+Uma função envolvente também pode retornar uma de suas funções aninhadas
+para permitir que a função aninhada seja usada em outro escopo.
 
-You can rewrite the `chooseStepFunction(backward:)` example above
-to use and return nested functions:
+Você pode reescrever o exemplo `chooseStepFunction(backward:)` acima
+para usar e retornar funções aninhadas:
 
 ```swift
 func chooseStepFunction(backward: Bool) -> (Int) -> Int {
@@ -1313,3 +1311,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

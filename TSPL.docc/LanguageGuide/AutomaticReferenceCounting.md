@@ -1042,7 +1042,7 @@ indicated by the exclamation point at the end of its type annotation (`City!`).
 This means that the `capitalCity` property has a default value of `nil`,
 like any other optional,
 but can be accessed without the need to unwrap its value
-as described in <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
+as described in <doc:TheBasics#Optionals-com-unwrap-implícito>.
 
 Because `capitalCity` has a default `nil` value,
 a new `Country` instance is considered fully initialized
@@ -1272,7 +1272,7 @@ the closure *captures* self,
 which means that it holds a strong reference back to the `HTMLElement` instance.
 A strong reference cycle is created between the two.
 (For more information about capturing values in a closure,
-see <doc:Closures#Capturing-Values>.)
+see <doc:Closures#Capturando-valores>.)
 
 > Note: Even though the closure refers to `self` multiple times,
 > it only captures one strong reference to the `HTMLElement` instance.

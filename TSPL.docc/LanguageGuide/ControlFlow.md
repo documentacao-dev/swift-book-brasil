@@ -818,8 +818,8 @@ let freezeWarning: String? = if temperatureInCelsius <= 0 {
 
 No código acima, um ramo da expressão `if` tem um valor de string
 e o outro ramo tem o valor `nil`.
-O valor `nil` poderia ser usado como valor de qualquer tipo opcional,
-então você precisa escrever explicitamente que `freezeWarning` é uma string opcional,
+O valor `nil` poderia ser usado como valor de qualquer tipo optional,
+então você precisa escrever explicitamente que `freezeWarning` é uma string optional,
 como descrito em <doc:TheBasics#Type-Annotations>.
 
 Uma forma alternativa de fornecer essa informação de tipo

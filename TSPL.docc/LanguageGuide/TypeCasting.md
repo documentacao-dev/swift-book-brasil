@@ -1,33 +1,33 @@
-# Type Casting
+# Conversão de tipos
 
-Determine a value's runtime type and give it more specific type information.
+Determine o tipo de tempo de execução de um valor e dê a ele informações de tipo mais específicas.
 
-*Type casting* is a way to check the type of an instance,
-or to treat that instance as a different
-superclass or subclass from somewhere else in its own class hierarchy.
+*Conversão de tipos* é uma forma de verificar o tipo de uma instância,
+ou de tratar essa instância como uma superclasse ou subclasse diferente
+dentro da própria hierarquia de classes.
 
-Type casting in Swift is implemented with the `is` and `as` operators.
-These two operators provide a simple and expressive way
-to check the type of a value or cast a value to a different type.
+A conversão de tipos em Swift é implementada com os operadores `is` e `as`.
+Esses dois operadores oferecem uma forma simples e expressiva
+de verificar o tipo de um valor ou converter um valor para outro tipo.
 
-You can also use type casting to check whether a type conforms to a protocol,
-as described in <doc:Protocols#Checking-for-Protocol-Conformance>.
+Você também pode usar a conversão de tipos para verificar se um tipo está em conformidade com um protocolo,
+como descrito em <doc:Protocols#Checking-for-Protocol-Conformance>.
 
-## Defining a Class Hierarchy for Type Casting
+## Definindo uma hierarquia de classes para conversão de tipos
 
-You can use type casting with a hierarchy of classes and subclasses
-to check the type of a particular class instance
-and to cast that instance to another class within the same hierarchy.
-The three code snippets below define a hierarchy of classes
-and an array containing instances of those classes,
-for use in an example of type casting.
+Você pode usar a conversão de tipos com uma hierarquia de classes e subclasses
+para verificar o tipo de uma instância de classe específica
+e para converter essa instância para outra classe dentro da mesma hierarquia.
+Os três trechos de código abaixo definem uma hierarquia de classes
+e um array que contém instâncias dessas classes,
+para usar em um exemplo de conversão de tipos.
 
-The first snippet defines a new base class called `MediaItem`.
-This class provides basic functionality for any kind of item that appears
-in a digital media library.
-Specifically, it declares a `name` property of type `String`,
-and an `init(name:)` initializer.
-(It's assumed that all media items, including all movies and songs, will have a name.)
+O primeiro trecho define uma nova classe base chamada `MediaItem`.
+Essa classe oferece funcionalidades básicas para qualquer tipo de item
+que aparece em uma biblioteca de mídia digital.
+Especificamente, ela declara uma propriedade `name` do tipo `String`
+e um inicializador `init(name:)`.
+(Presume-se que todos os itens de mídia, incluindo todos os filmes e músicas, terão um nome.)
 
 ```swift
 class MediaItem {
@@ -51,12 +51,12 @@ class MediaItem {
   ```
 -->
 
-The next snippet defines two subclasses of `MediaItem`.
-The first subclass, `Movie`, encapsulates additional information about a movie or film.
-It adds a `director` property on top of the base `MediaItem` class,
-with a corresponding initializer.
-The second subclass, `Song`, adds an `artist` property and initializer
-on top of the base class:
+O próximo trecho define duas subclasses de `MediaItem`.
+A primeira subclasse, `Movie`, encapsula informações adicionais sobre um filme.
+Ela acrescenta uma propriedade `director` à classe base `MediaItem`,
+com o inicializador correspondente.
+A segunda subclasse, `Song`, acrescenta uma propriedade `artist`
+e um inicializador à classe base:
 
 ```swift
 class Movie: MediaItem {
@@ -98,13 +98,13 @@ class Song: MediaItem {
   ```
 -->
 
-The final snippet creates a constant array called `library`,
-which contains two `Movie` instances and three `Song` instances.
-The type of the `library` array is inferred
-by initializing it with the contents of an array literal.
-Swift's type checker is able to deduce that `Movie` and `Song` have
-a common superclass of `MediaItem`,
-and so it infers a type of `[MediaItem]` for the `library` array:
+O último trecho cria uma constante array chamada `library`,
+que contém duas instâncias de `Movie` e três instâncias de `Song`.
+O tipo do array `library` é inferido
+ao inicializá-lo com o conteúdo de um literal de array.
+O verificador de tipos do Swift consegue deduzir que `Movie` e `Song` têm
+uma superclasse em comum, `MediaItem`,
+e por isso infere o tipo `[MediaItem]` para o array `library`:
 
 ```swift
 let library = [
@@ -134,24 +134,24 @@ let library = [
   ```
 -->
 
-The items stored in `library` are still `Movie` and `Song` instances behind the scenes.
-However, if you iterate over the contents of this array,
-the items you receive back are typed as `MediaItem`,
-and not as `Movie` or `Song`.
-In order to work with them as their native type,
-you need to *check* their type,
-or *downcast* them to a different type,
-as described below.
+Os itens armazenados em `library` continuam sendo instâncias de `Movie` e `Song` por trás dos panos.
+No entanto, se você percorrer o conteúdo desse array,
+os itens que você recebe são tipados como `MediaItem`,
+e não como `Movie` ou `Song`.
+Para trabalhar com eles no tipo nativo,
+você precisa *verificar* o tipo deles,
+ou fazer *downcast* para outro tipo,
+como descrito a seguir.
 
-## Checking Type
+## Verificando o tipo
 
-Use the *type check operator* (`is`) to check
-whether an instance is of a certain subclass type.
-The type check operator returns `true` if the instance is of that subclass type
-and `false` if it's not.
+Use o *operador de verificação de tipo* (`is`) para verificar
+se uma instância é de determinado tipo de subclasse.
+O operador de verificação de tipo retorna `true` se a instância for desse tipo de subclasse
+e `false` se não for.
 
-The example below defines two variables, `movieCount` and `songCount`,
-which count the number of `Movie` and `Song` instances in the `library` array:
+O exemplo abaixo define duas variáveis, `movieCount` e `songCount`,
+que contam quantas instâncias de `Movie` e de `Song` há no array `library`:
 
 ```swift
 var movieCount = 0
@@ -189,54 +189,54 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
   ```
 -->
 
-This example iterates through all items in the `library` array.
-On each pass, the `for`-`in` loop sets the `item` constant
-to the next `MediaItem` in the array.
+Este exemplo percorre todos os itens do array `library`.
+A cada passagem, o laço `for`-`in` define a constante `item`
+como o próximo `MediaItem` do array.
 
-`item is Movie` returns `true` if the current `MediaItem`
-is a `Movie` instance and `false` if it's not.
-Similarly, `item is Song` checks whether the item is a `Song` instance.
-At the end of the `for`-`in` loop, the values of `movieCount` and `songCount`
-contain a count of how many `MediaItem` instances were found of each type.
+`item is Movie` retorna `true` se o `MediaItem` atual
+for uma instância de `Movie`, e `false` se não for.
+De forma semelhante, `item is Song` verifica se o item é uma instância de `Song`.
+Ao final do laço `for`-`in`, os valores de `movieCount` e `songCount`
+contêm a contagem de quantas instâncias de `MediaItem` foram encontradas de cada tipo.
 
 ## Downcasting
 
-A constant or variable of a certain class type may actually refer to
-an instance of a subclass behind the scenes.
-Where you believe this is the case,
-you can try to *downcast* to the subclass type
-with a *type cast operator* (`as?` or `as!`).
+Uma constante ou variável de determinado tipo de classe pode, na verdade,
+referenciar uma instância de uma subclasse por trás dos panos.
+Quando você achar que esse é o caso,
+pode tentar fazer *downcast* para o tipo da subclasse
+com um *operador de conversão de tipo* (`as?` ou `as!`).
 
-Because downcasting can fail,
-the type cast operator comes in two different forms.
-The conditional form, `as?`, returns an optional value of the type you are trying to downcast to.
-The forced form, `as!`, attempts the downcast and force-unwraps the result
-as a single compound action.
+Como o downcast pode falhar,
+o operador de conversão de tipo vem em duas formas diferentes.
+A forma condicional, `as?`, retorna um valor optional do tipo para o qual você está tentando fazer o downcast.
+A forma forçada, `as!`, tenta o downcast e faz unwrap forçado do resultado
+em uma única ação composta.
 
-Use the conditional form of the type cast operator (`as?`)
-when you aren't sure if the downcast will succeed.
-This form of the operator will always return an optional value,
-and the value will be `nil` if the downcast was not possible.
-This enables you to check for a successful downcast.
+Use a forma condicional do operador de conversão de tipo (`as?`)
+quando não tiver certeza de que o downcast vai dar certo.
+Essa forma do operador sempre retorna um optional,
+e o valor será `nil` se o downcast não for possível.
+Assim você pode verificar se o downcast deu certo.
 
-Use the forced form of the type cast operator (`as!`)
-only when you are sure that the downcast will always succeed.
-This form of the operator will trigger a runtime error
-if you try to downcast to an incorrect class type.
+Use a forma forçada do operador de conversão de tipo (`as!`)
+apenas quando tiver certeza de que o downcast sempre vai dar certo.
+Essa forma do operador dispara um erro de tempo de execução
+se você tentar fazer downcast para um tipo de classe incorreto.
 
-The example below iterates over each `MediaItem` in `library`,
-and prints an appropriate description for each item.
-To do this, it needs to access each item as a true `Movie` or `Song`,
-and not just as a `MediaItem`.
-This is necessary in order for it to be able to access
-the `director` or `artist` property of a `Movie` or `Song`
-for use in the description.
+O exemplo abaixo percorre cada `MediaItem` em `library`
+e imprime uma descrição apropriada para cada item.
+Para isso, ele precisa acessar cada item como um `Movie` ou `Song` de verdade,
+e não apenas como um `MediaItem`.
+Isso é necessário para que ele consiga acessar
+a propriedade `director` ou `artist` de um `Movie` ou `Song`
+e usá-la na descrição.
 
-In this example, each item in the array might be a `Movie`,
-or it might be a `Song`.
-You don't know in advance which actual class to use for each item,
-and so it's appropriate to use the conditional form of the type cast operator (`as?`)
-to check the downcast each time through the loop:
+Neste exemplo, cada item do array pode ser um `Movie`
+ou pode ser um `Song`.
+Você não sabe de antemão qual classe real usar para cada item,
+por isso é apropriado usar a forma condicional do operador de conversão de tipo (`as?`)
+para verificar o downcast em cada passagem pelo laço:
 
 ```swift
 for item in library {
@@ -274,36 +274,36 @@ for item in library {
   ```
 -->
 
-The example starts by trying to downcast the current `item` as a `Movie`.
-Because `item` is a `MediaItem` instance, it's possible that it *might* be a `Movie`;
-equally, it's also possible that it might be a `Song`,
-or even just a base `MediaItem`.
-Because of this uncertainty, the `as?` form of the type cast operator returns an *optional* value
-when attempting to downcast to a subclass type.
-The result of `item as? Movie` is of type `Movie?`, or “optional `Movie`”.
+O exemplo começa tentando fazer o downcast do `item` atual para `Movie`.
+Como `item` é uma instância de `MediaItem`, é possível que ele *seja* um `Movie`;
+da mesma forma, também é possível que seja um `Song`,
+ou mesmo apenas um `MediaItem` da base.
+Por causa dessa incerteza, a forma `as?` do operador de conversão de tipo retorna um valor *optional*
+ao tentar fazer o downcast para um tipo de subclasse.
+O resultado de `item as? Movie` é do tipo `Movie?`, ou “`Movie` optional”.
 
-Downcasting to `Movie` fails when applied to
-the `Song` instances in the library array.
-To cope with this, the example above uses optional binding
-to check whether the optional `Movie` actually contains a value
-(that is, to find out whether the downcast succeeded.)
-This optional binding is written “`if let movie = item as? Movie`”,
-which can be read as:
+O downcast para `Movie` falha quando aplicado às
+instâncias de `Song` no array `library`.
+Para lidar com isso, o exemplo acima usa optional binding
+para verificar se o `Movie` optional realmente contém um valor
+(ou seja, para descobrir se o downcast deu certo).
+Esse optional binding é escrito como “`if let movie = item as? Movie`”,
+que pode ser lido assim:
 
-“Try to access `item` as a `Movie`.
-If this is successful,
-set a new temporary constant called `movie` to
-the value stored in the returned optional `Movie`.”
+“Tente acessar `item` como um `Movie`.
+Se isso der certo,
+defina uma nova constante temporária chamada `movie` com
+o valor armazenado no `Movie` optional retornado.”
 
-If the downcasting succeeds, the properties of `movie` are then used
-to print a description for that `Movie` instance, including the name of its `director`.
-A similar principle is used to check for `Song` instances,
-and to print an appropriate description (including `artist` name)
-whenever a `Song` is found in the library.
+Se o downcast der certo, as propriedades de `movie` são então usadas
+para imprimir uma descrição dessa instância de `Movie`, incluindo o nome do `director`.
+Um princípio semelhante é usado para verificar instâncias de `Song`
+e imprimir uma descrição apropriada (incluindo o nome do `artist`)
+sempre que um `Song` for encontrado na biblioteca.
 
-> Note: Casting doesn't actually modify the instance or change its values.
-> The underlying instance remains the same; it's simply treated and accessed
-> as an instance of the type to which it has been cast.
+> Nota: A conversão não modifica a instância nem altera os valores dela.
+> A instância subjacente continua a mesma; ela simplesmente é tratada e acessada
+> como uma instância do tipo para o qual foi convertida.
 
 <!--
   TODO: This example should be followed by the same example written with switch,
@@ -317,20 +317,20 @@ whenever a `Song` is found in the library.
   The reference shows the behavior in a contrived example.
 -->
 
-## Type Casting for Any and AnyObject
+## Conversão de tipos para Any e AnyObject
 
-Swift provides two special types for working with nonspecific types:
+O Swift oferece dois tipos especiais para trabalhar com tipos não específicos:
 
-- `Any` can represent an instance of any type at all, including function types.
-- `AnyObject` can represent an instance of any class type.
+- `Any` pode representar uma instância de qualquer tipo, incluindo tipos de função.
+- `AnyObject` pode representar uma instância de qualquer tipo de classe.
 
-Use `Any` and `AnyObject` only when you explicitly need
-the behavior and capabilities they provide.
-It's always better to be specific about the types you expect to work with in your code.
+Use `Any` e `AnyObject` somente quando precisar explicitamente
+do comportamento e dos recursos que eles oferecem.
+É sempre melhor ser específico quanto aos tipos com os quais você espera trabalhar no código.
 
-Here's an example of using `Any` to work with a mix of different types,
-including function types and nonclass types.
-The example creates an array called `things`, which can store values of type `Any`:
+Aqui está um exemplo de uso de `Any` para trabalhar com uma mistura de tipos diferentes,
+incluindo tipos de função e tipos que não são de classe.
+O exemplo cria um array chamado `things`, que pode armazenar valores do tipo `Any`:
 
 ```swift
 var things: [Any] = []
@@ -362,20 +362,20 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
   ```
 -->
 
-The `things` array contains
-two `Int` values, two `Double` values, a `String` value,
-a tuple of type `(Double, Double)`,
-the movie “Ghostbusters”,
-and a closure expression that takes a `String` value
-and returns another `String` value.
+O array `things` contém
+dois valores `Int`, dois valores `Double`, um valor `String`,
+uma tupla do tipo `(Double, Double)`,
+o filme “Ghostbusters”
+e uma expressão de closure que recebe um valor `String`
+e retorna outro valor `String`.
 
-To discover the specific type of a constant or variable
-that's known only to be of type `Any` or `AnyObject`,
-you can use an `is` or `as` pattern in a `switch` statement's cases.
-The example below iterates over the items in the `things` array
-and queries the type of each item with a `switch` statement.
-Several of the `switch` statement's cases bind their matched value to
-a constant of the specified type to enable its value to be printed:
+Para descobrir o tipo específico de uma constante ou variável
+que se sabe ser apenas do tipo `Any` ou `AnyObject`,
+você pode usar um padrão `is` ou `as` nos casos de uma instrução `switch`.
+O exemplo abaixo percorre os itens do array `things`
+e consulta o tipo de cada item com uma instrução `switch`.
+Vários casos da instrução `switch` vinculam o valor correspondido a
+uma constante do tipo especificado, para que o valor possa ser impresso:
 
 ```swift
 for thing in things {
@@ -453,12 +453,12 @@ for thing in things {
   ```
 -->
 
-> Note: The `Any` type represents values of any type, including optional types.
-> Swift gives you a warning if you use an optional value
-> where a value of type `Any` is expected.
-> If you really do need to use an optional value as an `Any` value,
-> you can use the `as` operator to explicitly cast the optional to `Any`,
-> as shown below.
+> Nota: O tipo `Any` representa valores de qualquer tipo, incluindo tipos optional.
+> O Swift mostra um aviso se você usar um valor optional
+> onde um valor do tipo `Any` é esperado.
+> Se você realmente precisar usar um valor optional como um valor `Any`,
+> pode usar o operador `as` para converter explicitamente o optional para `Any`,
+> como mostrado abaixo.
 >
 > ```swift
 > let optionalNumber: Int? = 3
@@ -531,3 +531,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

@@ -1296,7 +1296,7 @@ Para mais informações, veja <doc:Functions#Functions-with-Multiple-Return-Valu
 
 > Nota: Tuplas são úteis para grupos simples de valores relacionados.
 > Elas não são adequadas para criar estruturas de dados complexas.
-> Se a sua estrutura de dados tende a ser mais complexa, modele-a como uma classe ou estrutura,
+> Se a sua estrutura de dados tende a ser mais complexa, modele-a como uma classe ou struct,
 > e não como uma tupla.
 > Para mais informações, veja <doc:ClassesAndStructures>.
 

@@ -587,7 +587,7 @@ if question {
   !! ^~~~~~~
   !! /tmp/swifttest.swift:7:4: warning: expression of type 'Bool' is unused
   !! answer2
-  !! ^~~~~~
+  !! ^~~~~~~
   ```
 -->
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Build do site swift.documentacao.dev com o Swift-DocC, saída em site/.
 #
-# - gera o resumo da gramática (bin/generate-grammar), como o publish-book oficial;
+# - gera o resumo da gramática na cópia, como o bin/generate-grammar oficial, mas
+#   reconhecendo os blocos "> Gramática de" e com título em português;
 # - trabalha numa cópia do TSPL.docc: ali os links <doc:X#Secao> passam a apontar
 #   para as âncoras dos títulos traduzidos (ancorar_links.py); o repositório
 #   guarda os links iguais aos do original;
@@ -15,13 +16,25 @@ cd "$(git rev-parse --show-toplevel)"
 DOCC=(docc)
 command -v docc >/dev/null || DOCC=(xcrun docc)
 
-resumo="TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md"
 tmp=$(mktemp -d)
-limpar() { rm -rf "$tmp" "$resumo"; }
+limpar() { rm -rf "$tmp"; }
 trap limpar EXIT
 
-bin/generate-grammar
 cp -R TSPL.docc "$tmp/TSPL.docc"
+resumo="$tmp/TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md"
+{
+    echo "# Resumo da gramática"
+    echo
+    echo "Leia a gramática formal completa."
+    echo
+    for cap in LexicalStructure Types Expressions Statements Declarations Attributes Patterns GenericParametersAndArguments; do
+        sed 's/^> Grammar of /> Gramática de /' "TSPL.docc/ReferenceManual/$cap.md" \
+            | awk '/^# / { sub("#", "##"); print; print "" }
+                   /^> Gramática de / { g = 1 }
+                   g && /^>/ { print }
+                   g && /^$/ { g = 0; print "" }'
+    done
+} > "$resumo"
 python3 tool/traducao/ancorar_links.py "$tmp/TSPL.docc"
 
 em_ingles=$(python3 - <<'PY'

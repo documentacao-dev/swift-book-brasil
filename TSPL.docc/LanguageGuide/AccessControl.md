@@ -1,178 +1,174 @@
-# Access Control
+# Controle de acesso
 
-Manage the visibility of code by declaration, file, and module.
+Gerencie a visibilidade do código por declaração, arquivo e módulo.
 
-*Access control* restricts access to parts of your code
-from code in other source files and modules.
-This feature enables you to hide the implementation details of your code,
-and to specify a preferred interface through which that code can be accessed and used.
+*Controle de acesso* restringe o acesso a partes do seu código
+a partir de código em outros arquivos-fonte e módulos.
+Esse recurso permite ocultar os detalhes de implementação do seu código
+e definir uma interface preferida pela qual esse código pode ser acessado e usado.
 
-You can assign specific access levels to individual types
-(classes, structures, and enumerations),
-as well as to properties, methods, initializers, and subscripts belonging to those types.
-Protocols can be restricted to a certain context,
-as can global constants, variables, and functions.
+Você pode atribuir níveis de acesso específicos a tipos individuais
+(classes, structs e enums),
+assim como a propriedades, métodos, inicializadores e subscripts pertencentes a esses tipos.
+Protocolos podem ser restritos a um determinado contexto,
+assim como constantes, variáveis e funções globais.
 
-In addition to offering various levels of access control,
-Swift reduces the need to specify explicit access control levels
-by providing default access levels for typical scenarios.
-Indeed, if you are writing a single-target app,
-you may not need to specify explicit access control levels at all.
+Além de oferecer vários níveis de controle de acesso,
+o Swift reduz a necessidade de especificar níveis de acesso explícitos
+ao fornecer níveis de acesso padrão para cenários típicos.
+Na verdade, se você estiver escrevendo um app com um único target,
+talvez nem precise especificar níveis de acesso explícitos.
 
-> Note: The various aspects of your code that can have access control applied to them
-> (properties, types, functions, and so on)
-> are referred to as “entities” in the sections below, for brevity.
+> Nota: Os vários aspectos do seu código aos quais o controle de acesso pode ser aplicado
+> (propriedades, tipos, funções e assim por diante)
+> são chamados de “entidades” nas seções abaixo, por brevidade.
 
-## Modules, Source Files, and Packages
+## Módulos, arquivos-fonte e pacotes
 
-Swift's access control model is based on the concept of
-modules, source files, and packages.
+O modelo de controle de acesso do Swift se baseia no conceito de
+módulos, arquivos-fonte e pacotes.
 
-A *module* is a single unit of code distribution ---
-a framework or application that's built and shipped as a single unit
-and that can be imported by another module with Swift's `import` keyword.
+Um *módulo* é uma única unidade de distribuição de código:
+um framework ou app que é compilado e distribuído como uma unidade única
+e que pode ser importado por outro módulo com a palavra-chave `import` do Swift.
 
-Each build target (such as an app bundle or framework) in Xcode
-is treated as a separate module in Swift.
-If you group together aspects of your app's code as a stand-alone framework ---
-perhaps to encapsulate and reuse that code across multiple applications ---
-then everything you define within that framework will be part of a separate module
-when it's imported and used within an app,
-or when it's used within another framework.
+Cada target de build (como um bundle de app ou um framework) no Xcode
+é tratado como um módulo separado no Swift.
+Se você agrupar aspectos do código do seu app como um framework independente
+(talvez para encapsular e reutilizar esse código em vários apps),
+então tudo o que você definir dentro desse framework fará parte de um módulo separado
+quando for importado e usado dentro de um app,
+ou quando for usado dentro de outro framework.
 
-A *source file* is a single Swift source code file within a module
-(in effect, a single file within an app or framework).
-Although it's common to define individual types in separate source files,
-a single source file can contain definitions for multiple types, functions, and so on.
+Um *arquivo-fonte* é um único arquivo de código-fonte Swift dentro de um módulo
+(na prática, um único arquivo dentro de um app ou framework).
+Embora seja comum definir tipos individuais em arquivos-fonte separados,
+um único arquivo-fonte pode conter definições de vários tipos, funções e assim por diante.
 
-A *package* is a group of modules that you develop as a unit.
-You define the modules that form a package
-as part of configuring the build system you're using,
-not as part of your Swift source code.
-For example, if you use Swift Package Manager to build your code,
-you define a package in your `Package.swift` file
-using APIs from the [PackageDescription][] module,
-and if you use Xcode, you specify the package name
-in the Package Access Identifier build setting.
+Um *pacote* é um grupo de módulos que você desenvolve como uma unidade.
+Você define os módulos que formam um pacote
+como parte da configuração do sistema de build que você está usando,
+e não como parte do seu código-fonte Swift.
+Por exemplo, se você usa o Swift Package Manager para compilar seu código,
+define um pacote no arquivo `Package.swift`
+usando as APIs do módulo [PackageDescription][],
+e se usa o Xcode, especifica o nome do pacote
+na configuração de build Package Access Identifier.
 
 [PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
-## Access Levels
+## Níveis de acesso
 
-Swift provides six different *access levels* for entities within your code.
-These access levels are relative to the source file in which an entity is defined,
-the module that source file belongs to,
-and the package that the module belongs to.
+O Swift oferece seis *níveis de acesso* diferentes para entidades no seu código.
+Esses níveis de acesso são relativos ao arquivo-fonte em que uma entidade é definida,
+ao módulo a que esse arquivo-fonte pertence
+e ao pacote a que o módulo pertence.
 
-- *Open access* and *public access*
-  enable entities to be used within any source file from their defining module,
-  and also in a source file from another module that imports the defining module.
-  You typically use open or public access when specifying the public interface to a framework.
-  The difference between open and public access is described below.
-- *Package access*
-  enables entities to be used within
-  any source files from their defining package
-  but not in any source file outside of that package.
-  You typically use package access
-  within an app or framework that's structured into multiple modules.
-- *Internal access*
-  enables entities to be used within any source file from their defining module,
-  but not in any source file outside of that module.
-  You typically use internal access when defining
-  an app's or a framework's internal structure.
-- *File-private access*
-  restricts the use of an entity to its own defining source file.
-  Use file-private access to hide the implementation details of
-  a specific piece of functionality
-  when those details are used within an entire file.
-- *Private access*
-  restricts the use of an entity to the enclosing declaration,
-  and to extensions of that declaration that are in the same file.
-  Use private access to hide the implementation details of
-  a specific piece of functionality
-  when those details are used only within a single declaration.
+- *Acesso open* e *acesso public*
+  permitem que entidades sejam usadas em qualquer arquivo-fonte do módulo que as define,
+  e também em um arquivo-fonte de outro módulo que importe o módulo que as define.
+  Você normalmente usa acesso open ou public ao especificar a interface pública de um framework.
+  A diferença entre open e public é descrita abaixo.
+- *Acesso package*
+  permite que entidades sejam usadas em qualquer arquivo-fonte do pacote que as define,
+  mas não em nenhum arquivo-fonte fora desse pacote.
+  Você normalmente usa acesso package
+  dentro de um app ou framework estruturado em vários módulos.
+- *Acesso internal*
+  permite que entidades sejam usadas em qualquer arquivo-fonte do módulo que as define,
+  mas não em nenhum arquivo-fonte fora desse módulo.
+  Você normalmente usa acesso internal ao definir
+  a estrutura interna de um app ou framework.
+- *Acesso file-private*
+  restringe o uso de uma entidade ao seu próprio arquivo-fonte.
+  Use acesso file-private para ocultar os detalhes de implementação de
+  uma funcionalidade específica quando esses detalhes são usados em um arquivo inteiro.
+- *Acesso private*
+  restringe o uso de uma entidade à declaração que a envolve,
+  e às extensões dessa declaração que estejam no mesmo arquivo.
+  Use acesso private para ocultar os detalhes de implementação de
+  uma funcionalidade específica quando esses detalhes são usados apenas dentro de uma única declaração.
 
-Open access is the highest (least restrictive) access level
-and private access is the lowest (most restrictive) access level.
+O acesso open é o nível de acesso mais alto (menos restritivo),
+e o acesso private é o nível mais baixo (mais restritivo).
 
-Open access applies only to classes and class members,
-and it differs from public access
-by allowing code outside the module to subclass and override,
-as discussed below in <doc:AccessControl#Subclassing>.
-Marking a class as open explicitly indicates
-that you've considered the impact of code from other modules
-using that class as a superclass,
-and that you've designed your class's code accordingly.
+O acesso open se aplica apenas a classes e membros de classes,
+e difere do acesso public
+por permitir que código fora do módulo crie subclasses e sobrescreva membros,
+como discutido abaixo em <doc:AccessControl#Subclassing>.
+Marcar uma classe como open indica explicitamente
+que você considerou o impacto de código de outros módulos
+usando essa classe como superclasse,
+e que projetou o código da sua classe de acordo com isso.
 
-### Guiding Principle of Access Levels
+### Princípio orientador dos níveis de acesso
 
-Access levels in Swift follow an overall guiding principle:
-*No entity can be defined in terms of another entity that has
-a lower (more restrictive) access level.*
+Os níveis de acesso no Swift seguem um princípio orientador geral:
+*Nenhuma entidade pode ser definida em termos de outra entidade que tenha
+um nível de acesso mais baixo (mais restritivo).*
 
-For example:
+Por exemplo:
 
-- A public variable can't be defined as having an internal, file-private, or private type,
-  because the type might not be available everywhere that the public variable is used.
-- A function can't have a higher access level than its parameter types and return type,
-  because the function could be used in situations where
-  its constituent types are unavailable to the surrounding code.
+- Uma variável public não pode ser definida com tipo internal, file-private ou private,
+  porque o tipo pode não estar disponível em todos os lugares onde a variável public é usada.
+- Uma função não pode ter nível de acesso mais alto que os tipos dos parâmetros e o tipo de retorno,
+  porque a função poderia ser usada em situações em que
+  seus tipos constituintes não estão disponíveis para o código ao redor.
 
-The specific implications of this guiding principle for different aspects of the language
-are covered in detail below.
+As implicações específicas desse princípio para diferentes aspectos da linguagem
+são detalhadas abaixo.
 
-### Default Access Levels
+### Níveis de acesso padrão
 
-All entities in your code
-(with a few specific exceptions, as described later in this chapter)
-have a default access level of internal
-if you don't specify an explicit access level yourself.
-As a result, in many cases you don't need to specify
-an explicit access level in your code.
+Todas as entidades do seu código
+(com algumas exceções específicas, descritas mais adiante neste capítulo)
+têm o nível de acesso padrão internal
+se você não especificar um nível de acesso explícito.
+Por isso, em muitos casos você não precisa especificar
+um nível de acesso explícito no seu código.
 
-### Access Levels for Single-Target Apps
+### Níveis de acesso para apps com um único target
 
-When you write a simple single-target app,
-the code in your app is typically self-contained within the app
-and doesn't need to be made available outside of the app's module.
-The default access level of internal already matches this requirement.
-Therefore, you don't need to specify a custom access level.
-You may, however, want to mark some parts of your code as file private or private
-in order to hide their implementation details from other code within the app's module.
+Quando você escreve um app simples com um único target,
+o código do app normalmente é autocontido dentro do app
+e não precisa ser disponibilizado fora do módulo do app.
+O nível de acesso padrão internal já atende a esse requisito.
+Portanto, você não precisa especificar um nível de acesso personalizado.
+Talvez valha marcar algumas partes do código como file-private ou private
+para ocultar seus detalhes de implementação de outros códigos dentro do módulo do app.
 
-### Access Levels for Frameworks
+### Níveis de acesso para frameworks
 
-When you develop a framework,
-mark the public-facing interface to that framework
-as open or public so that it can be viewed and accessed by other modules,
-such as an app that imports the framework.
-This public-facing interface is the application programming interface
-(or API) for the framework.
+Ao desenvolver um framework,
+marque a interface voltada para o público como open ou public
+para que ela possa ser vista e acessada por outros módulos,
+como um app que importa o framework.
+Essa interface pública é a interface de programação de aplicações (API) do framework.
 
-> Note: Any internal implementation details of your framework can still use
-> the default access level of internal,
-> or can be marked as private or file private if you want to hide them from
-> other parts of the framework's internal code.
-> You need to mark an entity as open or public only if you want it to become
-> part of your framework's API.
+> Nota: Qualquer detalhe de implementação interno do seu framework ainda pode usar
+> o nível de acesso padrão internal,
+> ou pode ser marcado como private ou file-private se você quiser ocultá-lo de
+> outras partes do código interno do framework.
+> Você só precisa marcar uma entidade como open ou public se quiser que ela se torne
+> parte da API do seu framework.
 
-### Access Levels for Unit Test Targets
+### Níveis de acesso para targets de testes unitários
 
-When you write an app with a unit test target,
-the code in your app needs to be made available to that module in order to be tested.
-By default, only entities marked as open or public
-are accessible to other modules.
-However, a unit test target can access any internal entity,
-if you mark the import declaration for a product module with the `@testable` attribute
-and compile that product module with testing enabled.
+Ao escrever um app com um target de testes unitários,
+o código do app precisa ser disponibilizado para esse módulo para que possa ser testado.
+Por padrão, apenas entidades marcadas como open ou public
+são acessíveis a outros módulos.
+No entanto, um target de testes unitários pode acessar qualquer entidade internal,
+se você marcar a declaração de import do módulo do produto com o atributo `@testable`
+e compilar esse módulo do produto com testes habilitados.
 
-## Access Control Syntax
+## Sintaxe do controle de acesso
 
-Define the access level for an entity by placing
-one of the modifiers listed in <doc:AccessControl#Access-Levels>,
-such as `public` or `private`,
-at the beginning of the entity's declaration.
-For example:
+Defina o nível de acesso de uma entidade colocando
+um dos modificadores listados em <doc:AccessControl#Access-Levels>,
+como `public` ou `private`,
+no início da declaração da entidade.
+Por exemplo:
 
 ```swift
 public class SomePublicClass {}
@@ -180,43 +176,42 @@ internal struct SomeInternalStruct() {}
 private func somePrivateFunction() {}
 ```
 
-The code above declares `SomePublicClass` as public,
-`SomeInternalStruct` as internal,
-and `somePrivateFunction()` as private.
-If you don't write an explicit access level,
-the default access level modifier is `internal`,
-as described in <doc:AccessControl#Default-Access-Levels>.
-For example, in the code below, `SomeInternalStruct` is implicitly internal:
+O código acima declara `SomePublicClass` como public,
+`SomeInternalStruct` como internal,
+e `somePrivateFunction()` como private.
+Se você não escrever um nível de acesso explícito,
+o modificador de acesso padrão é `internal`,
+como descrito em <doc:AccessControl#Default-Access-Levels>.
+Por exemplo, no código abaixo, `SomeInternalStruct` é implicitamente internal:
 
 ```swift
 struct SomeInternalStruct() {}
 ```
 
-## Custom Types
+## Tipos personalizados
 
-If you want to specify an explicit access level for a custom type,
-do so at the point that you define the type.
-The new type can then be used wherever its access level permits.
-For example, if you define a file-private class,
-that class can only be used as the type of a property,
-or as a function parameter or return type,
-in the source file in which the file-private class is defined.
+Se você quiser especificar um nível de acesso explícito para um tipo personalizado,
+faça isso no momento em que define o tipo.
+O novo tipo pode então ser usado em qualquer lugar que seu nível de acesso permita.
+Por exemplo, se você definir uma classe file-private,
+essa classe só pode ser usada como o tipo de uma propriedade,
+ou como tipo de parâmetro ou de retorno de uma função,
+no arquivo-fonte em que a classe file-private é definida.
 
-The access control level of a type also affects
-the default access level of that type's *members*
-(its properties, methods, initializers, and subscripts).
-If you define a type's access level as private or file private,
-the default access level of its members will also be private or file private.
-If you define a type's access level as internal or public
-(or use the default access level of internal
-without specifying an access level explicitly),
-the default access level of the type's members will be internal.
+O nível de controle de acesso de um tipo também afeta
+o nível de acesso padrão dos *membros* desse tipo
+(suas propriedades, métodos, inicializadores e subscripts).
+Se você definir o nível de acesso de um tipo como private ou file-private,
+o nível de acesso padrão dos membros também será private ou file-private.
+Se você definir o nível de acesso de um tipo como internal ou public
+(ou usar o nível de acesso padrão internal sem especificar um nível explicitamente),
+o nível de acesso padrão dos membros do tipo será internal.
 
-> Important: A public type defaults to having internal members, not public members.
-> If you want a type member to be public, you must explicitly mark it as such.
-> This requirement ensures that the public-facing API for a type is
-> something you opt in to publishing,
-> and avoids presenting the internal workings of a type as public API by mistake.
+> Importante: Um tipo public tem membros internal por padrão, não public.
+> Se você quiser que um membro do tipo seja public, precisa marcá-lo explicitamente como tal.
+> Essa exigência garante que a API pública de um tipo seja
+> algo que você escolhe publicar,
+> e evita apresentar os detalhes internos de um tipo como API pública por engano.
 
 ```swift
 public class SomePublicClass {                   // explicitly public class
@@ -270,13 +265,13 @@ private class SomePrivateClass {                 // explicitly private class
   ```
 -->
 
-### Tuple Types
+### Tipos de tupla
 
-The access level for a tuple type is
-the most restrictive access level of all types used in that tuple.
-For example, if you compose a tuple from two different types,
-one with internal access and one with private access,
-the access level for that compound tuple type will be private.
+O nível de acesso de um tipo tupla é
+o mais restritivo entre todos os tipos usados nessa tupla.
+Por exemplo, se você compuser uma tupla a partir de dois tipos diferentes,
+um com acesso internal e outro com acesso private,
+o nível de acesso desse tipo tupla composto será private.
 
 <!--
   - test: `tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private`
@@ -346,24 +341,24 @@ the access level for that compound tuple type will be private.
   ```
 -->
 
-> Note: Tuple types don't have a standalone definition in the way that
-> classes, structures, enumerations, and functions do.
-> A tuple type's access level is determined automatically
-> from the types that make up the tuple type,
-> and can't be specified explicitly.
+> Nota: Tipos de tupla não têm uma definição independente como
+> classes, structs, enums e funções têm.
+> O nível de acesso de um tipo tupla é determinado automaticamente
+> pelos tipos que compõem a tupla,
+> e não pode ser especificado explicitamente.
 
-### Function Types
+### Tipos de função
 
-The access level for a function type is calculated as
-the most restrictive access level of the function's parameter types and return type.
-You must specify the access level explicitly as part of the function's definition
-if the function's calculated access level doesn't match the contextual default.
+O nível de acesso de um tipo de função é calculado como
+o mais restritivo entre os níveis de acesso dos tipos dos parâmetros e do tipo de retorno da função.
+Você deve especificar o nível de acesso explicitamente como parte da definição da função
+se o nível de acesso calculado não corresponder ao padrão do contexto.
 
-The example below defines a global function called `someFunction()`,
-without providing a specific access-level modifier for the function itself.
-You might expect this function to have the default access level of “internal”,
-but this isn't the case.
-In fact, `someFunction()` won't compile as written below:
+O exemplo abaixo define uma função global chamada `someFunction()`,
+sem fornecer um modificador de acesso específico para a própria função.
+Você pode esperar que essa função tenha o nível de acesso padrão “internal”,
+mas não é isso que acontece.
+Na verdade, `someFunction()` não compila como escrita abaixo:
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -385,16 +380,16 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   ```
 -->
 
-The function's return type is
-a tuple type composed from two of the custom classes defined above in <doc:AccessControl#Custom-Types>.
-One of these classes is defined as internal,
-and the other is defined as private.
-Therefore, the overall access level of the compound tuple type is private
-(the minimum access level of the tuple's constituent types).
+O tipo de retorno da função é
+um tipo tupla composto de duas das classes personalizadas definidas acima em <doc:AccessControl#Custom-Types>.
+Uma dessas classes é definida como internal,
+e a outra como private.
+Portanto, o nível de acesso geral do tipo tupla composto é private
+(o menor nível de acesso entre os tipos constituintes da tupla).
 
-Because the function's return type is private,
-you must mark the function's overall access level with the `private` modifier
-for the function declaration to be valid:
+Como o tipo de retorno da função é private,
+você deve marcar o nível de acesso geral da função com o modificador `private`
+para que a declaração da função seja válida:
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -413,22 +408,22 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
   ```
 -->
 
-It's not valid to mark the definition of `someFunction()`
-with the `public` or `internal` modifiers,
-or to use the default setting of internal,
-because public or internal users of the function might not have appropriate access
-to the private class used in the function's return type.
+Não é válido marcar a definição de `someFunction()`
+com os modificadores `public` ou `internal`,
+nem usar o padrão internal,
+porque usuários public ou internal da função podem não ter o acesso adequado
+à classe private usada no tipo de retorno da função.
 
-### Enumeration Types
+### Tipos de enum
 
-The individual cases of an enumeration automatically receive the same access level as
-the enumeration they belong to.
-You can't specify a different access level for individual enumeration cases.
+Cada caso de um enum recebe automaticamente o mesmo nível de acesso
+do enum a que pertence.
+Você não pode especificar um nível de acesso diferente para casos individuais de enum.
 
-In the example below,
-the `CompassPoint` enumeration has an explicit access level of public.
-The enumeration cases `north`, `south`, `east`, and `west`
-therefore also have an access level of public:
+No exemplo abaixo,
+o enum `CompassPoint` tem o nível de acesso explícito public.
+Os casos do enum `north`, `south`, `east` e `west`
+portanto também têm nível de acesso public:
 
 ```swift
 public enum CompassPoint {
@@ -474,22 +469,22 @@ public enum CompassPoint {
   ```
 -->
 
-#### Raw Values and Associated Values
+#### Raw values e associated values
 
-The types used for any raw values or associated values in an enumeration definition
-must have an access level at least as high as the enumeration's access level.
-For example,
-you can't use a private type as the raw-value type of
-an enumeration with an internal access level.
+Os tipos usados em quaisquer raw values ou associated values em uma definição de enum
+devem ter um nível de acesso pelo menos tão alto quanto o nível de acesso do enum.
+Por exemplo,
+você não pode usar um tipo private como tipo do raw value de
+um enum com nível de acesso internal.
 
-### Nested Types
+### Tipos aninhados
 
-The access level of a nested type is the same as its containing type,
-unless the containing type is public.
-Nested types defined within a public type
-have an automatic access level of internal.
-If you want a nested type within a public type to be publicly available,
-you must explicitly declare the nested type as public.
+O nível de acesso de um tipo aninhado é o mesmo do seu tipo contêiner,
+a menos que o tipo contêiner seja public.
+Tipos aninhados definidos dentro de um tipo public
+têm nível de acesso automático internal.
+Se você quiser que um tipo aninhado dentro de um tipo public seja disponibilizado publicamente,
+precisa declará-lo explicitamente como public.
 
 <!--
   - test: `nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private`
@@ -627,30 +622,30 @@ you must explicitly declare the nested type as public.
   ```
 -->
 
-## Subclassing
+## Criando subclasses
 
-You can subclass any class
-that can be accessed in the current access context
-and that's defined in the same module as the subclass.
-You can also subclass any open class
-that's defined in a different module.
-A subclass can't have a higher access level than its superclass ---
-for example, you can't write a public subclass of an internal superclass.
+Você pode criar uma subclasse de qualquer classe
+que possa ser acessada no contexto de acesso atual
+e que esteja definida no mesmo módulo da subclasse.
+Você também pode criar uma subclasse de qualquer classe open
+definida em outro módulo.
+Uma subclasse não pode ter um nível de acesso mais alto que o da sua superclasse ---
+por exemplo, você não pode escrever uma subclasse public de uma superclasse internal.
 
-In addition,
-for classes that are defined in the same module,
-you can override any class member
-(method, property, initializer, or subscript)
-that's visible in a certain access context.
-For classes that are defined in another module,
-you can override any open class member.
+Além disso,
+para classes definidas no mesmo módulo,
+você pode sobrescrever qualquer membro de classe
+(método, propriedade, inicializador ou subscript)
+que esteja visível em determinado contexto de acesso.
+Para classes definidas em outro módulo,
+você pode sobrescrever qualquer membro de classe open.
 
-An override can make an inherited class member more accessible than its superclass version.
-In the example below, class `A` is a public class with a file-private method called `someMethod()`.
-Class `B` is a subclass of `A`, with a reduced access level of “internal”.
-Nonetheless, class `B` provides an override of `someMethod()`
-with an access level of “internal”, which is *higher* than
-the original implementation of `someMethod()`:
+Um override pode tornar um membro de classe herdado mais acessível do que a versão da superclasse.
+No exemplo abaixo, a classe `A` é uma classe public com um método `someMethod()` file-private.
+A classe `B` é subclasse de `A`, com nível de acesso reduzido para “internal”.
+Mesmo assim, a classe `B` fornece um override de `someMethod()`
+com nível de acesso “internal”, que é *mais alto* que
+a implementação original de `someMethod()`:
 
 ```swift
 public class A {
@@ -676,12 +671,12 @@ internal class B: A {
   ```
 -->
 
-It's even valid for a subclass member to call
-a superclass member that has lower access permissions than the subclass member,
-as long as the call to the superclass's member takes place within
-an allowed access level context
-(that is, within the same source file as the superclass for a file-private member call,
-or within the same module as the superclass for an internal member call):
+É até válido um membro de subclasse chamar
+um membro da superclasse que tenha permissões de acesso mais restritas que o membro da subclasse,
+desde que a chamada ao membro da superclasse aconteça dentro
+de um nível de acesso permitido
+(ou seja, dentro do mesmo arquivo-fonte da superclasse, no caso de uma chamada a um membro file-private,
+ou dentro do mesmo módulo da superclasse, no caso de uma chamada a um membro internal):
 
 ```swift
 public class A {
@@ -711,18 +706,18 @@ internal class B: A {
   ```
 -->
 
-Because superclass `A` and subclass `B` are defined in the same source file,
-it's valid for the `B` implementation of `someMethod()` to call
+Como a superclasse `A` e a subclasse `B` são definidas no mesmo arquivo-fonte,
+é válido que a implementação de `someMethod()` em `B` chame
 `super.someMethod()`.
 
-## Constants, Variables, Properties, and Subscripts
+## Constantes, variáveis, propriedades e subscripts
 
-A constant, variable, or property can't be more public than its type.
-It's not valid to write a public property with a private type, for example.
-Similarly, a subscript can't be more public than either its index type or return type.
+Uma constante, variável ou propriedade não pode ser mais pública que o tipo dela.
+Não é válido escrever, por exemplo, uma propriedade public com um tipo private.
+Da mesma forma, um subscript não pode ser mais público que seu tipo de índice ou seu tipo de retorno.
 
-If a constant, variable, property, or subscript makes use of a private type,
-the constant, variable, property, or subscript must also be marked as `private`:
+Se uma constante, variável, propriedade ou subscript usar um tipo private,
+a constante, variável, propriedade ou subscript também precisa ser marcada como `private`:
 
 ```swift
 private var privateInstance = SomePrivateClass()
@@ -769,29 +764,29 @@ private var privateInstance = SomePrivateClass()
   ```
 -->
 
-### Getters and Setters
+### Getters e setters
 
-Getters and setters for constants, variables, properties, and subscripts
-automatically receive the same access level as
-the constant, variable, property, or subscript they belong to.
+Getters e setters de constantes, variáveis, propriedades e subscripts
+recebem automaticamente o mesmo nível de acesso da
+constante, variável, propriedade ou subscript a que pertencem.
 
-You can give a setter a *lower* access level than its corresponding getter,
-to restrict the read-write scope of that variable, property, or subscript.
-You assign a lower access level by writing
-`fileprivate(set)`, `private(set)`, `internal(set)`, or `package(set)`
-before the `var` or `subscript` introducer.
+Você pode dar a um setter um nível de acesso *mais baixo* que o do seu getter correspondente,
+para restringir o escopo de leitura e escrita dessa variável, propriedade ou subscript.
+Você atribui um nível de acesso mais baixo escrevendo
+`fileprivate(set)`, `private(set)`, `internal(set)` ou `package(set)`
+antes da palavra-chave `var` ou `subscript`.
 
-> Note: This rule applies to stored properties as well as computed properties.
-> Even though you don't write an explicit getter and setter for a stored property,
-> Swift still synthesizes an implicit getter and setter for you
-> to provide access to the stored property's backing storage.
-> Use `fileprivate(set)`, `private(set)`, `internal(set)`, and `package(set)`
-> to change the access level
-> of this synthesized setter in exactly the same way as for an explicit setter
-> in a computed property.
+> Nota: Esta regra se aplica tanto a propriedades armazenadas quanto a propriedades computadas.
+> Mesmo que você não escreva um getter e um setter explícitos para uma propriedade armazenada,
+> o Swift ainda sintetiza um getter e um setter implícitos para dar acesso
+> ao armazenamento de apoio da propriedade.
+> Use `fileprivate(set)`, `private(set)`, `internal(set)` e `package(set)`
+> para alterar o nível de acesso
+> desse setter sintetizado exatamente da mesma forma que faria com um setter explícito
+> em uma propriedade computada.
 
-The example below defines a structure called `TrackedString`,
-which keeps track of the number of times a string property is modified:
+O exemplo abaixo define uma struct chamada `TrackedString`,
+que registra quantas vezes uma propriedade string é modificada:
 
 ```swift
 struct TrackedString {
@@ -819,26 +814,26 @@ struct TrackedString {
   ```
 -->
 
-The `TrackedString` structure defines a stored string property called `value`,
-with an initial value of `""` (an empty string).
-The structure also defines a stored integer property called `numberOfEdits`,
-which is used to track the number of times that `value` is modified.
-This modification tracking is implemented with
-a `didSet` property observer on the `value` property,
-which increments `numberOfEdits` every time the `value` property is set to a new value.
+A struct `TrackedString` define uma propriedade armazenada de string chamada `value`,
+com valor inicial `""` (uma string vazia).
+A struct também define uma propriedade armazenada de inteiro chamada `numberOfEdits`,
+que é usada para contar quantas vezes `value` é modificada.
+Esse controle de modificações é implementado com
+um observador de propriedade `didSet` na propriedade `value`,
+que incrementa `numberOfEdits` toda vez que `value` recebe um novo valor.
 
-The `TrackedString` structure and the `value` property
-don't provide an explicit access-level modifier,
-and so they both receive the default access level of internal.
-However, the access level for the `numberOfEdits` property
-is marked with a `private(set)` modifier
-to indicate that
-the property's getter still has the default access level of internal,
-but the property is settable only from within
-code that's part of the `TrackedString` structure.
-This enables `TrackedString` to modify the `numberOfEdits` property internally,
-but to present the property as a read-only property
-when it's used outside the structure's definition.
+A struct `TrackedString` e a propriedade `value`
+não fornecem um modificador explícito de nível de acesso,
+por isso ambas recebem o nível de acesso padrão, `internal`.
+No entanto, o nível de acesso da propriedade `numberOfEdits`
+é marcado com o modificador `private(set)`
+para indicar que
+o getter da propriedade continua com o nível de acesso padrão, `internal`,
+mas a propriedade só pode receber valores a partir de
+código que faz parte da struct `TrackedString`.
+Isso permite que `TrackedString` modifique a propriedade `numberOfEdits` internamente,
+mas a apresente como uma propriedade somente leitura
+quando usada fora da definição da struct.
 
 <!--
   - test: `reducedSetterScope_error`
@@ -861,8 +856,8 @@ when it's used outside the structure's definition.
   <rdar://problem/54089342> REPL fails to enforce private(set) on struct property
 -->
 
-If you create a `TrackedString` instance and modify its string value a few times,
-you can see the `numberOfEdits` property value update to match the number of modifications:
+Se você criar uma instância de `TrackedString` e modificar seu valor string algumas vezes,
+verá o valor da propriedade `numberOfEdits` ser atualizado para refletir o número de modificações:
 
 ```swift
 var stringToEdit = TrackedString()
@@ -886,22 +881,22 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
   ```
 -->
 
-Although you can query the current value of the `numberOfEdits` property
-from within another source file,
-you can't *modify* the property from another source file.
-This restriction protects the implementation details of
-the `TrackedString` edit-tracking functionality,
-while still providing convenient access to an aspect of that functionality.
+Embora você possa consultar o valor atual da propriedade `numberOfEdits`
+de dentro de outro arquivo-fonte,
+não pode *modificar* a propriedade a partir de outro arquivo-fonte.
+Essa restrição protege os detalhes de implementação
+da funcionalidade de rastreamento de edições de `TrackedString`,
+ao mesmo tempo que oferece acesso prático a um aspecto dessa funcionalidade.
 
-Note that you can assign an explicit access level for both
-a getter and a setter if required.
-The example below shows a version of the `TrackedString` structure
-in which the structure is defined with an explicit access level of public.
-The structure's members (including the `numberOfEdits` property)
-therefore have an internal access level by default.
-You can make the structure's `numberOfEdits` property getter public,
-and its property setter private,
-by combining the `public` and `private(set)` access-level modifiers:
+Observe que você pode atribuir um nível de acesso explícito tanto
+para um getter quanto para um setter, se necessário.
+O exemplo abaixo mostra uma versão da struct `TrackedString`
+em que a struct é definida com nível de acesso explícito public.
+Os membros da struct (incluindo a propriedade `numberOfEdits`)
+têm, portanto, nível de acesso `internal` por padrão.
+Você pode fazer o getter da propriedade `numberOfEdits` ser public,
+e o setter ser private,
+combinando os modificadores de nível de acesso `public` e `private(set)`:
 
 ```swift
 public struct TrackedString {
@@ -986,61 +981,61 @@ public struct TrackedString {
   ```
 -->
 
-## Initializers
+## Inicializadores
 
-Custom initializers can be assigned an access level less than or equal to
-the type that they initialize.
-The only exception is for required initializers
-(as defined in <doc:Initialization#Required-Initializers>).
-A required initializer must have the same access level as the class it belongs to.
+Inicializadores personalizados podem receber um nível de acesso menor ou igual
+ao do tipo que eles inicializam.
+A única exceção são os inicializadores required
+(como definidos em <doc:Initialization#Required-Initializers>).
+Um inicializador required deve ter o mesmo nível de acesso da classe a que pertence.
 
-As with function and method parameters,
-the types of an initializer's parameters can't be more private than
-the initializer's own access level.
+Assim como ocorre com parâmetros de funções e métodos,
+os tipos dos parâmetros de um inicializador não podem ser mais private que
+o nível de acesso do próprio inicializador.
 
-### Default Initializers
+### Inicializadores padrão
 
-As described in <doc:Initialization#Default-Initializers>,
-Swift automatically provides a *default initializer* without any arguments
-for any structure or base class
-that provides default values for all of its properties
-and doesn't provide at least one initializer itself.
+Como descrito em <doc:Initialization#Default-Initializers>,
+o Swift fornece automaticamente um *inicializador padrão* sem argumentos
+para qualquer struct ou classe base
+que forneça valores padrão para todas as suas propriedades
+e não forneça pelo menos um inicializador próprio.
 
-A default initializer has the same access level as the type it initializes,
-unless that type is defined as `public`.
-For a type that's defined as `public`,
-the default initializer is considered internal.
-If you want a public type to be initializable with a no-argument initializer
-when used in another module,
-you must explicitly provide a public no-argument initializer yourself
-as part of the type's definition.
+Um inicializador padrão tem o mesmo nível de acesso do tipo que ele inicializa,
+a menos que esse tipo seja definido como `public`.
+Para um tipo definido como `public`,
+o inicializador padrão é considerado internal.
+Se você quiser que um tipo public possa ser inicializado com um inicializador sem argumentos
+quando usado em outro módulo,
+você precisa fornecer explicitamente um inicializador public sem argumentos
+como parte da definição do tipo.
 
-### Default Memberwise Initializers for Structure Types
+### Inicializadores memberwise padrão para structs
 
-The default memberwise initializer for a structure type is considered private
-if any of the structure's stored properties are private.
-Likewise, if any of the structure's stored properties are file private,
-the initializer is file private.
-Otherwise, the initializer has an access level of internal.
+O inicializador memberwise padrão de uma struct é considerado private
+se alguma das propriedades armazenadas da struct for private.
+Do mesmo modo, se alguma das propriedades armazenadas da struct for file-private,
+o inicializador é file-private.
+Caso contrário, o inicializador tem nível de acesso internal.
 
-As with the default initializer above,
-if you want a public structure type to be initializable with a memberwise initializer
-when used in another module,
-you must provide a public memberwise initializer yourself as part of the type's definition.
+Assim como no caso do inicializador padrão acima,
+se você quiser que uma struct public possa ser inicializada com um inicializador memberwise
+quando usada em outro módulo,
+você precisa fornecer explicitamente um inicializador memberwise public como parte da definição do tipo.
 
-## Protocols
+## Protocolos
 
-If you want to assign an explicit access level to a protocol type,
-do so at the point that you define the protocol.
-This enables you to create protocols that can only be adopted within
-a certain access context.
+Se você quiser atribuir um nível de acesso explícito a um tipo de protocolo,
+faça isso no ponto em que você define o protocolo.
+Isso permite criar protocolos que só podem ser adotados dentro
+de um certo contexto de acesso.
 
-The access level of each requirement within a protocol definition
-is automatically set to the same access level as the protocol.
-You can't set a protocol requirement to a different access level than
-the protocol it supports.
-This ensures that all of the protocol's requirements will be visible
-on any type that adopts the protocol.
+O nível de acesso de cada requisito dentro da definição de um protocolo
+é definido automaticamente como o mesmo nível de acesso do protocolo.
+Você não pode definir um requisito de protocolo com um nível de acesso
+diferente do protocolo ao qual ele pertence.
+Isso garante que todos os requisitos do protocolo fiquem visíveis
+em qualquer tipo que adote o protocolo.
 
 <!--
   - test: `protocolRequirementsCannotBeDifferentThanTheProtocol`
@@ -1083,12 +1078,12 @@ on any type that adopts the protocol.
   ```
 -->
 
-> Note: If you define a public protocol,
-> the protocol's requirements require a public access level
-> for those requirements when they're implemented.
-> This behavior is different from other types,
-> where a public type definition implies
-> an access level of internal for the type's members.
+> Nota: Se você definir um protocolo public,
+> os requisitos do protocolo exigem um nível de acesso public
+> para esses requisitos quando forem implementados.
+> Esse comportamento é diferente dos outros tipos,
+> em que a definição de um tipo public implica
+> um nível de acesso internal para os membros do tipo.
 
 <!--
   - test: `protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private`
@@ -1222,58 +1217,60 @@ on any type that adopts the protocol.
   ```
 -->
 
-### Protocol Inheritance
+### Herança de protocolos
 
-If you define a new protocol that inherits from an existing protocol,
-the new protocol can have at most the same access level as the protocol it inherits from.
-For example,
-you can't write a public protocol that inherits from an internal protocol.
+Se você definir um novo protocolo que herda de um protocolo existente,
+o novo protocolo pode ter no máximo o mesmo nível de acesso
+do protocolo do qual ele herda.
+Por exemplo,
+você não pode escrever um protocolo public que herde de um protocolo internal.
 
-### Protocol Conformance
+### Conformidade a protocolos
 
-A type can conform to a protocol with a lower access level than the type itself.
-For example, you can define a public type that can be used in other modules,
-but whose conformance to an internal protocol can only be used
-within the internal protocol's defining module.
+Um tipo pode estar em conformidade com um protocolo de nível de acesso
+mais baixo que o próprio tipo.
+Por exemplo, você pode definir um tipo public que pode ser usado em outros módulos,
+mas cuja conformidade a um protocolo internal só pode ser usada
+dentro do módulo que define esse protocolo.
 
-The context in which a type conforms to a particular protocol
-is the minimum of the type's access level and the protocol's access level.
-For example, if a type is public, but a protocol it conforms to is internal,
-the type's conformance to that protocol is also internal.
+O contexto em que um tipo está em conformidade com um protocolo específico
+é o mínimo entre o nível de acesso do tipo e o nível de acesso do protocolo.
+Por exemplo, se um tipo é public, mas um protocolo com o qual ele está em conformidade
+é internal, a conformidade do tipo a esse protocolo também é internal.
 
-When you write or extend a type to conform to a protocol,
-you must ensure that the type's implementation of each protocol requirement
-has at least the same access level as the type's conformance to that protocol.
-For example, if a public type conforms to an internal protocol,
-the type's implementation of each protocol requirement must be at least internal.
+Ao escrever ou estender um tipo para que ele esteja em conformidade com um protocolo,
+você deve garantir que a implementação do tipo de cada requisito do protocolo
+tenha pelo menos o mesmo nível de acesso da conformidade do tipo a esse protocolo.
+Por exemplo, se um tipo public está em conformidade com um protocolo internal,
+a implementação do tipo de cada requisito do protocolo deve ser pelo menos internal.
 
-> Note: In Swift, as in Objective-C, protocol conformance is global ---
-> it isn't possible for a type to conform to a protocol in two different ways
-> within the same program.
+> Nota: No Swift, assim como no Objective-C, a conformidade a protocolos é global:
+> não é possível que um tipo esteja em conformidade com um protocolo de duas formas diferentes
+> dentro do mesmo programa.
 
 ## Extensions
 
-You can extend a class, structure, or enumeration in any access context
-in which the class, structure, or enumeration is available.
-Any type members added in an extension have the same default access level as
-type members declared in the original type being extended.
-If you extend a public or internal type, any new type members you add
-have a default access level of internal.
-If you extend a file-private type, any new type members you add
-have a default access level of file private.
-If you extend a private type, any new type members you add
-have a default access level of private.
+Você pode estender uma classe, struct ou enum em qualquer contexto de acesso
+em que a classe, struct ou enum esteja disponível.
+Quaisquer membros de tipo adicionados em uma extension têm o mesmo nível de acesso padrão
+que os membros de tipo declarados no tipo original que está sendo estendido.
+Se você estender um tipo public ou internal, quaisquer novos membros de tipo que você adicionar
+têm nível de acesso padrão internal.
+Se você estender um tipo file-private, quaisquer novos membros de tipo que você adicionar
+têm nível de acesso padrão file-private.
+Se você estender um tipo private, quaisquer novos membros de tipo que você adicionar
+têm nível de acesso padrão private.
 
-Alternatively, you can mark an extension with an explicit access-level modifier
-(for example, `private`)
-to set a new default access level for all members defined within the extension.
-This new default can still be overridden within the extension
-for individual type members.
+Como alternativa, você pode marcar uma extension com um modificador de nível de acesso explícito
+(por exemplo, `private`) para definir um novo nível de acesso padrão
+para todos os membros definidos dentro da extension.
+Esse novo padrão ainda pode ser sobrescrito dentro da extension
+para membros de tipo individuais.
 
-You can't provide an explicit access-level modifier for an extension
-if you're using that extension to add protocol conformance.
-Instead, the protocol's own access level is used to provide
-the default access level for each protocol requirement implementation within the extension.
+Você não pode fornecer um modificador de nível de acesso explícito para uma extension
+se estiver usando essa extension para adicionar conformidade a um protocolo.
+Em vez disso, o nível de acesso do próprio protocolo é usado para definir
+o nível de acesso padrão de cada implementação de requisito de protocolo dentro da extension.
 
 <!--
   - test: `extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private`
@@ -1351,25 +1348,24 @@ the default access level for each protocol requirement implementation within the
   ```
 -->
 
-### Private Members in Extensions
+### Membros private em extensions
 
-Extensions that are in the same file as
-the class, structure, or enumeration that they extend
-behave as if the code in the extension
-had been written as part of the original type's declaration.
-As a result, you can:
+Extensions que estão no mesmo arquivo da classe, struct ou enum que elas estendem
+se comportam como se o código da extension tivesse sido escrito
+como parte da declaração do tipo original.
+Por isso, você pode:
 
-- Declare a private member in the original declaration,
-  and access that member from extensions in the same file.
-- Declare a private member in one extension,
-  and access that member from another extension in the same file.
-- Declare a private member in an extension,
-  and access that member from the original declaration in the same file.
+- Declarar um membro private na declaração original
+  e acessar esse membro a partir de extensions no mesmo arquivo.
+- Declarar um membro private em uma extension
+  e acessar esse membro a partir de outra extension no mesmo arquivo.
+- Declarar um membro private em uma extension
+  e acessar esse membro a partir da declaração original no mesmo arquivo.
 
-This behavior means you can use extensions in the same way
-to organize your code,
-whether or not your types have private entities.
-For example, given the following simple protocol:
+Esse comportamento significa que você pode usar extensions da mesma forma
+para organizar seu código,
+independentemente de seus tipos terem ou não entidades private.
+Por exemplo, dado o seguinte protocolo simples:
 
 ```swift
 protocol SomeProtocol {
@@ -1387,7 +1383,7 @@ protocol SomeProtocol {
   ```
 -->
 
-You can use an extension to add protocol conformance, like this:
+Você pode usar uma extension para adicionar conformidade a protocolo, assim:
 
 ```swift
 struct SomeStruct {
@@ -1422,18 +1418,21 @@ extension SomeStruct: SomeProtocol {
 
 ## Generics
 
-The access level for a generic type or generic function is
-the minimum of the access level of the generic type or function itself
-and the access level of any type constraints on its type parameters.
+O nível de acesso de um tipo genérico ou de uma função genérica é
+o mínimo entre o nível de acesso do próprio tipo ou função
+e o nível de acesso de quaisquer restrições de tipo sobre os parâmetros de tipo dele.
 
-## Type Aliases
+## Aliases de tipo
 
-Any type aliases you define are treated as distinct types for the purposes of access control.
-A type alias can have an access level less than or equal to the access level of the type it aliases.
-For example, a private type alias can alias a private, file-private, internal, public, or open type,
-but a public type alias can't alias an internal, file-private, or private type.
+Os aliases de tipo que você define contam como tipos distintos
+para fins de controle de acesso.
+Um alias de tipo pode ter nível de acesso menor ou igual ao nível de acesso
+do tipo para o qual ele aponta.
+Por exemplo, um alias de tipo private pode apontar para um tipo private, file-private,
+internal, public ou open, mas um alias de tipo public não pode apontar para
+um tipo internal, file-private ou private.
 
-> Note: This rule also applies to type aliases for associated types used to satisfy protocol conformances.
+> Nota: Esta regra também vale para aliases de tipo de tipos associados usados para satisfazer conformidades a protocolos.
 
 <!--
   - test: `typeAliases`
@@ -1485,3 +1484,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

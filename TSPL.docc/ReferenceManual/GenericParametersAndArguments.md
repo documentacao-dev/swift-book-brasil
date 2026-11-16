@@ -1,52 +1,52 @@
-# Generic Parameters and Arguments
+# Parâmetros e argumentos genéricos
 
-Generalize declarations to abstract away concrete types.
+Generalize declarações para abstrair tipos concretos.
 
-This chapter describes parameters and arguments for generic types, functions, and
-initializers. When you declare a generic type, function, subscript, or initializer,
-you specify the type parameters that the generic type, function, or initializer
-can work with. These type parameters act as placeholders that
-are replaced by actual concrete type arguments when an instance of a generic type is
-created or a generic function or initializer is called.
+Este capítulo descreve os parâmetros e os argumentos para tipos, funções e
+inicializadores genéricos. Ao declarar um tipo, uma função, um subscript ou um inicializador genérico,
+você especifica os parâmetros de tipo com os quais o tipo, a função ou o inicializador genérico
+pode trabalhar. Esses parâmetros de tipo funcionam como marcadores de posição que
+são substituídos por argumentos de tipo concretos reais quando uma instância de um tipo genérico é
+criada ou quando uma função ou um inicializador genérico é chamado.
 
-For an overview of generics in Swift, see <doc:Generics>.
+Para uma visão geral de generics em Swift, consulte <doc:Generics>.
 
 <!--
   NOTE: Generic types are sometimes referred to as :newTerm:`parameterized types`
   because they're declared with one or more type parameters.
 -->
 
-## Generic Parameter Clause
+## Cláusula de parâmetro genérico
 
-A *generic parameter clause* specifies the type parameters of a generic
-type or function, along with any associated constraints and requirements on those parameters.
-A generic parameter clause is enclosed in angle brackets (<>)
-and has the following form:
+Uma *cláusula de parâmetro genérico* especifica os parâmetros de tipo de um
+tipo ou função genérica, junto com quaisquer restrições e requisitos associados a esses parâmetros.
+Uma cláusula de parâmetro genérico fica entre colchetes angulares (<>)
+e tem a seguinte forma:
 
 ```swift
 <<#generic parameter list#>>
 ```
 
-The *generic parameter list* is a comma-separated list of generic parameters,
-each of which has the following form:
+A *lista de parâmetros genéricos* é uma lista de parâmetros genéricos separados por vírgula,
+cada um com a seguinte forma:
 
 ```swift
 <#type parameter#>: <#constraint#>
 ```
 
-A generic parameter consists of a *type parameter* followed by
-an optional *constraint*. A *type parameter* is simply the name
-of a placeholder type
-(for example, `T`, `U`, `V`, `Key`, `Value`, and so on).
-You have access to the type parameters (and any of their associated types) in the rest of the
-type, function, or initializer declaration, including in the signature of the function
-or initializer.
+Um parâmetro genérico é formado por um *parâmetro de tipo* seguido de
+uma *restrição* opcional. Um *parâmetro de tipo* é simplesmente o nome
+de um tipo de marcador de posição
+(por exemplo, `T`, `U`, `V`, `Key`, `Value` e assim por diante).
+Você tem acesso aos parâmetros de tipo (e a qualquer um dos seus tipos associados) no restante da
+declaração do tipo, da função ou do inicializador, incluindo na assinatura da função
+ou do inicializador.
 
-The *constraint* specifies that a type parameter inherits
-from a specific class or conforms to a protocol or protocol composition.
-For example, in the generic function below, the generic parameter `T: Comparable`
-indicates that any type argument substituted
-for the type parameter `T` must conform to the `Comparable` protocol.
+A *restrição* especifica que um parâmetro de tipo herda
+de uma classe específica ou está em conformidade com um protocolo ou uma composição de protocolos.
+Por exemplo, na função genérica abaixo, o parâmetro genérico `T: Comparable`
+indica que qualquer argumento de tipo substituído
+pelo parâmetro de tipo `T` precisa estar em conformidade com o protocolo `Comparable`.
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
@@ -70,11 +70,11 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
   ```
 -->
 
-Because `Int` and `Double`, for example, both conform to the `Comparable` protocol,
-this function accepts arguments of either type. In contrast with generic types, you don't
-specify a generic argument clause when you use a generic function or initializer.
-The type arguments are instead inferred from the type of the arguments passed
-to the function or initializer.
+Como `Int` e `Double`, por exemplo, estão em conformidade com o protocolo `Comparable`,
+essa função aceita argumentos de qualquer um dos dois tipos. Diferente dos tipos genéricos, você
+não especifica uma cláusula de argumento genérico ao usar uma função ou um inicializador genérico.
+Os argumentos de tipo são inferidos a partir do tipo dos argumentos
+passados para a função ou o inicializador.
 
 ```swift
 simpleMax(17, 42) // T is inferred to be Int
@@ -99,26 +99,26 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
-The last generic parameter in a generic parameter list
-can be followed by an optional comma.
+O último parâmetro genérico de uma lista de parâmetros genéricos
+pode ser seguido por uma vírgula opcional.
 
-### Integer Generic Parameters
+### Parâmetros genéricos inteiros
 
-An *integer generic parameter*
-acts as a placeholder for an integer value rather than a type.
-It has the following form:
+Um *parâmetro genérico inteiro*
+funciona como um marcador de posição para um valor inteiro, e não para um tipo.
+Ele tem a seguinte forma:
 
 ```swift
 let <#type parameter#>: <#type>
 ```
 
-The *type* must be the `Int` type from the Swift standard library,
-or a type alias or generic type that resolves to `Int`.
+O *tipo* precisa ser o tipo `Int` da biblioteca padrão do Swift,
+ou um alias de tipo ou um tipo genérico que resolva para `Int`.
 
-The value you provide for an integer generic parameter
-must be either an integer literal
-or another integer generic parameter from the enclosing generic context.
-For example:
+O valor que você fornece para um parâmetro genérico inteiro
+precisa ser um literal inteiro
+ou outro parâmetro genérico inteiro do contexto genérico que o envolve.
+Por exemplo:
 
 ```swift
 struct SomeStruct<let x: Int> { }
@@ -135,21 +135,21 @@ struct AnotherStruct<let x: Int, T, each U> {
 }
 ```
 
-The value of an integer generic parameter on a type
-is accessible as a static constant member of that type,
-with the same visibility as the type itself.
-The value of an integer generic parameter on a function
-is accessible as a constant from within the function.
-When used in an expression,
-these constants have type `Int`.
+O valor de um parâmetro genérico inteiro em um tipo
+é acessível como um membro constante estático desse tipo,
+com a mesma visibilidade do próprio tipo.
+O valor de um parâmetro genérico inteiro em uma função
+é acessível como uma constante dentro da função.
+Quando usadas em uma expressão,
+essas constantes têm tipo `Int`.
 
 ```swift
 print(a.x)  // Prints "4"
 ```
 
-The value of an integer generic parameter can be inferred
-from the types of the arguments you use
-when initializing the type or calling the function.
+O valor de um parâmetro genérico inteiro pode ser inferido
+a partir dos tipos dos argumentos que você usa
+ao inicializar o tipo ou chamar a função.
 
 ```swift
 struct AnotherStruct<let y: Int> {
@@ -164,60 +164,60 @@ let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
 someFunction(s: s1)  // Prints "12"
 ```
 
-### Generic Where Clauses
+### Cláusulas where genéricas
 
-You can specify additional requirements on type parameters and their associated types
-by including a generic `where` clause right before the opening curly brace
-of a type or function's body.
-A generic `where` clause consists of the `where` keyword,
-followed by a comma-separated list of one or more *requirements*.
+Você pode especificar requisitos adicionais para os parâmetros de tipo e para seus tipos associados
+incluindo uma cláusula `where` genérica logo antes da chave de abertura
+do corpo de um tipo ou função.
+Uma cláusula `where` genérica é formada pela palavra-chave `where`,
+seguida de uma lista de um ou mais *requisitos* separados por vírgula.
 
 ```swift
 where <#requirements#>
 ```
 
-The *requirements* in a generic `where` clause specify that a type parameter inherits from
-a class or conforms to a protocol or protocol composition.
-Although the generic `where` clause provides syntactic
-sugar for expressing simple constraints on type parameters
-(for example, `<T: Comparable>` is equivalent to `<T> where T: Comparable` and so on),
-you can use it to provide more complex constraints on type parameters
-and their associated types. For example,
-you can constrain the associated types of type parameters to conform to protocols.
-For example, `<S: Sequence> where S.Iterator.Element: Equatable`
-specifies that `S` conforms to the `Sequence` protocol
-and that the associated type `S.Iterator.Element`
-conforms to the `Equatable` protocol.
-This constraint ensures that each element of the sequence is equatable.
-Integer generic parameters can't have protocol or superclass requirements.
+Os *requisitos* de uma cláusula `where` genérica especificam que um parâmetro de tipo herda de
+uma classe ou está em conformidade com um protocolo ou uma composição de protocolos.
+Embora a cláusula `where` genérica ofereça açúcar sintático para expressar
+restrições simples sobre parâmetros de tipo
+(por exemplo, `<T: Comparable>` é equivalente a `<T> where T: Comparable` e assim por diante),
+você pode usá-la para impor restrições mais complexas sobre parâmetros de tipo
+e sobre seus tipos associados. Por exemplo,
+você pode restringir os tipos associados de parâmetros de tipo para que estejam em conformidade com protocolos.
+Por exemplo, `<S: Sequence> where S.Iterator.Element: Equatable`
+especifica que `S` está em conformidade com o protocolo `Sequence`
+e que o tipo associado `S.Iterator.Element`
+está em conformidade com o protocolo `Equatable`.
+Essa restrição garante que cada elemento da sequência possa ser comparado por igualdade, com `==`.
+Parâmetros genéricos inteiros não podem ter requisitos de protocolo nem de superclasse.
 
-You can also specify the requirement that two types be identical,
-using the `==` operator. For example,
+Você também pode especificar o requisito de que dois tipos sejam idênticos,
+usando o operador `==`. Por exemplo,
 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`
-expresses the constraints that `S1` and `S2` conform to the `Sequence` protocol
-and that the elements of both sequences must be of the same type.
-For integer generic parameters,
-the `==` operator specifies a requirement for their values.
-You can require two integer generic parameters to have the same value,
-or you can require a specific integer value for the integer generic parameter.
+expressa as restrições de que `S1` e `S2` estão em conformidade com o protocolo `Sequence`
+e de que os elementos das duas sequências precisam ser do mesmo tipo.
+Para parâmetros genéricos inteiros,
+o operador `==` especifica um requisito sobre os valores deles.
+Você pode exigir que dois parâmetros genéricos inteiros tenham o mesmo valor,
+ou pode exigir um valor inteiro específico para o parâmetro genérico inteiro.
 
-Any type argument substituted for a type parameter must
-meet all the constraints and requirements placed on the type parameter.
+Qualquer argumento de tipo substituído para um parâmetro de tipo precisa
+atender a todas as restrições e requisitos impostos ao parâmetro de tipo.
 
-A generic `where` clause can appear
-as part of a declaration that includes type parameters,
-or as part of a declaration
-that's nested inside of a declaration that includes type parameters.
-The generic `where` clause for a nested declaration
-can still refer to the type parameters of the enclosing declaration;
-however,
-the requirements from that `where` clause
-apply only to the declaration where it's written.
+Uma cláusula `where` genérica pode aparecer
+como parte de uma declaração que inclui parâmetros de tipo,
+ou como parte de uma declaração
+que está aninhada dentro de uma declaração que inclui parâmetros de tipo.
+A cláusula `where` genérica de uma declaração aninhada
+ainda pode se referir aos parâmetros de tipo da declaração que a envolve;
+porém,
+os requisitos dessa cláusula `where`
+se aplicam apenas à declaração onde ela está escrita.
 
-If the enclosing declaration also has a `where` clause,
-the requirements from both clauses are combined.
-In the example below, `startsWithZero()` is available
-only if `Element` conforms to both `SomeProtocol` and `Numeric`.
+Se a declaração que envolve também tiver uma cláusula `where`,
+os requisitos das duas cláusulas são combinados.
+No exemplo abaixo, `startsWithZero()` fica disponível
+apenas se `Element` estiver em conformidade com `SomeProtocol` e com `Numeric`.
 
 ```swift
 extension Collection where Element: SomeProtocol {
@@ -264,17 +264,17 @@ extension Collection where Element: SomeProtocol {
   ```
 -->
 
-You can overload a generic function or initializer by providing different
-constraints, requirements, or both on the type parameters.
-When you call an overloaded generic function or initializer,
-the compiler uses these constraints to resolve which overloaded function
-or initializer to invoke.
+Você pode sobrecarregar uma função ou um inicializador genérico fornecendo
+restrições, requisitos ou ambos diferentes sobre os parâmetros de tipo.
+Ao chamar uma função ou um inicializador genérico sobrecarregado,
+o compilador usa essas restrições para decidir qual função
+ou inicializador sobrecarregado invocar.
 
-For more information about generic `where` clauses and to see an example
-of one in a generic function declaration,
-see <doc:Generics#Generic-Where-Clauses>.
+Para mais informações sobre cláusulas `where` genéricas e para ver um exemplo
+de uma delas em uma declaração de função genérica,
+consulte <doc:Generics#Generic-Where-Clauses>.
 
-> Grammar of a generic parameter clause:
+> Gramática de uma cláusula de parâmetro genérico:
 >
 > *generic-parameter-clause* → **`<`** *generic-parameter-list* **`,`**_?_ **`>`** \
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
@@ -298,25 +298,25 @@ see <doc:Generics#Generic-Where-Clauses>.
   (a comma-separated list types inside of a comma-separated list of requirements).
 -->
 
-## Generic Argument Clause
+## Cláusula de argumento genérico
 
-A *generic argument clause* specifies the type arguments of a generic
-type.
-A generic argument clause is enclosed in angle brackets (<>)
-and has the following form:
+Uma *cláusula de argumento genérico* especifica os argumentos de tipo de um
+tipo genérico.
+Uma cláusula de argumento genérico fica entre colchetes angulares (<>)
+e tem a seguinte forma:
 
 ```swift
 <<#generic argument list#>>
 ```
 
-The *generic argument list* is a comma-separated list of type arguments.
-A *type argument* is the name of an actual concrete type that replaces
-a corresponding type parameter in the generic parameter clause of a generic type ---
-or, for an integer generic parameter,
-an integer value that replaces that integer generic parameter.
-The result is a specialized version of that generic type.
-The example below shows a simplified version of the Swift standard library's
-generic dictionary type.
+A *lista de argumentos genéricos* é uma lista de argumentos de tipo separados por vírgula.
+Um *argumento de tipo* é o nome de um tipo concreto real que substitui
+o parâmetro de tipo correspondente na cláusula de parâmetro genérico de um tipo genérico ---
+ou, no caso de um parâmetro genérico inteiro,
+um valor inteiro que substitui esse parâmetro genérico inteiro.
+O resultado é uma versão especializada desse tipo genérico.
+O exemplo abaixo mostra uma versão simplificada do tipo de dicionário genérico
+da biblioteca padrão do Swift.
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
@@ -328,19 +328,19 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
   TODO: How are we supposed to wrap code lines like the above?
 -->
 
-The specialized version of the generic `Dictionary` type, `Dictionary<String, Int>`
-is formed by replacing the generic parameters `Key: Hashable` and `Value`
-with the concrete type arguments `String` and `Int`. Each type argument must satisfy
-all the constraints of the generic parameter it replaces, including any additional
-requirements specified in a generic `where` clause. In the example above,
-the `Key` type parameter is constrained to conform to the `Hashable` protocol
-and therefore `String` must also conform to the `Hashable` protocol.
+A versão especializada do tipo genérico `Dictionary`, `Dictionary<String, Int>`,
+é formada substituindo os parâmetros genéricos `Key: Hashable` e `Value`
+pelos argumentos de tipo concretos `String` e `Int`. Cada argumento de tipo precisa satisfazer
+todas as restrições do parâmetro genérico que ele substitui, incluindo quaisquer
+requisitos adicionais especificados em uma cláusula `where` genérica. No exemplo acima,
+o parâmetro de tipo `Key` é restrito a estar em conformidade com o protocolo `Hashable`,
+então `String` também precisa estar em conformidade com o protocolo `Hashable`.
 
-You can also replace a type parameter with a type argument that's itself
-a specialized version of a generic type (provided it satisfies the appropriate
-constraints and requirements). For example, you can replace the type parameter
-`Element` in `Array<Element>` with a specialized version of an array, `Array<Int>`,
-to form an array whose elements are themselves arrays of integers.
+Você também pode substituir um parâmetro de tipo por um argumento de tipo que seja, ele mesmo,
+uma versão especializada de um tipo genérico (desde que atenda às restrições
+e requisitos apropriados). Por exemplo, você pode substituir o parâmetro de tipo
+`Element` em `Array<Element>` por uma versão especializada de array, `Array<Int>`,
+para formar um array cujos elementos são, por sua vez, arrays de inteiros.
 
 ```swift
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -354,14 +354,14 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
-The last type argument in a generic argument list
-can be followed by an optional comma.
+O último argumento de tipo em uma lista de argumentos genéricos
+pode ser seguido por uma vírgula opcional.
 
-As mentioned in <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
-you don't use a generic argument clause to specify the type arguments
-of a generic function or initializer.
+Como mencionado em <doc:GenericParametersAndArguments#Generic-Parameter-Clause>,
+você não usa uma cláusula de argumento genérico para especificar os argumentos de tipo
+de uma função ou de um inicializador genérico.
 
-> Grammar of a generic argument clause:
+> Gramática de uma cláusula de argumento genérico:
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
@@ -376,3 +376,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

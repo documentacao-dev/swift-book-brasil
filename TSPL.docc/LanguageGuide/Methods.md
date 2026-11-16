@@ -1,37 +1,37 @@
-# Methods
+# Métodos
 
-Define and call functions that are part of an instance or type.
+Defina e chame funções que fazem parte de uma instância ou de um tipo.
 
-*Methods* are functions that are associated with a particular type.
-Classes, structures, and enumerations can all define instance methods,
-which encapsulate specific tasks and functionality for working with an instance of a given type.
-Classes, structures, and enumerations can also define type methods,
-which are associated with the type itself.
-Type methods are similar to class methods in Objective-C.
+*Métodos* são funções associadas a um tipo específico.
+Classes, structs e enums podem definir métodos de instância,
+que encapsulam tarefas e funcionalidades específicas para trabalhar com uma instância de um determinado tipo.
+Classes, structs e enums também podem definir métodos de tipo,
+que estão associados ao próprio tipo.
+Métodos de tipo são parecidos com os métodos de classe do Objective-C.
 
-The fact that structures and enumerations can define methods in Swift
-is a major difference from C and Objective-C.
-In Objective-C, classes are the only types that can define methods.
-In Swift, you can choose whether to define a class, structure, or enumeration,
-and still have the flexibility to define methods on the type you create.
+O fato de structs e enums poderem definir métodos em Swift
+é uma diferença importante em relação ao C e ao Objective-C.
+Em Objective-C, classes são os únicos tipos que podem definir métodos.
+Em Swift, você escolhe se vai definir uma classe, uma struct ou um enum,
+e ainda tem a flexibilidade de definir métodos no tipo que criar.
 
-## Instance Methods
+## Métodos de instância
 
-*Instance methods* are functions that belong to instances of
-a particular class, structure, or enumeration.
-They support the functionality of those instances,
-either by providing ways to access and modify instance properties,
-or by providing functionality related to the instance's purpose.
-Instance methods have exactly the same syntax as functions,
-as described in <doc:Functions>.
+*Métodos de instância* são funções que pertencem às instâncias de
+uma determinada classe, struct ou enum.
+Eles sustentam a funcionalidade dessas instâncias,
+seja fornecendo formas de acessar e modificar propriedades da instância,
+seja fornecendo funcionalidades relacionadas à finalidade da instância.
+Métodos de instância têm exatamente a mesma sintaxe das funções,
+como descrito em <doc:Functions>.
 
-You write an instance method within the opening and closing braces of the type it belongs to.
-An instance method has implicit access to all other instance methods and properties of that type.
-An instance method can be called only on a specific instance of the type it belongs to.
-It can't be called in isolation without an existing instance.
+Você escreve um método de instância entre as chaves de abertura e de fechamento do tipo ao qual ele pertence.
+Um método de instância tem acesso implícito a todos os outros métodos e propriedades desse tipo.
+Um método de instância só pode ser chamado em uma instância específica do tipo ao qual pertence.
+Ele não pode ser chamado isoladamente, sem uma instância existente.
 
-Here's an example that defines a simple `Counter` class,
-which can be used to count the number of times an action occurs:
+Veja um exemplo que define uma classe `Counter` simples,
+que pode ser usada para contar quantas vezes uma ação acontece:
 
 ```swift
 class Counter {
@@ -67,16 +67,16 @@ class Counter {
   ```
 -->
 
-The `Counter` class defines three instance methods:
+A classe `Counter` define três métodos de instância:
 
-- `increment()` increments the counter by `1`.
-- `increment(by: Int)` increments the counter by a specified integer amount.
-- `reset()` resets the counter to zero.
+- `increment()` incrementa o contador em `1`.
+- `increment(by: Int)` incrementa o contador por uma quantidade inteira especificada.
+- `reset()` zera o contador.
 
-The `Counter` class also declares a variable property, `count`,
-to keep track of the current counter value.
+A classe `Counter` também declara uma propriedade variável, `count`,
+para acompanhar o valor atual do contador.
 
-You call instance methods with the same dot syntax as properties:
+Você chama métodos de instância com a mesma sintaxe de ponto usada para propriedades:
 
 ```swift
 let counter = Counter()
@@ -108,20 +108,20 @@ counter.reset()
   ```
 -->
 
-Function parameters can have both a name (for use within the function's body)
-and an argument label (for use when calling the function),
-as described in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>.
-The same is true for method parameters,
-because methods are just functions that are associated with a type.
+Parâmetros de função podem ter tanto um nome (para uso dentro do corpo da função)
+quanto um rótulo de argumento (para uso na chamada da função),
+como descrito em <doc:Functions#Function-Argument-Labels-and-Parameter-Names>.
+O mesmo vale para parâmetros de método,
+porque métodos são apenas funções associadas a um tipo.
 
-### The self Property
+### A propriedade self
 
-Every instance of a type has an implicit property called `self`,
-which is exactly equivalent to the instance itself.
-You use the `self` property to refer to the current instance
-within its own instance methods.
+Toda instância de um tipo tem uma propriedade implícita chamada `self`,
+que é exatamente equivalente à própria instância.
+Você usa a propriedade `self` para se referir à instância atual
+dentro dos próprios métodos de instância.
 
-The `increment()` method in the example above could have been written like this:
+O método `increment()` do exemplo acima poderia ter sido escrito assim:
 
 ```swift
 func increment() {
@@ -146,22 +146,21 @@ func increment() {
   NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 -->
 
-In practice, you don't need to write `self` in your code very often.
-If you don't explicitly write `self`,
-Swift assumes that you are referring to a property or method of the current instance
-whenever you use a known property or method name within a method.
-This assumption is demonstrated by the use of `count` (rather than `self.count`)
-inside the three instance methods for `Counter`.
+Na prática, você não precisa escrever `self` no código com muita frequência.
+Se você não escrever `self` explicitamente,
+o Swift entende que você está se referindo a uma propriedade ou método da instância atual
+sempre que usar, dentro de um método, o nome de uma propriedade ou método conhecido.
+Essa suposição é demonstrada pelo uso de `count` (em vez de `self.count`)
+dentro dos três métodos de instância de `Counter`.
 
-The main exception to this rule occurs when a parameter name for an instance method
-has the same name as a property of that instance.
-In this situation, the parameter name takes precedence,
-and it becomes necessary to refer to the property in a more qualified way.
-You use the `self` property to
-distinguish between the parameter name and the property name.
+A principal exceção a essa regra acontece quando o nome de um parâmetro de método de instância
+tem o mesmo nome de uma propriedade dessa instância.
+Nessa situação, o nome do parâmetro tem precedência,
+e fica necessário se referir à propriedade de forma mais qualificada.
+Você usa a propriedade `self` para
+distinguir o nome do parâmetro do nome da propriedade.
 
-Here, `self` disambiguates between
-a method parameter called `x` and an instance property that's also called `x`:
+Aqui, `self` diferencia um parâmetro de método chamado `x` de uma propriedade de instância que também se chama `x`:
 
 ```swift
 struct Point {
@@ -195,29 +194,29 @@ if somePoint.isToTheRightOf(x: 1.0) {
   ```
 -->
 
-Without the `self` prefix,
-Swift would assume that both uses of `x` referred to the method parameter called `x`.
+Sem o prefixo `self`,
+o Swift entenderia que os dois usos de `x` se referem ao parâmetro do método chamado `x`.
 
-### Modifying Value Types from Within Instance Methods
+### Modificando tipos de valor dentro de métodos de instância
 
-Structures and enumerations are *value types*.
-By default, the properties of a value type can't be modified from within its instance methods.
+Structs e enums são *tipos de valor*.
+Por padrão, as propriedades de um tipo de valor não podem ser modificadas dentro dos métodos de instância dele.
 
 <!--
   TODO: find out why.  once I actually know why, explain it.
 -->
 
-However, if you need to modify the properties of your structure or enumeration
-within a particular method,
-you can opt in to *mutating* behavior for that method.
-The method can then mutate (that is, change)
-its properties from within the method,
-and any changes that it makes are written back to the original structure when the method ends.
-The method can also assign a completely new instance to its implicit `self` property,
-and this new instance will replace the existing one when the method ends.
+No entanto, se você precisar modificar as propriedades da struct ou do enum
+dentro de um método específico,
+pode optar pelo comportamento *mutating* para esse método.
+O método pode então mutar (ou seja, alterar)
+suas propriedades de dentro do método,
+e as alterações que ele fizer são gravadas de volta na struct original quando o método terminar.
+O método também pode atribuir uma instância completamente nova à propriedade implícita `self`,
+e essa nova instância substituirá a existente quando o método terminar.
 
-You can opt in to this behavior by placing the `mutating` keyword
-before the `func` keyword for that method:
+Você opta por esse comportamento colocando a palavra-chave `mutating`
+antes da palavra-chave `func` do método:
 
 ```swift
 struct Point {
@@ -251,16 +250,16 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
   ```
 -->
 
-The `Point` structure above defines a mutating `moveBy(x:y:)` method,
-which moves a `Point` instance by a certain amount.
-Instead of returning a new point,
-this method actually modifies the point on which it's called.
-The `mutating` keyword is added to its definition
-to enable it to modify its properties.
+A struct `Point` acima define um método `mutating` chamado `moveBy(x:y:)`,
+que move uma instância de `Point` em certa quantidade.
+Em vez de retornar um novo ponto,
+esse método de fato modifica o ponto sobre o qual é chamado.
+A palavra-chave `mutating` é adicionada à definição dele
+para permitir que ele modifique suas propriedades.
 
-Note that you can't call a mutating method on a constant of structure type,
-because its properties can't be changed, even if they're variable properties,
-as described in <doc:Properties#Stored-Properties-of-Constant-Structure-Instances>:
+Observe que você não pode chamar um método `mutating` em uma constante de tipo struct,
+porque as propriedades dela não podem ser alteradas, mesmo que sejam propriedades variáveis,
+como descrito em <doc:Properties#Stored-Properties-of-Constant-Structure-Instances>:
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -299,10 +298,10 @@ fixedPoint.moveBy(x: 2.0, y: 3.0)
   if the setter for the computed property is explicitly defined as @!mutating.
 -->
 
-### Assigning to self Within a Mutating Method
+### Atribuindo a self dentro de um método mutating
 
-Mutating methods can assign an entirely new instance to the implicit `self` property.
-The `Point` example shown above could have been written in the following way instead:
+Métodos `mutating` podem atribuir uma instância totalmente nova à propriedade implícita `self`.
+O exemplo `Point` mostrado acima poderia ter sido escrito assim:
 
 ```swift
 struct Point {
@@ -330,13 +329,13 @@ struct Point {
   ```
 -->
 
-This version of the mutating `moveBy(x:y:)` method creates a new structure
-whose `x` and `y` values are set to the target location.
-The end result of calling this alternative version of the method
-will be exactly the same as for calling the earlier version.
+Esta versão do método `mutating` `moveBy(x:y:)` cria uma nova struct
+cujos valores de `x` e `y` são definidos como a posição de destino.
+O resultado final de chamar esta versão alternativa do método
+será exatamente o mesmo de chamar a versão anterior.
 
-Mutating methods for enumerations can set the implicit `self` parameter to be
-a different case from the same enumeration:
+Métodos `mutating` de enums podem definir o parâmetro implícito `self` como
+outro caso do mesmo enum:
 
 ```swift
 enum TriStateSwitch {
@@ -384,29 +383,29 @@ ovenLight.next()
   ```
 -->
 
-This example defines an enumeration for a three-state switch.
-The switch cycles between three different power states
-(`off`, `low` and `high`)
-every time its `next()` method is called.
+Este exemplo define um enum para um interruptor de três estados.
+O interruptor percorre três estados de energia diferentes
+(`off`, `low` e `high`)
+cada vez que o método `next()` é chamado.
 
-## Type Methods
+## Métodos de tipo
 
-Instance methods, as described above,
-are methods that you call on an instance of a particular type.
-You can also define methods that are called on the type itself.
-These kinds of methods are called *type methods*.
-You indicate type methods by writing
-the `static` keyword before the method's `func` keyword.
-Classes can use the `class` keyword instead,
-to allow subclasses to override the superclass’s implementation of that method.
+Métodos de instância, como descritos acima,
+são métodos que você chama em uma instância de um determinado tipo.
+Você também pode definir métodos que são chamados no próprio tipo.
+Esses métodos são chamados de *métodos de tipo*.
+Você indica um método de tipo escrevendo
+a palavra-chave `static` antes da palavra-chave `func` do método.
+Classes podem usar a palavra-chave `class` no lugar,
+para permitir que subclasses sobrescrevam a implementação desse método da superclasse.
 
-> Note: In Objective-C, you can define type-level methods only for Objective-C classes.
-> In Swift, you can define type-level methods for all classes, structures, and enumerations.
-> Each type method is explicitly scoped to the type it supports.
+> Nota: No Objective-C, você só pode definir métodos em nível de tipo para classes do Objective-C.
+> No Swift, você pode definir métodos de tipo para todas as classes, structs e enums.
+> Cada método de tipo é explicitamente restrito ao tipo que ele atende.
 
-Type methods are called with dot syntax, like instance methods.
-However, you call type methods on the type, not on an instance of that type.
-Here's how you call a type method on a class called `SomeClass`:
+Métodos de tipo são chamados com sintaxe de ponto, como métodos de instância.
+No entanto, você chama métodos de tipo no tipo, e não em uma instância desse tipo.
+Veja como chamar um método de tipo em uma classe chamada `SomeClass`:
 
 ```swift
 class SomeClass {
@@ -430,31 +429,31 @@ SomeClass.someTypeMethod()
   ```
 -->
 
-Within the body of a type method,
-the implicit `self` property refers to the type itself,
-rather than an instance of that type.
-This means that you can use `self` to disambiguate between
-type properties and type method parameters,
-just as you do for instance properties and instance method parameters.
+Dentro do corpo de um método de tipo,
+a propriedade implícita `self` se refere ao próprio tipo,
+e não a uma instância desse tipo.
+Isso significa que você pode usar `self` para diferenciar propriedades de tipo
+de parâmetros de método de tipo, assim como faz com propriedades de instância
+e parâmetros de método de instância.
 
-More generally, any unqualified method and property names that you use
-within the body of a type method will refer to other type-level methods and properties.
-A type method can call another type method with the other method's name,
-without needing to prefix it with the type name.
-Similarly, type methods on structures and enumerations can access type properties
-by using the type property's name without a type name prefix.
+De modo geral, quaisquer nomes de métodos e propriedades não qualificados que você usar
+dentro do corpo de um método de tipo se referirão a outros métodos e propriedades de nível de tipo.
+Um método de tipo pode chamar outro método de tipo pelo nome dele,
+sem precisar prefixá-lo com o nome do tipo.
+Da mesma forma, métodos de tipo de structs e enums podem acessar propriedades de tipo
+usando o nome da propriedade, sem prefixo com o nome do tipo.
 
-The example below defines a structure called `LevelTracker`,
-which tracks a player's progress through the different levels or stages of a game.
-It's a single-player game,
-but can store information for multiple players on a single device.
+O exemplo abaixo define uma struct chamada `LevelTracker`,
+que acompanha o progresso de um jogador pelos diferentes níveis ou fases de um jogo.
+É um jogo para um jogador,
+mas pode guardar informações de vários jogadores em um único dispositivo.
 
-All of the game's levels (apart from level one) are locked when the game is first played.
-Every time a player finishes a level,
-that level is unlocked for all players on the device.
-The `LevelTracker` structure uses type properties and methods
-to keep track of which levels of the game have been unlocked.
-It also tracks the current level for an individual player.
+Todos os níveis do jogo (exceto o nível um) estão bloqueados quando o jogo é jogado pela primeira vez.
+Sempre que um jogador termina um nível,
+esse nível é desbloqueado para todos os jogadores do dispositivo.
+A struct `LevelTracker` usa propriedades e métodos de tipo
+para acompanhar quais níveis do jogo foram desbloqueados.
+Ela também acompanha o nível atual de um jogador individual.
 
 ```swift
 struct LevelTracker {
@@ -510,38 +509,37 @@ struct LevelTracker {
   ```
 -->
 
-The `LevelTracker` structure keeps track of the highest level that any player has unlocked.
-This value is stored in a type property called `highestUnlockedLevel`.
+A struct `LevelTracker` mantém o registro do nível mais alto que qualquer jogador desbloqueou.
+Esse valor fica armazenado em uma propriedade de tipo chamada `highestUnlockedLevel`.
 
-`LevelTracker` also defines two type functions to work with
-the `highestUnlockedLevel` property.
-The first is a type function called `unlock(_:)`,
-which updates the value of `highestUnlockedLevel` whenever a new level is unlocked.
-The second is a convenience type function called `isUnlocked(_:)`,
-which returns `true` if a particular level number is already unlocked.
-(Note that these type methods can access the `highestUnlockedLevel` type property
-without your needing to write it as `LevelTracker.highestUnlockedLevel`.)
+`LevelTracker` também define duas funções de tipo para trabalhar com
+a propriedade `highestUnlockedLevel`.
+A primeira é uma função de tipo chamada `unlock(_:)`,
+que atualiza o valor de `highestUnlockedLevel` sempre que um novo nível é desbloqueado.
+A segunda é uma função de tipo de conveniência chamada `isUnlocked(_:)`,
+que retorna `true` se determinado número de nível já estiver desbloqueado.
+(Observe que esses métodos de tipo podem acessar a propriedade de tipo `highestUnlockedLevel`
+sem que você precise escrevê-la como `LevelTracker.highestUnlockedLevel`.)
 
-In addition to its type property and type methods,
-`LevelTracker` tracks an individual player's progress through the game.
-It uses an instance property called `currentLevel` to track
-the level that a player is currently playing.
+Além da propriedade de tipo e dos métodos de tipo,
+`LevelTracker` acompanha o progresso de um jogador individual pelo jogo.
+Ele usa uma propriedade de instância chamada `currentLevel` para acompanhar
+o nível que um jogador está jogando no momento.
 
-To help manage the `currentLevel` property,
-`LevelTracker` defines an instance method called `advance(to:)`.
-Before updating `currentLevel`,
-this method checks whether the requested new level is already unlocked.
-The `advance(to:)` method returns a Boolean value to indicate
-whether or not it was actually able to set `currentLevel`.
-Because it's not necessarily a mistake for
-code that calls the `advance(to:)` method
-to ignore the return value,
-this function is marked with the `@discardableResult` attribute.
-For more information about this attribute,
-see <doc:Attributes>.
+Para ajudar a gerenciar a propriedade `currentLevel`,
+`LevelTracker` define um método de instância chamado `advance(to:)`.
+Antes de atualizar `currentLevel`,
+esse método verifica se o novo nível solicitado já está desbloqueado.
+O método `advance(to:)` retorna um valor booleano para indicar
+se conseguiu ou não definir `currentLevel`.
+Como não é necessariamente um erro
+o código que chama `advance(to:)` ignorar o valor de retorno,
+essa função é marcada com o atributo `@discardableResult`.
+Para mais informações sobre esse atributo,
+veja <doc:Attributes>.
 
-The `LevelTracker` structure is used with the `Player` class, shown below,
-to track and update the progress of an individual player:
+A struct `LevelTracker` é usada com a classe `Player`, mostrada abaixo,
+para acompanhar e atualizar o progresso de um jogador individual:
 
 ```swift
 class Player {
@@ -575,18 +573,18 @@ class Player {
   ```
 -->
 
-The `Player` class creates a new instance of `LevelTracker`
-to track that player's progress.
-It also provides a method called `complete(level:)`,
-which is called whenever a player completes a particular level.
-This method unlocks the next level for all players
-and updates the player's progress to move them to the next level.
-(The Boolean return value of `advance(to:)` is ignored,
-because the level is known to have been unlocked
-by the call to `LevelTracker.unlock(_:)` on the previous line.)
+A classe `Player` cria uma nova instância de `LevelTracker`
+para acompanhar o progresso desse jogador.
+Ela também oferece um método chamado `complete(level:)`,
+que é chamado sempre que um jogador conclui determinado nível.
+Esse método desbloqueia o próximo nível para todos os jogadores
+e atualiza o progresso do jogador para levá-lo ao próximo nível.
+(O valor de retorno booleano de `advance(to:)` é ignorado,
+porque o nível já é conhecido como desbloqueado
+pela chamada a `LevelTracker.unlock(_:)` na linha anterior.)
 
-You can create an instance of the `Player` class for a new player,
-and see what happens when the player completes level one:
+Você pode criar uma instância da classe `Player` para um novo jogador,
+e ver o que acontece quando ele conclui o nível um:
 
 ```swift
 var player = Player(name: "Argyrios")
@@ -606,9 +604,9 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
   ```
 -->
 
-If you create a second player, whom you try to move to a level
-that's not yet unlocked by any player in the game,
-the attempt to set the player's current level fails:
+Se você criar um segundo jogador, e tentar levá-lo a um nível
+que ainda não foi desbloqueado por nenhum jogador do jogo,
+a tentativa de definir o nível atual do jogador falha:
 
 ```swift
 player = Player(name: "Beto")
@@ -659,3 +657,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

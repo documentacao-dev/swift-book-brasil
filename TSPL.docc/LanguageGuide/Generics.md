@@ -1,28 +1,28 @@
 # Generics
 
-Write code that works for multiple types and specify requirements for those types.
+Escreva código que funciona com vários tipos e especifique requisitos para esses tipos.
 
-*Generic code* enables you to write flexible, reusable functions and types
-that can work with any type, subject to requirements that you define.
-You can write code that avoids duplication
-and expresses its intent in a clear, abstracted manner.
+*Código genérico* permite escrever funções e tipos flexíveis e reutilizáveis
+que podem trabalhar com qualquer tipo, sujeitos a requisitos que você define.
+Você pode escrever código que evita duplicação
+e expressa sua intenção de forma clara e abstrata.
 
-Generics are one of the most powerful features of Swift,
-and much of the Swift standard library is built with generic code.
-In fact, you've been using generics throughout the *Language Guide*,
-even if you didn't realize it.
-For example, Swift's `Array` and `Dictionary` types
-are both generic collections.
-You can create an array that holds `Int` values,
-or an array that holds `String` values,
-or indeed an array for any other type that can be created in Swift.
-Similarly, you can create a dictionary to store values of any specified type,
-and there are no limitations on what that type can be.
+Generics são um dos recursos mais poderosos do Swift,
+e grande parte da biblioteca padrão do Swift é construída com código genérico.
+Na verdade, você já usa generics ao longo do *Guia da linguagem*,
+mesmo sem perceber.
+Por exemplo, os tipos `Array` e `Dictionary` do Swift
+são ambos coleções genéricas.
+Você pode criar um array que guarda valores `Int`,
+ou um array que guarda valores `String`,
+ou, na verdade, um array para qualquer outro tipo que possa ser criado em Swift.
+Da mesma forma, você pode criar um dicionário para armazenar valores de qualquer tipo especificado,
+e não há limitações sobre qual pode ser esse tipo.
 
-## The Problem that Generics Solve
+## O problema que os generics resolvem
 
-Here's a standard, nongeneric function called `swapTwoInts(_:_:)`,
-which swaps two `Int` values:
+Aqui está uma função padrão, não genérica, chamada `swapTwoInts(_:_:)`,
+que troca dois valores `Int`:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
@@ -44,12 +44,12 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
   ```
 -->
 
-This function makes use of in-out parameters to swap the values of `a` and `b`,
-as described in <doc:Functions#In-Out-Parameters>.
+Essa função usa parâmetros in-out para trocar os valores de `a` e `b`,
+conforme descrito em <doc:Functions#In-Out-Parameters>.
 
-The `swapTwoInts(_:_:)` function swaps the original value of `b` into `a`,
-and the original value of `a` into `b`.
-You can call this function to swap the values in two `Int` variables:
+A função `swapTwoInts(_:_:)` coloca o valor original de `b` em `a`,
+e o valor original de `a` em `b`.
+Você pode chamar essa função para trocar os valores de duas variáveis `Int`:
 
 ```swift
 var someInt = 3
@@ -71,11 +71,11 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   ```
 -->
 
-The `swapTwoInts(_:_:)` function is useful, but it can only be used with `Int` values.
-If you want to swap two `String` values,
-or two `Double` values,
-you have to write more functions,
-such as the `swapTwoStrings(_:_:)` and `swapTwoDoubles(_:_:)` functions shown below:
+A função `swapTwoInts(_:_:)` é útil, mas só pode ser usada com valores `Int`.
+Se você quiser trocar dois valores `String`,
+ou dois valores `Double`,
+precisa escrever mais funções,
+como as funções `swapTwoStrings(_:_:)` e `swapTwoDoubles(_:_:)` mostradas abaixo:
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -109,31 +109,31 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
   ```
 -->
 
-You may have noticed that the bodies of
-the `swapTwoInts(_:_:)`, `swapTwoStrings(_:_:)`, and `swapTwoDoubles(_:_:)` functions are identical.
-The only difference is the type of the values that they accept
-(`Int`, `String`, and `Double`).
+Você deve ter notado que o corpo das funções
+`swapTwoInts(_:_:)`, `swapTwoStrings(_:_:)` e `swapTwoDoubles(_:_:)` é idêntico.
+A única diferença é o tipo dos valores que elas aceitam
+(`Int`, `String` e `Double`).
 
-It's more useful, and considerably more flexible,
-to write a single function that swaps two values of *any* type.
-Generic code enables you to write such a function.
-(A generic version of these functions is defined below.)
+É mais útil, e bem mais flexível,
+escrever uma única função que troca dois valores de *qualquer* tipo.
+Código genérico permite escrever essa função.
+(Uma versão genérica dessas funções está definida abaixo.)
 
-> Note: In all three functions,
-> the types of `a` and `b` must be the same.
-> If `a` and `b` aren't of the same type,
-> it isn't possible to swap their values.
-> Swift is a type-safe language,
-> and doesn't allow (for example) a variable of type `String`
-> and a variable of type `Double`
-> to swap values with each other.
-> Attempting to do so results in a compile-time error.
+> Nota: Nas três funções,
+> os tipos de `a` e `b` precisam ser iguais.
+> Se `a` e `b` não forem do mesmo tipo,
+> não é possível trocar os valores deles.
+> Swift é uma linguagem com segurança de tipos,
+> e não permite (por exemplo) que uma variável do tipo `String`
+> e uma variável do tipo `Double`
+> troquem valores entre si.
+> Tentar fazer isso resulta em um erro de compilação.
 
-## Generic Functions
+## Funções genéricas
 
-*Generic functions* can work with any type.
-Here's a generic version of the `swapTwoInts(_:_:)` function from above,
-called `swapTwoValues(_:_:)`:
+*Funções genéricas* podem trabalhar com qualquer tipo.
+Aqui está uma versão genérica da função `swapTwoInts(_:_:)` vista acima,
+chamada `swapTwoValues(_:_:)`:
 
 ```swift
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
@@ -162,11 +162,11 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
   generics.
 -->
 
-The body of the `swapTwoValues(_:_:)` function
-is identical to the body of the `swapTwoInts(_:_:)` function.
-However, the first line of `swapTwoValues(_:_:)`
-is slightly different from `swapTwoInts(_:_:)`.
-Here's how the first lines compare:
+O corpo da função `swapTwoValues(_:_:)`
+é idêntico ao corpo da função `swapTwoInts(_:_:)`.
+No entanto, a primeira linha de `swapTwoValues(_:_:)`
+é um pouco diferente da de `swapTwoInts(_:_:)`.
+Veja como as primeiras linhas se comparam:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int)
@@ -192,29 +192,29 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
   ```
 -->
 
-The generic version of the function
-uses a *placeholder* type name (called `T`, in this case)
-instead of an *actual* type name (such as `Int`, `String`, or `Double`).
-The placeholder type name doesn't say anything about what `T` must be,
-but it *does* say that both `a` and `b` must be of the same type `T`,
-whatever `T` represents.
-The actual type to use in place of `T`
-is determined each time the `swapTwoValues(_:_:)` function is called.
+A versão genérica da função
+usa um nome de tipo *marcador* (chamado aqui de `T`)
+no lugar de um nome de tipo *real* (como `Int`, `String` ou `Double`).
+O nome de tipo marcador não diz nada sobre o que `T` precisa ser,
+mas *diz* que `a` e `b` precisam ser do mesmo tipo `T`,
+seja lá o que `T` representar.
+O tipo real a ser usado no lugar de `T`
+é determinado toda vez que a função `swapTwoValues(_:_:)` é chamada.
 
-The other difference between a generic function and a nongeneric function
-is that the generic function's name (`swapTwoValues(_:_:)`)
-is followed by the placeholder type name (`T`) inside angle brackets (`<T>`).
-The brackets tell Swift that `T` is a placeholder type name
-within the `swapTwoValues(_:_:)` function definition.
-Because `T` is a placeholder, Swift doesn't look for an actual type called `T`.
+A outra diferença entre uma função genérica e uma não genérica
+é que o nome da função genérica (`swapTwoValues(_:_:)`)
+é seguido pelo nome do tipo marcador (`T`) entre colchetes angulares (`<T>`).
+Os colchetes dizem ao Swift que `T` é um nome de tipo marcador
+dentro da definição da função `swapTwoValues(_:_:)`.
+Como `T` é um marcador, o Swift não procura um tipo real chamado `T`.
 
-The `swapTwoValues(_:_:)` function can now be called in the same way as `swapTwoInts`,
-except that it can be passed two values of *any* type,
-as long as both of those values are of the same type as each other.
-Each time `swapTwoValues(_:_:)` is called,
-the type to use for `T` is inferred from the types of values passed to the function.
+A função `swapTwoValues(_:_:)` agora pode ser chamada do mesmo jeito que `swapTwoInts`,
+exceto que pode receber dois valores de *qualquer* tipo,
+contanto que os dois valores sejam do mesmo tipo entre si.
+Cada vez que `swapTwoValues(_:_:)` é chamada,
+o tipo a ser usado para `T` é inferido a partir dos tipos dos valores passados para a função.
 
-In the two examples below, `T` is inferred to be `Int` and `String` respectively:
+Nos dois exemplos abaixo, `T` é inferido como `Int` e `String`, respectivamente:
 
 ```swift
 var someInt = 3
@@ -246,55 +246,55 @@ swapTwoValues(&someString, &anotherString)
   ```
 -->
 
-> Note: The `swapTwoValues(_:_:)` function defined above is inspired by
-> a generic function called `swap`, which is part of the Swift standard library,
-> and is automatically made available for you to use in your apps.
-> If you need the behavior of the `swapTwoValues(_:_:)` function in your own code,
-> you can use Swift's existing `swap(_:_:)` function rather than providing your own implementation.
+> Nota: A função `swapTwoValues(_:_:)` definida acima é inspirada
+> em uma função genérica chamada `swap`, que faz parte da biblioteca padrão do Swift
+> e fica disponível automaticamente para você usar nos seus apps.
+> Se você precisar do comportamento da função `swapTwoValues(_:_:)` no seu próprio código,
+> pode usar a função `swap(_:_:)` que já existe no Swift, em vez de escrever sua própria implementação.
 
-## Type Parameters
+## Parâmetros de tipo
 
-In the `swapTwoValues(_:_:)` example above,
-the placeholder type `T` is an example of a *type parameter*.
-Type parameters specify and name a placeholder type,
-and are written immediately after the function's name,
-between a pair of matching angle brackets (such as `<T>`).
+No exemplo `swapTwoValues(_:_:)` acima,
+o tipo marcador `T` é um exemplo de *parâmetro de tipo*.
+Parâmetros de tipo especificam e nomeiam um tipo marcador,
+e são escritos logo depois do nome da função,
+entre um par de colchetes angulares (como `<T>`).
 
-Once you specify a type parameter,
-you can use it to define the type of a function's parameters
-(such as the `a` and `b` parameters of the `swapTwoValues(_:_:)` function),
-or as the function's return type,
-or as a type annotation within the body of the function.
-In each case, the type parameter
-is replaced with an *actual* type whenever the function is called.
-(In the `swapTwoValues(_:_:)` example above,
-`T` was replaced with `Int` the first time the function was called,
-and was replaced with `String` the second time it was called.)
+Depois de especificar um parâmetro de tipo,
+você pode usá-lo para definir o tipo dos parâmetros de uma função
+(como os parâmetros `a` e `b` da função `swapTwoValues(_:_:)`),
+ou como tipo de retorno da função,
+ou como anotação de tipo dentro do corpo da função.
+Em todos os casos, o parâmetro de tipo
+é substituído por um tipo *real* sempre que a função é chamada.
+(No exemplo `swapTwoValues(_:_:)` acima,
+`T` foi substituído por `Int` na primeira vez que a função foi chamada,
+e por `String` na segunda vez.)
 
-You can provide more than one type parameter
-by writing multiple type parameter names within the angle brackets,
-separated by commas.
+Você pode fornecer mais de um parâmetro de tipo
+escrevendo vários nomes de parâmetros de tipo dentro dos colchetes angulares,
+separados por vírgulas.
 
-## Naming Type Parameters
+## Nomeando parâmetros de tipo
 
-In most cases, type parameters have descriptive names,
-such as `Key` and `Value` in `Dictionary<Key, Value>`
-and `Element` in `Array<Element>`,
-which tells the reader about the relationship between the type parameter
-and the generic type or function it's used in.
-However, when there isn't a meaningful relationship between them,
-it's traditional to name them using single letters such as `T`, `U`, and `V`,
-such as `T` in the `swapTwoValues(_:_:)` function above.
+Na maioria dos casos, parâmetros de tipo têm nomes descritivos,
+como `Key` e `Value` em `Dictionary<Key, Value>`
+e `Element` em `Array<Element>`,
+que informam ao leitor qual é a relação entre o parâmetro de tipo
+e o tipo ou a função genérica em que ele é usado.
+No entanto, quando não há uma relação significativa entre eles,
+é tradicional nomeá-los com letras isoladas, como `T`, `U` e `V`,
+como o `T` da função `swapTwoValues(_:_:)` acima.
 
-Use upper camel case names for type parameters,
-like `T` and `MyTypeParameter`,
-to indicate that they're a placeholder for a *type*, not a value.
+Use nomes em UpperCamelCase para parâmetros de tipo,
+como `T` e `MyTypeParameter`,
+para indicar que são um marcador para um *tipo*, e não para um valor.
 
-> Note:
-> If you don't need to name a type parameter
-> and its generic type constraints are simple,
-> there's an alternate, lightweight syntax you can use instead,
-> as described in <doc:OpaqueTypes#Opaque-Parameter-Types>.
+> Nota:
+> Se você não precisar nomear um parâmetro de tipo
+> e as restrições de tipo genérico forem simples,
+> existe uma sintaxe alternativa e mais leve que você pode usar no lugar,
+> conforme descrito em <doc:OpaqueTypes#Opaque-Parameter-Types>.
 <!--
 Comparison between this syntax and the lightweight syntax
 is in the Opaque Types chapter, not here ---
@@ -302,44 +302,43 @@ the reader hasn't learned about constraints yet,
 so it wouldn't make sense to list what is/isn't supported.
 -->
 
-## Generic Types
+## Tipos genéricos
 
-In addition to generic functions,
-Swift enables you to define your own *generic types*.
-These are custom classes, structures, and enumerations
-that can work with *any* type, in a similar way to `Array` and `Dictionary`.
+Além das funções genéricas,
+o Swift permite definir seus próprios *tipos genéricos*.
+São classes, structs e enums personalizados
+que podem trabalhar com *qualquer* tipo, de forma parecida com `Array` e `Dictionary`.
 
-This section shows you how to write a generic collection type called `Stack`.
-A stack is an ordered set of values, similar to an array,
-but with a more restricted set of operations than Swift's `Array` type.
-An array allows new items to be inserted and removed at any location in the array.
-A stack, however, allows new items to be appended only to the end of the collection
-(known as *pushing* a new value on to the stack).
-Similarly, a stack allows items to be removed only from the end of the collection
-(known as *popping* a value off the stack).
+Esta seção mostra como escrever um tipo de coleção genérico chamado `Stack`.
+Uma pilha é um conjunto ordenado de valores, parecido com um array,
+mas com um conjunto de operações mais restrito que o tipo `Array` do Swift.
+Um array permite inserir e remover novos itens em qualquer posição dele.
+Já uma pilha permite adicionar novos itens apenas no fim da coleção
+(chamado de *empilhar*, ou *push*, um novo valor na pilha).
+Da mesma forma, uma pilha permite remover itens apenas do fim da coleção
+(chamado de *desempilhar*, ou *pop*, um valor da pilha).
 
-> Note: The concept of a stack is used by the `UINavigationController` class
-> to model the view controllers in its navigation hierarchy.
-> You call the `UINavigationController` class
-> `pushViewController(_:animated:)` method to add (or push)
-> a view controller on to the navigation stack,
-> and its `popViewControllerAnimated(_:)` method to remove (or pop)
-> a view controller from the navigation stack.
-> A stack is a useful collection model whenever you need a strict
-> “last in, first out” approach to managing a collection.
+> Nota: O conceito de pilha é usado pela classe `UINavigationController`
+> para modelar os view controllers da hierarquia de navegação dela.
+> Você chama o método `pushViewController(_:animated:)` da classe `UINavigationController`
+> para adicionar (ou empilhar) um view controller na pilha de navegação,
+> e o método `popViewControllerAnimated(_:)` para remover (ou desempilhar)
+> um view controller da pilha de navegação.
+> Uma pilha é um modelo de coleção útil sempre que você precisa de uma abordagem estrita
+> de “último a entrar, primeiro a sair” para gerenciar uma coleção.
 
-The illustration below shows the push and pop behavior for a stack:
+A ilustração abaixo mostra o comportamento de empilhar e desempilhar de uma pilha:
 
 ![](stackPushPop)
 
-1. There are currently three values on the stack.
-2. A fourth value is pushed onto the top of the stack.
-3. The stack now holds four values, with the most recent one at the top.
-4. The top item in the stack is popped.
-5. After popping a value, the stack once again holds three values.
+1. No momento, há três valores na pilha.
+2. Um quarto valor é empilhado no topo da pilha.
+3. A pilha agora tem quatro valores, com o mais recente no topo.
+4. O item do topo da pilha é desempilhado.
+5. Depois de desempilhar um valor, a pilha volta a ter três valores.
 
-Here's how to write a nongeneric version of a stack,
-in this case for a stack of `Int` values:
+Veja como escrever uma versão não genérica de uma pilha,
+neste caso para uma pilha de valores `Int`:
 
 ```swift
 struct IntStack {
@@ -376,17 +375,17 @@ struct IntStack {
   ```
 -->
 
-This structure uses an `Array` property called `items` to store the values in the stack.
-`Stack` provides two methods, `push` and `pop`,
-to push and pop values on and off the stack.
-These methods are marked as `mutating`,
-because they need to modify (or *mutate*) the structure's `items` array.
+Essa struct usa uma propriedade `Array` chamada `items` para armazenar os valores da pilha.
+`Stack` oferece dois métodos, `push` e `pop`,
+para empilhar e desempilhar valores da pilha.
+Esses métodos são marcados como `mutating`,
+porque precisam modificar (ou *mutar*) o array `items` da struct.
 
-The `IntStack` type shown above can only be used with `Int` values, however.
-It would be much more useful to define a *generic* `Stack` structure,
-that can manage a stack of *any* type of value.
+O tipo `IntStack` mostrado acima, porém, só pode ser usado com valores `Int`.
+Seria bem mais útil definir uma struct `Stack` *genérica*,
+que possa gerenciar uma pilha de *qualquer* tipo de valor.
 
-Here's a generic version of the same code:
+Aqui está uma versão genérica do mesmo código:
 
 ```swift
 struct Stack<Element> {
@@ -416,34 +415,34 @@ struct Stack<Element> {
   ```
 -->
 
-Note how the generic version of `Stack`
-is essentially the same as the nongeneric version,
-but with a type parameter called `Element`
-instead of an actual type of `Int`.
-This type parameter is written within a pair of angle brackets (`<Element>`)
-immediately after the structure's name.
+Repare que a versão genérica de `Stack`
+é basicamente a mesma que a versão não genérica,
+mas com um parâmetro de tipo chamado `Element`
+no lugar de um tipo real como `Int`.
+Esse parâmetro de tipo é escrito dentro de um par de colchetes angulares (`<Element>`)
+logo depois do nome da struct.
 
-`Element` defines a placeholder name for
-a type to be provided later.
-This future type can be referred to as `Element`
-anywhere within the structure's definition.
-In this case, `Element` is used as a placeholder in three places:
+`Element` define um nome marcador para
+um tipo que será fornecido depois.
+Esse tipo futuro pode ser referenciado como `Element`
+em qualquer lugar da definição da struct.
+Nesse caso, `Element` é usado como marcador em três lugares:
 
-- To create a property called `items`,
-  which is initialized with an empty array of values of type `Element`
-- To specify that the `push(_:)` method has a single parameter called `item`,
-  which must be of type `Element`
-- To specify that the value returned by the `pop()` method
-  will be a value of type `Element`
+- Para criar uma propriedade chamada `items`,
+  que é inicializada com um array vazio de valores do tipo `Element`
+- Para especificar que o método `push(_:)` tem um único parâmetro chamado `item`,
+  que precisa ser do tipo `Element`
+- Para especificar que o valor retornado pelo método `pop()`
+  será um valor do tipo `Element`
 
-Because it's a generic type,
-`Stack` can be used to create a stack of *any* valid type in Swift,
-in a similar manner to `Array` and `Dictionary`.
+Como é um tipo genérico,
+`Stack` pode ser usado para criar uma pilha de *qualquer* tipo válido em Swift,
+de forma parecida com `Array` e `Dictionary`.
 
-You create a new `Stack` instance by writing
-the type to be stored in the stack within angle brackets.
-For example, to create a new stack of strings,
-you write `Stack<String>()`:
+Você cria uma nova instância de `Stack` escrevendo
+o tipo a ser armazenado na pilha entre colchetes angulares.
+Por exemplo, para criar uma nova pilha de strings,
+você escreve `Stack<String>()`:
 
 ```swift
 var stackOfStrings = Stack<String>()
@@ -468,11 +467,11 @@ stackOfStrings.push("cuatro")
   ```
 -->
 
-Here's how `stackOfStrings` looks after pushing these four values on to the stack:
+Veja como fica `stackOfStrings` depois de empilhar esses quatro valores:
 
 ![](stackPushedFourStrings)
 
-Popping a value from the stack removes and returns the top value, `"cuatro"`:
+Desempilhar um valor da pilha remove e retorna o valor do topo, `"cuatro"`:
 
 ```swift
 let fromTheTop = stackOfStrings.pop()
@@ -489,22 +488,22 @@ let fromTheTop = stackOfStrings.pop()
   ```
 -->
 
-Here's how the stack looks after popping its top value:
+Veja como fica a pilha depois de desempilhar seu valor do topo:
 
 ![](stackPoppedOneString)
 
-## Extending a Generic Type
+## Estendendo um tipo genérico
 
-When you extend a generic type,
-you don't provide a type parameter list as part of the extension's definition.
-Instead, the type parameter list from the *original* type definition
-is available within the body of the extension,
-and the original type parameter names are used to refer to
-the type parameters from the original definition.
+Ao estender um tipo genérico,
+você não fornece uma lista de parâmetros de tipo como parte da definição da extension.
+Em vez disso, a lista de parâmetros de tipo da definição *original*
+fica disponível dentro do corpo da extension,
+e os nomes originais dos parâmetros de tipo são usados para se referir
+aos parâmetros de tipo da definição original.
 
-The following example extends the generic `Stack` type to add
-a read-only computed property called `topItem`,
-which returns the top item on the stack without popping it from the stack:
+O exemplo a seguir estende o tipo genérico `Stack` para adicionar
+uma propriedade computada somente leitura chamada `topItem`,
+que retorna o item do topo da pilha sem removê-lo da pilha:
 
 ```swift
 extension Stack {
@@ -526,17 +525,17 @@ extension Stack {
   ```
 -->
 
-The `topItem` property returns an optional value of type `Element`.
-If the stack is empty, `topItem` returns `nil`;
-if the stack isn't empty, `topItem` returns the final item in the `items` array.
+A propriedade `topItem` retorna um optional do tipo `Element`.
+Se a pilha estiver vazia, `topItem` retorna `nil`;
+se a pilha não estiver vazia, `topItem` retorna o último item do array `items`.
 
-Note that this extension doesn't define a type parameter list.
-Instead, the `Stack` type's existing type parameter name, `Element`,
-is used within the extension to indicate the optional type of
-the `topItem` computed property.
+Observe que essa extension não define uma lista de parâmetros de tipo.
+Em vez disso, o nome do parâmetro de tipo que já existe no tipo `Stack`, `Element`,
+é usado dentro da extension para indicar o tipo optional da
+propriedade computada `topItem`.
 
-The `topItem` computed property can now be used with any `Stack` instance
-to access and query its top item without removing it.
+A propriedade computada `topItem` agora pode ser usada com qualquer instância de `Stack`
+para acessar e consultar o item do topo sem removê-lo.
 
 ```swift
 if let topItem = stackOfStrings.topItem {
@@ -556,55 +555,55 @@ if let topItem = stackOfStrings.topItem {
   ```
 -->
 
-Extensions of a generic type can also include requirements
-that instances of the extended type must satisfy
-in order to gain the new functionality,
-as discussed in <doc:Generics#Extensions-with-a-Generic-Where-Clause> below.
+Extensions de um tipo genérico também podem incluir requisitos
+que as instâncias do tipo estendido precisam satisfazer
+para ganhar a nova funcionalidade,
+como discutido em <doc:Generics#Extensions-with-a-Generic-Where-Clause> abaixo.
 
-## Type Constraints
+## Restrições de tipo
 
-The `swapTwoValues(_:_:)` function and the `Stack` type can work with any type.
-However, it's sometimes useful to enforce
-certain *type constraints* on the types that can be used with
-generic functions and generic types.
-Type constraints specify that a type parameter must
-inherit from a specific class,
-or conform to a particular protocol or protocol composition.
+A função `swapTwoValues(_:_:)` e o tipo `Stack` podem trabalhar com qualquer tipo.
+No entanto, às vezes é útil impor
+certas *restrições de tipo* aos tipos que podem ser usados com
+funções genéricas e tipos genéricos.
+Restrições de tipo especificam que um parâmetro de tipo precisa
+herdar de uma classe específica,
+ou estar em conformidade com um protocolo ou uma composição de protocolos específica.
 
-For example,
-Swift's `Dictionary` type places a limitation on
-the types that can be used as keys for a dictionary.
-As described in <doc:CollectionTypes#Dictionaries>,
-the type of a dictionary's keys must be *hashable*.
-That is, it must provide a way to make itself uniquely representable.
-`Dictionary` needs its keys to be hashable so that it can
-check whether it already contains a value for a particular key.
-Without this requirement, `Dictionary` couldn't tell
-whether it should insert or replace a value for a particular key,
-nor would it be able to find a value for a given key that's already in the dictionary.
+Por exemplo,
+o tipo `Dictionary` do Swift impõe uma limitação sobre
+os tipos que podem ser usados como chaves de um dicionário.
+Como descrito em <doc:CollectionTypes#Dictionaries>,
+o tipo das chaves de um dicionário precisa ser *hashable*.
+Ou seja, precisa fornecer uma forma de se tornar representável de maneira única.
+`Dictionary` precisa que suas chaves sejam hashable para que ele possa
+verificar se já contém um valor para uma chave específica.
+Sem esse requisito, `Dictionary` não conseguiria saber
+se deve inserir ou substituir um valor para uma chave específica,
+nem conseguiria encontrar o valor de uma chave dada que já está no dicionário.
 
-This requirement is enforced by a type constraint on the key type for `Dictionary`,
-which specifies that the key type must conform to the `Hashable` protocol,
-a special protocol defined in the Swift standard library.
-All of Swift's basic types (such as `String`, `Int`, `Double`, and `Bool`)
-are hashable by default.
-For information about
-making your own custom types conform to the `Hashable` protocol,
-see [Conforming to the Hashable Protocol](https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol).
+Esse requisito é imposto por uma restrição de tipo sobre o tipo da chave de `Dictionary`,
+que especifica que o tipo da chave precisa estar em conformidade com o protocolo `Hashable`,
+um protocolo especial definido na biblioteca padrão do Swift.
+Todos os tipos básicos do Swift (como `String`, `Int`, `Double` e `Bool`)
+são hashable por padrão.
+Para informações sobre
+como fazer seus próprios tipos personalizados estarem em conformidade com o protocolo `Hashable`,
+veja [Conformidade com o protocolo Hashable](https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol).
 
-You can define your own type constraints when creating custom generic types,
-and these constraints provide much of the power of generic programming.
-Abstract concepts like `Hashable`
-characterize types in terms of their conceptual characteristics,
-rather than their concrete type.
+Você pode definir suas próprias restrições de tipo ao criar tipos genéricos personalizados,
+e essas restrições fornecem boa parte do poder da programação genérica.
+Conceitos abstratos como `Hashable`
+caracterizam tipos em termos de suas características conceituais,
+em vez do tipo concreto.
 
-### Type Constraint Syntax
+### Sintaxe de restrições de tipo
 
-You write type constraints by placing a single class or protocol constraint
-after a type parameter's name, separated by a colon,
-as part of the type parameter list.
-The basic syntax for type constraints on a generic function is shown below
-(although the syntax is the same for generic types):
+Você escreve restrições de tipo colocando uma única restrição de classe ou de protocolo
+depois do nome de um parâmetro de tipo, separada por dois-pontos,
+como parte da lista de parâmetros de tipo.
+A sintaxe básica para restrições de tipo em uma função genérica é mostrada abaixo
+(embora a sintaxe seja a mesma para tipos genéricos):
 
 ```swift
 func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
@@ -624,20 +623,20 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
   ```
 -->
 
-The hypothetical function above has two type parameters.
-The first type parameter, `T`, has a type constraint
-that requires `T` to be a subclass of `SomeClass`.
-The second type parameter, `U`, has a type constraint
-that requires `U` to conform to the protocol `SomeProtocol`.
+A função hipotética acima tem dois parâmetros de tipo.
+O primeiro parâmetro de tipo, `T`, tem uma restrição de tipo
+que exige que `T` seja uma subclasse de `SomeClass`.
+O segundo parâmetro de tipo, `U`, tem uma restrição de tipo
+que exige que `U` esteja em conformidade com o protocolo `SomeProtocol`.
 
-### Type Constraints in Action
+### Restrições de tipo na prática
 
-Here's a nongeneric function called `findIndex(ofString:in:)`,
-which is given a `String` value to find
-and an array of `String` values within which to find it.
-The `findIndex(ofString:in:)` function returns an optional `Int` value,
-which will be the index of the first matching string in the array if it's found,
-or `nil` if the string can't be found:
+Aqui está uma função não genérica chamada `findIndex(ofString:in:)`,
+que recebe um valor `String` a ser procurado
+e um array de valores `String` em que fazer a busca.
+A função `findIndex(ofString:in:)` retorna um `Int` optional,
+que será o índice da primeira string correspondente no array, se ela for encontrada,
+ou `nil` se a string não puder ser encontrada:
 
 ```swift
 func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
@@ -665,7 +664,7 @@ func findIndex(ofString valueToFind: String, in array: [String]) -> Int? {
   ```
 -->
 
-The `findIndex(ofString:in:)` function can be used to find a string value in an array of strings:
+A função `findIndex(ofString:in:)` pode ser usada para encontrar um valor string em um array de strings:
 
 ```swift
 let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
@@ -687,17 +686,17 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
   ```
 -->
 
-The principle of finding the index of a value in an array isn't useful only for strings, however.
-You can write the same functionality as a generic function
-by replacing any mention of strings with values of some type `T` instead.
+O princípio de encontrar o índice de um valor em um array, porém, não é útil apenas para strings.
+Você pode escrever a mesma funcionalidade como uma função genérica,
+substituindo qualquer menção a strings por valores de algum tipo `T`.
 
-Here's how you might expect a generic version of `findIndex(ofString:in:)`,
-called `findIndex(of:in:)`, to be written.
-Note that the return type of this function is still `Int?`,
-because the function returns an optional index number,
-not an optional value from the array.
-Be warned, though --- this function doesn't compile,
-for reasons explained after the example:
+Veja como você poderia esperar que uma versão genérica de `findIndex(ofString:in:)`,
+chamada `findIndex(of:in:)`, fosse escrita.
+Observe que o tipo de retorno dessa função continua sendo `Int?`,
+pois a função retorna um número de índice optional,
+não um optional do array.
+Atenção, porém: essa função não compila,
+pelos motivos explicados depois do exemplo:
 
 ```swift
 func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
@@ -728,22 +727,22 @@ func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-This function doesn't compile as written above.
-The problem lies with the equality check, “`if value == valueToFind`”.
-Not every type in Swift can be compared with the equal to operator (`==`).
-If you create your own class or structure to represent a complex data model, for example,
-then the meaning of “equal to” for that class or structure
-isn't something that Swift can guess for you.
-Because of this, it isn't possible to guarantee that this code will work
-for *every* possible type `T`,
-and an appropriate error is reported when you try to compile the code.
+Essa função não compila como escrita acima.
+O problema está na verificação de igualdade, “`if value == valueToFind`”.
+Nem todo tipo em Swift pode ser comparado com o operador de igualdade (`==`).
+Se você criar sua própria classe ou struct para representar um modelo de dados complexo, por exemplo,
+então o significado de “igual a” para essa classe ou struct
+não é algo que o Swift consegue adivinhar por você.
+Por isso, não é possível garantir que esse código vai funcionar
+para *todo* tipo possível `T`,
+e o compilador reporta um erro apropriado quando você tenta compilar o código.
 
-All is not lost, however.
-The Swift standard library defines a protocol called `Equatable`,
-which requires any conforming type to implement
-the equal to operator (`==`) and the not equal to operator (`!=`)
-to compare any two values of that type.
-All of Swift's standard types automatically support the `Equatable` protocol.
+Nem tudo está perdido, porém.
+A biblioteca padrão do Swift define um protocolo chamado `Equatable`,
+que exige que qualquer tipo em conformidade implemente
+o operador de igualdade (`==`) e o operador de desigualdade (`!=`)
+para comparar quaisquer dois valores daquele tipo.
+Todos os tipos padrão do Swift adotam automaticamente o protocolo `Equatable`.
 
 <!--
   TODO: write about how to make your own types conform to Equatable
@@ -753,10 +752,10 @@ All of Swift's standard types automatically support the `Equatable` protocol.
   as described in <link>.
 -->
 
-Any type that's `Equatable` can be used safely with the `findIndex(of:in:)` function,
-because it's guaranteed to support the equal to operator.
-To express this fact, you write a type constraint of `Equatable`
-as part of the type parameter's definition when you define the function:
+Qualquer tipo que seja `Equatable` pode ser usado com segurança na função `findIndex(of:in:)`,
+pois é garantido que ele oferece suporte ao operador de igualdade.
+Para expressar isso, você escreve uma restrição de tipo de `Equatable`
+como parte da definição do parâmetro de tipo ao definir a função:
 
 ```swift
 func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
@@ -784,11 +783,11 @@ func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
   ```
 -->
 
-The single type parameter for `findIndex(of:in:)` is written as `T: Equatable`,
-which means “any type `T` that conforms to the `Equatable` protocol.”
+O único parâmetro de tipo de `findIndex(of:in:)` é escrito como `T: Equatable`,
+o que significa “qualquer tipo `T` que esteja em conformidade com o protocolo `Equatable`.”
 
-The `findIndex(of:in:)` function now compiles successfully
-and can be used with any type that's `Equatable`, such as `Double` or `String`:
+A função `findIndex(of:in:)` agora compila com sucesso
+e pode ser usada com qualquer tipo que seja `Equatable`, como `Double` ou `String`:
 
 ```swift
 let doubleIndex = findIndex(of: 9.3, in: [3.14159, 0.1, 0.25])
@@ -818,21 +817,21 @@ let stringIndex = findIndex(of: "Andrea", in: ["Mike", "Malcolm", "Andrea"])
   TODO: likewise providing type parameters for initializers
 -->
 
-## Associated Types
+## Tipos associados
 
-When defining a protocol,
-it's sometimes useful to declare one or more associated types
-as part of the protocol's definition.
-An *associated type* gives a placeholder name
-to a type that's used as part of the protocol.
-The actual type to use for that associated type
-isn't specified until the protocol is adopted.
-Associated types are specified with the `associatedtype` keyword.
+Ao definir um protocolo,
+às vezes é útil declarar um ou mais tipos associados
+como parte da definição do protocolo.
+Um *tipo associado* dá um nome marcador
+a um tipo que é usado como parte do protocolo.
+O tipo real a ser usado para esse tipo associado
+não é especificado até que o protocolo seja adotado.
+Tipos associados são especificados com a palavra-chave `associatedtype`.
 
-### Associated Types in Action
+### Tipos associados na prática
 
-Here's an example of a protocol called `Container`,
-which declares an associated type called `Item`:
+Aqui está um exemplo de um protocolo chamado `Container`,
+que declara um tipo associado chamado `Item`:
 
 ```swift
 protocol Container {
@@ -856,51 +855,51 @@ protocol Container {
   ```
 -->
 
-The `Container` protocol defines three required capabilities
-that any container must provide:
+O protocolo `Container` define três capacidades obrigatórias
+que qualquer contêiner precisa fornecer:
 
-- It must be possible to add a new item to the container with an `append(_:)` method.
-- It must be possible to access a count of the items in the container
-  through a `count` property that returns an `Int` value.
-- It must be possible to retrieve each item in the container with a subscript
-  that takes an `Int` index value.
+- Deve ser possível adicionar um novo item ao contêiner com um método `append(_:)`.
+- Deve ser possível acessar a quantidade de itens do contêiner
+  por meio de uma propriedade `count` que retorna um valor `Int`.
+- Deve ser possível recuperar cada item do contêiner com um subscript
+  que recebe um índice `Int`.
 
-This protocol doesn't specify how the items in the container should be stored
-or what type they're allowed to be.
-The protocol only specifies the three bits of functionality
-that any type must provide in order to be considered a `Container`.
-A conforming type can provide additional functionality,
-as long as it satisfies these three requirements.
+Esse protocolo não especifica como os itens do contêiner devem ser armazenados
+nem qual tipo eles podem ter.
+O protocolo especifica apenas as três funcionalidades
+que qualquer tipo precisa fornecer para ser considerado um `Container`.
+Um tipo em conformidade pode fornecer funcionalidades adicionais,
+contanto que satisfaça esses três requisitos.
 
-Any type that conforms to the `Container` protocol must be able to specify
-the type of values it stores.
-Specifically, it must ensure that only items of the right type
-are added to the container,
-and it must be clear about the type of the items returned by its subscript.
+Qualquer tipo que esteja em conformidade com o protocolo `Container` precisa conseguir especificar
+o tipo dos valores que armazena.
+Especificamente, precisa garantir que apenas itens do tipo certo
+sejam adicionados ao contêiner,
+e precisa deixar claro o tipo dos itens retornados pelo seu subscript.
 
-To define these requirements,
-the `Container` protocol needs a way to refer to
-the type of the elements that a container will hold,
-without knowing what that type is for a specific container.
-The `Container` protocol needs to specify that
-any value passed to the `append(_:)` method
-must have the same type as the container's element type,
-and that the value returned by the container's subscript
-will be of the same type as the container's element type.
+Para definir esses requisitos,
+o protocolo `Container` precisa de uma forma de se referir
+ao tipo dos elementos que um contêiner vai guardar,
+sem saber qual é esse tipo para um contêiner específico.
+O protocolo `Container` precisa especificar que
+qualquer valor passado ao método `append(_:)`
+deve ter o mesmo tipo do tipo de elemento do contêiner,
+e que o valor retornado pelo subscript do contêiner
+será do mesmo tipo do tipo de elemento do contêiner.
 
-To achieve this,
-the `Container` protocol declares an associated type called `Item`,
-written as  `associatedtype Item`.
-The protocol doesn't define what `Item` is ---
-that information is left for any conforming type to provide.
-Nonetheless, the `Item` alias provides a way to refer to
-the type of the items in a `Container`,
-and to define a type for use with the `append(_:)` method and subscript,
-to ensure that the expected behavior of any `Container` is enforced.
+Para isso,
+o protocolo `Container` declara um tipo associado chamado `Item`,
+escrito como `associatedtype Item`.
+O protocolo não define o que `Item` é ---
+essa informação fica para qualquer tipo em conformidade fornecer.
+Mesmo assim, o alias `Item` oferece uma forma de se referir
+ao tipo dos itens de um `Container`,
+e de definir um tipo para uso com o método `append(_:)` e o subscript,
+para garantir que o comportamento esperado de qualquer `Container` seja respeitado.
 
-Here's a version of the nongeneric `IntStack` type
-from <doc:Generics#Generic-Types> above,
-adapted to conform to the `Container` protocol:
+Aqui está uma versão do tipo não genérico `IntStack`
+vista em <doc:Generics#Generic-Types> acima,
+adaptada para estar em conformidade com o protocolo `Container`:
 
 ```swift
 struct IntStack: Container {
@@ -954,26 +953,26 @@ struct IntStack: Container {
   ```
 -->
 
-The `IntStack` type implements all three of the `Container` protocol's requirements,
-and in each case wraps part of the `IntStack` type's existing functionality
-to satisfy these requirements.
+O tipo `IntStack` implementa os três requisitos do protocolo `Container`,
+e em cada caso encapsula parte da funcionalidade já existente do tipo `IntStack`
+para satisfazer esses requisitos.
 
-Moreover, `IntStack` specifies that for this implementation of `Container`,
-the appropriate `Item` to use is a type of `Int`.
-The definition of `typealias Item = Int` turns the abstract type of `Item`
-into a concrete type of `Int` for this implementation of the `Container` protocol.
+Além disso, `IntStack` especifica que, para essa implementação de `Container`,
+o `Item` apropriado a ser usado é do tipo `Int`.
+A definição `typealias Item = Int` transforma o tipo abstrato `Item`
+em um tipo concreto `Int` para essa implementação do protocolo `Container`.
 
-Thanks to Swift's type inference,
-you don't actually need to declare a concrete `Item` of `Int`
-as part of the definition of `IntStack`.
-Because `IntStack` conforms to all of the requirements of the `Container` protocol,
-Swift can infer the appropriate `Item` to use,
-simply by looking at the type of the `append(_:)` method's `item` parameter
-and the return type of the subscript.
-Indeed, if you delete the `typealias Item = Int` line from the code above,
-everything still works, because it's clear what type should be used for `Item`.
+Graças à inferência de tipos do Swift,
+você não precisa declarar de fato um `Item` concreto como `Int`
+como parte da definição de `IntStack`.
+Como `IntStack` está em conformidade com todos os requisitos do protocolo `Container`,
+o Swift consegue inferir o `Item` apropriado a ser usado,
+simplesmente observando o tipo do parâmetro `item` do método `append(_:)`
+e o tipo de retorno do subscript.
+De fato, se você apagar a linha `typealias Item = Int` do código acima,
+tudo continua funcionando, porque fica claro qual tipo deve ser usado para `Item`.
 
-You can also make the generic `Stack` type conform to the `Container` protocol:
+Você também pode fazer o tipo genérico `Stack` estar em conformidade com o protocolo `Container`:
 
 ```swift
 struct Stack<Element>: Container {
@@ -1025,25 +1024,25 @@ struct Stack<Element>: Container {
   ```
 -->
 
-This time, the type parameter `Element` is used as
-the type of the `append(_:)` method's `item` parameter
-and the return type of the subscript.
-Swift can therefore infer that `Element` is the appropriate type to use
-as the `Item` for this particular container.
+Dessa vez, o parâmetro de tipo `Element` é usado como
+o tipo do parâmetro `item` do método `append(_:)`
+e o tipo de retorno do subscript.
+Por isso, o Swift consegue inferir que `Element` é o tipo apropriado a ser usado
+como `Item` para esse contêiner específico.
 
-### Extending an Existing Type to Specify an Associated Type
+### Estendendo um tipo existente para especificar um tipo associado
 
-You can extend an existing type to add conformance to a protocol,
-as described in <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
-This includes a protocol with an associated type.
+Você pode estender um tipo existente para adicionar conformidade a um protocolo,
+como descrito em <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
+Isso inclui um protocolo com um tipo associado.
 
-Swift's `Array` type already provides an `append(_:)` method,
-a `count` property, and a subscript with an `Int` index to retrieve its elements.
-These three capabilities match the requirements of the `Container` protocol.
-This means that you can extend `Array` to conform to the `Container` protocol
-simply by declaring that `Array` adopts the protocol.
-You do this with an empty extension,
-as described in <doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>:
+O tipo `Array` do Swift já fornece um método `append(_:)`,
+uma propriedade `count` e um subscript com índice `Int` para recuperar seus elementos.
+Essas três capacidades correspondem aos requisitos do protocolo `Container`.
+Isso significa que você pode estender `Array` para estar em conformidade com o protocolo `Container`
+simplesmente declarando que `Array` adota o protocolo.
+Você faz isso com uma extension vazia,
+como descrito em <doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>:
 
 ```swift
 extension Array: Container {}
@@ -1057,18 +1056,18 @@ extension Array: Container {}
   ```
 -->
 
-Array's existing `append(_:)` method and subscript enable Swift to infer
-the appropriate type to use for `Item`,
-just as for the generic `Stack` type above.
-After defining this extension, you can use any `Array` as a `Container`.
+O método `append(_:)` e o subscript já existentes em `Array` permitem que o Swift infira
+o tipo apropriado a ser usado para `Item`,
+assim como para o tipo genérico `Stack` acima.
+Depois de definir essa extension, você pode usar qualquer `Array` como `Container`.
 
-### Adding Constraints to an Associated Type
+### Adicionando restrições a um tipo associado
 
-You can add type constraints to an associated type in a protocol
-to require that conforming types satisfy those constraints.
-For example,
-the following code defines a version of `Container`
-that requires the items in the container to be equatable.
+Você pode adicionar restrições de tipo a um tipo associado em um protocolo
+para exigir que os tipos em conformidade satisfaçam essas restrições.
+Por exemplo,
+o código a seguir define uma versão de `Container`
+que exige que os itens do contêiner sejam `Equatable`.
 
 ```swift
 protocol Container {
@@ -1092,18 +1091,18 @@ protocol Container {
   ```
 -->
 
-To conform to this version of `Container`,
-the container's `Item` type has to conform to the `Equatable` protocol.
+Para estar em conformidade com essa versão de `Container`,
+o tipo `Item` do contêiner precisa estar em conformidade com o protocolo `Equatable`.
 
-### Using a Protocol in Its Associated Type's Constraints
+### Usando um protocolo nas restrições do seu próprio tipo associado
 
-A protocol can appear as part of its own requirements.
-For example,
-here's a protocol that refines the `Container` protocol,
-adding the requirement of a `suffix(_:)` method.
-The `suffix(_:)` method
-returns a given number of elements from the end of the container,
-storing them in an instance of the `Suffix` type.
+Um protocolo pode aparecer como parte dos seus próprios requisitos.
+Por exemplo,
+aqui está um protocolo que refina o protocolo `Container`,
+adicionando o requisito de um método `suffix(_:)`.
+O método `suffix(_:)`
+retorna uma quantidade informada de elementos do fim do contêiner,
+armazenando-os em uma instância do tipo `Suffix`.
 
 ```swift
 protocol SuffixableContainer: Container {
@@ -1123,20 +1122,20 @@ protocol SuffixableContainer: Container {
   ```
 -->
 
-In this protocol,
-`Suffix` is an associated type,
-like the `Item` type in the `Container` example above.
-`Suffix` has two constraints:
-It must conform to the `SuffixableContainer` protocol
-(the protocol currently being defined),
-and its `Item` type must be the same
-as the container's `Item` type.
-The constraint on `Item` is a generic `where` clause,
-which is discussed in <doc:Generics#Associated-Types-with-a-Generic-Where-Clause> below.
+Nesse protocolo,
+`Suffix` é um tipo associado,
+assim como o tipo `Item` no exemplo `Container` acima.
+`Suffix` tem duas restrições:
+ele precisa estar em conformidade com o protocolo `SuffixableContainer`
+(o protocolo que está sendo definido agora),
+e seu tipo `Item` precisa ser o mesmo
+que o tipo `Item` do contêiner.
+A restrição sobre `Item` é uma cláusula `where` genérica,
+que é discutida em <doc:Generics#Associated-Types-with-a-Generic-Where-Clause> abaixo.
 
-Here's an extension of the `Stack` type
-from <doc:Generics#Generic-Types> above
-that adds conformance to the `SuffixableContainer` protocol:
+Aqui está uma extension do tipo `Stack`
+visto em <doc:Generics#Generic-Types> acima
+que adiciona conformidade ao protocolo `SuffixableContainer`:
 
 ```swift
 extension Stack: SuffixableContainer {
@@ -1182,17 +1181,17 @@ let suffix = stackOfInts.suffix(2)
   ```
 -->
 
-In the example above,
-the `Suffix` associated type for `Stack` is also `Stack`,
-so the suffix operation on `Stack` returns another `Stack`.
-Alternatively,
-a type that conforms to `SuffixableContainer`
-can have a `Suffix` type that's different from itself ---
-meaning the suffix operation can return a different type.
-For example,
-here's an extension to the nongeneric `IntStack` type
-that adds `SuffixableContainer` conformance,
-using `Stack<Int>` as its suffix type instead of `IntStack`:
+No exemplo acima,
+o tipo associado `Suffix` de `Stack` também é `Stack`,
+então a operação de sufixo em `Stack` retorna outro `Stack`.
+Como alternativa,
+um tipo que está em conformidade com `SuffixableContainer`
+pode ter um tipo `Suffix` diferente de si mesmo ---
+ou seja, a operação de sufixo pode retornar um tipo diferente.
+Por exemplo,
+aqui está uma extension do tipo não genérico `IntStack`
+que adiciona conformidade com `SuffixableContainer`,
+usando `Stack<Int>` como seu tipo de sufixo no lugar de `IntStack`:
 
 ```swift
 extension IntStack: SuffixableContainer {
@@ -1230,34 +1229,34 @@ extension IntStack: SuffixableContainer {
   ```
 -->
 
-## Generic Where Clauses
+## Cláusulas where genéricas
 
-Type constraints, as described in <doc:Generics#Type-Constraints>,
-enable you to define requirements on the type parameters associated with
-a generic function, subscript, or type.
+Restrições de tipo, como descritas em <doc:Generics#Type-Constraints>,
+permitem definir requisitos sobre os parâmetros de tipo associados a
+uma função genérica, um subscript ou um tipo genérico.
 
-It can also be useful to define requirements for associated types.
-You do this by defining a *generic where clause*.
-A generic `where` clause enables you to require that
-an associated type must conform to a certain protocol,
-or that certain type parameters and associated types must be the same.
-A generic `where` clause starts with the `where` keyword,
-followed by constraints for associated types
-or equality relationships between types and associated types.
-You write a generic `where` clause right before the opening curly brace
-of a type or function's body.
+Também pode ser útil definir requisitos para tipos associados.
+Você faz isso definindo uma *cláusula where genérica*.
+Uma cláusula `where` genérica permite exigir que
+um tipo associado esteja em conformidade com determinado protocolo,
+ou que certos parâmetros de tipo e tipos associados sejam iguais.
+Uma cláusula `where` genérica começa com a palavra-chave `where`,
+seguida de restrições para tipos associados
+ou de relações de igualdade entre tipos e tipos associados.
+Você escreve uma cláusula `where` genérica logo antes da chave de abertura
+do corpo de um tipo ou de uma função.
 
-The example below defines a generic function called `allItemsMatch`,
-which checks to see if two `Container` instances contain
-the same items in the same order.
-The function returns a Boolean value of `true` if all items match
-and a value of `false` if they don't.
+O exemplo abaixo define uma função genérica chamada `allItemsMatch`,
+que verifica se duas instâncias de `Container` contêm
+os mesmos itens na mesma ordem.
+A função retorna o valor booleano `true` se todos os itens coincidirem
+e o valor `false` se não coincidirem.
 
-The two containers to be checked don't have to be
-the same type of container (although they can be),
-but they do have to hold the same type of items.
-This requirement is expressed through a combination of type constraints
-and a generic `where` clause:
+Os dois contêineres a serem comparados não precisam ser
+do mesmo tipo de contêiner (embora possam ser),
+mas precisam guardar o mesmo tipo de itens.
+Essa exigência é expressa por uma combinação de restrições de tipo
+e uma cláusula `where` genérica:
 
 ```swift
 func allItemsMatch<C1: Container, C2: Container>
@@ -1307,56 +1306,56 @@ func allItemsMatch<C1: Container, C2: Container>
   ```
 -->
 
-This function takes two arguments called
-`someContainer` and `anotherContainer`.
-The `someContainer` argument is of type `C1`,
-and the `anotherContainer` argument is of type `C2`.
-Both `C1` and `C2` are type parameters
-for two container types to be determined when the function is called.
+Essa função recebe dois argumentos chamados
+`someContainer` e `anotherContainer`.
+O argumento `someContainer` é do tipo `C1`,
+e o argumento `anotherContainer` é do tipo `C2`.
+Tanto `C1` quanto `C2` são parâmetros de tipo
+para dois tipos de contêiner que serão determinados quando a função for chamada.
 
-The following requirements are placed on the function's two type parameters:
+Os seguintes requisitos são impostos aos dois parâmetros de tipo da função:
 
-- `C1` must conform to the `Container` protocol (written as `C1: Container`).
-- `C2` must also conform to the `Container` protocol (written as `C2: Container`).
-- The `Item` for `C1` must be the same as the `Item` for `C2`
-  (written as `C1.Item == C2.Item`).
-- The `Item` for `C1` must conform to the `Equatable` protocol
-  (written as `C1.Item: Equatable`).
+- `C1` precisa estar em conformidade com o protocolo `Container` (escrito como `C1: Container`).
+- `C2` também precisa estar em conformidade com o protocolo `Container` (escrito como `C2: Container`).
+- O `Item` de `C1` precisa ser o mesmo que o `Item` de `C2`
+  (escrito como `C1.Item == C2.Item`).
+- O `Item` de `C1` precisa estar em conformidade com o protocolo `Equatable`
+  (escrito como `C1.Item: Equatable`).
 
-The first and second requirements are defined in the function's type parameter list,
-and the third and fourth requirements are defined in the function's generic `where` clause.
+O primeiro e o segundo requisitos são definidos na lista de parâmetros de tipo da função,
+e o terceiro e o quarto requisitos são definidos na cláusula `where` genérica da função.
 
-These requirements mean:
+Esses requisitos significam:
 
-- `someContainer` is a container of type `C1`.
-- `anotherContainer` is a container of type `C2`.
-- `someContainer` and `anotherContainer` contain the same type of items.
-- The items in `someContainer` can be checked with the not equal operator (`!=`)
-  to see if they're different from each other.
+- `someContainer` é um contêiner do tipo `C1`.
+- `anotherContainer` é um contêiner do tipo `C2`.
+- `someContainer` e `anotherContainer` guardam o mesmo tipo de itens.
+- Os itens de `someContainer` podem ser comparados com o operador de desigualdade (`!=`)
+  para verificar se são diferentes uns dos outros.
 
-The third and fourth requirements combine to mean that
-the items in `anotherContainer` can *also* be checked with the `!=` operator,
-because they're exactly the same type as the items in `someContainer`.
+O terceiro e o quarto requisitos, juntos, significam que
+os itens de `anotherContainer` *também* podem ser comparados com o operador `!=`,
+pois são exatamente do mesmo tipo que os itens de `someContainer`.
 
-These requirements enable the `allItemsMatch(_:_:)` function to compare the two containers,
-even if they're of a different container type.
+Esses requisitos permitem que a função `allItemsMatch(_:_:)` compare os dois contêineres,
+mesmo que sejam de tipos de contêiner diferentes.
 
-The `allItemsMatch(_:_:)` function starts by checking that
-both containers contain the same number of items.
-If they contain a different number of items, there's no way that they can match,
-and the function returns `false`.
+A função `allItemsMatch(_:_:)` começa verificando se
+os dois contêineres têm a mesma quantidade de itens.
+Se tiverem quantidades diferentes, não há como coincidirem,
+e a função retorna `false`.
 
-After making this check, the function iterates over all of the items in `someContainer`
-with a `for`-`in` loop and the half-open range operator (`..<`).
-For each item, the function checks whether the item from `someContainer` isn't equal to
-the corresponding item in `anotherContainer`.
-If the two items aren't equal, then the two containers don't match,
-and the function returns `false`.
+Depois dessa verificação, a função percorre todos os itens de `someContainer`
+com um laço `for`-`in` e o operador de intervalo semiaberto (`..<`).
+Para cada item, a função verifica se o item de `someContainer` é diferente
+do item correspondente em `anotherContainer`.
+Se os dois itens forem diferentes, os dois contêineres não coincidem,
+e a função retorna `false`.
 
-If the loop finishes without finding a mismatch,
-the two containers match, and the function returns `true`.
+Se o laço terminar sem encontrar uma diferença,
+os dois contêineres coincidem, e a função retorna `true`.
 
-Here's how the `allItemsMatch(_:_:)` function looks in action:
+Veja como a função `allItemsMatch(_:_:)` funciona na prática:
 
 ```swift
 var stackOfStrings = Stack<String>()
@@ -1394,24 +1393,24 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   ```
 -->
 
-The example above creates a `Stack` instance to store `String` values,
-and pushes three strings onto the stack.
-The example also creates an `Array` instance initialized with
-an array literal containing the same three strings as the stack.
-Even though the stack and the array are of a different type,
-they both conform to the `Container` protocol,
-and both contain the same type of values.
-You can therefore call the `allItemsMatch(_:_:)` function
-with these two containers as its arguments.
-In the example above, the `allItemsMatch(_:_:)` function correctly reports that
-all of the items in the two containers match.
+O exemplo acima cria uma instância de `Stack` para guardar valores `String`,
+e empilha três strings na pilha.
+O exemplo também cria uma instância de `Array` inicializada com
+um array literal que contém as mesmas três strings da pilha.
+Mesmo que a pilha e o array sejam de tipos diferentes,
+ambos estão em conformidade com o protocolo `Container`,
+e ambos guardam o mesmo tipo de valores.
+Por isso, você pode chamar a função `allItemsMatch(_:_:)`
+com esses dois contêineres como argumentos.
+No exemplo acima, a função `allItemsMatch(_:_:)` informa corretamente que
+todos os itens dos dois contêineres coincidem.
 
-## Extensions with a Generic Where Clause
+## Extensions com cláusula where genérica
 
-You can also use a generic `where` clause as part of an extension.
-The example below
-extends the generic `Stack` structure from the previous examples
-to add an `isTop(_:)` method.
+Você também pode usar uma cláusula `where` genérica como parte de uma extension.
+O exemplo abaixo
+estende a struct genérica `Stack` dos exemplos anteriores
+para adicionar um método `isTop(_:)`.
 
 ```swift
 extension Stack where Element: Equatable {
@@ -1439,22 +1438,22 @@ extension Stack where Element: Equatable {
   ```
 -->
 
-This new `isTop(_:)` method
-first checks that the stack isn't empty,
-and then compares the given item
-against the stack's topmost item.
-If you tried to do this without a generic `where` clause,
-you would have a problem:
-The implementation of `isTop(_:)` uses the `==` operator,
-but the definition of `Stack` doesn't require
-its items to be equatable,
-so using the `==` operator results in a compile-time error.
-Using a generic `where` clause
-lets you add a new requirement to the extension,
-so that the extension adds the `isTop(_:)` method
-only when the items in the stack are equatable.
+Esse novo método `isTop(_:)`
+primeiro verifica se a pilha não está vazia,
+e depois compara o item informado
+com o item do topo da pilha.
+Se você tentasse fazer isso sem uma cláusula `where` genérica,
+teria um problema:
+a implementação de `isTop(_:)` usa o operador `==`,
+mas a definição de `Stack` não exige
+que seus itens sejam `Equatable`,
+então usar o operador `==` resulta em um erro de compilação.
+Usar uma cláusula `where` genérica
+permite adicionar um novo requisito à extension,
+de modo que a extension adicione o método `isTop(_:)`
+apenas quando os itens da pilha forem `Equatable`.
 
-Here's how the `isTop(_:)` method looks in action:
+Veja como o método `isTop(_:)` funciona na prática:
 
 ```swift
 if stackOfStrings.isTop("tres") {
@@ -1478,9 +1477,9 @@ if stackOfStrings.isTop("tres") {
   ```
 -->
 
-If you try to call the `isTop(_:)` method
-on a stack whose elements aren't equatable,
-you'll get a compile-time error.
+Se você tentar chamar o método `isTop(_:)`
+em uma pilha cujos elementos não são `Equatable`,
+você receberá um erro de compilação.
 
 ```swift
 struct NotEquatable { }
@@ -1505,9 +1504,9 @@ notEquatableStack.isTop(notEquatableValue)  // Error
   ```
 -->
 
-You can use a generic `where` clause with extensions to a protocol.
-The example below extends the `Container` protocol from the previous examples
-to add a `startsWith(_:)` method.
+Você pode usar uma cláusula `where` genérica com extensions de um protocolo.
+O exemplo abaixo estende o protocolo `Container` dos exemplos anteriores
+para adicionar um método `startsWith(_:)`.
 
 ```swift
 extension Container where Item: Equatable {
@@ -1535,14 +1534,14 @@ extension Container where Item: Equatable {
   This does, however, mean I can't use a for-in loop.
 -->
 
-The `startsWith(_:)` method
-first makes sure that the container has at least one item,
-and then it checks
-whether the first item in the container matches the given item.
-This new `startsWith(_:)` method
-can be used with any type that conforms to the `Container` protocol,
-including the stacks and arrays used above,
-as long as the container's items are equatable.
+O método `startsWith(_:)`
+primeiro garante que o contêiner tenha pelo menos um item,
+e depois verifica
+se o primeiro item do contêiner corresponde ao item informado.
+Esse novo método `startsWith(_:)`
+pode ser usado com qualquer tipo que esteja em conformidade com o protocolo `Container`,
+inclusive as pilhas e os arrays usados acima,
+contanto que os itens do contêiner sejam `Equatable`.
 
 ```swift
 if [9, 9, 9].startsWith(42) {
@@ -1566,11 +1565,11 @@ if [9, 9, 9].startsWith(42) {
   ```
 -->
 
-The generic `where` clause in the example above
-requires `Item` to conform to a protocol,
-but you can also write a generic `where` clauses that require `Item`
-to be a specific type.
-For example:
+A cláusula `where` genérica do exemplo acima
+exige que `Item` esteja em conformidade com um protocolo,
+mas você também pode escrever cláusulas `where` genéricas que exigem que `Item`
+seja um tipo específico.
+Por exemplo:
 
 ```swift
 extension Container where Item == Double {
@@ -1604,17 +1603,17 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
   ```
 -->
 
-This example adds an `average()` method
-to containers whose `Item` type is `Double`.
-It iterates over the items in the container to add them up,
-and divides by the container's count to compute the average.
-It explicitly converts the count from `Int` to `Double`
-to be able to do floating-point division.
+Este exemplo adiciona um método `average()`
+aos contêineres cujo tipo `Item` é `Double`.
+Ele percorre os itens do contêiner para somá-los,
+e divide pela quantidade do contêiner para calcular a média.
+Ele converte explicitamente a quantidade de `Int` para `Double`
+para conseguir fazer divisão de ponto flutuante.
 
-You can include multiple requirements in a generic `where` clause
-that's part of an extension,
-just like you can for a generic `where` clause that you write elsewhere.
-Separate each requirement in the list with a comma.
+Você pode incluir vários requisitos em uma cláusula `where` genérica
+que faz parte de uma extension,
+assim como pode fazer em uma cláusula `where` genérica escrita em outro lugar.
+Separe cada requisito da lista com uma vírgula.
 
 <!--
   No example of a compound where clause
@@ -1622,19 +1621,19 @@ Separate each requirement in the list with a comma.
   there isn't anything to write a second constraint for.
 -->
 
-## Contextual Where Clauses
+## Cláusulas where contextuais
 
-You can write a generic `where` clause
-as part of a declaration that doesn't have its own generic type constraints,
-when you're already working in the context of generic types.
-For example,
-you can write a generic `where` clause
-on a subscript of a generic type
-or on a method in an extension to a generic type.
-The `Container` structure is generic,
-and the `where` clauses in the example below
-specify what type constraints have to be satisfied
-to make these new  methods available on a container.
+Você pode escrever uma cláusula `where` genérica
+como parte de uma declaração que não tem restrições de tipo genérico próprias,
+quando já está trabalhando no contexto de tipos genéricos.
+Por exemplo,
+você pode escrever uma cláusula `where` genérica
+em um subscript de um tipo genérico
+ou em um método de uma extension de um tipo genérico.
+O protocolo `Container` é genérico,
+e as cláusulas `where` do exemplo abaixo
+especificam quais restrições de tipo precisam ser satisfeitas
+para tornar esses novos métodos disponíveis em um contêiner.
 
 ```swift
 extension Container {
@@ -1680,17 +1679,17 @@ print(numbers.endsWith(37))
   ```
 -->
 
-This example
-adds an `average()` method to `Container` when the items are integers,
-and it adds an `endsWith(_:)` method when the items are equatable.
-Both functions include a generic `where` clause
-that adds type constraints to the generic `Item` type parameter
-from the original declaration of `Container`.
+Este exemplo
+adiciona um método `average()` a `Container` quando os itens são inteiros,
+e adiciona um método `endsWith(_:)` quando os itens são `Equatable`.
+Ambas as funções incluem uma cláusula `where` genérica
+que adiciona restrições de tipo ao parâmetro de tipo genérico `Item`
+da declaração original de `Container`.
 
-If you want to write this code without using contextual `where` clauses,
-you write two extensions,
-one for each generic `where` clause.
-The example above and the example below have the same behavior.
+Se você quiser escrever esse código sem usar cláusulas `where` contextuais,
+você escreveria duas extensions,
+uma para cada cláusula `where` genérica.
+O exemplo acima e o exemplo abaixo têm o mesmo comportamento.
 
 ```swift
 extension Container where Item == Int {
@@ -1730,23 +1729,23 @@ extension Container where Item: Equatable {
   ```
 -->
 
-In the version of this example that uses contextual `where` clauses,
-the implementation of `average()` and `endsWith(_:)`
-are both in the same extension
-because each method's generic `where` clause
-states the requirements that need to be satisfied
-to make that method available.
-Moving those requirements to the extensions' generic `where` clauses
-makes the methods available in the same situations,
-but requires one extension per requirement.
+Na versão deste exemplo que usa cláusulas `where` contextuais,
+a implementação de `average()` e de `endsWith(_:)`
+ficam na mesma extension,
+pois a cláusula `where` genérica de cada método
+indica os requisitos que precisam ser satisfeitos
+para que aquele método fique disponível.
+Mover esses requisitos para as cláusulas `where` genéricas das extensions
+torna os métodos disponíveis nas mesmas situações,
+mas exige uma extension para cada requisito.
 
-## Associated Types with a Generic Where Clause
+## Tipos associados com cláusula where genérica
 
-You can include a generic `where` clause on an associated type.
-For example, suppose you want to make a version of `Container`
-that includes an iterator,
-like what the `Sequence` protocol uses in the Swift standard library.
-Here's how you write that:
+Você pode incluir uma cláusula `where` genérica em um tipo associado.
+Por exemplo, suponha que você queira criar uma versão de `Container`
+que inclua um iterador,
+como o que o protocolo `Sequence` usa na biblioteca padrão do Swift.
+Veja como escrever isso:
 
 ```swift
 protocol Container {
@@ -1781,11 +1780,11 @@ protocol Container {
   although we don't call that out here.
 -->
 
-The generic `where` clause on `Iterator` requires that
-the iterator must traverse over elements
-of the same item type as the container's items,
-regardless of the iterator's type.
-The `makeIterator()` function provides access to a container's iterator.
+A cláusula `where` genérica em `Iterator` exige que
+o iterador percorra elementos
+do mesmo tipo de item dos itens do contêiner,
+independentemente do tipo do iterador.
+A função `makeIterator()` dá acesso ao iterador de um contêiner.
 
 <!--
   This example requires SE-0157 Recursive protocol constraints
@@ -1817,12 +1816,12 @@ The `makeIterator()` function provides access to a container's iterator.
    uses this new associated type as its return value.
 -->
 
-For a protocol that inherits from another protocol,
-you add a constraint to an inherited associated type
-by including the generic `where` clause in the protocol declaration.
-For example, the following code
-declares a `ComparableContainer` protocol
-that requires `Item` to conform to `Comparable`:
+Para um protocolo que herda de outro protocolo,
+você adiciona uma restrição a um tipo associado herdado
+incluindo a cláusula `where` genérica na declaração do protocolo.
+Por exemplo, o código a seguir
+declara um protocolo `ComparableContainer`
+que exige que `Item` esteja em conformidade com `Comparable`:
 
 ```swift
 protocol ComparableContainer: Container where Item: Comparable { }
@@ -1865,14 +1864,14 @@ protocol ComparableContainer: Container where Item: Comparable { }
   }
 -->
 
-## Generic Subscripts
+## Subscripts genéricos
 
-Subscripts can be generic,
-and they can include generic `where` clauses.
-You write the placeholder type name inside angle brackets after `subscript`,
-and you write a generic `where` clause right before the opening curly brace
-of the subscript's body.
-For example:
+Subscripts podem ser genéricos,
+e podem incluir cláusulas `where` genéricas.
+Você escreve o nome do tipo marcador entre colchetes angulares depois de `subscript`,
+e escreve uma cláusula `where` genérica logo antes da chave de abertura
+do corpo do subscript.
+Por exemplo:
 
 <!--
   The paragraph above borrows the wording used to introduce
@@ -1947,36 +1946,36 @@ extension Container {
   ```
 -->
 
-This extension to the `Container` protocol
-adds a subscript that takes a sequence of indices
-and returns an array containing the items at each given index.
-This generic subscript is constrained as follows:
+Essa extension do protocolo `Container`
+adiciona um subscript que recebe uma sequência de índices
+e retorna um array contendo os itens de cada índice informado.
+Esse subscript genérico tem as seguintes restrições:
 
-- The generic parameter `Indices` in angle brackets
-  has to be a type that conforms to the `Sequence` protocol
-  from the Swift standard library.
-- The subscript takes a single parameter, `indices`,
-  which is an instance of that `Indices` type.
-- The generic `where` clause requires
-  that the iterator for the sequence
-  must traverse over elements of type `Int`.
-  This ensures that the indices in the sequence
-  are the same type as the indices used for a container.
+- O parâmetro genérico `Indices`, entre colchetes angulares,
+  precisa ser um tipo que esteja em conformidade com o protocolo `Sequence`
+  da biblioteca padrão do Swift.
+- O subscript recebe um único parâmetro, `indices`,
+  que é uma instância do tipo `Indices`.
+- A cláusula `where` genérica exige
+  que o iterador da sequência
+  percorra elementos do tipo `Int`.
+  Isso garante que os índices da sequência
+  sejam do mesmo tipo dos índices usados em um contêiner.
 
-Taken together, these constraints mean that
-the value passed for the `indices` parameter
-is a sequence of integers.
+Juntas, essas restrições significam que
+o valor passado para o parâmetro `indices`
+é uma sequência de inteiros.
 
-## Implicit Constraints
+## Restrições implícitas
 
-In addition to constraints you write explicitly,
-many places in your generic code also implicitly require
-conformance to some very common protocols like [`Copyable`][].
+Além das restrições que você escreve explicitamente,
+muitos lugares do seu código genérico também exigem implicitamente
+conformidade com alguns protocolos muito comuns, como [`Copyable`][].
 <!-- When SE-0446 is implemented, add Escapable above. -->
-These generic constraints that you don't have to write
-are known as *implicit constraints*.
-For example, both of the following function declarations
-require `MyType` to be copyable:
+Essas restrições genéricas que você não precisa escrever
+são conhecidas como *restrições implícitas*.
+Por exemplo, as duas declarações de função a seguir
+exigem que `MyType` seja copiável:
 
 [`Copyable`]: https://developer.apple.com/documentation/swift/copyable
 
@@ -1985,25 +1984,25 @@ function someFunction<MyType> { ... }
 function someFunction<MyType: Copyable> { ... }
 ```
 
-In the code above,
-the first declaration has an implicit constraint,
-and the second version lists the conformance explicitly.
-In most code,
-types also implicitly conform to these common protocols.
-For more information,
-see <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+No código acima,
+a primeira declaração tem uma restrição implícita,
+e a segunda versão lista a conformidade explicitamente.
+Na maioria dos códigos,
+os tipos também estão implicitamente em conformidade com esses protocolos comuns.
+Para mais informações,
+veja <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-Because most types in Swift conform to these protocols,
-writing them almost everywhere would be repetitive.
-Instead, by marking only the exceptions,
-you call out the places that omit a common constraint.
-To suppress an implicit constraint,
-write the protocol name with a tilde (`~`) in front of it.
-You can read `~Copyable` as "maybe copyable" ---
-this suppressed constraint allows
-both copyable and noncopyable types in this position.
-Note that `~Copyable` doesn't *require* the type to be noncopyable.
-For example:
+Como a maioria dos tipos em Swift está em conformidade com esses protocolos,
+escrevê-los quase em todo lugar seria repetitivo.
+Em vez disso, marcando apenas as exceções,
+você destaca os lugares que omitem uma restrição comum.
+Para suprimir uma restrição implícita,
+escreva o nome do protocolo com um til (`~`) na frente dele.
+Você pode ler `~Copyable` como “talvez copiável” ---
+essa restrição suprimida permite
+tanto tipos copiáveis quanto tipos não copiáveis nessa posição.
+Observe que `~Copyable` não *exige* que o tipo seja não copiável.
+Por exemplo:
 
 ```swift
 func f<MyType>(x: inout MyType) {
@@ -2017,25 +2016,25 @@ func g<AnotherType: ~Copyable>(y: inout AnotherType) {
 }
 ```
 
-In the code above,
-the function `f()` implicitly requires `MyType` to be copyable.
-Within the function body,
-the value of `x` is copied to `x1` and `x2` in the assignment.
-In contrast, `g()` suppresses the implicit constraint on `AnotherType`,
-which allows you to pass either a copyable or noncopyable value.
-Within the function body,
-you can't copy the value of `y`
-because `AnotherType` might be noncopyable.
-Assignment consumes the value of `y`
-and it's an error to consume that value more than once.
-Noncopyable values like `y`
-must be passed as in-out, borrowing, or consuming parameters ---
-for more information,
-see <doc:Declarations#Borrowing-and-Consuming-Parameters>.
+No código acima,
+a função `f()` exige implicitamente que `MyType` seja copiável.
+Dentro do corpo da função,
+o valor de `x` é copiado para `x1` e `x2` na atribuição.
+Já `g()` suprime a restrição implícita sobre `AnotherType`,
+o que permite passar um valor copiável ou não copiável.
+Dentro do corpo da função,
+você não pode copiar o valor de `y`,
+pois `AnotherType` pode ser não copiável.
+A atribuição consome o valor de `y`,
+e é um erro consumir esse valor mais de uma vez.
+Valores não copiáveis, como `y`,
+precisam ser passados como parâmetros in-out, borrowing ou consuming ---
+para mais informações,
+veja <doc:Declarations#Borrowing-and-Consuming-Parameters>.
 
-For details about when generic code
-includes an implicit constraint to a given protocol,
-see the reference for that protocol.
+Para detalhes sobre quando o código genérico
+inclui uma restrição implícita para um determinado protocolo,
+veja a referência desse protocolo.
 
 <!--
   TODO: Generic Enumerations
@@ -2055,3 +2054,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

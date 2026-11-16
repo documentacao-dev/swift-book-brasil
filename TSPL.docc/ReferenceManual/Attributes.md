@@ -1,161 +1,161 @@
-# Attributes
+# Atributos
 
-Add information to declarations and types.
+Adiciona informações a declarações e tipos.
 
-There are two kinds of attributes in Swift ---
-those that apply to declarations and those that apply to types.
-An attribute provides additional information about the declaration or type.
-For example,
-the `discardableResult` attribute on a function declaration indicates that,
-although the function returns a value,
-the compiler shouldn't generate a warning if the return value is unused.
+Existem dois tipos de atributos no Swift:
+os que se aplicam a declarações e os que se aplicam a tipos.
+Um atributo fornece informação adicional sobre a declaração ou o tipo.
+Por exemplo,
+o atributo `discardableResult` numa declaração de função indica que,
+embora a função retorne um valor,
+o compilador não deve gerar um aviso se o valor de retorno não for usado.
 
-You specify an attribute by writing the `@` symbol followed by the attribute's name
-and any arguments that the attribute accepts:
+Você especifica um atributo escrevendo o símbolo `@` seguido do nome do atributo
+e de quaisquer argumentos que ele aceite:
 
 ```swift
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
 
-Some declaration attributes accept arguments
-that specify more information about the attribute
-and how it applies to a particular declaration.
-These *attribute arguments* are enclosed in parentheses,
-and their format is defined by the attribute they belong to.
+Alguns atributos de declaração aceitam argumentos
+que especificam mais informações sobre o atributo
+e sobre como ele se aplica a uma declaração específica.
+Esses *argumentos do atributo* ficam entre parênteses,
+e o formato deles é definido pelo atributo a que pertencem.
 
-Attached macros and property wrappers also use attribute syntax.
-For information about how macros expand,
-see <doc:Expressions#Macro-Expansion-Expression>.
-For information about property wrappers,
-see <doc:Attributes#propertyWrapper>.
+Macros anexadas e property wrappers também usam a sintaxe de atributos.
+Para saber como as macros são expandidas,
+veja <doc:Expressions#Macro-Expansion-Expression>.
+Para informações sobre property wrappers,
+veja <doc:Attributes#propertyWrapper>.
 
-## Declaration Attributes
+## Atributos de declaração
 
-You can apply a declaration attribute to declarations only.
+Você pode aplicar um atributo de declaração apenas a declarações.
 
 ### attached
 
-Apply the `attached` attribute to a macro declaration.
-The arguments to this attribute indicate the macro's role.
-For a macro that has multiple roles,
-apply the `attached` macro multiple times, once for each role.
+Aplique o atributo `attached` a uma declaração de macro.
+Os argumentos desse atributo indicam o papel da macro.
+Para uma macro que tem vários papéis,
+aplique o atributo `attached` várias vezes, uma para cada papel.
 
 <!-- TODO:
 If there's a stable URL we can use, make the macro protocols below links.
 -->
 
-The first argument to this attribute
-indicates the macro's role:
+O primeiro argumento desse atributo
+indica o papel da macro:
 
-- term Peer macros:
-  Write `peer` as the first argument to this attribute.
-  The type that implements the macro conforms to the `PeerMacro` protocol.
-  These macros produce new declarations
-  in the same scope as the declaration
-  that the macro is attached to.
-  For example,
-  applying a peer macro to a method of a structure
-  can define additional methods and properties on that structure.
+- term Macros de par:
+  Escreva `peer` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `PeerMacro`.
+  Essas macros produzem declarações novas
+  no mesmo escopo da declaração
+  à qual a macro está anexada.
+  Por exemplo,
+  aplicar uma macro de par a um método de uma struct
+  pode definir métodos e propriedades adicionais nessa struct.
 
-- term Member macros:
-  Write `member` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberMacro` protocol.
-  These macros produce new declarations
-  that are members of the type or extension
-  that the macro is attached to.
-  For example,
-  applying a member macro to a structure declaration
-  can define additional methods and properties on that structure.
+- term Macros de membro:
+  Escreva `member` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `MemberMacro`.
+  Essas macros produzem declarações novas
+  que são membros do tipo ou da extension
+  à qual a macro está anexada.
+  Por exemplo,
+  aplicar uma macro de membro a uma declaração de struct
+  pode definir métodos e propriedades adicionais nessa struct.
 
-- term Member attribute:
-  Write `memberAttribute` as the first argument to this attribute.
-  The type that implements the macro conforms to the `MemberAttributeMacro` protocol.
-  These macros add attributes to members of the type or extension
-  that the macro is attached to.
+- term Atributo de membro:
+  Escreva `memberAttribute` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `MemberAttributeMacro`.
+  Essas macros adicionam atributos aos membros do tipo ou da extension
+  à qual a macro está anexada.
 
-- term Accessor macros:
-  Write `accessor` as the first argument to this attribute.
-  The type that implements the macro conforms to the `AccessorMacro` protocol.
-  These macros add accessors to the stored property they're attached to,
-  turning it into a computed property.
+- term Macros de acessor:
+  Escreva `accessor` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `AccessorMacro`.
+  Essas macros adicionam acessores à propriedade armazenada à qual estão anexadas,
+  transformando-a em uma propriedade computada.
 
-- term Extension macros:
-  Write `extension` as the first argument to this attribute.
-  The type that implements the macro conforms to the `ExtensionMacro` protocol.
-  These macros can add protocol conformance,
-  a `where` clause,
-  and new declarations that are members of the type the macro is attached to.
-  If the macro adds protocol conformances,
-  include the `conformances:` argument and specify those protocols.
-  The conformance list contains protocol names,
-  type aliases that refer to conformance list items,
-  or protocol compositions of conformance list items.
-  An extension macro on a nested type
-  expands to an extension at the top level of that file.
-  You can't write an extension macro
-  on an extension, a type alias, or a type that's nested inside a function,
-  or use an extension macro to add an extension that has a peer macro.
+- term Macros de extension:
+  Escreva `extension` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `ExtensionMacro`.
+  Essas macros podem adicionar conformidade a protocolos,
+  uma cláusula `where`,
+  e declarações novas que são membros do tipo ao qual a macro está anexada.
+  Se a macro adicionar conformidades a protocolos,
+  inclua o argumento `conformances:` e especifique esses protocolos.
+  A lista de conformidades contém nomes de protocolos,
+  aliases de tipo que se referem a itens da lista de conformidades,
+  ou composições de protocolos de itens da lista de conformidades.
+  Uma macro de extension em um tipo aninhado
+  se expande para uma extension no nível superior desse arquivo.
+  Você não pode escrever uma macro de extension
+  em uma extension, em um alias de tipo ou em um tipo aninhado dentro de uma função,
+  nem usar uma macro de extension para adicionar uma extension que tenha uma macro de par.
 
-- term Body macros:
-  Write `body` as the first argument to this attribute.
-  The type that implements the macro conforms to the `BodyMacro` protocol.
-  These macros can generate, modify, or replace
-  the body of the function or accessor that they're attached to.
-  You can write at most one body macro on any given function.
-  If an original function body is provided,
-  it must be syntactically correct,
-  but it isn’t type checked until after the macro is expanded.
+- term Macros de corpo:
+  Escreva `body` como primeiro argumento desse atributo.
+  O tipo que implementa a macro conforma com o protocolo `BodyMacro`.
+  Essas macros podem gerar, modificar ou substituir
+  o corpo da função ou do acessor ao qual estão anexadas.
+  Você pode escrever no máximo uma macro de corpo em cada função.
+  Se o corpo original da função for fornecido,
+  ele precisa estar sintaticamente correto,
+  mas não é verificado quanto a tipos até depois que a macro é expandida.
 
-The peer and member macro roles require a `names:` argument,
-listing the names of the symbols that the macro generates.
-The accessor macro role requires a `names:` argument if the
-macro generates a `willSet` or `didSet` property observer. An
-accessor macro that generates property observers can't add
-other accessors, because observers only apply to stored properties.
-The extension macro role also requires a `names:` argument
-if the macro adds declarations inside the extension.
-When a macro declaration includes the `names:` argument,
-the macro implementation must generate
-only symbol with names that match that list.
-That said,
-a macro need not generate a symbol for every listed name.
-The value for that argument is a list of one or more of the following:
+Os papéis de macro de par e de membro exigem um argumento `names:`,
+que lista os nomes dos símbolos que a macro gera.
+O papel de macro de acessor exige um argumento `names:` se a
+macro gerar um observador de propriedade `willSet` ou `didSet`. Uma
+macro de acessor que gera observadores de propriedade não pode adicionar
+outros acessores, porque observadores só se aplicam a propriedades armazenadas.
+O papel de macro de extension também exige um argumento `names:`
+se a macro adicionar declarações dentro da extension.
+Quando a declaração de uma macro inclui o argumento `names:`,
+a implementação da macro deve gerar
+apenas símbolos com nomes que correspondam a essa lista.
+Dito isso,
+uma macro não precisa gerar um símbolo para cada nome listado.
+O valor desse argumento é uma lista de um ou mais dos seguintes itens:
 
 - `named(<#name#>)`
-  where *name* is that fixed symbol name,
-  for a name that's known in advance.
+  em que *name* é esse nome fixo do símbolo,
+  para um nome que é conhecido com antecedência.
 
 - `overloaded`
-  for a name that's the same as an existing symbol.
+  para um nome que é igual ao de um símbolo já existente.
 
 - `prefixed(<#prefix#>)`
-  where *prefix* is prepended to the symbol name,
-  for a name that starts with a fixed string.
+  em que *prefix* é colocado antes do nome do símbolo,
+  para um nome que começa com uma string fixa.
 
 - `suffixed(<#suffix#>)`
-  where *suffix* is appended to the symbol name,
-  for a name that ends with a fixed string.
+  em que *suffix* é colocado depois do nome do símbolo,
+  para um nome que termina com uma string fixa.
 
 - `arbitrary`
-  for a name that can't be determined until macro expansion.
+  para um nome que só pode ser determinado durante a expansão da macro.
 
-As a special case,
-you can write `prefixed($)`
-for a macro that behaves similar to a property wrapper.
+Como caso especial,
+você pode escrever `prefixed($)`
+para uma macro que se comporta de forma semelhante a um property wrapper.
 <!--
 TODO TR: Is there any more detail about this case?
 -->
 
 ### available
 
-Apply this attribute to indicate a declaration's life cycle
-relative to certain Swift language versions
-or certain platforms and operating system versions.
+Aplique este atributo para indicar o ciclo de vida de uma declaração
+em relação a certas versões da linguagem Swift
+ou a certas plataformas e versões de sistema operacional.
 
-The `available` attribute always appears
-with a list of two or more comma-separated attribute arguments.
-These arguments begin with one of the following platform or language names:
+O atributo `available` sempre aparece
+com uma lista de dois ou mais argumentos de atributo separados por vírgula.
+Esses argumentos começam com um dos seguintes nomes de plataforma ou de linguagem:
 
 - `iOS`
 - `iOSApplicationExtension`
@@ -180,62 +180,62 @@ These arguments begin with one of the following platform or language names:
   For the list in source, see include/swift/AST/PlatformKinds.def
 -->
 
-You can also use an asterisk (`*`) to indicate the
-availability of the declaration on all of the platform names listed above.
-An `available` attribute
-that specifies availability using a Swift version number
-can't use the asterisk.
+Você também pode usar um asterisco (`*`) para indicar a
+disponibilidade da declaração em todos os nomes de plataforma listados acima.
+Um atributo `available`
+que especifica a disponibilidade usando um número de versão do Swift
+não pode usar o asterisco.
 
-The remaining arguments can appear in any order
-and specify additional information about the declaration's life cycle,
-including important milestones.
+Os demais argumentos podem aparecer em qualquer ordem
+e especificam informações adicionais sobre o ciclo de vida da declaração,
+incluindo marcos importantes.
 
-- The `unavailable` argument indicates that the declaration
-  isn't available on the specified platform.
-  This argument can't be used when specifying Swift version availability.
-- The `introduced` argument indicates the first version
-  of the specified platform or language in which the declaration was introduced.
-  It has the following form:
+- O argumento `unavailable` indica que a declaração
+  não está disponível na plataforma especificada.
+  Esse argumento não pode ser usado ao especificar a disponibilidade por versão do Swift.
+- O argumento `introduced` indica a primeira versão
+  da plataforma ou da linguagem especificada em que a declaração foi introduzida.
+  Ele tem a seguinte forma:
 
   ```swift
   introduced: <#version number#>
   ```
-  The *version number* consists of one to three positive integers,
-  separated by periods.
-- The `deprecated` argument indicates the first version
-  of the specified platform or language in which the declaration was deprecated.
-  It has the following form:
+  O *número de versão* é formado por um a três inteiros positivos,
+  separados por pontos.
+- O argumento `deprecated` indica a primeira versão
+  da plataforma ou da linguagem especificada em que a declaração foi marcada como obsoleta (deprecated).
+  Ele tem a seguinte forma:
 
   ```swift
   deprecated: <#version number#>
   ```
-  The optional *version number* consists of one to three positive integers,
-  separated by periods.
-  Omitting the version number indicates that the declaration is currently deprecated,
-  without giving any information about when the deprecation occurred.
-  If you omit the version number, omit the colon (`:`) as well.
-- The `obsoleted` argument indicates the first version
-  of the specified platform or language in which the declaration was obsoleted.
-  When a declaration is obsoleted,
-  it's removed from the specified platform or language and can no longer be used.
-  It has the following form:
+  O *número de versão*, que é opcional, é formado por um a três inteiros positivos,
+  separados por pontos.
+  Omitir o número de versão indica que a declaração foi marcada como obsoleta (deprecated) no momento,
+  sem informar quando isso aconteceu.
+  Se você omitir o número de versão, omita também os dois-pontos (`:`).
+- O argumento `obsoleted` indica a primeira versão
+  da plataforma ou da linguagem especificada em que a declaração deixou de existir (obsoleted).
+  Quando uma declaração deixa de existir (obsoleted),
+  ela é removida da plataforma ou da linguagem especificada e não pode mais ser usada.
+  Ele tem a seguinte forma:
 
   ```swift
   obsoleted: <#version number#>
   ```
-  The *version number* consists of one to three positive integers, separated by periods.
+  O *número de versão* é formado por um a três inteiros positivos, separados por pontos.
 
-- The `noasync` argument indicates that
-  the declared symbol can't be used directly
-  in an asynchronous context.
+- O argumento `noasync` indica que
+  o símbolo declarado não pode ser usado diretamente
+  em um contexto assíncrono.
 
-  Because Swift concurrency can resume on a different thread
-  after a potential suspension point,
-  using elements like thread-local storage, locks, mutexes, or semaphores
-  across suspension points can lead to incorrect results.
+  Como a concorrência do Swift pode retomar em outra thread
+  depois de um possível ponto de suspensão,
+  usar elementos como armazenamento local de thread, locks, mutexes ou semáforos
+  através de pontos de suspensão pode levar a resultados incorretos.
 
-  To avoid this problem,
-  add an `@available(*, noasync)` attribute to the symbol's declaration:
+  Para evitar esse problema,
+  adicione um atributo `@available(*, noasync)` à declaração do símbolo:
 
   ```swift
   extension pthread_mutex_t {
@@ -252,10 +252,10 @@ including important milestones.
   }
   ```
 
-  This attribute raises a compile-time error
-  when someone uses the symbol in an asynchronous context.
-  You can also use the `message` argument to provide additional information
-  about the symbol.
+  Esse atributo gera um erro de compilação
+  quando alguém usa o símbolo em um contexto assíncrono.
+  Você também pode usar o argumento `message` para fornecer informações adicionais
+  sobre o símbolo.
 
   ```swift
   @available(*, noasync, message: "Migrate locks to Swift concurrency.")
@@ -264,10 +264,10 @@ including important milestones.
   }
   ```
 
-  If you can guarantee that your code
-  uses a potentially unsafe symbol in a safe manner,
-  you can wrap it in a synchronous function and call that function
-  from an asynchronous context.
+  Se você puder garantir que seu código
+  usa um símbolo potencialmente inseguro de forma segura,
+  pode envolvê-lo em uma função síncrona e chamar essa função
+  a partir de um contexto assíncrono.
 
   ```swift
 
@@ -290,38 +290,38 @@ including important milestones.
   }
   ```
 
-  You can use the `noasync` argument on most declarations;
-  however, you can't use it when declaring deinitializers.
-  Swift must be able to call a class's deinitializers from any context,
-  both synchronous and asynchronous.
+  Você pode usar o argumento `noasync` na maioria das declarações;
+  no entanto, não pode usá-lo ao declarar desinicializadores.
+  O Swift precisa conseguir chamar os desinicializadores de uma classe a partir de qualquer contexto,
+  tanto síncrono quanto assíncrono.
 
-- The `message` argument provides a textual message that the compiler displays
-  when emitting a warning or error about the use
-  of a declaration marked `deprecated`, `obsoleted`, or `noasync`.
-  It has the following form:
+- O argumento `message` fornece uma mensagem de texto que o compilador exibe
+  ao emitir um aviso ou um erro sobre o uso
+  de uma declaração marcada como `deprecated`, `obsoleted` ou `noasync`.
+  Ele tem a seguinte forma:
 
   ```swift
   message: <#message#>
   ```
-  The *message* consists of a string literal.
-- The `renamed` argument provides a textual message
-  that indicates the new name for a declaration that's been renamed.
-  The compiler displays the new name
-  when emitting an error about the use of a renamed declaration.
-  It has the following form:
+  A *mensagem* é um literal de string.
+- O argumento `renamed` fornece uma mensagem de texto
+  que indica o novo nome de uma declaração que foi renomeada.
+  O compilador exibe o novo nome
+  ao emitir um erro sobre o uso de uma declaração renomeada.
+  Ele tem a seguinte forma:
 
   ```swift
   renamed: <#new name#>
   ```
-  The *new name* consists of a string literal.
+  O *novo nome* é um literal de string.
 
-  You can apply the `available` attribute
-  with the `renamed` and `unavailable` arguments
-  to a type alias declaration, as shown below,
-  to indicate that the name of a declaration changed
-  between releases of a framework or library.
-  This combination results in a compile-time error
-  that the declaration has been renamed.
+  Você pode aplicar o atributo `available`
+  com os argumentos `renamed` e `unavailable`
+  a uma declaração de alias de tipo, como mostrado abaixo,
+  para indicar que o nome de uma declaração mudou
+  entre versões de um framework ou de uma biblioteca.
+  Essa combinação resulta em um erro de compilação
+  informando que a declaração foi renomeada.
 
   ```swift
   // First release
@@ -365,15 +365,15 @@ including important milestones.
     ```
   -->
 
-You can apply multiple `available` attributes on a single declaration
-to specify the declaration's availability on different platforms
-and different versions of Swift.
-The declaration that the `available` attribute applies to
-is ignored if the attribute specifies
-a platform or language version that doesn't match the current target.
-If you use multiple `available` attributes,
-the effective availability is the combination of
-the platform and Swift availabilities.
+Você pode aplicar vários atributos `available` a uma única declaração
+para especificar a disponibilidade dela em plataformas diferentes
+e em versões diferentes do Swift.
+A declaração à qual o atributo `available` se aplica
+é ignorada se o atributo especificar
+uma plataforma ou uma versão da linguagem que não corresponde ao destino atual.
+Se você usar vários atributos `available`,
+a disponibilidade efetiva é a combinação
+das disponibilidades da plataforma e do Swift.
 
 <!--
   - test: `multipleAvailableAttributes`
@@ -386,19 +386,19 @@ the platform and Swift availabilities.
   ```
 -->
 
-If an `available` attribute only specifies an `introduced` argument
-in addition to a platform or language name argument,
-you can use the following shorthand syntax instead:
+Se um atributo `available` especificar apenas o argumento `introduced`
+além de um nome de plataforma ou de linguagem,
+você pode usar a seguinte sintaxe abreviada:
 
 ```swift
 @available(<#platform name#> <#version number#>, *)
 @available(swift <#version number#>)
 ```
 
-The shorthand syntax for `available` attributes
-concisely expresses availability for multiple platforms.
-Although the two forms are functionally equivalent,
-the shorthand form is preferred whenever possible.
+A sintaxe abreviada dos atributos `available`
+expressa de forma concisa a disponibilidade em várias plataformas.
+Embora as duas formas sejam funcionalmente equivalentes,
+a forma abreviada é preferida sempre que possível.
 
 ```swift
 @available(iOS 10.0, macOS 10.12, *)
@@ -418,11 +418,11 @@ class MyClass {
   ```
 -->
 
-An `available` attribute
-that specifies availability using a Swift version number
-can't additionally specify a declaration's platform availability.
-Instead, use separate `available` attributes to specify a Swift
-version availability and one or more platform availabilities.
+Um atributo `available`
+que especifica a disponibilidade usando um número de versão do Swift
+não pode, além disso, especificar a disponibilidade de plataforma da declaração.
+Em vez disso, use atributos `available` separados para especificar a
+disponibilidade por versão do Swift e uma ou mais disponibilidades de plataforma.
 
 ```swift
 @available(swift 3.0.2)
@@ -446,22 +446,22 @@ struct MyStruct {
 
 ### backDeployed
 
-Apply this attribute to a function, method, subscript, or computed property
-to include a copy of the symbol's implementation
-in programs that call or access the symbol.
-You use this attribute to annotate symbols that ship as part of a platform,
-like the APIs that are included with an operating system.
-This attribute marks symbols that can be made available retroactively
-by including a copy of their implementation in programs that access them.
-Copying the implementation is also known as *emitting into the client*.
+Aplique este atributo a uma função, método, subscript ou propriedade computada
+para incluir uma cópia da implementação do símbolo
+nos programas que chamam ou acessam o símbolo.
+Você usa esse atributo para anotar símbolos que são distribuídos como parte de uma plataforma,
+como as APIs incluídas com um sistema operacional.
+Esse atributo marca símbolos que podem ser disponibilizados retroativamente
+ao incluir uma cópia da implementação deles nos programas que os acessam.
+Copiar a implementação também é conhecido como *emitir para o cliente*.
 
-This attribute takes a `before:` argument,
-specifying the first version of platforms that provide this symbol.
-These platform versions have the same meaning
-as the platform version you specify for the `available` attribute.
-Unlike the `available` attribute,
-the list can't contain an asterisk (`*`) to refer to all versions.
-For example, consider the following code:
+Esse atributo recebe um argumento `before:`,
+que especifica a primeira versão das plataformas que fornecem esse símbolo.
+Essas versões de plataforma têm o mesmo significado
+que a versão de plataforma que você especifica para o atributo `available`.
+Diferentemente do atributo `available`,
+a lista não pode conter um asterisco (`*`) para se referir a todas as versões.
+Por exemplo, considere o seguinte código:
 
 ```swift
 @available(iOS 16, *)
@@ -469,32 +469,32 @@ For example, consider the following code:
 func someFunction() { /* ... */ }
 ```
 
-In the example above,
-the iOS SDK provides `someFunction()` starting in iOS 17.
-In addition,
-the SDK makes `someFunction()` available on iOS 16 using back deployment.
+No exemplo acima,
+o SDK do iOS fornece `someFunction()` a partir do iOS 17.
+Além disso,
+o SDK disponibiliza `someFunction()` no iOS 16 usando back deployment.
 
-When compiling code that calls this function,
-Swift inserts a layer of indirection that finds the function's implementation.
-If the code is run using a version of the SDK that includes this function,
-the SDK's implementation is used.
-Otherwise, the copy included in the caller is used.
-In the example above,
-calling `someFunction()` uses the implementation from the SDK
-when running on iOS 17 or later,
-and when running on iOS 16
-it uses the copy of `someFunction()` that's included in the caller.
+Ao compilar código que chama essa função,
+o Swift insere uma camada de indireção que encontra a implementação da função.
+Se o código for executado usando uma versão do SDK que inclui essa função,
+a implementação do SDK é usada.
+Caso contrário, a cópia incluída no chamador é usada.
+No exemplo acima,
+chamar `someFunction()` usa a implementação do SDK
+quando executado no iOS 17 ou posterior,
+e, quando executado no iOS 16,
+usa a cópia de `someFunction()` que está incluída no chamador.
 
-> Note:
-> When the caller's minimum deployment target
-> is the same as or greater than
-> the first version of the SDK that includes the symbol,
-> the compiler can optimize away the runtime check
-> and call the SDK's implementation directly.
-> In this case,
-> if you access the back-deployed symbol directly,
-> the compiler can also omit
-> the copy of the symbol's implementation from the client.
+> Nota:
+> Quando a versão mínima de implantação do chamador
+> é igual ou maior que
+> a primeira versão do SDK que inclui o símbolo,
+> o compilador pode eliminar a verificação em tempo de execução
+> e chamar a implementação do SDK diretamente.
+> Nesse caso,
+> se você acessar o símbolo com back deployment diretamente,
+> o compilador também pode omitir
+> a cópia da implementação do símbolo do cliente.
 
 <!--
 Stripping out the copy emitted into the client
@@ -506,52 +506,52 @@ and the details could change over time,
 so we don't guarantee in docs that it always happens.
 -->
 
-Functions, methods, subscripts, and computed properties
-that meet the following criteria can be back deployed:
+Funções, métodos, subscripts e propriedades computadas
+que atendem aos critérios a seguir podem receber back deployment:
 
-- The declaration is `public` or `@usableFromInline`.
-- For class instance methods and class type methods,
-  the method is marked `final` and isn't marked `@objc`.
-- The implementation satisfies the requirements for an inlinable function,
-  described in <doc:Attributes#inlinable>.
+- A declaração é `public` ou `@usableFromInline`.
+- Para métodos de instância de classe e métodos de tipo de classe,
+  o método está marcado com `final` e não está marcado com `@objc`.
+- A implementação satisfaz os requisitos de uma função inlinable,
+  descritos em <doc:Attributes#inlinable>.
 
 ### c
 
-Apply this attribute to any declaration that can be represented in C,
-such as global functions
-and nongeneric enumerations (constrained to integer raw-value types).
-The `c` attribute tells the compiler
-that a declaration is available to use in C code.
+Aplique este atributo a qualquer declaração que possa ser representada em C,
+como funções globais
+e enums não genéricos (restritos a tipos de raw value inteiros).
+O atributo `c` informa ao compilador
+que a declaração está disponível para uso em código C.
 
-Applying the `c` attribute to an enumeration
-exposes each enumeration case to C code
-as the concatenation of the enumeration name and the case name.
-The first letter of the case name is capitalized.
-For example, a case named `venus` in a Swift `Planet` enumeration
-is exposed to C code as a case named `PlanetVenus`.
+Aplicar o atributo `c` a um enum
+expõe cada caso do enum ao código C
+como a concatenação do nome do enum com o nome do caso.
+A primeira letra do nome do caso fica em maiúscula.
+Por exemplo, um caso chamado `venus` em um enum `Planet` do Swift
+é exposto ao código C como um caso chamado `PlanetVenus`.
 
-The `c` attribute optionally accepts a single attribute argument,
-which consists of an identifier.
-The identifier specifies the name to be exposed to C
-for the entity that the `c` attribute applies to.
+O atributo `c` aceita opcionalmente um único argumento de atributo,
+que consiste em um identificador.
+O identificador especifica o nome que será exposto ao C
+para a entidade à qual o atributo `c` se aplica.
 
 ### discardableResult
 
-Apply this attribute to a function or method declaration
-to suppress the compiler warning
-when the function or method that returns a value
-is called without using its result.
+Aplique este atributo a uma declaração de função ou de método
+para suprimir o aviso do compilador
+quando a função ou o método, que retorna um valor,
+é chamado sem usar o resultado.
 
 ### dynamicCallable
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to treat instances of the type as callable functions.
-The type must implement either a `dynamicallyCall(withArguments:)` method,
-a `dynamicallyCall(withKeywordArguments:)` method,
-or both.
+Aplique este atributo a uma classe, struct, enum ou protocolo
+para tratar instâncias do tipo como funções que podem ser chamadas.
+O tipo precisa implementar um método `dynamicallyCall(withArguments:)`,
+um método `dynamicallyCall(withKeywordArguments:)`,
+ou os dois.
 
-You can call an instance of a dynamically callable type
-as if it's a function that takes any number of arguments.
+Você pode chamar uma instância de um tipo chamável dinamicamente
+como se fosse uma função que recebe qualquer número de argumentos.
 
 ```swift
 @dynamicCallable
@@ -608,14 +608,14 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
   ```
 -->
 
-The declaration of the `dynamicallyCall(withArguments:)` method
-must have a single parameter that conforms to the
+A declaração do método `dynamicallyCall(withArguments:)`
+precisa ter um único parâmetro que esteja em conformidade com o protocolo
 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral)
-protocol --- like `[Int]` in the example above.
-The return type can be any type.
+--- como `[Int]` no exemplo acima.
+O tipo de retorno pode ser qualquer tipo.
 
-You can include labels in a dynamic method call
-if you implement the `dynamicallyCall(withKeywordArguments:)` method.
+Você pode incluir rótulos em uma chamada de método dinâmica
+se implementar o método `dynamicallyCall(withKeywordArguments:)`.
 
 ```swift
 @dynamicCallable
@@ -663,30 +663,29 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   ```
 -->
 
-The declaration of the `dynamicallyCall(withKeywordArguments:)` method
-must have a single parameter that conforms to the
-[`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
-protocol,
-and the return type can be any type.
-The parameter's [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/key)
-must be
+A declaração do método `dynamicallyCall(withKeywordArguments:)`
+precisa ter um único parâmetro que esteja em conformidade com o protocolo
+[`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral),
+e o tipo de retorno pode ser qualquer tipo.
+O [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/key) do parâmetro
+precisa ser
 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral).
-The previous example uses [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
-as the parameter type
-so that callers can include duplicate parameter labels ---
-`a` and `b` appear multiple times in the call to `repeat`.
+O exemplo anterior usa [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)
+como tipo do parâmetro
+para que quem chama possa incluir rótulos de parâmetro duplicados ---
+`a` e `b` aparecem várias vezes na chamada a `repeat`.
 
-If you implement both `dynamicallyCall` methods,
-`dynamicallyCall(withKeywordArguments:)` is called
-when the method call includes keyword arguments.
-In all other cases, `dynamicallyCall(withArguments:)` is called.
+Se você implementar os dois métodos `dynamicallyCall`,
+`dynamicallyCall(withKeywordArguments:)` é chamado
+quando a chamada do método inclui argumentos nomeados.
+Em todos os outros casos, `dynamicallyCall(withArguments:)` é chamado.
 
-You can only call a dynamically callable instance
-with arguments and a return value that match the types you specify
-in one of your `dynamicallyCall` method implementations.
-The call in the following example doesn't compile because
-there isn't an implementation of `dynamicallyCall(withArguments:)`
-that takes `KeyValuePairs<String, String>`.
+Você só pode chamar uma instância chamável dinamicamente
+com argumentos e um valor de retorno que correspondam aos tipos especificados
+em uma das implementações de método `dynamicallyCall`.
+A chamada do exemplo a seguir não compila porque
+não existe uma implementação de `dynamicallyCall(withArguments:)`
+que receba `KeyValuePairs<String, String>`.
 
 ```swift
 repeatLabels(a: "four") // Error
@@ -716,34 +715,34 @@ repeatLabels(a: "four") // Error
 
 ### dynamicMemberLookup
 
-Apply this attribute to a class, structure, enumeration, or protocol
-to enable members to be looked up by name at runtime.
-The type must implement a `subscript(dynamicMember:)` subscript.
+Aplique este atributo a uma classe, struct, enum ou protocolo
+para permitir que os membros sejam buscados pelo nome em tempo de execução.
+O tipo precisa implementar um subscript `subscript(dynamicMember:)`.
 
-In an explicit member expression,
-if there isn't a corresponding declaration for the named member,
-the expression is understood as a call to
-the type's `subscript(dynamicMember:)` subscript,
-passing information about the member as the argument.
-The subscript can accept a parameter that's either a key path or a member name;
-if you implement both subscripts,
-the subscript that takes key path argument is used.
+Em uma expressão de membro explícita,
+se não houver uma declaração correspondente para o membro nomeado,
+a expressão é interpretada como uma chamada ao
+subscript `subscript(dynamicMember:)` do tipo,
+passando as informações sobre o membro como argumento.
+O subscript pode aceitar um parâmetro que seja um key path ou um nome de membro;
+se você implementar os dois subscripts,
+é usado o subscript que recebe um argumento de key path.
 
-An implementation of `subscript(dynamicMember:)`
-can accept key paths using an argument of type
+Uma implementação de `subscript(dynamicMember:)`
+pode aceitar key paths usando um argumento do tipo
 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath),
 [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath),
-or [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath).
-It can accept member names using an argument of a type that conforms to the
-[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) protocol ---
-in most cases, `String`.
-The subscript's return type can be any type.
+ou [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath).
+Ele pode aceitar nomes de membros usando um argumento de um tipo que esteja em conformidade com o protocolo
+[`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)
+--- na maioria dos casos, `String`.
+O tipo de retorno do subscript pode ser qualquer tipo.
 
-Dynamic member lookup by member name
-can be used to create a wrapper type around data
-that can't be type checked at compile time,
-such as when bridging data from other languages into Swift.
-For example:
+A busca dinâmica de membros pelo nome
+pode ser usada para criar um tipo wrapper em torno de dados
+que não podem ser verificados quanto a tipos em tempo de compilação,
+como ao trazer dados de outras linguagens para o Swift.
+Por exemplo:
 
 ```swift
 @dynamicMemberLookup
@@ -793,10 +792,10 @@ print(dynamic == equivalent)
   ```
 -->
 
-Dynamic member lookup by key path
-can be used to implement a wrapper type
-in a way that supports compile-time type checking.
-For example:
+A busca dinâmica de membros por key path
+pode ser usada para implementar um tipo wrapper
+de um jeito que permite a verificação de tipos em tempo de compilação.
+Por exemplo:
 
 ```swift
 struct Point { var x, y: Int }
@@ -837,30 +836,30 @@ print(wrapper.x)
 
 ### export
 
-Apply this attribute to a function or method declaration
-to control how its definition is exported to client modules.
-Include one of the following arguments,
-indicating what aspect of the declaration to export:
+Aplique este atributo a uma declaração de função ou de método
+para controlar como a definição dela é exportada para os módulos clientes.
+Inclua um dos argumentos a seguir,
+indicando qual aspecto da declaração exportar:
 
-- The `interface` argument specifies that
-  only the interface is exported to clients,
-  in the form of a callable symbol.
-  The definition (function body) isn't available to clients
-  for inlining, optimization, or any other purpose.
-  Use this argument to hide the implementation from clients.
+- O argumento `interface` especifica que
+  apenas a interface é exportada para os clientes,
+  na forma de um símbolo chamável.
+  A definição (corpo da função) não fica disponível para os clientes
+  para inlining, otimização ou qualquer outra finalidade.
+  Use esse argumento para ocultar a implementação dos clientes.
 
-- The `implementation` argument specifies that
-  only the definition (function body) is exported to clients.
-  There's no symbol for this function emitted into the binary,
-  and clients are responsible for emitting a copy of the definition
-  wherever it's required.
-  Use this argument to introduce a new function or method
-  without affecting the Application Binary Interface (ABI).
+- O argumento `implementation` especifica que
+  apenas a definição (corpo da função) é exportada para os clientes.
+  Não há um símbolo para essa função emitido no binário,
+  e os clientes são responsáveis por emitir uma cópia da definição
+  sempre que ela for necessária.
+  Use esse argumento para introduzir uma nova função ou método
+  sem afetar a Application Binary Interface (ABI).
 
 ### freestanding
 
-Apply the `freestanding` attribute
-to the declaration of a freestanding macro.
+Aplique o atributo `freestanding`
+à declaração de uma macro freestanding.
 
 <!--
 
@@ -883,15 +882,15 @@ https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L10
 
 ### frozen
 
-Apply this attribute to a structure or enumeration declaration
-to restrict the kinds of changes you can make to the type.
-This attribute is allowed only when compiling in library evolution mode.
-Future versions of the library can't change the declaration
-by adding, removing, or reordering
-an enumeration's cases
-or a structure's stored instance properties.
-These changes are allowed on nonfrozen types,
-but they break ABI compatibility for frozen types.
+Aplique este atributo a uma declaração de struct ou de enum
+para restringir os tipos de alteração que você pode fazer no tipo.
+Esse atributo só é permitido ao compilar no modo de evolução de biblioteca.
+Versões futuras da biblioteca não podem alterar a declaração
+adicionando, removendo ou reordenando
+os casos de um enum
+ou as propriedades de instância armazenadas de uma struct.
+Essas alterações são permitidas em tipos não congelados,
+mas quebram a compatibilidade de ABI para tipos congelados.
 
 <!--
   - test: `can-use-frozen-without-evolution`
@@ -915,28 +914,28 @@ but they break ABI compatibility for frozen types.
   ```
 -->
 
-In library evolution mode,
-code that interacts with members of nonfrozen structures and enumerations
-is compiled in a way that allows it to continue working without recompiling
-even if a future version of the library
-adds, removes, or reorders some of that type's members.
-The compiler makes this possible using techniques like
-looking up information at runtime
-and adding a layer of indirection.
-Marking a structure or enumeration as frozen
-gives up this flexibility to gain performance:
-Future versions of the library can make only limited changes to the type,
-but the compiler can make additional optimizations
-in code that interacts with the type's members.
+No modo de evolução de biblioteca,
+o código que interage com membros de structs e enums não congelados
+é compilado de um jeito que permite que ele continue funcionando sem recompilação,
+mesmo que uma versão futura da biblioteca
+adicione, remova ou reordene alguns membros desse tipo.
+O compilador torna isso possível com técnicas como
+buscar informações em tempo de execução
+e adicionar uma camada de indireção.
+Marcar uma struct ou um enum como congelado
+abre mão dessa flexibilidade para ganhar desempenho:
+versões futuras da biblioteca podem fazer apenas alterações limitadas no tipo,
+mas o compilador pode fazer otimizações adicionais
+no código que interage com os membros do tipo.
 
-Frozen types,
-the types of the stored properties of frozen structures,
-and the associated values of frozen enumeration cases
-must be public or marked with the `usableFromInline` attribute.
-The properties of a frozen structure can't have property observers,
-and expressions that provide the initial value for stored instance properties
-must follow the same restrictions as inlinable functions,
-as discussed in <doc:Attributes#inlinable>.
+Tipos congelados,
+os tipos das propriedades armazenadas de structs congeladas
+e os associated values aos casos de enums congelados
+precisam ser públicos ou estar marcados com o atributo `usableFromInline`.
+As propriedades de uma struct congelada não podem ter observadores de propriedade,
+e as expressões que fornecem o valor inicial das propriedades de instância armazenadas
+precisam seguir as mesmas restrições das funções inlinable,
+como discutido em <doc:Attributes#inlinable>.
 
 <!--
   - test: `frozen-struct-prop-init-cant-refer-to-private-type`
@@ -961,12 +960,12 @@ as discussed in <doc:Attributes#inlinable>.
   ```
 -->
 
-To enable library evolution mode on the command line,
-pass the `-enable-library-evolution` option to the Swift compiler.
-To enable it in Xcode,
-set the "Build Libraries for Distribution" build setting
-(`BUILD_LIBRARY_FOR_DISTRIBUTION`) to Yes,
-as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba).
+Para ativar o modo de evolução de biblioteca na linha de comando,
+passe a opção `-enable-library-evolution` para o compilador do Swift.
+Para ativá-lo no Xcode,
+defina a configuração de build "Build Libraries for Distribution"
+(`BUILD_LIBRARY_FOR_DISTRIBUTION`) como Yes,
+conforme descrito em [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a04ba).
 
 <!--
   This is the first time we're talking about a specific compiler flag/option.
@@ -976,11 +975,11 @@ as described in [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev04b3a
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 -->
 
-A switch statement over a frozen enumeration doesn't require a `default` case,
-as discussed in <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
-Including a `default` or `@unknown default` case
-when switching over a frozen enumeration
-produces a warning because that code is never executed.
+Uma instrução switch sobre um enum congelado não exige um caso `default`,
+como discutido em <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
+Incluir um caso `default` ou `@unknown default`
+ao fazer `switch` sobre um enum congelado
+gera um aviso, porque esse código nunca é executado.
 
 <!--
   - test: `NoUnknownDefaultOverFrozenEnum`
@@ -1040,9 +1039,9 @@ produces a warning because that code is never executed.
 
 ### GKInspectable
 
-Apply this attribute to expose a custom GameplayKit component property
-to the SpriteKit editor UI.
-Applying this attribute also implies the `objc` attribute.
+Aplique este atributo para expor uma propriedade de componente personalizado do GameplayKit
+na interface do editor do SpriteKit.
+Aplicar este atributo também implica o atributo `objc`.
 
 <!--
   See also <rdar://problem/27287369> Document @GKInspectable attribute
@@ -1051,56 +1050,56 @@ Applying this attribute also implies the `objc` attribute.
 
 ### globalActor
 
-Apply this attribute to an actor, structure, enumeration, or final class.
-The type must define a static property named `shared`,
-which provides a shared instance of an actor.
+Aplique este atributo a um actor, struct, enum ou classe `final`.
+O tipo precisa definir uma propriedade estática chamada `shared`,
+que fornece uma instância compartilhada de um actor.
 
-A global actor generalizes the concept of actor isolation
-to state that's spread out in several different places in code ---
-such as multiple types, files, and modules ---
-and makes it possible to safely access global variables from concurrent code.
-The actor that the global actor provides
-as the value of its `shared` property
-serializes access to all this state.
-You can also use a global actor to model constraints in concurrent code
-like code that all needs to execute on the same thread.
+Um global actor generaliza o conceito de isolamento de actor
+para estado espalhado por vários lugares do código ---
+como vários tipos, arquivos e módulos ---
+e torna possível acessar com segurança variáveis globais a partir de código concorrente.
+O actor que o global actor fornece
+como valor da sua propriedade `shared`
+serializa o acesso a todo esse estado.
+Você também pode usar um global actor para modelar restrições em código concorrente,
+como código que precisa executar sempre na mesma thread.
 
-Global actors implicitly conform to the [`GlobalActor`][] protocol.
-The main actor is a global actor provided by the standard library,
-as discussed in <doc:Concurrency#The-Main-Actor>.
-Most code can use the main actor instead of defining a new global actor.
+Global actors implicitamente conformam com o protocolo [`GlobalActor`][].
+O main actor é um global actor fornecido pela biblioteca padrão,
+como discutido em <doc:Concurrency#The-Main-Actor>.
+A maior parte do código pode usar o main actor em vez de definir um novo global actor.
 
 [`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
 ### implementation
 
-Apply this attribute to a declaration
-that provides a Swift implementation
-for a declaration that's imported from another language.
+Aplique este atributo a uma declaração
+que fornece uma implementação em Swift
+para uma declaração importada de outra linguagem.
 
-Implementing an interface in Swift doesn't require any changes
-to the interface declared in the C or Objective-C header file.
-If you have an existing interface,
-you can use this attribute
-to replace its existing implementation in another language
-with a Swift implementation,
-without changing the header file.
+Implementar uma interface em Swift não exige nenhuma mudança
+na interface declarada no cabeçalho C ou Objective-C.
+Se você já tiver uma interface,
+pode usar este atributo
+para substituir a implementação dela em outra linguagem
+por uma implementação em Swift,
+sem alterar o arquivo de cabeçalho.
 
-#### Swift Implementation of Objective-C Declarations
+#### Implementação em Swift de declarações Objective-C
 
-For declarations that are defined in an Objective-C header,
-apply the `objc` and `implementation` attributes
-to an extension in Swift that provides the implementations.
-Other code in Swift treats these implementations
-as if they were implemented in Objective-C and imported into Swift.
-The class that the extension extends must be imported from Objective-C,
-not be a root class,
-and not use lightweight generics.
-The extension can't include any protocol conformances.
-All declarations in this extension
-are implicitly marked with the `objc` attribute.
-For example,
-the following Objective-C header declares a class with one method:
+Para declarações definidas em um cabeçalho Objective-C,
+aplique os atributos `objc` e `implementation`
+a uma extension em Swift que fornece as implementações.
+Outros códigos em Swift tratam essas implementações
+como se tivessem sido implementadas em Objective-C e importadas para o Swift.
+A classe que a extension estende precisa ser importada de Objective-C,
+não pode ser uma classe raiz
+e não pode usar lightweight generics.
+A extension não pode incluir nenhuma conformidade com protocolos.
+Todas as declarações dessa extension
+são implicitamente marcadas com o atributo `objc`.
+Por exemplo,
+o cabeçalho Objective-C a seguir declara uma classe com um método:
 
 ```objc
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -1112,7 +1111,7 @@ NS_HEADER_AUDIT_END(nullability, sendability)
 
 <!-- Omitted the header's conventional blank lines for compactness. -->
 
-You implement the class and its method in Swift as follows:
+Você implementa a classe e o método dela em Swift assim:
 
 ```swift
 @objc @implementation
@@ -1121,44 +1120,44 @@ extension MyClass {
 }
 ```
 
-A member of the extension that matches a declaration in the header file
-is known as a *member implementation*.
-To be considered as a match,
-a member implementation must meet the following requirements:
+Um membro da extension que corresponde a uma declaração no arquivo de cabeçalho
+é chamado de *implementação de membro*.
+Para ser considerado correspondente,
+uma implementação de membro precisa atender aos requisitos a seguir:
 
-- Its selector and Swift name is the same as the declaration it implements.
-  If needed, you can use the `objc(custom:selector:)` attribute in Swift
-  and the `NS_SWIFT_NAME(custom(_:name:))` attribute in Objective-C.
-- Its type matches the type of the declaration it implements.
-  Types marked `_Nonnull` in Objective-C can be implemented in Swift
-  either as non-optional or as an implicitly unwrapped optional.
-- Its error handling (`throws`) matches the declaration it implements.
-- Its concurrency (`async`) matches the declaration it implements.
-  For an Objective-C method that takes a completion handler as an argument,
-  which is imported into Swift
-  as both an `async` method and a method that takes a closure,
-  you can write a member implementation
-  that matches either method.
-  However, you can't implement both methods.
-- It isn't marked `final` or `override`.
-- Its access control level is `open`, `public`, `package`, or `internal`.
-- It doesn't have any other traits
-  that would be incompatible with the member it implements,
-  like the `nonobjc` attribute, `class` modifier, or mutability,
+- Seu seletor e seu nome em Swift são iguais aos da declaração que ela implementa.
+  Se necessário, você pode usar o atributo `objc(custom:selector:)` em Swift
+  e o atributo `NS_SWIFT_NAME(custom(_:name:))` em Objective-C.
+- Seu tipo corresponde ao tipo da declaração que ela implementa.
+  Tipos marcados como `_Nonnull` em Objective-C podem ser implementados em Swift
+  tanto como não optionals quanto como implicitly unwrapped optionals.
+- Seu tratamento de erros (`throws`) corresponde ao da declaração que ela implementa.
+- Sua concorrência (`async`) corresponde à da declaração que ela implementa.
+  Para um método Objective-C que recebe um completion handler como argumento,
+  que é importado para o Swift
+  tanto como um método `async` quanto como um método que recebe uma closure,
+  você pode escrever uma implementação de membro
+  que corresponda a qualquer um dos dois métodos.
+  No entanto, você não pode implementar os dois métodos.
+- Ela não está marcada com `final` nem com `override`.
+- Seu nível de controle de acesso é `open`, `public`, `package` ou `internal`.
+- Ela não tem nenhuma outra característica
+  que seja incompatível com o membro que ela implementa,
+  como o atributo `nonobjc`, o modificador `class` ou a mutabilidade,
 
-Every member implementation in the extension
-must match a member declared in the Objective-C header,
-and every member declared in that Objective-C category
-must have a matching member implementation in Swift.
-If the Objective-C header doesn't specify a category,
-the declarations are part of the default category.
-When using this attribute to migrate Objective-C code into Swift,
-you either migrate one category at a time
-or you migrate individual methods by moving them between categories;
-migrating this way doesn't break source compatibility or ABI compatibility.
-For information about categories in Objective-C,
-see [Customizing Existing Classes][objc-category]
-in *Programming with Objective-C*.
+Toda implementação de membro na extension
+precisa corresponder a um membro declarado no cabeçalho Objective-C,
+e todo membro declarado nessa categoria Objective-C
+precisa ter uma implementação correspondente em Swift.
+Se o cabeçalho Objective-C não especificar uma categoria,
+as declarações fazem parte da categoria padrão.
+Ao usar este atributo para migrar código Objective-C para o Swift,
+você migra uma categoria por vez
+ou migra métodos individuais movendo-os entre categorias;
+migrar desse jeito não quebra a compatibilidade de código-fonte nem a compatibilidade de ABI.
+Para informações sobre categorias em Objective-C,
+veja [Personalizando classes existentes][objc-category]
+em *Programming with Objective-C*.
 
 [objc-category]: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html
 
@@ -1170,36 +1169,36 @@ The Objective-C Programming Language, superseded by the above
 https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocCategories.html
 -->
 
-In addition to member implementations,
-you can write the following declarations in the extension,
-but they can't match a declaration in the Objective-C header:
+Além das implementações de membros,
+você pode escrever as declarações a seguir na extension,
+mas elas não podem corresponder a uma declaração no cabeçalho Objective-C:
 
-- Overrides for superclass members.
-  You mark these declarations with `override` as usual.
-- Helper members with a `fileprivate` or `private` access control level
-  that aren't marked `final`.
-  To access them from Objective-C,
-  either declare them in a header that's not visible to the Swift compiler
-  or access them using their selector.
-- Helper members  with `internal`, `fileprivate`, or `private` access,
-  which are accessible only from other Swift code.
-  You mark these declarations `final`,
-  and they're implicitly marked with the `nonobjc` attribute.
-  For initializers, you apply the `nonobjc` attribute instead.
-- APIs with `public` or `package` access,
-  which are only accessible to Swift clients.
-  You mark these declarations `final`,
-  and they're implicitly marked with the `nonobjc` attribute.
-  For initializers, you apply the `nonobjc` attribute instead.
+- Sobrescritas de membros da superclasse.
+  Você marca essas declarações com `override`, como de costume.
+- Membros auxiliares com nível de controle de acesso `fileprivate` ou `private`
+  que não estejam marcados com `final`.
+  Para acessá-los a partir de Objective-C,
+  declare-os em um cabeçalho que não seja visível para o compilador do Swift
+  ou acesse-os pelo seletor.
+- Membros auxiliares com acesso `internal`, `fileprivate` ou `private`,
+  que só são acessíveis a partir de outro código em Swift.
+  Você marca essas declarações com `final`,
+  e elas são implicitamente marcadas com o atributo `nonobjc`.
+  Para inicializadores, você aplica o atributo `nonobjc`.
+- APIs com acesso `public` ou `package`,
+  que só são acessíveis a clientes em Swift.
+  Você marca essas declarações com `final`,
+  e elas são implicitamente marcadas com o atributo `nonobjc`.
+  Para inicializadores, você aplica o atributo `nonobjc`.
 
-The extension can include declarations for stored properties and initializers,
-which is an exception to the rule that
-you can't declare stored properties or initializers in extensions.
+A extension pode incluir declarações de propriedades armazenadas e de inicializadores,
+o que é uma exceção à regra de que
+você não pode declarar propriedades armazenadas ou inicializadores em extensions.
 
-To specify an Objective-C category for an extension's members,
-write its name as an argument to the `objc` attribute.
-The name must match an category declared in the Objective-C header file.
-For example, if the header contains the following:
+Para especificar uma categoria Objective-C para os membros de uma extension,
+escreva o nome dela como argumento do atributo `objc`.
+O nome precisa corresponder a uma categoria declarada no arquivo de cabeçalho Objective-C.
+Por exemplo, se o cabeçalho contiver o seguinte:
 
 ```objc
 @interface MyClass (SomeCategory)
@@ -1207,7 +1206,7 @@ For example, if the header contains the following:
 @end
 ```
 
-The Swift code to implement `someCategoryMethod()` is as follows:
+O código em Swift para implementar `someCategoryMethod()` fica assim:
 
 ```swift
 @objc(SomeCategory) @implementation
@@ -1216,24 +1215,24 @@ extension MyClass {
 }
 ```
 
-#### Swift Implementation of C Declarations
+#### Implementação em Swift de declarações C
 
-For a declaration that's defined in an C header,
-apply the `c` and `implementation` attributes
-to an declaration in Swift that provides the implementation.
-Other code in Swift treats these implementations
-as if they were implemented in C and imported into Swift.
-The implementation in Swift
-needs to have the same name and type
-as an imported C implementation of that declaration.
-For example,
-the following C header declares a global function:
+Para uma declaração definida em um cabeçalho C,
+aplique os atributos `c` e `implementation`
+a uma declaração em Swift que fornece a implementação.
+Outros códigos em Swift tratam essas implementações
+como se tivessem sido implementadas em C e importadas para o Swift.
+A implementação em Swift
+precisa ter o mesmo nome e o mesmo tipo
+de uma implementação C importada dessa declaração.
+Por exemplo,
+o cabeçalho C a seguir declara uma função global:
 
 ```c
 int myFunction(int value);
 ```
 
-You implement the function in Swift as follows:
+Você implementa a função em Swift assim:
 
 ```swift
 @c @implementation
@@ -1244,27 +1243,26 @@ func myFunction(_ value: CInt) -> CInt {
 
 ### inlinable
 
-Apply this attribute to a
-function, method, computed property, subscript,
-convenience initializer, or deinitializer declaration
-to expose that declaration's implementation
-as part of the module's public interface.
-The compiler is allowed to replace calls to an inlinable symbol
-with a copy of the symbol's implementation at the call site.
+Aplique este atributo a uma declaração de função, método, propriedade computada, subscript,
+inicializador de conveniência ou desinicializador
+para expor a implementação dessa declaração
+como parte da interface pública do módulo.
+O compilador pode substituir chamadas a um símbolo inlinable
+por uma cópia da implementação do símbolo no local da chamada.
 
-Inlinable code
-can interact with `open` and `public` symbols declared in any module,
-and it can interact with `internal` symbols
-declared in the same module
-that are marked with the `usableFromInline` attribute.
-Inlinable code can't interact with `private` or `fileprivate` symbols.
+Código inlinable
+pode interagir com símbolos `open` e `public` declarados em qualquer módulo,
+e pode interagir com símbolos `internal`
+declarados no mesmo módulo
+que estejam marcados com o atributo `usableFromInline`.
+Código inlinable não pode interagir com símbolos `private` ou `fileprivate`.
 
-This attribute can't be applied
-to declarations that are nested inside functions
-or to `fileprivate` or `private` declarations.
-Functions and closures that are defined inside an inlinable function
-are implicitly inlinable,
-even though they can't be marked with this attribute.
+Este atributo não pode ser aplicado
+a declarações aninhadas dentro de funções
+nem a declarações `fileprivate` ou `private`.
+Funções e closures definidas dentro de uma função inlinable
+são implicitamente inlinable,
+mesmo que não possam ser marcadas com este atributo.
 
 <!--
   - test: `cant-inline-private`
@@ -1313,11 +1311,11 @@ even though they can't be marked with this attribute.
 
 ### main
 
-Apply this attribute to a structure, class, or enumeration declaration
-to indicate that it contains the top-level entry point for program flow.
-The type must provide a `main` type function
-that doesn't take any arguments and returns `Void`.
-For example:
+Aplique este atributo a uma declaração de struct, classe ou enum
+para indicar que ela contém o ponto de entrada de nível superior do fluxo do programa.
+O tipo precisa fornecer uma função de tipo `main`
+que não recebe argumentos e retorna `Void`.
+Por exemplo:
 
 ```swift
 @main
@@ -1343,10 +1341,10 @@ struct MyTopLevel {
   ```
 -->
 
-Another way to describe the requirements of the `main` attribute
-is that the type you write this attribute on
-must satisfy the same requirements
-as types that conform to the following hypothetical protocol:
+Outra forma de descrever os requisitos do atributo `main`
+é dizer que o tipo em que você escreve esse atributo
+precisa satisfazer os mesmos requisitos
+dos tipos que conformam com o protocolo hipotético a seguir:
 
 ```swift
 protocol ProvidesMain {
@@ -1364,9 +1362,9 @@ protocol ProvidesMain {
   ```
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+O código Swift que você compila para criar um executável
+pode conter no máximo um ponto de entrada de nível superior,
+como discutido em <doc:Declarations#Top-Level-Code>.
 
 <!--
   - test: `no-at-main-in-top-level-code`
@@ -1410,47 +1408,45 @@ as discussed in <doc:Declarations#Top-Level-Code>.
 
 ### nonobjc
 
-Apply this attribute to a
-method, property, subscript, or initializer declaration
-to suppress an implicit `objc` attribute.
-The `nonobjc` attribute tells the compiler
-to make the declaration unavailable in Objective-C code,
-even though it's possible to represent it in Objective-C.
+Aplique este atributo a uma declaração de método, propriedade, subscript ou inicializador
+para suprimir o atributo `objc` implícito.
+O atributo `nonobjc` informa ao compilador
+que a declaração deve ficar indisponível em código Objective-C,
+mesmo que seja possível representá-la em Objective-C.
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `objc` attribute.
+Aplicar este atributo a uma extension
+tem o mesmo efeito que aplicá-lo a cada membro
+dessa extension que não esteja marcado explicitamente com o atributo `objc`.
 
-You use the `nonobjc` attribute to resolve circularity
-for bridging methods in a class marked with the `objc` attribute,
-and to allow overloading of methods and initializers
-in a class marked with the `objc` attribute.
+Você usa o atributo `nonobjc` para resolver a circularidade
+de métodos com ponte (bridging) em uma classe marcada com o atributo `objc`,
+e para permitir a sobrecarga de métodos e inicializadores
+em uma classe marcada com o atributo `objc`.
 
-A method marked with the `nonobjc` attribute
-can't override a method marked with the `objc` attribute.
-However, a method marked with the `objc` attribute
-can override a method marked with the `nonobjc` attribute.
-Similarly, a method marked with the `nonobjc` attribute
-can't satisfy a protocol requirement
-for a method marked with the `objc` attribute.
+Um método marcado com o atributo `nonobjc`
+não pode sobrescrever um método marcado com o atributo `objc`.
+No entanto, um método marcado com o atributo `objc`
+pode sobrescrever um método marcado com o atributo `nonobjc`.
+Da mesma forma, um método marcado com o atributo `nonobjc`
+não pode satisfazer um requisito de protocolo
+para um método marcado com o atributo `objc`.
 
 ### NSApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute produces a compile-time error.
+> Obsoleto:
+> Este atributo está obsoleto;
+> use o atributo <doc:Attributes#main> no lugar.
+> No Swift 6,
+> usar este atributo gera um erro de compilação.
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`NSApplicationMain(_:_:)` function.
+Aplique este atributo a uma classe
+para indicar que ela é o delegate do app.
+Usar este atributo é equivalente a chamar a
+função `NSApplicationMain(_:_:)`.
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the `NSApplicationMain(_:_:)` function as follows:
+Se você não usar este atributo,
+forneça um arquivo `main.swift` com código no nível superior
+que chame a função `NSApplicationMain(_:_:)` assim:
 
 ```swift
 import AppKit
@@ -1462,20 +1458,20 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
   which is correct behavior if you call a non-returning function like this.
 -->
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+O código Swift que você compila para criar um executável
+pode conter no máximo um ponto de entrada de nível superior,
+como discutido em <doc:Declarations#Top-Level-Code>.
 
 ### NSCopying
 
-Apply this attribute to a stored variable property of a class.
-This attribute causes the property's setter to be synthesized with a *copy*
-of the property's value --- returned by the `copyWithZone(_:)` method --- instead of the
-value of the property itself.
-The type of the property must conform to the `NSCopying` protocol.
+Aplique este atributo a uma propriedade de variável armazenada de uma classe.
+Este atributo faz com que o setter da propriedade seja sintetizado com uma *cópia*
+do valor da propriedade --- retornada pelo método `copyWithZone(_:)` --- em vez do
+próprio valor da propriedade.
+O tipo da propriedade precisa conformar com o protocolo `NSCopying`.
 
-The `NSCopying` attribute behaves in a way similar to the Objective-C `copy`
-property attribute.
+O atributo `NSCopying` se comporta de forma parecida com o atributo de propriedade
+`copy` do Objective-C.
 
 <!--
   TODO: If and when Dave includes a section about this in the Guide,
@@ -1484,75 +1480,74 @@ property attribute.
 
 ### NSManaged
 
-Apply this attribute to an instance method or stored variable property
-of a class that inherits from `NSManagedObject`
-to indicate that Core Data dynamically provides its implementation at runtime,
-based on the associated entity description.
-For a property marked with the `NSManaged` attribute,
-Core Data also provides the storage at runtime.
-Applying this attribute also implies the `objc` attribute.
+Aplique este atributo a um método de instância ou a uma propriedade de variável armazenada
+de uma classe que herda de `NSManagedObject`
+para indicar que o Core Data fornece a implementação dela dinamicamente em tempo de execução,
+com base na descrição da entidade associada.
+Para uma propriedade marcada com o atributo `NSManaged`,
+o Core Data também fornece o armazenamento em tempo de execução.
+Aplicar este atributo também implica o atributo `objc`.
 
 ### objc
 
-Apply this attribute to any declaration that can be represented in Objective-C ---
-for example, global functions, nonnested classes, protocols,
-nongeneric enumerations (constrained to integer raw-value types),
-properties and methods (including getters and setters) of classes,
-protocols and optional members of a protocol,
-initializers, and subscripts.
-The `objc` attribute tells the compiler
-that a declaration is available to use in Objective-C code.
+Aplique este atributo a qualquer declaração que possa ser representada em Objective-C ---
+por exemplo, funções globais, classes não aninhadas, protocolos,
+enums não genéricos (restritos a tipos de raw value inteiros),
+propriedades e métodos (incluindo getters e setters) de classes,
+protocolos e membros optional de um protocolo,
+inicializadores e subscripts.
+O atributo `objc` informa ao compilador
+que a declaração está disponível para uso em código Objective-C.
 
-Applying this attribute to an extension
-has the same effect as
-applying it to every member of that extension
-that isn't explicitly marked with the `nonobjc` attribute.
+Aplicar este atributo a uma extension
+tem o mesmo efeito que aplicá-lo a cada membro
+dessa extension que não esteja marcado explicitamente com o atributo `nonobjc`.
 
-The compiler implicitly adds the `objc` attribute
-to subclasses of any class defined in Objective-C.
-However, the subclass must not be generic,
-and must not inherit from any generic classes.
-You can explicitly add the `objc` attribute
-to a subclass that meets these criteria,
-to specify its Objective-C name as discussed below.
-Protocols that are marked with the `objc` attribute can't inherit
-from protocols that aren't marked with this attribute.
+O compilador adiciona implicitamente o atributo `objc`
+às subclasses de qualquer classe definida em Objective-C.
+No entanto, a subclasse não pode ser genérica,
+nem herdar de nenhuma classe genérica.
+Você pode adicionar explicitamente o atributo `objc`
+a uma subclasse que atenda a esses critérios,
+para especificar o nome dela em Objective-C, como discutido a seguir.
+Protocolos marcados com o atributo `objc` não podem herdar
+de protocolos que não estejam marcados com esse atributo.
 
-The `objc` attribute is also implicitly added in the following cases:
+O atributo `objc` também é adicionado implicitamente nos casos a seguir:
 
-- The declaration is an override in a subclass,
-  and the superclass's declaration has the `objc` attribute.
-- The declaration satisfies a requirement
-  from a protocol that has the `objc` attribute.
-- The declaration has the `IBAction`, `IBSegueAction`, `IBOutlet`,
+- A declaração é uma sobrescrita em uma subclasse,
+  e a declaração da superclasse tem o atributo `objc`.
+- A declaração satisfaz um requisito
+  de um protocolo que tem o atributo `objc`.
+- A declaração tem o atributo `IBAction`, `IBSegueAction`, `IBOutlet`,
   `IBDesignable`, `IBInspectable`,
-  `NSManaged`, or `GKInspectable` attribute.
+  `NSManaged` ou `GKInspectable`.
 
-If you apply the `objc` attribute to an enumeration,
-each enumeration case is exposed to Objective-C code
-as the concatenation of the enumeration name and the case name.
-The first letter of the case name is capitalized.
-For example, a case named `venus` in a Swift `Planet` enumeration
-is exposed to Objective-C code as a case named `PlanetVenus`.
+Se você aplicar o atributo `objc` a um enum,
+cada caso do enum é exposto ao código Objective-C
+como a concatenação do nome do enum com o nome do caso.
+A primeira letra do nome do caso fica em maiúscula.
+Por exemplo, um caso chamado `venus` em um enum `Planet` do Swift
+é exposto ao código Objective-C como um caso chamado `PlanetVenus`.
 
-The `objc` attribute optionally accepts a single attribute argument,
-which consists of an identifier.
-The identifier specifies the name to be exposed to Objective-C
-for the entity that the `objc` attribute applies to.
-You can use this argument to name
-global functions, classes, enumerations, enumeration cases, protocols,
-methods, getters, setters, and initializers.
-You can also use this argument on an extension,
-to specify the Objective-C category for the extension's members.
-If you specify the Objective-C name
-for a class, protocol, or enumeration,
-include a three-letter prefix on the name,
-as described in [Conventions](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
-in [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210).
-The example below exposes
-the getter for the `enabled` property of the `ExampleClass`
-to Objective-C code as `isEnabled`
-rather than just as the name of the property itself.
+O atributo `objc` aceita opcionalmente um único argumento de atributo,
+que consiste em um identificador.
+O identificador especifica o nome que será exposto ao Objective-C
+para a entidade à qual o atributo `objc` se aplica.
+Você pode usar esse argumento para dar nome a
+funções globais, classes, enums, casos de enum, protocolos,
+métodos, getters, setters e inicializadores.
+Você também pode usar esse argumento em uma extension,
+para especificar a categoria Objective-C dos membros da extension.
+Se você especificar o nome em Objective-C
+de uma classe, protocolo ou enum,
+inclua um prefixo de três letras no nome,
+como descrito em [Convenções](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
+em [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210).
+O exemplo a seguir expõe
+o getter da propriedade `enabled` de `ExampleClass`
+para o código Objective-C como `isEnabled`,
+e não apenas pelo nome da própria propriedade.
 
 ```swift
 class ExampleClass: NSObject {
@@ -1580,39 +1575,39 @@ class ExampleClass: NSObject {
   ```
 -->
 
-For more information, see
-[Importing Swift into Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c).
+Para mais informações, veja
+[Importando Swift no Objective-C](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c).
 
-> Note: The argument to the `objc` attribute
-> can also change the runtime name for that declaration.
-> You use the runtime name when calling functions
-> that interact with the Objective-C runtime,
-> like [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/nsclassfromstring(_:)),
-> and when specifying class names in an app's Info.plist file.
-> If you specify a name by passing an argument,
-> that name is used as the name in Objective-C code
-> and as the runtime name.
-> If you omit the argument,
-> the name used in Objective-C code matches the name in Swift code,
-> and the runtime name follows the normal Swift compiler convention
-> of name mangling.
+> Nota: O argumento do atributo `objc`
+> também pode alterar o nome em tempo de execução dessa declaração.
+> Você usa o nome em tempo de execução ao chamar funções
+> que interagem com o runtime do Objective-C,
+> como [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/nsclassfromstring(_:)),
+> e ao especificar nomes de classes no arquivo Info.plist de um app.
+> Se você especificar um nome passando um argumento,
+> esse nome é usado como nome no código Objective-C
+> e como nome em tempo de execução.
+> Se você omitir o argumento,
+> o nome usado no código Objective-C corresponde ao nome no código Swift,
+> e o nome em tempo de execução segue a convenção normal do compilador do Swift
+> de name mangling.
 
 ### objcMembers
 
-Apply this attribute to a class declaration,
-to implicitly apply the `objc` attribute
-to all Objective-C compatible members of the class,
-its extensions, its subclasses, and all of the extensions of its subclasses.
+Aplique este atributo a uma declaração de classe
+para aplicar implicitamente o atributo `objc`
+a todos os membros da classe compatíveis com Objective-C,
+às suas extensions, às suas subclasses e a todas as extensions das suas subclasses.
 
-Most code should use the `objc` attribute instead,
-to expose only the declarations that are needed.
-If you need to expose many declarations,
-you can group them in an extension that has the `objc` attribute.
-The `objcMembers` attribute is a convenience for
-libraries that make heavy use of
-the introspection facilities of the Objective-C runtime.
-Applying the `objc` attribute when it isn't needed
-can increase your binary size and adversely affect performance.
+A maior parte do código deve usar o atributo `objc`,
+para expor apenas as declarações que são necessárias.
+Se você precisar expor muitas declarações,
+pode agrupá-las em uma extension que tenha o atributo `objc`.
+O atributo `objcMembers` é uma conveniência para
+bibliotecas que usam muito
+os recursos de introspecção do runtime do Objective-C.
+Aplicar o atributo `objc` quando ele não é necessário
+pode aumentar o tamanho do binário e afetar o desempenho de forma negativa.
 
 <!--
   The binary size comes from the additional thunks
@@ -1623,69 +1618,69 @@ can increase your binary size and adversely affect performance.
 
 ### preconcurrency
 
-Apply this attribute to a declaration,
-to suppress strict concurrency checking.
-You can apply this attribute
-to the following kinds of declarations:
+Aplique este atributo a uma declaração
+para suprimir a verificação estrita de concorrência.
+Você pode aplicar este atributo
+aos seguintes tipos de declaração:
 
-- Imports
-- Structures, classes, and actors
-- Enumerations and enumeration cases
-- Protocols
-- Variables and constants
+- Declarações `import`
+- Structs, classes e actors
+- Enums e casos de enum
+- Protocolos
+- Variáveis e constantes
 - Subscripts
-- Initializers
-- Functions
+- Inicializadores
+- Funções
 
-On an import declaration,
-this attribute reduces the strictness of concurrency checking
-for code that uses types from the imported module.
-Specifically,
-types from the imported module
-that aren't explicitly marked as nonsendable
-can be used in a context that requires sendable types.
+Em uma declaração de import,
+este atributo reduz o rigor da verificação de concorrência
+para o código que usa tipos do módulo importado.
+Especificamente,
+tipos do módulo importado
+que não estejam explicitamente marcados como nonsendable
+podem ser usados em um contexto que exige tipos sendable.
 
-On other declarations,
-this attribute reduces the strictness of concurrency checking
-for code that uses the symbol being declared.
-When you use this symbol in a scope that has minimal concurrency checking,
-concurrency-related constraints specified by that symbol,
-such as `Sendable` requirements or global actors,
-aren't checked.
+Em outras declarações,
+este atributo reduz o rigor da verificação de concorrência
+para o código que usa o símbolo que está sendo declarado.
+Quando você usa esse símbolo em um escopo com verificação mínima de concorrência,
+restrições relacionadas à concorrência especificadas por esse símbolo,
+como requisitos `Sendable` ou global actors,
+não são verificadas.
 
-You can use this attribute as follows,
-to aid in migrating code to strict concurrency checking:
+Você pode usar este atributo da seguinte forma,
+para ajudar na migração do código para a verificação estrita de concorrência:
 
-1. Enable strict checking.
-1. Annotate imports with the `preconcurrency` attribute
-   for modules that haven't enabled strict checking.
-1. After migrating a module to strict checking,
-   remove the `preconcurrency` attribute.
-   The compiler warns you about
-   any places where the `preconcurrency` attribute on an import
-   no longer has an effect and should be removed.
+1. Ative a verificação estrita.
+1. Anote os imports com o atributo `preconcurrency`
+   para os módulos que ainda não ativaram a verificação estrita.
+1. Depois de migrar um módulo para a verificação estrita,
+   remova o atributo `preconcurrency`.
+   O compilador emite um aviso sobre
+   qualquer lugar em que o atributo `preconcurrency` em um import
+   não tenha mais efeito e deva ser removido.
 
-For other declarations,
-add the `preconcurrency` attribute
-when you add concurrency-related constraints to the declaration,
-if you still have clients
-that haven't migrated to strict checking.
-Remove the `preconcurrency` attribute after all your clients have migrated.
+Para as demais declarações,
+adicione o atributo `preconcurrency`
+quando você incluir restrições relacionadas à concorrência na declaração,
+se ainda houver clientes
+que não migraram para a verificação estrita.
+Remova o atributo `preconcurrency` depois que todos os seus clientes tiverem migrado.
 
-Declarations from Objective-C are always imported
-as if they were marked with the `preconcurrency` attribute.
+Declarações vindas de Objective-C são sempre importadas
+como se estivessem marcadas com o atributo `preconcurrency`.
 
 ### propertyWrapper
 
-Apply this attribute to a class, structure, or enumeration declaration
-to use that type as a property wrapper.
-When you apply this attribute to a type,
-you create a custom attribute with the same name as the type.
-Apply that new attribute to a property of a class, structure, or enumeration
-to wrap access to the property through an instance of the wrapper type;
-apply the attribute to a local stored variable declaration
-to wrap access to the variable the same way.
-Computed variables, global variables, and constants can't use property wrappers.
+Aplique este atributo a uma declaração de classe, struct ou enum
+para usar esse tipo como property wrapper.
+Quando você aplica este atributo a um tipo,
+cria um atributo personalizado com o mesmo nome do tipo.
+Aplique esse novo atributo a uma propriedade de classe, struct ou enum
+para envolver o acesso à propriedade por meio de uma instância do tipo wrapper;
+aplique o atributo a uma declaração de variável armazenada local
+para envolver o acesso à variável do mesmo jeito.
+Variáveis computadas, variáveis globais e constantes não podem usar property wrappers.
 
 <!--
   - test: `property-wrappers-can-go-on-stored-variable`
@@ -1732,33 +1727,33 @@ Computed variables, global variables, and constants can't use property wrappers.
   ```
 -->
 
-The wrapper must define a `wrappedValue` instance property.
-The *wrapped value* of the property
-is the value that the getter and setter for this property expose.
-In most cases, `wrappedValue` is a computed value,
-but it can be a stored value instead.
-The wrapper defines and manages
-any underlying storage needed by its wrapped value.
-The compiler synthesizes storage for the instance of the wrapper type
-by prefixing the name of the wrapped property with an underscore (`_`) ---
-for example, the wrapper for `someProperty` is stored as `_someProperty`.
-The synthesized storage for the wrapper has an access control level of `private`.
+O wrapper precisa definir uma propriedade de instância `wrappedValue`.
+O *valor encapsulado* da propriedade
+é o valor que o getter e o setter dessa propriedade expõem.
+Na maioria dos casos, `wrappedValue` é um valor computado,
+mas pode ser um valor armazenado.
+O wrapper define e gerencia
+qualquer armazenamento subjacente necessário para o valor encapsulado.
+O compilador sintetiza o armazenamento para a instância do tipo wrapper
+adicionando um sublinhado (`_`) antes do nome da propriedade encapsulada ---
+por exemplo, o wrapper de `someProperty` é armazenado como `_someProperty`.
+O armazenamento sintetizado para o wrapper tem nível de controle de acesso `private`.
 
-A property that has a property wrapper
-can include `willSet` and `didSet` blocks,
-but it can't override the compiler-synthesized `get` or `set` blocks.
+Uma propriedade que tem um property wrapper
+pode incluir blocos `willSet` e `didSet`,
+mas não pode sobrescrever os blocos `get` ou `set` sintetizados pelo compilador.
 
-Swift provides two forms of syntactic sugar
-for initialization of a property wrapper.
-You can use assignment syntax in the definition of a wrapped value
-to pass the expression on the right-hand side of the assignment
-as the argument to the `wrappedValue` parameter
-of the property wrapper's initializer.
-You can also provide arguments to the attribute
-when you apply it to a property,
-and those arguments are passed to the property wrapper's initializer.
-For example, in the code below,
-`SomeStruct` calls each of the initializers that `SomeWrapper` defines.
+O Swift oferece duas formas de açúcar sintático
+para a inicialização de um property wrapper.
+Você pode usar a sintaxe de atribuição na definição de um valor encapsulado
+para passar a expressão do lado direito da atribuição
+como argumento do parâmetro `wrappedValue`
+do inicializador do property wrapper.
+Você também pode fornecer argumentos ao atributo
+ao aplicá-lo a uma propriedade,
+e esses argumentos são passados ao inicializador do property wrapper.
+Por exemplo, no código abaixo,
+`SomeStruct` chama cada um dos inicializadores que `SomeWrapper` define.
 
 ```swift
 @propertyWrapper
@@ -1846,18 +1841,18 @@ struct SomeStruct {
   -> e = 30  // Uses the property setter
 -->
 
-The *projected value* for a wrapped property is a second value
-that a property wrapper can use to expose additional functionality.
-The author of a property wrapper type
-is responsible for determining the meaning of its projected value
-and defining the interface that the projected value exposes.
-To project a value from a property wrapper,
-define a `projectedValue` instance property on the wrapper type.
-The compiler synthesizes an identifier for the projected value
-by prefixing the name of the wrapped property with a dollar sign (`$`) ---
-for example, the projected value for `someProperty` is `$someProperty`.
-The projected value has the same access control level
-as the original wrapped property.
+O *valor projetado* de uma propriedade encapsulada é um segundo valor
+que um property wrapper pode usar para expor funcionalidade adicional.
+O autor de um tipo property wrapper
+é responsável por definir o significado do valor projetado
+e a interface que o valor projetado expõe.
+Para projetar um valor a partir de um property wrapper,
+defina uma propriedade de instância `projectedValue` no tipo wrapper.
+O compilador sintetiza um identificador para o valor projetado
+adicionando um cifrão (`$`) antes do nome da propriedade encapsulada ---
+por exemplo, o valor projetado de `someProperty` é `$someProperty`.
+O valor projetado tem o mesmo nível de controle de acesso
+que a propriedade encapsulada original.
 
 ```swift
 @propertyWrapper
@@ -1908,128 +1903,128 @@ s.$x.wrapper  // WrapperWithProjection value
   ```
 -->
 
-If the projected value wraps a variable that's named using a raw identifier,
-you also use a raw identifier to refer to
-the value's synthesized storage and its the projected value.
-Write the underscore or dollar sign inside the backticks;
-for example, `` someValue.`_some raw identifier` ``
-refers to the synthesized storage
-for a property that include spaces in its name,
-and `` someValue.`$some raw identifier` ``
-refers to its projected value.
+Se o valor projetado encapsular uma variável nomeada com um identificador bruto (raw identifier),
+você também usa um identificador bruto para se referir
+ao armazenamento sintetizado do valor e ao seu valor projetado.
+Escreva o sublinhado ou o cifrão dentro das crases;
+por exemplo, `` someValue.`_some raw identifier` ``
+se refere ao armazenamento sintetizado
+de uma propriedade cujo nome inclui espaços,
+e `` someValue.`$some raw identifier` ``
+se refere ao seu valor projetado.
 
 ### resultBuilder
 
-Apply this attribute to a class, structure, or enumeration
-to use that type as a result builder.
-A *result builder* is a type
-that builds a nested data structure step by step.
-You use result builders to implement a domain-specific language (DSL)
-for creating nested data structures in a natural, declarative way.
-For an example of how to use the `resultBuilder` attribute,
-see <doc:AdvancedOperators#Result-Builders>.
+Aplique este atributo a uma classe, struct ou enum
+para usar esse tipo como result builder.
+Um *result builder* é um tipo
+que constrói uma estrutura de dados aninhada passo a passo.
+Você usa result builders para implementar uma linguagem específica de domínio (DSL)
+para criar structs de dados aninhadas de forma natural e declarativa.
+Para um exemplo de como usar o atributo `resultBuilder`,
+veja <doc:AdvancedOperators#Result-Builders>.
 
-#### Result-Building Methods
+#### Métodos de construção de resultado
 
-A result builder implements static methods described below.
-Because all of the result builder's functionality
-is exposed through static methods,
-you don't ever initialize an instance of that type.
-A result builder must implement either the `buildBlock(_:)` method
-or both the `buildPartialBlock(first:)`
-and `buildPartialBlock(accumulated:next:)` methods.
-The other methods ---
-which enable additional functionality in the DSL ---
-are optional.
-The declaration of a result builder type
-doesn't actually have to include any protocol conformance.
+Um result builder implementa os métodos estáticos descritos a seguir.
+Como toda a funcionalidade do result builder
+é exposta por meio de métodos estáticos,
+você nunca inicializa uma instância desse tipo.
+Um result builder precisa implementar o método `buildBlock(_:)`
+ou os métodos `buildPartialBlock(first:)`
+e `buildPartialBlock(accumulated:next:)`.
+Os outros métodos ---
+que habilitam funcionalidades adicionais na DSL ---
+são opcionais.
+A declaração de um tipo result builder
+não precisa, de fato, incluir nenhuma conformidade com protocolo.
 
-The description of the static methods uses three types as placeholders.
-The type `Expression` is a placeholder
-for the type of the result builder's input,
-`Component` is a placeholder for the type of a partial result,
-and `FinalResult` is a placeholder
-for the type of the result that the result builder produces.
-You replace these types with the actual types that your result builder uses.
-If your result-building methods
-don't specify a type for `Expression` or `FinalResult`,
-they default to being the same as `Component`.
+A descrição dos métodos estáticos usa três tipos como marcadores.
+O tipo `Expression` é um marcador
+para o tipo da entrada do result builder,
+`Component` é um marcador para o tipo de um resultado parcial,
+e `FinalResult` é um marcador
+para o tipo do resultado que o result builder produz.
+Você substitui esses tipos pelos tipos reais que seu result builder usa.
+Se os seus métodos de construção de resultado
+não especificarem um tipo para `Expression` ou `FinalResult`,
+eles usam, por padrão, o mesmo tipo de `Component`.
 
-The block-building methods are as follows:
+Os métodos de construção de blocos são os seguintes:
 
 - term `static func buildBlock(_ components: Component...) -> Component`:
-  Combines an array of partial results into a single partial result.
+  Combina um array de resultados parciais em um único resultado parcial.
 
 - term `static func buildPartialBlock(first: Component) -> Component`:
-  Builds a partial result component from the first component.
-  Implement both this method and `buildPartialBlock(accumulated:next:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+  Constrói um componente de resultado parcial a partir do primeiro componente.
+  Implemente este método e também `buildPartialBlock(accumulated:next:)`
+  para oferecer suporte à construção de blocos um componente por vez.
+  Em comparação com `buildBlock(_:)`,
+  essa abordagem reduz a necessidade de sobrecargas genéricas
+  que tratam diferentes quantidades de argumentos.
 
 - term `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  Builds a partial result component
-  by combining an accumulated component with a new component.
-  Implement both this method and `buildPartialBlock(first:)`
-  to support building blocks one component at a time.
-  Compared to `buildBlock(_:)`,
-  this approach reduces the need for generic overloads
-  that handle different numbers of arguments.
+  Constrói um componente de resultado parcial
+  combinando um componente acumulado com um novo componente.
+  Implemente este método e também `buildPartialBlock(first:)`
+  para oferecer suporte à construção de blocos um componente por vez.
+  Em comparação com `buildBlock(_:)`,
+  essa abordagem reduz a necessidade de sobrecargas genéricas
+  que tratam diferentes quantidades de argumentos.
 
-A result builder can implement all three of the block-building methods listed above;
-in that case, availability determines which method is called.
-By default, Swift calls the `buildPartialBlock(first:)` and `buildPartialBlock(accumulated:next:)`
-methods. To make Swift call `buildBlock(_:)` instead,
-mark the enclosing declaration as being available
-before the availability you write on `buildPartialBlock(first:)` and
+Um result builder pode implementar os três métodos de construção de blocos listados acima;
+nesse caso, a disponibilidade determina qual método é chamado.
+Por padrão, o Swift chama os métodos `buildPartialBlock(first:)` e `buildPartialBlock(accumulated:next:)`.
+Para que o Swift chame `buildBlock(_:)` no lugar,
+marque a declaração que a envolve como disponível
+antes da disponibilidade que você escreve em `buildPartialBlock(first:)` e
 `buildPartialBlock(accumulated:next:)`.
 
-The additional result-building methods are as follows:
+Os métodos adicionais de construção de resultado são os seguintes:
 
 - term `static func buildOptional(_ component: Component?) -> Component`:
-  Builds a partial result from a partial result that can be `nil`.
-  Implement this method to support `if` statements
-  that don’t include an `else` clause.
+  Constrói um resultado parcial a partir de um resultado parcial que pode ser `nil`.
+  Implemente este método para oferecer suporte a instruções `if`
+  que não incluem uma cláusula `else`.
 
 - term `static func buildEither(first: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(second:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+  Constrói um resultado parcial cujo valor varia dependendo de alguma condição.
+  Implemente este método e também `buildEither(second:)`
+  para oferecer suporte a instruções `switch`
+  e a instruções `if` que incluem uma cláusula `else`.
 
 - term `static func buildEither(second: Component) -> Component`:
-  Builds a partial result whose value varies depending on some condition.
-  Implement both this method and `buildEither(first:)`
-  to support `switch` statements
-  and `if` statements that include an `else` clause.
+  Constrói um resultado parcial cujo valor varia dependendo de alguma condição.
+  Implemente este método e também `buildEither(first:)`
+  para oferecer suporte a instruções `switch`
+  e a instruções `if` que incluem uma cláusula `else`.
 
 - term `static func buildArray(_ components: [Component]) -> Component`:
-  Builds a partial result from an array of partial results.
-  Implement this method to support `for` loops.
+  Constrói um resultado parcial a partir de um array de resultados parciais.
+  Implemente este método para oferecer suporte a laços `for`.
 
 - term `static func buildExpression(_ expression: Expression) -> Component`:
-  Builds a partial result from an expression.
-  You can implement this method to perform preprocessing ---
-  for example, converting expressions to an internal type ---
-  or to provide additional information for type inference at use sites.
+  Constrói um resultado parcial a partir de uma expressão.
+  Você pode implementar este método para fazer um pré-processamento ---
+  por exemplo, converter expressões para um tipo interno ---
+  ou para fornecer informações adicionais para a inferência de tipos nos pontos de uso.
 
 - term `static func buildFinalResult(_ component: Component) -> FinalResult`:
-  Builds a final result from a partial result.
-  You can implement this method as part of a result builder
-  that uses a different type for partial and final results,
-  or to perform other postprocessing on a result before returning it.
+  Constrói um resultado final a partir de um resultado parcial.
+  Você pode implementar este método como parte de um result builder
+  que usa um tipo diferente para resultados parciais e finais,
+  ou para fazer outro pós-processamento em um resultado antes de retorná-lo.
 
 - term `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  Builds a partial result that erases type information.
-  You can implement this method to prevent type information
-  from propagating outside a compiler-control statement
-  that performs an availability check.
+  Constrói um resultado parcial que apaga as informações de tipo.
+  Você pode implementar este método para impedir que as informações de tipo
+  se propaguem para fora de uma instrução de controle do compilador
+  que faz uma verificação de disponibilidade.
 
-For example, the code below defines a simple result builder
-that builds an array of integers.
-This code defines `Component` and `Expression` as type aliases,
-to make it easier to match the examples below to the list of methods above.
+Por exemplo, o código abaixo define um result builder simples
+que constrói um array de inteiros.
+Este código define `Component` e `Expression` como aliases de tipo,
+para facilitar a correspondência dos exemplos abaixo com a lista de métodos acima.
 
 ```swift
 @resultBuilder
@@ -2092,16 +2087,16 @@ struct ArrayBuilder {
   ```
 -->
 
-#### Result Transformations
+#### Transformações de resultado
 
-The following syntactic transformations are applied recursively
-to turn code that uses result-builder syntax
-into code that calls the static methods of the result builder type:
+As transformações sintáticas a seguir são aplicadas recursivamente
+para transformar código que usa a sintaxe de result builder
+em código que chama os métodos estáticos do tipo result builder:
 
-- If the result builder has a `buildExpression(_:)` method,
-  each expression becomes a call to that method.
-  This transformation is always first.
-  For example, the following declarations are equivalent:
+- Se o result builder tiver um método `buildExpression(_:)`,
+  cada expressão se torna uma chamada a esse método.
+  Esta transformação é sempre a primeira.
+  Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
   @ArrayBuilder var builderNumber: [Int] { 10 }
@@ -2117,24 +2112,24 @@ into code that calls the static methods of the result builder type:
     >> assert(builderNumber == manualNumber)
     ```
   -->
-- An assignment statement is transformed like an expression,
-  but is understood to evaluate to `()`.
-  You can define an overload of `buildExpression(_:)`
-  that takes an argument of type `()` to handle assignments specifically.
-- A branch statement that checks an availability condition
-  becomes a call to the `buildLimitedAvailability(_:)` method,
-  if that method is implemented.
-  If you don't implement `buildLimitedAvailability(_:)`,
-  then branch statements that check availability
-  use the same transformations as other branch statements.
-  This transformation happens before the transformation into a call to
-  `buildEither(first:)`, `buildEither(second:)`, or `buildOptional(_:)`.
+- Uma instrução de atribuição é transformada como uma expressão,
+  mas é entendida como avaliando para `()`.
+  Você pode definir uma sobrecarga de `buildExpression(_:)`
+  que recebe um argumento do tipo `()` para tratar atribuições de forma específica.
+- Uma instrução de desvio que verifica uma condição de disponibilidade
+  se torna uma chamada ao método `buildLimitedAvailability(_:)`,
+  se esse método estiver implementado.
+  Se você não implementar `buildLimitedAvailability(_:)`,
+  então as instruções de desvio que verificam disponibilidade
+  usam as mesmas transformações das demais instruções de desvio.
+  Esta transformação acontece antes da transformação em uma chamada a
+  `buildEither(first:)`, `buildEither(second:)` ou `buildOptional(_:)`.
 
-  You use the `buildLimitedAvailability(_:)` method to erase type information
-  that changes depending on which branch is taken.
-  For example,
-  the `buildEither(first:)` and  `buildEither(second:)` methods below
-  use a generic type that captures type information about both branches.
+  Você usa o método `buildLimitedAvailability(_:)` para apagar informações de tipo
+  que mudam dependendo de qual ramo é executado.
+  Por exemplo,
+  os métodos `buildEither(first:)` e `buildEither(second:)` a seguir
+  usam um tipo genérico que captura informações de tipo dos dois ramos.
 
   ```swift
   protocol Drawable {
@@ -2174,7 +2169,7 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  However, this approach causes a problem in code that has availability checks:
+  No entanto, essa abordagem causa um problema em código que tem verificações de disponibilidade:
 
   ```swift
   @available(macOS 99, *)
@@ -2195,18 +2190,18 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-  In the code above,
-  `FutureText` appears as part of the type of `brokenDrawing`
-  because it's one of the types in the `DrawEither` generic type.
-  This could cause your program to crash if `FutureText`
-  isn't available at runtime,
-  even in the case where that type is explicitly not being used.
+  No código acima,
+  `FutureText` aparece como parte do tipo de `brokenDrawing`
+  porque é um dos tipos no tipo genérico `DrawEither`.
+  Isso pode fazer seu programa travar se `FutureText`
+  não estiver disponível em tempo de execução,
+  mesmo que esse tipo não seja usado explicitamente.
 
-  To solve this problem,
-  implement a `buildLimitedAvailability(_:)` method
-  to erase type information by returning a type that's always available.
-  For example, the code below builds an `AnyDrawable` value
-  from its availability check.
+  Para resolver esse problema,
+  implemente um método `buildLimitedAvailability(_:)`
+  para apagar as informações de tipo, retornando um tipo que está sempre disponível.
+  Por exemplo, o código abaixo constrói um valor `AnyDrawable`
+  a partir da verificação de disponibilidade.
 
   ```swift
   struct AnyDrawable: Drawable {
@@ -2231,22 +2226,21 @@ into code that calls the static methods of the result builder type:
 
   <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-- A branch statement becomes a series of nested calls to the
-  `buildEither(first:)` and `buildEither(second:)` methods.
-  The statements' conditions and cases are mapped onto
-  the leaf nodes of a binary tree,
-  and the statement becomes
-  a nested call to the `buildEither` methods
-  following the path to that leaf node from the root node.
+- Uma instrução de desvio se torna uma série de chamadas aninhadas aos
+  métodos `buildEither(first:)` e `buildEither(second:)`.
+  As condições e os casos da instrução são mapeados para os nós folha
+  de uma árvore binária, e a instrução se torna
+  uma chamada aninhada aos métodos `buildEither`
+  seguindo o caminho até esse nó folha a partir do nó raiz.
 
-  For example, if you write a switch statement that has three cases,
-  the compiler uses a binary tree with three leaf nodes.
-  Likewise,
-  because the path from the root node to the second case is
-  "second child" and then "first child",
-  that case becomes a nested call like
+  Por exemplo, se você escrever uma instrução `switch` com três casos,
+  o compilador usa uma árvore binária com três nós folha.
+  Da mesma forma,
+  como o caminho do nó raiz até o segundo caso é
+  “segundo filho” e depois “primeiro filho”,
+  esse caso se torna uma chamada aninhada como
   `buildEither(first: buildEither(second: ... ))`.
-  The following declarations are equivalent:
+  As declarações a seguir são equivalentes:
 
   ```swift
   let someNumber = 19
@@ -2310,13 +2304,13 @@ into code that calls the static methods of the result builder type:
     << Building first... [32]
     ```
   -->
-- A branch statement that might not produce a value,
-  like an `if` statement without an `else` clause,
-  becomes a call to `buildOptional(_:)`.
-  If the `if` statement's condition is satisfied,
-  its code block is transformed and passed as the argument;
-  otherwise, `buildOptional(_:)` is called with `nil` as its argument.
-  For example, the following declarations are equivalent:
+- Uma instrução de desvio que pode não produzir um valor,
+  como uma instrução `if` sem cláusula `else`,
+  se torna uma chamada a `buildOptional(_:)`.
+  Se a condição da instrução `if` for satisfeita,
+  o bloco de código dela é transformado e passado como argumento;
+  caso contrário, `buildOptional(_:)` é chamado com `nil` como argumento.
+  Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
   @ArrayBuilder var builderOptional: [Int] {
@@ -2348,16 +2342,15 @@ into code that calls the static methods of the result builder type:
     >> assert(builderOptional == manualOptional)
     ```
   -->
-- If the result builder implements
-  the `buildPartialBlock(first:)`
-  and `buildPartialBlock(accumulated:next:)` methods,
-  a code block or `do` statement becomes a call to those methods.
-  The first statement inside of the block
-  is transformed to become an argument
-  to the `buildPartialBlock(first:)` method,
-  and the remaining statements become nested calls
-  to the `buildPartialBlock(accumulated:next:)` method.
-  For example, the following declarations are equivalent:
+- Se o result builder implementar os métodos
+  `buildPartialBlock(first:)`
+  e `buildPartialBlock(accumulated:next:)`,
+  um bloco de código ou uma instrução `do` se torna uma chamada a esses métodos.
+  A primeira instrução dentro do bloco é transformada para se tornar um argumento
+  do método `buildPartialBlock(first:)`,
+  e as instruções restantes se tornam chamadas aninhadas
+  ao método `buildPartialBlock(accumulated:next:)`.
+  Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
   struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
@@ -2428,12 +2421,12 @@ into code that calls the static methods of the result builder type:
     >> assert(type(of: builderBlock) == type(of: manualResult))
     ```
   -->
-- Otherwise, a code block or `do` statement
-  becomes a call to the `buildBlock(_:)` method.
-  Each of the statements inside of the block is transformed,
-  one at a time,
-  and they become the arguments to the `buildBlock(_:)` method.
-  For example, the following declarations are equivalent:
+- Caso contrário, um bloco de código ou uma instrução `do`
+  se torna uma chamada ao método `buildBlock(_:)`.
+  Cada uma das instruções dentro do bloco é transformada,
+  uma por vez,
+  e se torna um argumento do método `buildBlock(_:)`.
+  Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
   @ArrayBuilder var builderBlock: [Int] {
@@ -2467,12 +2460,12 @@ into code that calls the static methods of the result builder type:
     >> assert(builderBlock == manualBlock)
     ```
   -->
-- A `for` loop becomes a temporary variable, a `for` loop,
-  and call to the `buildArray(_:)` method.
-  The new `for` loop iterates over the sequence
-  and appends each partial result to that array.
-  The temporary array is passed as the argument in the `buildArray(_:)` call.
-  For example, the following declarations are equivalent:
+- Um laço `for` se torna uma variável temporária, um laço `for`
+  e uma chamada ao método `buildArray(_:)`.
+  O novo laço `for` percorre a sequência
+  e adiciona cada resultado parcial a esse array.
+  O array temporário é passado como argumento na chamada a `buildArray(_:)`.
+  Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
   @ArrayBuilder var builderArray: [Int] {
@@ -2508,9 +2501,9 @@ into code that calls the static methods of the result builder type:
     >> assert(builderArray == manualArray)
     ```
   -->
-- If the result builder has a `buildFinalResult(_:)` method,
-  the final result becomes a call to that method.
-  This transformation is always last.
+- Se o result builder tiver um método `buildFinalResult(_:)`,
+  o resultado final se torna uma chamada a esse método.
+  Esta transformação é sempre a última.
 
 <!--
   - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
@@ -2619,29 +2612,29 @@ into code that calls the static methods of the result builder type:
   ```
 -->
 
-Although the transformation behavior is described in terms of temporary variables,
-using a result builder doesn't actually create any new declarations
-that are visible from the rest of your code.
+Embora o comportamento das transformações seja descrito em termos de variáveis temporárias,
+usar um result builder não cria, de fato, nenhuma declaração nova
+que seja visível para o resto do código.
 
-You can't use
-`break`, `continue`, `defer`, `guard`, or `return` statements,
-`while` statements,
-or `do`-`catch` statements
-in the code that a result builder transforms.
+Você não pode usar
+instruções `break`, `continue`, `defer`, `guard` ou `return`,
+instruções `while`,
+nem instruções `do`-`catch`
+no código que um result builder transforma.
 
-The transformation process doesn't change declarations in the code,
-which lets you use temporary constants and variables
-to build up expressions piece by piece.
-It also doesn't change
-`throw` statements,
-compile-time diagnostic statements,
-or closures that contain a `return` statement.
+O processo de transformação não altera declarações no código,
+o que permite usar constantes e variáveis temporárias
+para montar expressões peça por peça.
+Ele também não altera
+instruções `throw`,
+instruções de diagnóstico em tempo de compilação,
+nem closures que contenham uma instrução `return`.
 
-Whenever possible, transformations are coalesced.
-For example, the expression `4 + 5 * 6` becomes
-`buildExpression(4 + 5 * 6)` rather multiple calls to that function.
-Likewise, nested branch statements become
-a single binary tree of calls to the `buildEither` methods.
+Sempre que possível, as transformações são agrupadas.
+Por exemplo, a expressão `4 + 5 * 6` se torna
+`buildExpression(4 + 5 * 6)`, em vez de várias chamadas a essa função.
+Da mesma forma, instruções de desvio aninhadas se tornam
+uma única árvore binária de chamadas aos métodos `buildEither`.
 
 <!--
   - test: `result-builder-transform-complex-expression`
@@ -2666,31 +2659,30 @@ a single binary tree of calls to the `buildEither` methods.
   ```
 -->
 
-#### Custom Result-Builder Attributes
+#### Atributos personalizados de result builder
 
-Creating a result builder type creates a custom attribute with the same name.
-You can apply that attribute in the following places:
+Criar um tipo result builder cria um atributo personalizado com o mesmo nome.
+Você pode aplicar esse atributo nos lugares a seguir:
 
-- On a function declaration,
-  the result builder builds the body of the function.
-- On a variable or subscript declaration that includes a getter,
-  the result builder builds the body of the getter.
-- On a parameter in a function declaration,
-  the result builder builds the body of a closure
-  that's passed as the corresponding argument.
+- Em uma declaração de função, o result builder constrói o corpo da função.
+- Em uma declaração de variável ou de subscript que inclui um getter,
+  o result builder constrói o corpo do getter.
+- Em um parâmetro de uma declaração de função,
+  o result builder constrói o corpo de um closure
+  que é passado como o argumento correspondente.
 
-Applying a result builder attribute doesn't impact ABI compatibility.
-Applying a result builder attribute to a parameter
-makes that attribute part of the function's interface,
-which can affect source compatibility.
+Aplicar um atributo de result builder não afeta a compatibilidade de ABI.
+Aplicar um atributo de result builder a um parâmetro
+torna esse atributo parte da interface da função,
+o que pode afetar a compatibilidade de código-fonte.
 
 ### requires_stored_property_inits
 
-Apply this attribute to a class declaration
-to require all stored properties within the class
-to provide default values as part of their definitions.
-This attribute is inferred for any class
-that inherits from `NSManagedObject`.
+Aplique este atributo a uma declaração de classe
+para exigir que todas as propriedades armazenadas dentro da classe
+forneçam valores padrão como parte de suas definições.
+Este atributo é inferido para qualquer classe
+que herde de `NSManagedObject`.
 
 <!--
   - test: `requires_stored_property_inits-requires-default-values`
@@ -2715,81 +2707,80 @@ that inherits from `NSManagedObject`.
 
 ### testable
 
-Apply this attribute to an `import` declaration
-to import that module with changes to its access control
-that simplify testing the module's code.
-Entities in the imported module
-that are marked with the `internal` access-level modifier
-are imported as if they were declared with the `public` access-level modifier.
-Classes and class members
-that are marked with the `internal` or `public` access-level modifier
-are imported as if they were declared with the `open` access-level modifier.
-The imported module must be compiled with testing enabled.
+Aplique este atributo a uma declaração `import`
+para importar esse módulo com alterações em seu controle de acesso
+que simplificam os testes do código do módulo.
+Entidades do módulo importado
+que estão marcadas com o modificador de nível de acesso `internal`
+são importadas como se tivessem sido declaradas com o modificador de nível de acesso `public`.
+Classes e membros de classe
+que estão marcados com o modificador de nível de acesso `internal` ou `public`
+são importados como se tivessem sido declarados com o modificador de nível de acesso `open`.
+O módulo importado precisa ser compilado com os testes habilitados.
 
 ### UIApplicationMain
 
-> Deprecated:
-> This attribute is deprecated;
-> use the <doc:Attributes#main> attribute instead.
-> In Swift 6,
-> using this attribute produces a compile-time error.
+> Obsoleto:
+> Este atributo está obsoleto;
+> use o atributo <doc:Attributes#main> no lugar.
+> No Swift 6,
+> usar este atributo gera um erro de compilação.
 
-Apply this attribute to a class
-to indicate that it's the app delegate.
-Using this attribute is equivalent to calling the
-`UIApplicationMain` function and
-passing this class's name as the name of the delegate class.
+Aplique este atributo a uma classe
+para indicar que ela é o delegate do app.
+Usar este atributo é equivalente a chamar a
+função `UIApplicationMain` e
+passar o nome dessa classe como o nome da classe delegate.
 
-If you don't use this attribute,
-supply a `main.swift` file with code at the top level
-that calls the [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/uiapplicationmain(_:_:_:_:)-1yub7) function.
-For example,
-if your app uses a custom subclass of `UIApplication`
-as its principal class,
-call the `UIApplicationMain(_:_:_:_:)` function
-instead of using this attribute.
+Se você não usar este atributo,
+forneça um arquivo `main.swift` com código no nível superior
+que chame a função [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/uiapplicationmain(_:_:_:_:)-1yub7).
+Por exemplo,
+se seu app usar uma subclasse personalizada de `UIApplication`
+como classe principal,
+chame a função `UIApplicationMain(_:_:_:_:)`
+em vez de usar este atributo.
 
-The Swift code you compile to make an executable
-can contain at most one top-level entry point,
-as discussed in <doc:Declarations#Top-Level-Code>.
+O código Swift que você compila para criar um executável
+pode conter no máximo um ponto de entrada de nível superior,
+como discutido em <doc:Declarations#Top-Level-Code>.
 
 ### unchecked
 
-Apply this attribute to a protocol type
-as part of a type declaration's list of adopted protocols
-to turn off enforcement of that protocol's requirements.
+Aplique este atributo a um tipo de protocolo
+como parte da lista de protocolos adotados por uma declaração de tipo
+para desligar a aplicação dos requisitos desse protocolo.
 
-The only supported protocol is [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
+O único protocolo aceito é [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
 
 ### usableFromInline
 
-Apply this attribute to a
-function, method, computed property, subscript,
-initializer, or deinitializer declaration
-to allow that symbol to be used in inlinable code
-that's defined in the same module as the declaration.
-The declaration must have the `internal` access-level modifier.
-A structure or class marked `usableFromInline`
-can use only types that are public or `usableFromInline` for its properties.
-An enumeration marked `usableFromInline`
-can use only types that are public or `usableFromInline`
-for the raw values and associated values of its cases.
+Aplique este atributo a uma declaração de função, método, propriedade computada, subscript,
+inicializador ou desinicializador
+para permitir que esse símbolo seja usado em código inlinable
+definido no mesmo módulo da declaração.
+A declaração precisa ter o modificador de nível de acesso `internal`.
+Uma struct ou classe marcada com `usableFromInline`
+só pode usar tipos que sejam públicos ou `usableFromInline` em suas propriedades.
+Um enum marcado com `usableFromInline`
+só pode usar tipos que sejam públicos ou `usableFromInline`
+para os raw values e os associated values dos seus casos.
 
-Like the `public` access-level modifier,
-this attribute
-exposes the declaration as part of the module's public interface.
-Unlike `public`,
-the compiler doesn't allow declarations marked with `usableFromInline`
-to be referenced by name in code outside the module,
-even though the declaration's symbol is exported.
-However, code outside the module might still be able
-to interact with the declaration's symbol by using runtime behavior.
+Assim como o modificador de nível de acesso `public`,
+este atributo
+expõe a declaração como parte da interface pública do módulo.
+Diferentemente de `public`,
+o compilador não permite que declarações marcadas com `usableFromInline`
+sejam referenciadas pelo nome em código fora do módulo,
+mesmo que o símbolo da declaração seja exportado.
+No entanto, código fora do módulo ainda pode
+interagir com o símbolo da declaração usando o comportamento em tempo de execução.
 
-Declarations marked with the `inlinable` attribute
-are implicitly usable from inlinable code.
-Although either `inlinable` or `usableFromInline`
-can be applied to `internal` declarations,
-applying both attributes is an error.
+Declarações marcadas com o atributo `inlinable`
+são implicitamente utilizáveis a partir de código inlinable.
+Embora `inlinable` ou `usableFromInline` possam ser aplicados
+a declarações `internal`,
+aplicar os dois atributos é um erro.
 
 <!--
   - test: `usableFromInline-and-inlinable-is-redundant`
@@ -2804,136 +2795,137 @@ applying both attributes is an error.
 
 ### warn_unqualified_access
 
-Apply this attribute to a
-top-level function, instance method, or class or static method
-to trigger warnings when that function or method is used
-without a preceding qualifier,
-such as a module name, type name, or instance variable or constant.
-Use this attribute to help discourage ambiguity between functions
-with the same name that are accessible from the same scope.
+Aplique este atributo a uma
+função de nível superior, método de instância, ou método de classe ou estático
+para disparar avisos quando essa função ou método for usado
+sem um qualificador anterior,
+como um nome de módulo, um nome de tipo ou uma variável ou constante de instância.
+Use este atributo para ajudar a evitar ambiguidade entre funções
+com o mesmo nome que são acessíveis no mesmo escopo.
 
-For example,
-the Swift standard library includes both a top-level
+Por exemplo,
+a biblioteca padrão do Swift inclui tanto uma função
 [`min(_:_:)`](https://developer.apple.com/documentation/swift/min(_:_:))
-function and a
+de nível superior
+quanto um método
 [`min()`](https://developer.apple.com/documentation/swift/sequence/min())
-method for sequences with comparable elements.
-The sequence method is declared with the `warn_unqualified_access` attribute
-to help reduce confusion
-when attempting to use one or the other from within a `Sequence` extension.
+para sequências com elementos comparáveis.
+O método da sequência é declarado com o atributo `warn_unqualified_access`
+para ajudar a reduzir a confusão
+ao tentar usar um ou outro dentro de uma extension de `Sequence`.
 
-### Declaration Attributes Used by Interface Builder
+### Atributos de declaração usados pelo Interface Builder
 
-Interface Builder attributes are declaration attributes
-used by Interface Builder to synchronize with Xcode.
-Swift provides the following Interface Builder attributes:
+Atributos do Interface Builder são atributos de declaração
+usados pelo Interface Builder para sincronizar com o Xcode.
+O Swift fornece os seguintes atributos do Interface Builder:
 `IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, and `IBInspectable`.
-These attributes are conceptually the same as their
-Objective-C counterparts.
+`IBDesignable` e `IBInspectable`.
+Esses atributos são conceitualmente iguais aos
+equivalentes em Objective-C.
 
 <!--
   TODO: Need to link to the relevant discussion of these attributes in Objc.
 -->
 
-You apply the `IBOutlet` and `IBInspectable` attributes
-to property declarations of a class.
-You apply the `IBAction` and `IBSegueAction` attribute
-to method declarations of a class
-and the `IBDesignable` attribute to class declarations.
+Você aplica os atributos `IBOutlet` e `IBInspectable`
+a declarações de propriedade de uma classe.
+Você aplica os atributos `IBAction` e `IBSegueAction`
+a declarações de método de uma classe
+e o atributo `IBDesignable` a declarações de classe.
 
-Applying the `IBAction`, `IBSegueAction`, `IBOutlet`,
-`IBDesignable`, or `IBInspectable` attribute
-also implies the `objc` attribute.
+Aplicar os atributos `IBAction`, `IBSegueAction`, `IBOutlet`,
+`IBDesignable` ou `IBInspectable`
+também implica o atributo `objc`.
 
-## Type Attributes
+## Atributos de tipo
 
-You can apply type attributes to types only.
+Você pode aplicar atributos de tipo apenas a tipos.
 
 ### autoclosure
 
-Apply this attribute to delay the evaluation of an expression
-by automatically wrapping that expression in a closure with no arguments.
-You apply it to a parameter's type in a function or method declaration,
-for a parameter whose type is a function type that takes no arguments
-and that returns a value of the type of the expression.
-For an example of how to use the `autoclosure` attribute,
-see <doc:Closures#Autoclosures> and <doc:Types#Function-Type>.
+Aplique este atributo para adiar a avaliação de uma expressão,
+envolvendo automaticamente essa expressão em um closure sem argumentos.
+Você o aplica ao tipo de um parâmetro em uma declaração de função ou de método,
+para um parâmetro cujo tipo é um tipo de função que não recebe argumentos
+e que retorna um valor do tipo da expressão.
+Para um exemplo de como usar o atributo `autoclosure`,
+veja <doc:Closures#Autoclosures> e <doc:Types#Function-Type>.
 
 ### convention
 
-Apply this attribute to the type of a function
-to indicate its calling conventions.
+Aplique este atributo ao tipo de uma função
+para indicar as convenções de chamada dela.
 
-The `convention` attribute always appears with
-one of the following arguments:
+O atributo `convention` sempre aparece com
+um dos seguintes argumentos:
 
-- The `swift` argument indicates a Swift function reference.
-  This is the standard calling convention for function values in Swift.
-- The `block` argument indicates an Objective-C compatible block reference.
-  The function value is represented as a reference to the block object,
-  which is an `id`-compatible Objective-C object that embeds its invocation
-  function within the object.
-  The invocation function uses the C calling convention.
-- The `c` argument indicates a C function reference.
-  The function value carries no context and uses the C calling convention.
+- O argumento `swift` indica uma referência a uma função Swift.
+  Esta é a convenção de chamada padrão para valores de função no Swift.
+- O argumento `block` indica uma referência a um bloco compatível com Objective-C.
+  O valor da função é representado como uma referência ao objeto do bloco,
+  que é um objeto Objective-C compatível com `id` que incorpora sua função de invocação
+  dentro do objeto.
+  A função de invocação usa a convenção de chamada C.
+- O argumento `c` indica uma referência a uma função C.
+  O valor da função não carrega contexto e usa a convenção de chamada C.
 
 <!--
   Note: @convention(thin) is private, even though it doesn't have an underscore
   https://forums.swift.org/t/12087/6
 -->
 
-With a few exceptions,
-a function of any calling convention can be used
-when a function any other calling convention is needed.
-A nongeneric global function,
-a local function that doesn't capture any local variables,
-or a closure that doesn't capture any local variables
-can be converted to the C calling convention.
-Other Swift functions can't be converted to the C calling convention.
-A function with the Objective-C block calling convention
-can't be converted to the C calling convention.
+Com algumas exceções,
+uma função de qualquer convenção de chamada pode ser usada
+quando é necessária uma função com outra convenção de chamada.
+Uma função global não genérica,
+uma função local que não captura nenhuma variável local,
+ou um closure que não captura nenhuma variável local
+podem ser convertidos para a convenção de chamada C.
+Outras funções Swift não podem ser convertidas para a convenção de chamada C.
+Uma função com a convenção de chamada de bloco do Objective-C
+não pode ser convertida para a convenção de chamada C.
 
 ### escaping
 
-Apply this attribute to a parameter's type in a function or method declaration
-to indicate that the parameter's value can be stored for later execution.
-This means that the value is allowed to outlive the lifetime of the call.
-Function type parameters with the `escaping` type attribute
-require explicit use of `self.` for properties or methods.
-For an example of how to use the `escaping` attribute,
-see <doc:Closures#Escaping-Closures>.
+Aplique este atributo ao tipo de um parâmetro em uma declaração de função ou de método
+para indicar que o valor do parâmetro pode ser armazenado para execução posterior.
+Isso significa que o valor pode sobreviver ao tempo de vida da chamada.
+Parâmetros de tipo função com o atributo de tipo `escaping`
+exigem o uso explícito de `self.` para propriedades ou métodos.
+Para um exemplo de como usar o atributo `escaping`,
+veja <doc:Closures#Escaping-Closures>.
 
 ### Sendable
 
-Apply this attribute to the type of a function
-to indicate that the function or closure is sendable.
-Applying this attribute to a function type
-has the same meaning as conforming a non–function type
-to the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol.
+Aplique este atributo ao tipo de uma função
+para indicar que a função ou o closure é sendable.
+Aplicar este atributo a um tipo de função
+tem o mesmo significado que fazer um tipo que não é de função
+conformar com o protocolo [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
 
-This attribute is inferred on functions and closures
-if the function or closure is used in a context
-that expects a sendable value,
-and the function or closure satisfies the requirements to be sendable.
+Este atributo é inferido em funções e closures
+se a função ou o closure for usado em um contexto
+que espera um valor sendable,
+e a função ou o closure satisfizer os requisitos para ser sendable.
 
-A sendable function type
-is a subtype of the corresponding nonsendable function type.
+Um tipo de função sendable
+é um subtipo do tipo de função nonsendable correspondente.
 
-## Switch Case Attributes
+## Atributos de caso de switch
 
-You can apply switch case attributes to switch cases only.
+Você pode aplicar atributos de caso de switch apenas a casos de switch.
 
 ### unknown
 
-Apply this attribute to a switch case
-to indicate that it isn't expected to be matched
-by any case of the enumeration that's known
-at the time the code is compiled.
-For an example of how to use the `unknown` attribute,
-see <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
+Aplique este atributo a um caso de switch
+para indicar que não se espera que ele seja correspondido
+por nenhum caso conhecido do enum
+no momento em que o código é compilado.
+Para um exemplo de como usar o atributo `unknown`,
+veja <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 
-> Grammar of an attribute:
+> Gramática de um atributo:
 >
 > *attribute* → **`@`** *attribute-name* *attribute-argument-clause*_?_ \
 > *attribute-name* → *identifier* \
@@ -2956,3 +2948,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

@@ -1,37 +1,37 @@
 # Subscripts
 
-Access the elements of a collection.
+Acesse os elementos de uma coleção.
 
-Classes, structures, and enumerations can define *subscripts*,
-which are shortcuts for accessing the member elements of a collection, list, or sequence.
-You use subscripts to set and retrieve values by index without needing
-separate methods for setting and retrieval.
-For example, you access elements in an `Array` instance as `someArray[index]`
-and elements in a `Dictionary` instance as `someDictionary[key]`.
+Classes, structs e enums podem definir *subscripts*,
+que são atalhos para acessar os elementos membros de uma coleção, lista ou sequência.
+Você usa subscripts para ler e gravar valores por índice, sem precisar
+de métodos separados para leitura e escrita.
+Por exemplo, você acessa os elementos de uma instância de `Array` como `someArray[index]`
+e os elementos de uma instância de `Dictionary` como `someDictionary[key]`.
 
-You can define multiple subscripts for a single type,
-and the appropriate subscript overload to use is selected
-based on the type of index value you pass to the subscript.
-Subscripts aren't limited to a single dimension,
-and you can define subscripts with multiple input parameters
-to suit your custom type's needs.
+Você pode definir vários subscripts para um mesmo tipo,
+e a sobrecarga de subscript adequada é escolhida
+com base no tipo do valor de índice que você passa para ele.
+Subscripts não se limitam a uma única dimensão,
+e você pode definir subscripts com vários parâmetros de entrada
+para atender às necessidades do tipo personalizado.
 
 <!--
   TODO: this chapter should provide an example of subscripting an enumeration,
   as per Joe Groff's example from rdar://16555559.
 -->
 
-## Subscript Syntax
+## Sintaxe de subscript
 
-Subscripts enable you to query instances of a type
-by writing one or more values in square brackets after the instance name.
-Their syntax is similar to both instance method syntax and computed property syntax.
-You write subscript definitions with the `subscript` keyword,
-and specify one or more input parameters and a return type,
-in the same way as instance methods.
-Unlike instance methods, subscripts can be read-write or read-only.
-This behavior is communicated by a getter and setter
-in the same way as for computed properties:
+Subscripts permitem consultar instâncias de um tipo
+escrevendo um ou mais valores entre colchetes depois do nome da instância.
+A sintaxe é semelhante tanto à de métodos de instância quanto à de propriedades computadas.
+Você escreve definições de subscript com a palavra-chave `subscript`
+e especifica um ou mais parâmetros de entrada e um tipo de retorno,
+da mesma forma que em métodos de instância.
+Diferente dos métodos de instância, subscripts podem ser de leitura e escrita ou somente de leitura.
+Esse comportamento é definido por um getter e um setter,
+da mesma forma que nas propriedades computadas:
 
 ```swift
 subscript(index: Int) -> Int {
@@ -62,15 +62,14 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-The type of `newValue` is the same as the return value of the subscript.
-As with computed properties, you can choose not to specify
-the setter's `(newValue)` parameter.
-A default parameter called `newValue` is provided to your setter
-if you don't provide one yourself.
+O tipo de `newValue` é o mesmo do valor de retorno do subscript.
+Assim como nas propriedades computadas, você pode optar por não especificar
+o parâmetro `(newValue)` do setter.
+Se você não fornecer um, o setter recebe automaticamente um parâmetro padrão chamado `newValue`.
 
-As with read-only computed properties,
-you can simplify the declaration of a read-only subscript
-by removing the `get` keyword and its braces:
+Assim como nas propriedades computadas somente de leitura,
+você pode simplificar a declaração de um subscript somente de leitura
+removendo a palavra-chave `get` e suas chaves:
 
 ```swift
 subscript(index: Int) -> Int {
@@ -91,8 +90,8 @@ subscript(index: Int) -> Int {
   ```
 -->
 
-Here's an example of a read-only subscript implementation,
-which defines a `TimesTable` structure to represent an *n*-times-table of integers:
+Veja um exemplo de implementação de subscript somente de leitura,
+que define uma struct `TimesTable` para representar uma tabela de multiplicação de *n* de inteiros:
 
 ```swift
 struct TimesTable {
@@ -122,33 +121,33 @@ print("six times three is \(threeTimesTable[6])")
   ```
 -->
 
-In this example, a new instance of `TimesTable` is created
-to represent the three-times-table.
-This is indicated by passing a value of `3` to the structure's `initializer`
-as the value to use for the instance's `multiplier` parameter.
+Neste exemplo, uma nova instância de `TimesTable` é criada
+para representar a tabela do três.
+Isso é feito passando o valor `3` para o `initializer` da struct,
+como valor a ser usado no parâmetro `multiplier` da instância.
 
-You can query the `threeTimesTable` instance by calling its subscript,
-as shown in the call to `threeTimesTable[6]`.
-This requests the sixth entry in the three-times-table,
-which returns a value of `18`, or `3` times `6`.
+Você pode consultar a instância `threeTimesTable` chamando o subscript dela,
+como mostrado na chamada `threeTimesTable[6]`.
+Isso pede a sexta entrada da tabela do três,
+que retorna o valor `18`, ou seja, `3` vezes `6`.
 
-> Note: An *n*-times-table is based on a fixed mathematical rule.
-> It isn't appropriate to set `threeTimesTable[someIndex]` to a new value,
-> and so the subscript for `TimesTable` is defined as a read-only subscript.
+> Nota: Uma tabela de multiplicação de *n* é baseada em uma regra matemática fixa.
+> Não faz sentido definir `threeTimesTable[someIndex]` com um novo valor,
+> por isso o subscript de `TimesTable` é definido como somente de leitura.
 
-## Subscript Usage
+## Uso de subscripts
 
-The exact meaning of “subscript” depends on the context in which it's used.
-Subscripts are typically used as a shortcut for accessing
-the member elements in a collection, list, or sequence.
-You are free to implement subscripts in the most appropriate way for
-your particular class or structure's functionality.
+O significado exato de “subscript” depende do contexto em que ele é usado.
+Subscripts costumam ser usados como atalho para acessar
+os elementos membros de uma coleção, lista ou sequência.
+Você é livre para implementar subscripts da forma que for mais adequada
+à funcionalidade da classe ou struct.
 
-For example, Swift's `Dictionary` type implements a subscript
-to set and retrieve the values stored in a `Dictionary` instance.
-You can set a value in a dictionary
-by providing a key of the dictionary's key type within subscript brackets,
-and assigning a value of the dictionary's value type to the subscript:
+Por exemplo, o tipo `Dictionary` do Swift implementa um subscript
+para gravar e ler os valores armazenados em uma instância de `Dictionary`.
+Você pode definir um valor em um dicionário
+passando uma chave do tipo de chave do dicionário entre colchetes do subscript
+e atribuindo ao subscript um valor do tipo de valor do dicionário:
 
 ```swift
 var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -164,38 +163,38 @@ numberOfLegs["bird"] = 2
   ```
 -->
 
-The example above defines a variable called `numberOfLegs`
-and initializes it with a dictionary literal containing three key-value pairs.
-The type of the `numberOfLegs` dictionary is inferred to be `[String: Int]`.
-After creating the dictionary,
-this example uses subscript assignment to add
-a `String` key of `"bird"` and an `Int` value of `2` to the dictionary.
+O exemplo acima define uma variável chamada `numberOfLegs`
+e a inicializa com um literal de dicionário que contém três pares chave-valor.
+O tipo do dicionário `numberOfLegs` é inferido como `[String: Int]`.
+Depois de criar o dicionário,
+o exemplo usa uma atribuição por subscript para adicionar
+a chave `String` `"bird"` e o valor `Int` `2` ao dicionário.
 
-For more information about `Dictionary` subscripting,
-see <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
+Para mais informações sobre o subscript de `Dictionary`,
+veja <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
-> Note: Swift's `Dictionary` type implements its key-value subscripting
-> as a subscript that takes and returns an *optional* type.
-> For the `numberOfLegs` dictionary above,
-> the key-value subscript takes and returns a value of type `Int?`,
-> or “optional int”.
-> The `Dictionary` type uses an optional subscript type to model the fact that
-> not every key will have a value, and to give a way to delete a value for a key
-> by assigning a `nil` value for that key.
+> Nota: O tipo `Dictionary` do Swift implementa o subscript de chave-valor
+> como um subscript que recebe e retorna um tipo *optional*.
+> Para o dicionário `numberOfLegs` acima,
+> o subscript de chave-valor recebe e retorna um valor do tipo `Int?`,
+> ou “`Int` optional”.
+> O tipo `Dictionary` usa um tipo optional no subscript para modelar o fato de que
+> nem toda chave terá um valor, e para oferecer uma forma de remover o valor de uma chave
+> atribuindo a ela o valor `nil`.
 
-## Subscript Options
+## Opções de subscript
 
-Subscripts can take any number of input parameters,
-and these input parameters can be of any type.
-Subscripts can also return a value of any type.
+Subscripts podem receber qualquer número de parâmetros de entrada,
+e esses parâmetros podem ser de qualquer tipo.
+Subscripts também podem retornar um valor de qualquer tipo.
 
-Like functions,
-subscripts can take a varying number of parameters
-and provide default values for their parameters,
-as discussed in <doc:Functions#Variadic-Parameters>
-and <doc:Functions#Default-Parameter-Values>.
-However, unlike functions,
-subscripts can't use in-out parameters.
+Assim como as funções,
+subscripts podem receber um número variável de parâmetros
+e fornecer valores padrão para os parâmetros,
+como discutido em <doc:Functions#Variadic-Parameters>
+e <doc:Functions#Default-Parameter-Values>.
+No entanto, diferente das funções,
+subscripts não podem usar parâmetros in-out.
 
 <!--
   - test: `subscripts-can-have-default-arguments`
@@ -212,18 +211,18 @@ subscripts can't use in-out parameters.
   ```
 -->
 
-A class or structure can provide as many subscript implementations as it needs,
-and the appropriate subscript to be used will be inferred based on
-the types of the value or values that are contained within the subscript brackets
-at the point that the subscript is used.
-This definition of multiple subscripts is known as *subscript overloading*.
+Uma classe ou struct pode fornecer quantas implementações de subscript forem necessárias,
+e o subscript adequado a ser usado é inferido
+pelos tipos do valor ou valores que estão entre os colchetes
+no momento em que o subscript é usado.
+Essa definição de vários subscripts é conhecida como *sobrecarga de subscript*.
 
-While it's most common for a subscript to take a single parameter,
-you can also define a subscript with multiple parameters
-if it's appropriate for your type.
-The following example defines a `Matrix` structure,
-which represents a two-dimensional matrix of `Double` values.
-The `Matrix` structure's subscript takes two integer parameters:
+Embora seja mais comum um subscript receber um único parâmetro,
+você também pode definir um subscript com vários parâmetros
+se isso fizer sentido para o tipo.
+O exemplo a seguir define uma struct `Matrix`,
+que representa uma matriz bidimensional de valores `Double`.
+O subscript da struct `Matrix` recebe dois parâmetros inteiros:
 
 ```swift
 struct Matrix {
@@ -279,16 +278,16 @@ struct Matrix {
   ```
 -->
 
-`Matrix` provides an initializer that takes two parameters called `rows` and `columns`,
-and creates an array that's large enough to store `rows * columns` values of type `Double`.
-Each position in the matrix is given an initial value of `0.0`.
-To achieve this, the array's size, and an initial cell value of `0.0`,
-are passed to an array initializer that creates and initializes a new array of the correct size.
-This initializer is described in more detail
-in <doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.
+`Matrix` fornece um inicializador que recebe dois parâmetros chamados `rows` e `columns`,
+e cria um array grande o bastante para guardar `rows * columns` valores do tipo `Double`.
+Cada posição da matriz recebe o valor inicial `0.0`.
+Para isso, o tamanho do array e o valor inicial de cada célula, `0.0`,
+são passados a um inicializador de array que cria e inicializa um novo array do tamanho correto.
+Esse inicializador é descrito com mais detalhes
+em <doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.
 
-You can construct a new `Matrix` instance by passing
-an appropriate row and column count to its initializer:
+Você pode criar uma nova instância de `Matrix` passando
+a quantidade adequada de linhas e colunas para o inicializador:
 
 ```swift
 var matrix = Matrix(rows: 2, columns: 2)
@@ -303,15 +302,15 @@ var matrix = Matrix(rows: 2, columns: 2)
   ```
 -->
 
-The example above creates a new `Matrix` instance with two rows and two columns.
-The `grid` array for this `Matrix` instance
-is effectively a flattened version of the matrix,
-as read from top left to bottom right:
+O exemplo acima cria uma nova instância de `Matrix` com duas linhas e duas colunas.
+O array `grid` dessa instância de `Matrix`
+é, na prática, uma versão achatada da matriz,
+lida do canto superior esquerdo até o canto inferior direito:
 
 ![](subscriptMatrix01)
 
-Values in the matrix can be set by passing row and column values into the subscript,
-separated by a comma:
+Os valores da matriz podem ser definidos passando os valores de linha e coluna para o subscript,
+separados por vírgula:
 
 ```swift
 matrix[0, 1] = 1.5
@@ -331,20 +330,20 @@ matrix[1, 0] = 3.2
   ```
 -->
 
-These two statements call the subscript's setter to set
-a value of `1.5` in the top right position of the matrix
-(where `row` is `0` and `column` is `1`),
-and `3.2` in the bottom left position
-(where `row` is `1` and `column` is `0`):
+Essas duas instruções chamam o setter do subscript para definir
+o valor `1.5` na posição superior direita da matriz
+(onde `row` é `0` e `column` é `1`),
+e `3.2` na posição inferior esquerda
+(onde `row` é `1` e `column` é `0`):
 
 ![](subscriptMatrix02)
 
-The `Matrix` subscript's getter and setter both contain an assertion
-to check that the subscript's  `row` and `column` values are valid.
-To assist with these assertions,
-`Matrix` includes a convenience method called `indexIsValid(row:column:)`,
-which checks whether the requested `row` and `column`
-are inside the bounds of the matrix:
+O getter e o setter do subscript de `Matrix` contêm, ambos, uma asserção
+para verificar se os valores de `row` e `column` do subscript são válidos.
+Para ajudar nessas asserções,
+`Matrix` inclui um método de conveniência chamado `indexIsValid(row:column:)`,
+que verifica se a `row` e a `column` pedidas
+estão dentro dos limites da matriz:
 
 ```swift
 func indexIsValid(row: Int, column: Int) -> Bool {
@@ -364,8 +363,8 @@ func indexIsValid(row: Int, column: Int) -> Bool {
   ```
 -->
 
-An assertion is triggered if you try to access a subscript
-that's outside of the matrix bounds:
+Uma asserção é disparada se você tentar acessar um subscript
+que esteja fora dos limites da matriz:
 
 ```swift
 let someValue = matrix[2, 2]
@@ -382,17 +381,17 @@ let someValue = matrix[2, 2]
   ```
 -->
 
-## Type Subscripts
+## Subscripts de tipo
 
-Instance subscripts, as described above,
-are subscripts that you call on an instance of a particular type.
-You can also define subscripts that are called on the type itself.
-This kind of subscript is called a *type subscript*.
-You indicate a type subscript
-by writing the `static` keyword before the `subscript` keyword.
-Classes can use the `class` keyword instead,
-to allow subclasses to override the superclass’s implementation of that subscript.
-The example below shows how you define and call a type subscript:
+Subscripts de instância, como descritos acima,
+são subscripts que você chama em uma instância de um tipo específico.
+Você também pode definir subscripts que são chamados no próprio tipo.
+Esse tipo de subscript é chamado de *subscript de tipo*.
+Você indica um subscript de tipo
+escrevendo a palavra-chave `static` antes da palavra-chave `subscript`.
+Classes podem usar a palavra-chave `class` no lugar,
+para permitir que subclasses sobrescrevam a implementação desse subscript da superclasse.
+O exemplo abaixo mostra como você define e chama um subscript de tipo:
 
 ```swift
 enum Planet: Int {
@@ -431,3 +430,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

@@ -1,35 +1,35 @@
-# Opaque and Boxed Protocol Types
+# Tipos opacos e tipos de protocolo boxed
 
-Hide implementation details about a value's type.
+Oculte detalhes de implementação sobre o tipo de um valor.
 
-Swift provides two ways to hide details about a value's type:
-opaque types and boxed protocol types.
-Hiding type information
-is useful at boundaries between
-a module and code that calls into the module,
-because the underlying type of the return value can remain private.
+O Swift oferece duas formas de ocultar detalhes sobre o tipo de um valor:
+tipos opacos e tipos de protocolo boxed.
+Ocultar informações de tipo
+é útil nas fronteiras entre
+um módulo e o código que chama o módulo,
+porque o tipo concreto do valor de retorno pode continuar privado.
 
-A function or method that returns an opaque type
-hides its return value's type information.
-Instead of providing a concrete type as the function's return type,
-the return value is described in terms of the protocols it supports.
-Opaque types preserve type identity ---
-the compiler has access to the type information,
-but clients of the module don't.
+Uma função ou método que retorna um tipo opaco
+oculta as informações de tipo do valor de retorno.
+Em vez de informar um tipo concreto como tipo de retorno da função,
+o valor de retorno é descrito pelos protocolos que ele oferece.
+Tipos opacos preservam a identidade de tipo:
+o compilador tem acesso às informações de tipo,
+mas quem usa o módulo não tem.
 
-A boxed protocol type can store an instance of any type
-that conforms to the given protocol.
-Boxed protocol types don't preserve type identity ---
-the value's specific type isn't known until runtime,
-and it can change over time as different values are stored.
+Um tipo de protocolo boxed pode armazenar uma instância de qualquer tipo
+que esteja em conformidade com o protocolo indicado.
+Tipos de protocolo boxed não preservam a identidade de tipo:
+o tipo específico do valor só é conhecido em tempo de execução,
+e pode mudar ao longo do tempo, conforme diferentes valores são armazenados.
 
-## The Problem that Opaque Types Solve
+## O problema que os tipos opacos resolvem
 
-For example,
-suppose you're writing a module that draws ASCII art shapes.
-The basic characteristic of an ASCII art shape
-is a `draw()` function that returns the string representation of that shape,
-which you can use as the requirement for the `Shape` protocol:
+Por exemplo,
+suponha que você está escrevendo um módulo que desenha formas em arte ASCII.
+A característica básica de uma forma em arte ASCII
+é uma função `draw()` que retorna a representação em string dessa forma,
+o que você pode usar como requisito do protocolo `Shape`:
 
 ```swift
 protocol Shape {
@@ -79,11 +79,11 @@ print(smallTriangle.draw())
   ```
 -->
 
-You could use generics to implement operations like flipping a shape vertically,
-as shown in the code below.
-However, there's an important limitation to this approach:
-The flipped result exposes the exact generic types
-that were used to create it.
+Você poderia usar generics para implementar operações como inverter uma forma verticalmente,
+como mostra o código abaixo.
+Porém, essa abordagem tem uma limitação importante:
+a forma invertida expõe os tipos genéricos exatos
+que foram usados para criá-la.
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -119,10 +119,10 @@ print(flippedTriangle.draw())
   ```
 -->
 
-This approach to defining a `JoinedShape<T: Shape, U: Shape>` structure
-that joins two shapes together vertically, like the code below shows,
-results in types like `JoinedShape<Triangle, FlippedShape<Triangle>>`
-from joining a triangle with a flipped triangle.
+Essa abordagem de definir um struct `JoinedShape<T: Shape, U: Shape>`
+que une duas formas verticalmente, como mostra o código abaixo,
+resulta em tipos como `JoinedShape<Triangle, FlippedShape<Triangle>>`
+ao unir um triângulo com um triângulo invertido.
 
 ```swift
 struct JoinedShape<T: Shape, U: Shape>: Shape {
@@ -164,30 +164,29 @@ print(joinedTriangles.draw())
   ```
 -->
 
-Exposing detailed information about the creation of a shape
-allows types that aren't meant to be
-part of the ASCII art module's public interface
-to leak out because of the need to state the full return type.
-The code inside the module
-could build up the same shape in a variety of ways,
-and other code outside the module
-that uses the shape shouldn't have to account for
-the implementation details about the list of transformations.
-Wrapper types like `JoinedShape` and `FlippedShape`
-don't matter to the module's users,
-and they shouldn't be visible.
-The module's public interface
-consists of operations like joining and flipping a shape,
-and those operations return another `Shape` value.
+Expor informações detalhadas sobre a criação de uma forma
+permite que tipos que não deveriam fazer parte
+da interface pública do módulo de arte ASCII vazem para fora,
+porque é preciso declarar o tipo de retorno completo.
+O código dentro do módulo
+poderia montar a mesma forma de várias maneiras,
+e o código externo que usa a forma
+não deveria precisar lidar com os detalhes de implementação sobre a lista de transformações.
+Tipos que encapsulam outros, como `JoinedShape` e `FlippedShape`,
+não importam para quem usa o módulo,
+e eles não deveriam ficar visíveis.
+A interface pública do módulo
+consiste em operações como unir e inverter uma forma,
+e essas operações retornam outro valor do tipo `Shape`.
 
-## Returning an Opaque Type
+## Retornando um tipo opaco
 
-You can think of an opaque type like being the reverse of a generic type.
-Generic types let the code that calls a function
-pick the type for that function's parameters and return value
-in a way that's abstracted away from the function implementation.
-For example, the function in the following code
-returns a type that depends on its caller:
+Você pode pensar em um tipo opaco como o inverso de um tipo genérico.
+Tipos genéricos permitem que o código que chama uma função
+escolha o tipo dos parâmetros e do valor de retorno dessa função,
+sem depender da implementação da função.
+Por exemplo, a função do código a seguir
+retorna um tipo que depende de quem a chama:
 
 ```swift
 func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
@@ -199,21 +198,20 @@ func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
   and there's nothing to meaningfully test.
 -->
 
-The code that calls `max(_:_:)` chooses the values for `x` and `y`,
-and the type of those values determines the concrete type of `T`.
-The calling code can use any type
-that conforms to the `Comparable` protocol.
-The code inside the function is written in a general way
-so it can handle whatever type the caller provides.
-The implementation of `max(_:_:)` uses only functionality
-that all `Comparable` types share.
+O código que chama `max(_:_:)` escolhe os valores de `x` e `y`,
+e o tipo desses valores determina o tipo concreto de `T`.
+O código que chama pode usar qualquer tipo
+que esteja em conformidade com o protocolo `Comparable`.
+O código dentro da função é escrito de forma geral
+para lidar com qualquer tipo que quem chama fornecer.
+A implementação de `max(_:_:)` usa apenas as funcionalidades
+que todos os tipos `Comparable` compartilham.
 
-Those roles are reversed for a function with an opaque return type.
-An opaque type lets the function implementation
-pick the type for the value it returns
-in a way that's abstracted away from the code that calls the function.
-For example, the function in the following example returns a trapezoid
-without exposing the underlying type of that shape.
+Os papéis se invertem em uma função com tipo de retorno opaco.
+Um tipo opaco permite que a implementação da função escolha o tipo
+do valor que ela retorna, sem depender do código que chama a função.
+Por exemplo, a função do exemplo a seguir retorna um trapézio
+sem expor o tipo subjacente dessa forma.
 
 ```swift
 struct Square: Shape {
@@ -279,34 +277,34 @@ print(trapezoid.draw())
   ```
 -->
 
-The `makeTrapezoid()` function in this example
-declares its return type as `some Shape`;
-as a result, the function
-returns a value of some given type that conforms to the `Shape` protocol,
-without specifying any particular concrete type.
-Writing `makeTrapezoid()` this way lets it express
-the fundamental aspect of its public interface ---
-the value it returns is a shape ---
-without making the specific types that the shape is made from
-a part of its public interface.
-This implementation uses two triangles and a square,
-but the function could be rewritten to draw a trapezoid
-in a variety of other ways
-without changing its return type.
+A função `makeTrapezoid()` deste exemplo
+declara seu tipo de retorno como `some Shape`;
+com isso, a função
+retorna um valor de algum tipo específico que está em conformidade com o protocolo `Shape`,
+sem especificar nenhum tipo concreto em particular.
+Escrever `makeTrapezoid()` dessa forma permite expressar
+o aspecto fundamental de sua interface pública ---
+o valor que ela retorna é uma forma ---
+sem tornar os tipos específicos que compõem a forma
+parte da interface pública.
+Esta implementação usa dois triângulos e um quadrado,
+mas a função poderia ser reescrita para desenhar um trapézio
+de várias outras maneiras
+sem mudar o tipo de retorno.
 
-This example highlights the way that an opaque return type
-is like the reverse of a generic type.
-The code inside `makeTrapezoid()` can return any type it needs to,
-as long as that type conforms to the `Shape` protocol,
-like the calling code does for a generic function.
-The code that calls the function needs to be written in a general way,
-like the implementation of a generic function,
-so that it can work with any `Shape` value
-that's returned by `makeTrapezoid()`.
+Este exemplo mostra como um tipo de retorno opaco
+é o inverso de um tipo genérico.
+O código dentro de `makeTrapezoid()` pode retornar qualquer tipo de que precisar,
+desde que esse tipo esteja em conformidade com o protocolo `Shape`,
+assim como faz o código que chama uma função genérica.
+O código que chama a função precisa ser escrito de forma geral,
+como a implementação de uma função genérica,
+para que possa trabalhar com qualquer valor `Shape`
+retornado por `makeTrapezoid()`.
 
-You can also combine opaque return types with generics.
-The functions in the following code both return a value
-of some type that conforms to the `Shape` protocol.
+Você também pode combinar tipos de retorno opacos com generics.
+As funções do código a seguir retornam, ambas, um valor
+de algum tipo que está em conformidade com o protocolo `Shape`.
 
 ```swift
 func flip<T: Shape>(_ shape: T) -> some Shape {
@@ -348,27 +346,27 @@ print(opaqueJoinedTriangles.draw())
   ```
 -->
 
-The value of `opaqueJoinedTriangles` in this example
-is the same as `joinedTriangles` in the generics example
-in the <doc:OpaqueTypes#The-Problem-that-Opaque-Types-Solve> section earlier in this chapter.
-However, unlike the value in that example,
-`flip(_:)` and `join(_:_:)` wrap the underlying types
-that the generic shape operations return
-in an opaque return type,
-which prevents those types from being visible.
-Both functions are generic because the types they rely on are generic,
-and the type parameters to the function
-pass along the type information needed by `FlippedShape` and `JoinedShape`.
+O valor de `opaqueJoinedTriangles` neste exemplo
+é o mesmo que `joinedTriangles` no exemplo de generics
+na seção <doc:OpaqueTypes#The-Problem-that-Opaque-Types-Solve> anterior neste capítulo.
+Porém, diferente do valor daquele exemplo,
+`flip(_:)` e `join(_:_:)` envolvem os tipos subjacentes
+que as operações genéricas de forma retornam
+em um tipo de retorno opaco,
+o que impede que esses tipos fiquem visíveis.
+As duas funções são genéricas porque os tipos de que dependem são genéricos,
+e os parâmetros genéricos da função
+repassam as informações de tipo que `FlippedShape` e `JoinedShape` precisam.
 
-If a function with an opaque return type
-returns from multiple places,
-all of the possible return values must have the same type.
-For a generic function,
-that return type can use the function's generic type parameters,
-but it must still be a single type.
-For example,
-here's an *invalid* version of the shape-flipping function
-that includes a special case for squares:
+Se uma função com tipo de retorno opaco
+retorna a partir de vários pontos,
+todos os valores de retorno possíveis precisam ter o mesmo tipo.
+Em uma função genérica,
+esse tipo de retorno pode usar os parâmetros genéricos da função,
+mas continua precisando ser um único tipo.
+Por exemplo,
+aqui está uma versão *inválida* da função que inverte formas,
+com um caso especial para quadrados:
 
 ```swift
 func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
@@ -411,13 +409,13 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   ```
 -->
 
-If you call this function with a `Square`, it returns a `Square`;
-otherwise, it returns a `FlippedShape`.
-This violates the requirement to return values of only one type
-and makes `invalidFlip(_:)` invalid code.
-One way to fix `invalidFlip(_:)` is to move the special case for squares
-into the implementation of `FlippedShape`,
-which lets this function always return a `FlippedShape` value:
+Se você chamar essa função com um `Square`, ela retorna um `Square`;
+caso contrário, retorna um `FlippedShape`.
+Isso viola a exigência de retornar valores de um único tipo
+e torna `invalidFlip(_:)` código inválido.
+Uma forma de corrigir `invalidFlip(_:)` é mover o caso especial para quadrados
+para dentro da implementação de `FlippedShape`,
+o que permite que essa função sempre retorne um valor `FlippedShape`:
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -461,10 +459,10 @@ struct FlippedShape<T: Shape>: Shape {
   That example is long enough that it breaks the flow here.
 -->
 
-The requirement to always return a single type
-doesn't prevent you from using generics in an opaque return type.
-Here's an example of a function that incorporates its type parameter
-into the underlying type of the value it returns:
+A exigência de sempre retornar um único tipo
+não impede você de usar generics em um tipo de retorno opaco.
+Aqui está um exemplo de função que incorpora o parâmetro de tipo
+ao tipo subjacente do valor que ela retorna:
 
 ```swift
 func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
@@ -482,24 +480,24 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
   ```
 -->
 
-In this case,
-the underlying type of the return value
-varies depending on `T`:
-Whatever shape is passed in,
-`repeat(shape:count:)` creates and returns an array of that shape.
-Nevertheless,
-the return value always has the same underlying type of `[T]`,
-so it follows the requirement that functions with opaque return types
-must return values of only a single type.
+Nesse caso,
+o tipo subjacente do valor de retorno
+varia conforme `T`:
+qualquer que seja a forma passada,
+`repeat(shape:count:)` cria e retorna um array com essa forma.
+Mesmo assim,
+o valor de retorno sempre tem o mesmo tipo subjacente `[T]`,
+então a função segue a exigência de que funções com tipo de retorno opaco
+retornem valores de um único tipo.
 
-## Boxed Protocol Types
+## Tipos de protocolo boxed
 
-A boxed protocol type is also sometimes called an *existential type*,
-which comes from the phrase
-"there exists a type *T* such that *T* conforms to the protocol".
-To make a boxed protocol type,
-write `any` before the name of a protocol.
-Here's an example:
+Um tipo de protocolo boxed também é chamado às vezes de *tipo existencial*,
+termo que vem da frase
+"existe um tipo *T* tal que *T* está em conformidade com o protocolo".
+Para criar um tipo de protocolo boxed,
+escreva `any` antes do nome do protocolo.
+Veja um exemplo:
 
 ```swift
 struct VerticalShapes: Shape {
@@ -565,52 +563,51 @@ print(vertical.draw())
   ```
 -->
 
-In the example above,
-`VerticalShapes` declares the type of `shapes` as `[any Shape]` ---
-an array of boxed `Shape` elements.
-Each element in the array can be a different type,
-and each of those types must conform to the `Shape` protocol.
-To support this runtime flexibility,
-Swift adds a level of indirection when necessary ---
-this indirection is called a *box*,
-and it has a performance cost.
+No exemplo acima,
+`VerticalShapes` declara o tipo de `shapes` como `[any Shape]` ---
+um array de elementos `Shape` boxed.
+Cada elemento do array pode ser de um tipo diferente,
+e cada um desses tipos precisa estar em conformidade com o protocolo `Shape`.
+Para oferecer essa flexibilidade em tempo de execução,
+o Swift adiciona um nível de indireção quando necessário ---
+essa indireção se chama *box*,
+e tem um custo de desempenho.
 
-Within the `VerticalShapes` type,
-the code can use methods, properties, and subscripts
-that are required by the `Shape` protocol.
-For example, the `draw()` method of `VerticalShapes`
-calls the `draw()` method on each element of the array.
-This method is available because `Shape` requires a `draw()` method.
-In contrast,
-trying to access the `size` property of the triangle,
-or any other properties or methods that aren't required by `Shape`,
-produces an error.
+Dentro do tipo `VerticalShapes`,
+o código pode usar métodos, propriedades e subscripts
+exigidos pelo protocolo `Shape`.
+Por exemplo, o método `draw()` de `VerticalShapes`
+chama o método `draw()` de cada elemento do array.
+Esse método está disponível porque `Shape` exige um método `draw()`.
+Já tentar acessar a propriedade `size` do triângulo,
+ou qualquer outra propriedade ou método que não seja exigido por `Shape`,
+gera um erro.
 
-Contrast the three types you could use for `shapes`:
+Compare os três tipos que você poderia usar para `shapes`:
 
-- Using generics,
-  by writing `struct VerticalShapes<S: Shape>` and `var shapes: [S]`,
-  makes an array whose elements are some specific shape type,
-  and where the identity of that specific type
-  is visible to any code that interacts with the array.
+- Usando generics,
+  escrevendo `struct VerticalShapes<S: Shape>` e `var shapes: [S]`,
+  cria-se um array cujos elementos são um tipo específico de forma,
+  e a identidade desse tipo específico
+  fica visível para qualquer código que interaja com o array.
 
-- Using an opaque type,
-  by writing `var shapes: [some Shape]`,
-  makes an array whose elements are some specific shape type,
-  and where that specific type's identity is hidden.
+- Usando um tipo opaco,
+  escrevendo `var shapes: [some Shape]`,
+  cria-se um array cujos elementos são um tipo específico de forma,
+  e a identidade desse tipo específico fica oculta.
 
-- Using a boxed protocol type,
-  by writing `var shapes: [any Shape]`,
-  makes an array that can store elements of different types,
-  and where those types' identities are hidden.
+- Usando um tipo de protocolo boxed,
+  escrevendo `var shapes: [any Shape]`,
+  cria-se um array que pode armazenar elementos de tipos diferentes,
+  e a identidade desses tipos fica oculta.
 
-In this case,
-a boxed protocol type is the only approach
-that lets callers of `VerticalShapes` mix different kinds of shapes together.
+Neste caso,
+um tipo de protocolo boxed é a única abordagem
+que permite que quem usa `VerticalShapes` misture formas de tipos diferentes.
 
-You can use an `as` cast
-when you know the underlying type of a boxed value.
-For example:
+Você pode usar uma conversão com `as`
+quando souber o tipo subjacente de um valor boxed.
+Por exemplo:
 
 ```swift
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
@@ -619,27 +616,27 @@ if let downcastTriangle = vertical.shapes[0] as? Triangle {
 // Prints "5".
 ```
 
-For more information, see <doc:TypeCasting#Downcasting>.
+Para mais informações, consulte <doc:TypeCasting#Downcasting>.
 
-## Differences Between Opaque Types and Boxed Protocol Types
+## Diferenças entre tipos opacos e tipos de protocolo boxed
 
-Returning an opaque type looks very similar
-to using a boxed protocol type as the return type of a function,
-but these two kinds of return type differ in
-whether they preserve type identity.
-An opaque type refers to one specific type,
-although the caller of the function isn't able to see which type;
-a boxed protocol type can refer to any type that conforms to the protocol.
-Generally speaking,
-boxed protocol types give you more flexibility
-about the underlying types of the values they store,
-and opaque types let you make stronger guarantees
-about those underlying types.
+Retornar um tipo opaco se parece muito com usar um tipo de protocolo boxed
+como tipo de retorno de uma função,
+mas esses dois tipos de retorno diferem
+em preservar ou não a identidade de tipo.
+Um tipo opaco se refere a um tipo específico,
+embora quem chama a função não consiga ver qual é esse tipo;
+um tipo de protocolo boxed pode se referir a qualquer tipo que esteja em conformidade com o protocolo.
+Em geral,
+tipos de protocolo boxed dão mais flexibilidade
+quanto aos tipos subjacentes dos valores que armazenam,
+e tipos opacos permitem garantias mais fortes
+sobre esses tipos subjacentes.
 
-For example,
-here's a version of `flip(_:)`
-that uses a boxed protocol type as its return type
-instead of an opaque return type:
+Por exemplo,
+veja uma versão de `flip(_:)`
+que usa um tipo de protocolo boxed como tipo de retorno
+em vez de um tipo de retorno opaco:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -672,17 +669,17 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
   ```
 -->
 
-This version of `protoFlip(_:)`
-has the same body as `flip(_:)`,
-and it always returns a value of the same type.
-Unlike `flip(_:)`,
-the value that `protoFlip(_:)` returns isn't required
-to always have the same type ---
-it just has to conform to the `Shape` protocol.
-Put another way,
-`protoFlip(_:)` makes a much looser API contract with its caller
-than `flip(_:)` makes.
-It reserves the flexibility to return values of multiple types:
+Esta versão de `protoFlip(_:)`
+tem o mesmo corpo de `flip(_:)`,
+e sempre retorna um valor do mesmo tipo.
+Diferente de `flip(_:)`,
+o valor que `protoFlip(_:)` retorna não é obrigado
+a sempre ter o mesmo tipo ---
+ele só precisa estar em conformidade com o protocolo `Shape`.
+Dito de outra forma,
+`protoFlip(_:)` estabelece com quem a chama um contrato de API muito mais frouxo
+do que `flip(_:)` faz.
+Ela se reserva a flexibilidade de retornar valores de vários tipos:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -714,18 +711,18 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
   ```
 -->
 
-The revised version of the code returns
-an instance of `Square` or an instance of `FlippedShape`,
-depending on what shape is passed in.
-Two flipped shapes returned by this function
-might have completely different types.
-Other valid versions of this function could return values of different types
-when flipping multiple instances of the same shape.
-The less specific return type information from `protoFlip(_:)` means that
-many operations that depend on type information
-aren't available on the returned value.
-For example, it's not possible to write an `==` operator
-comparing results returned by this function.
+A versão revisada do código retorna
+uma instância de `Square` ou uma instância de `FlippedShape`,
+dependendo da forma passada.
+Duas formas invertidas retornadas por essa função
+podem ter tipos completamente diferentes.
+Outras versões válidas desta função poderiam retornar valores de tipos diferentes
+ao inverter várias instâncias da mesma forma.
+A informação de tipo menos específica de `protoFlip(_:)` faz com que
+muitas operações que dependem de informações de tipo
+não estejam disponíveis no valor retornado.
+Por exemplo, não é possível escrever um operador `==`
+que compare os resultados retornados por esta função.
 
 ```swift
 let protoFlippedTriangle = protoFlip(smallTriangle)
@@ -747,43 +744,43 @@ protoFlippedTriangle == sameThing  // Error
   ```
 -->
 
-The error on the last line of the example occurs for several reasons.
-The immediate issue is that the `Shape` doesn't include an `==` operator
-as part of its protocol requirements.
-If you try adding one, the next issue you'll encounter
-is that the `==` operator needs to know
-the types of its left-hand and right-hand arguments.
-This sort of operator usually takes arguments of type `Self`,
-matching whatever concrete type adopts the protocol,
-but adding a `Self` requirement to the protocol
-doesn't allow for the type erasure that happens
-when you use the protocol as a type.
+O erro na última linha do exemplo acontece por vários motivos.
+O problema imediato é que `Shape` não inclui um operador `==`
+entre os requisitos do protocolo.
+Se você tentar adicionar um, o próximo problema
+é que o operador `==` precisa conhecer
+os tipos dos seus argumentos da esquerda e da direita.
+Esse tipo de operador costuma receber argumentos do tipo `Self`,
+correspondendo ao tipo concreto que adota o protocolo,
+mas adicionar um requisito `Self` ao protocolo
+não permite o apagamento de tipo que acontece
+quando você usa o protocolo como tipo.
 
-Using a boxed protocol type as the return type for a function
-gives you the flexibility to return any type that conforms to the protocol.
-However, the cost of that flexibility
-is that some operations aren't possible on the returned values.
-The example shows how the `==` operator isn't available ---
-it depends on specific type information
-that isn't preserved by using a boxed protocol type.
+Usar um tipo de protocolo boxed como tipo de retorno de uma função
+dá a flexibilidade de retornar qualquer tipo que esteja em conformidade com o protocolo.
+Porém, o custo dessa flexibilidade
+é que algumas operações não são possíveis nos valores retornados.
+O exemplo mostra que o operador `==` não está disponível ---
+ele depende de informações de tipo específicas
+que não são preservadas ao usar um tipo de protocolo boxed.
 
-Another problem with this approach is that the shape transformations don't nest.
-The result of flipping a triangle is a value of type `Shape`,
-and the `protoFlip(_:)` function takes an argument
-of some type that conforms to the `Shape` protocol.
-However, a value of a boxed protocol type doesn't conform to that protocol;
-the value returned by `protoFlip(_:)` doesn't conform to `Shape`.
-This means code like `protoFlip(protoFlip(smallTriangle))`
-that applies multiple transformations is invalid
-because the flipped shape isn't a valid argument to `protoFlip(_:)`.
+Outro problema dessa abordagem é que as transformações de forma não se aninham.
+O resultado de inverter um triângulo é um valor do tipo `Shape`,
+e a função `protoFlip(_:)` recebe um argumento
+de algum tipo que está em conformidade com o protocolo `Shape`.
+Porém, um valor de tipo de protocolo boxed não está em conformidade com esse protocolo;
+o valor retornado por `protoFlip(_:)` não está em conformidade com `Shape`.
+Isso significa que código como `protoFlip(protoFlip(smallTriangle))`,
+que aplica várias transformações, é inválido,
+porque a forma invertida não é um argumento válido para `protoFlip(_:)`.
 
-In contrast,
-opaque types preserve the identity of the underlying type.
-Swift can infer associated types,
-which lets you use an opaque return value
-in places where a boxed protocol type can't be used as a return value.
-For example,
-here's a version of the `Container` protocol from <doc:Generics>:
+Em contraste,
+tipos opacos preservam a identidade do tipo subjacente.
+O Swift consegue inferir tipos associados,
+o que permite usar um valor de retorno opaco
+em lugares onde um tipo de protocolo boxed não pode ser usado como valor de retorno.
+Por exemplo,
+veja uma versão do protocolo `Container` de <doc:Generics>:
 
 ```swift
 protocol Container {
@@ -807,11 +804,11 @@ extension Array: Container { }
   ```
 -->
 
-You can't use `Container` as the return type of a function
-because that protocol has an associated type.
-You also can't use it as constraint in a generic return type
-because there isn't enough information outside the function body
-to infer what the generic type needs to be.
+Você não pode usar `Container` como tipo de retorno de uma função
+porque esse protocolo tem um tipo associado.
+Também não pode usá-lo como restrição em um tipo de retorno genérico,
+porque não há informação suficiente fora do corpo da função
+para inferir qual deve ser o tipo genérico.
 
 ```swift
 // Error: Protocol with associated types can't be used as a return type.
@@ -849,9 +846,9 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   ```
 -->
 
-Using the opaque type `some Container` as a return type
-expresses the desired API contract --- the function returns a container,
-but declines to specify the container's type:
+Usar o tipo opaco `some Container` como tipo de retorno
+expressa o contrato de API desejado: a função retorna um container,
+mas não especifica o tipo desse container:
 
 ```swift
 func makeOpaqueContainer<T>(item: T) -> some Container {
@@ -877,15 +874,15 @@ print(type(of: twelve))
   ```
 -->
 
-The type of `twelve` is inferred to be `Int`,
-which illustrates the fact that type inference works with opaque types.
-In the implementation of `makeOpaqueContainer(item:)`,
-the underlying type of the opaque container is `[T]`.
-In this case, `T` is `Int`,
-so the return value is an array of integers
-and the `Item` associated type is inferred to be `Int`.
-The subscript on `Container` returns `Item`,
-which means that the type of `twelve` is also inferred to be `Int`.
+O tipo de `twelve` é inferido como `Int`,
+o que mostra que a inferência de tipos funciona com tipos opacos.
+Na implementação de `makeOpaqueContainer(item:)`,
+o tipo subjacente do container opaco é `[T]`.
+Neste caso, `T` é `Int`,
+então o valor retornado é um array de inteiros
+e o tipo associado `Item` é inferido como `Int`.
+O subscript de `Container` retorna `Item`,
+o que significa que o tipo de `twelve` também é inferido como `Int`.
 
 <!--
   TODO: Expansion for the future
@@ -922,15 +919,15 @@ which means that the type of `twelve` is also inferred to be `Int`.
 -->
 
 
-## Opaque Parameter Types
+## Tipos de parâmetro opacos
 
-In addition to writing `some` to return an opaque type,
-you can also write `some` in the type for a parameter
-to a function, subscript, or initializer.
-However, when you write `some` in a parameter type
-that's just a shorter syntax for generics, not an opaque type.
-For example,
-both of the functions below are equivalent:
+Além de escrever `some` para retornar um tipo opaco,
+você também pode escrever `some` no tipo de um parâmetro
+de uma função, subscript ou inicializador.
+Porém, quando você escreve `some` no tipo de um parâmetro,
+trata-se apenas de uma sintaxe mais curta para generics, e não de um tipo opaco.
+Por exemplo,
+as duas funções abaixo são equivalentes:
 
 ```swift
 func drawTwiceGeneric<SomeShape: Shape>(_ shape: SomeShape) -> String {
@@ -944,19 +941,18 @@ func drawTwiceSome(_ shape: some Shape) -> String {
 }
 ```
 
-The `drawTwiceGeneric(_:)` function
-declares a generic type parameter named `SomeShape`,
-with a constraint that requires `SomeShape` to conform to the `Shape` protocol.
-The `drawTwiceSome(_:)` function
-uses the type `some Shape` for its argument.
-This creates a new, unnamed generic type parameter for the function
-with a constraint that requires the type to conform to the `Shape` protocol.
-Because the generic type doesn't have a name,
-you can't refer to that type elsewhere in the function.
+A função `drawTwiceGeneric(_:)` declara um parâmetro de tipo genérico chamado `SomeShape`,
+com uma restrição que exige que `SomeShape` esteja em conformidade com o protocolo `Shape`.
+A função `drawTwiceSome(_:)`
+usa o tipo `some Shape` para o argumento.
+Isso cria um novo parâmetro de tipo genérico, sem nome, para a função,
+com uma restrição que exige que o tipo esteja em conformidade com o protocolo `Shape`.
+Como o tipo genérico não tem nome,
+você não consegue se referir a esse tipo em outro lugar da função.
 
-If you write `some` before more than one parameter's type,
-each of the generic types are independent.
-For example:
+Se você escrever `some` antes do tipo de mais de um parâmetro,
+cada um dos tipos genéricos é independente.
+Por exemplo:
 
 ```swift
 func combine(shape s1: some Shape, with s2: some Shape) -> String {
@@ -966,21 +962,21 @@ func combine(shape s1: some Shape, with s2: some Shape) -> String {
 combine(smallTriangle, trapezoid)
 ```
 
-In the `combine(shape:with:)` function,
-the types of the first and second parameter
-must both conform to the `Shape` protocol,
-but there's no constraint that requires them to be the same type.
-When you call `combine(shape:with)`,
-you can pass two different shapes ---
-in this case, one triangle and one trapezoid.
+Na função `combine(shape:with:)`,
+os tipos do primeiro e do segundo parâmetro
+precisam estar, ambos, em conformidade com o protocolo `Shape`,
+mas não há restrição que exija que sejam o mesmo tipo.
+Ao chamar `combine(shape:with)`,
+você pode passar duas formas diferentes ---
+neste caso, um triângulo e um trapézio.
 
-Unlike the syntax for named generic type parameters,
-described in <doc:Generics> chapter,
-this lightweight syntax can't include
-a generic `where` clause or any same-type (`==`) constraints.
-In addition,
-using the lightweight syntax for very complex constraints
-can be hard to read.
+Diferente da sintaxe para parâmetros de tipo genérico nomeados,
+descrita no capítulo <doc:Generics>,
+essa sintaxe mais leve não pode incluir
+uma cláusula `where` genérica nem restrições de mesmo tipo (`==`).
+Além disso,
+usar a sintaxe mais leve para restrições muito complexas
+pode dificultar a leitura.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -991,3 +987,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

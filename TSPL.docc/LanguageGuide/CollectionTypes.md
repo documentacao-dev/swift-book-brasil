@@ -548,7 +548,7 @@ Um tipo precisa ser *hashable* para poder ser armazenado em um conjunto. Ou seja
 Um valor de hash é um valor `Int` que é igual para todos os objetos considerados iguais, de modo que, se `a == b`, o valor de hash de `a` é igual ao valor de hash de `b`.
 
 Todos os tipos básicos do Swift (como `String`, `Int`, `Double` e `Bool`) são hashable por padrão, e podem ser usados como tipos de valor de conjunto ou tipos de chave de dicionário.
-Valores de casos de enum sem valores associados (como descrito em <doc:Enumerations>) também são hashable por padrão.
+Valores de casos de enum sem associated values (como descrito em <doc:Enumerations>) também são hashable por padrão.
 
 > Nota: Você pode usar seus próprios tipos personalizados como tipos de valor de conjunto ou tipos de chave de dicionário, fazendo-os adotar o protocolo `Hashable` da biblioteca padrão do Swift.
 > Para informações sobre como implementar o método obrigatório `hash(into:)`, consulte [`Hashable`](https://developer.apple.com/documentation/swift/hashable).

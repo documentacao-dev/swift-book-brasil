@@ -1,63 +1,62 @@
-# Automatic Reference Counting
+# Contagem automática de referências (ARC)
 
-Model the lifetime of objects and their relationships.
+Modele o tempo de vida dos objetos e os relacionamentos entre eles.
 
-Swift uses *Automatic Reference Counting* (ARC)
-to track and manage your app's memory usage.
-In most cases, this means that memory management “just works” in Swift,
-and you don't need to think about memory management yourself.
-ARC automatically frees up the memory used by class instances
-when those instances are no longer needed.
+O Swift usa a *contagem automática de referências* (ARC)
+para rastrear e gerenciar o uso de memória do seu app.
+Na maioria dos casos, isso significa que o gerenciamento de memória “simplesmente funciona” no Swift,
+e você não precisa pensar nele.
+O ARC libera automaticamente a memória usada pelas instâncias de classe
+quando essas instâncias não são mais necessárias.
 
-However, in a few cases ARC requires more information
-about the relationships between parts of your code
-in order to manage memory for you.
-This chapter describes those situations
-and shows how you enable ARC to manage all of your app's memory.
-Using ARC in Swift is very similar to the approach described in
+No entanto, em alguns casos, o ARC precisa de mais informações
+sobre a relação entre partes do seu código
+para gerenciar a memória por você.
+Este capítulo descreve essas situações
+e mostra como fazer o ARC gerenciar toda a memória do seu app.
+Usar o ARC no Swift é muito parecido com a abordagem descrita em
 [Transitioning to ARC Release Notes](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)
-for using ARC with Objective-C.
+para usar o ARC com Objective-C.
 
-Reference counting applies only to instances of classes.
-Structures and enumerations are value types, not reference types,
-and aren't stored and passed by reference.
+A contagem de referências se aplica apenas a instâncias de classes.
+Structs e enums são tipos de valor, não tipos de referência,
+e não são armazenados nem passados por referência.
 
-## How ARC Works
+## Como o ARC funciona
 
-Every time you create a new instance of a class,
-ARC allocates a chunk of memory to store information about that instance.
-This memory holds information about the type of the instance,
-together with the values of any stored properties associated with that instance.
+Toda vez que você cria uma nova instância de classe,
+o ARC aloca um bloco de memória para armazenar informações sobre essa instância.
+Essa memória guarda informações sobre o tipo da instância,
+junto com os valores de quaisquer propriedades armazenadas associadas a essa instância.
 
-Additionally, when an instance is no longer needed,
-ARC frees up the memory used by that instance
-so that the memory can be used for other purposes instead.
-This ensures that class instances don't take up space in memory
-when they're no longer needed.
+Além disso, quando uma instância não é mais necessária,
+o ARC libera a memória usada por essa instância
+para que ela possa ser usada para outras finalidades.
+Isso garante que instâncias de classe não ocupem espaço na memória
+quando não são mais necessárias.
 
-However, if ARC were to deallocate an instance that was still in use,
-it would no longer be possible to access that instance's properties,
-or call that instance's methods.
-Indeed, if you tried to access the instance, your app would most likely crash.
+No entanto, se o ARC desalocasse uma instância que ainda estivesse em uso,
+deixaria de ser possível acessar as propriedades dessa instância
+ou chamar os métodos dela.
+De fato, se você tentasse acessar a instância, seu app provavelmente travaria.
 
-To make sure that instances don't disappear while they're still needed,
-ARC tracks how many properties, constants, and variables
-are currently referring to each class instance.
-ARC will not deallocate an instance
-as long as at least one active reference to that instance still exists.
+Para garantir que as instâncias não desapareçam enquanto ainda são necessárias,
+o ARC rastreia quantas propriedades, constantes e variáveis
+estão referenciando cada instância de classe no momento.
+O ARC não desaloca uma instância
+enquanto existir pelo menos uma referência ativa a ela.
 
-To make this possible,
-whenever you assign a class instance to a property, constant, or variable,
-that property, constant, or variable makes a *strong reference* to the instance.
-The reference is called a "strong" reference because
-it keeps a firm hold on that instance,
-and doesn't allow it to be deallocated for as long as that strong reference remains.
+Para que isso seja possível,
+sempre que você atribui uma instância de classe a uma propriedade, constante ou variável,
+essa propriedade, constante ou variável faz uma *strong reference* à instância.
+A referência é chamada de “strong” porque mantém um vínculo firme com a instância,
+e não permite que ela seja desalocada enquanto essa strong reference existir.
 
-## ARC in Action
+## ARC em ação
 
-Here's an example of how Automatic Reference Counting works.
-This example starts with a simple class called `Person`,
-which defines a stored constant property called `name`:
+Aqui está um exemplo de como a contagem automática de referências funciona.
+O exemplo começa com uma classe simples chamada `Person`,
+que define uma constante de propriedade armazenada chamada `name`:
 
 ```swift
 class Person {
@@ -89,17 +88,17 @@ class Person {
   ```
 -->
 
-The `Person` class has an initializer that sets the instance's `name` property
-and prints a message to indicate that initialization is underway.
-The `Person` class also has a deinitializer
-that prints a message when an instance of the class is deallocated.
+A classe `Person` tem um inicializador que define a propriedade `name` da instância
+e imprime uma mensagem para indicar que a inicialização está em andamento.
+A classe `Person` também tem um desinicializador
+que imprime uma mensagem quando uma instância da classe é desalocada.
 
-The next code snippet defines three variables of type `Person?`,
-which are used to set up multiple references to a new `Person` instance
-in subsequent code snippets.
-Because these variables are of an optional type (`Person?`, not `Person`),
-they're automatically initialized with a value of `nil`,
-and don't currently reference a `Person` instance.
+O próximo trecho de código define três variáveis do tipo `Person?`,
+que serão usadas para criar várias referências a uma nova instância de `Person`
+nos trechos seguintes.
+Como essas variáveis são de um tipo optional (`Person?`, e não `Person`),
+elas são automaticamente inicializadas com o valor `nil`
+e, por enquanto, não referenciam nenhuma instância de `Person`.
 
 ```swift
 var reference1: Person?
@@ -117,8 +116,8 @@ var reference3: Person?
   ```
 -->
 
-You can now create a new `Person` instance
-and assign it to one of these three variables:
+Agora você pode criar uma nova instância de `Person`
+e atribuí-la a uma dessas três variáveis:
 
 ```swift
 reference1 = Person(name: "John Appleseed")
@@ -134,17 +133,17 @@ reference1 = Person(name: "John Appleseed")
   ```
 -->
 
-Note that the message `"John Appleseed is being initialized"` is printed
-at the point that you call the `Person` class's initializer.
-This confirms that initialization has taken place.
+Observe que a mensagem `"John Appleseed is being initialized"` é impressa
+no momento em que você chama o inicializador de `Person`.
+Isso confirma que a inicialização ocorreu.
 
-Because the new `Person` instance has been assigned to the `reference1` variable,
-there's now a strong reference from `reference1` to the new `Person` instance.
-Because there's at least one strong reference,
-ARC makes sure that this `Person` is kept in memory and isn't deallocated.
+Como a nova instância de `Person` foi atribuída à variável `reference1`,
+agora existe uma strong reference de `reference1` para a nova instância de `Person`.
+Como existe pelo menos uma strong reference,
+o ARC garante que esse `Person` seja mantido na memória e não seja desalocado.
 
-If you assign the same `Person` instance to two more variables,
-two more strong references to that instance are established:
+Se você atribuir a mesma instância de `Person` a mais duas variáveis,
+outras duas strong references a essa instância são estabelecidas:
 
 ```swift
 reference2 = reference1
@@ -160,12 +159,12 @@ reference3 = reference1
   ```
 -->
 
-There are now *three* strong references to this single `Person` instance.
+Agora há *três* strong references para essa única instância de `Person`.
 
-If you break two of these strong references (including the original reference)
-by assigning `nil` to two of the variables,
-a single strong reference remains,
-and the `Person` instance isn't deallocated:
+Se você quebrar duas dessas strong references (incluindo a original)
+atribuindo `nil` a duas das variáveis,
+resta uma única strong reference,
+e a instância de `Person` não é desalocada:
 
 ```swift
 reference1 = nil
@@ -181,9 +180,8 @@ reference2 = nil
   ```
 -->
 
-ARC doesn't deallocate the `Person` instance until
-the third and final strong reference is broken,
-at which point it's clear that you are no longer using the `Person` instance:
+O ARC não desaloca a instância de `Person` até que a terceira e última strong reference
+seja quebrada, momento em que fica claro que você não está mais usando a instância de `Person`:
 
 ```swift
 reference3 = nil
@@ -199,29 +197,29 @@ reference3 = nil
   ```
 -->
 
-## Strong Reference Cycles Between Class Instances
+## Ciclos de strong reference entre instâncias de classe
 
-In the examples above,
-ARC is able to track the number of references to the new `Person` instance you create
-and to deallocate that `Person` instance when it's no longer needed.
+Nos exemplos acima,
+o ARC consegue rastrear o número de referências à nova instância de `Person` que você criou
+e desalocar essa instância de `Person` quando ela não for mais necessária.
 
-However, it's possible to write code in which an instance of a class
-*never* gets to a point where it has zero strong references.
-This can happen if two class instances hold a strong reference to each other,
-such that each instance keeps the other alive.
-This is known as a *strong reference cycle*.
+No entanto, é possível escrever código em que uma instância de uma classe
+*nunca* chega a ter zero strong references.
+Isso pode acontecer se duas instâncias de classe mantiverem uma strong reference uma para a outra,
+de modo que cada instância mantenha a outra viva.
+Isso é chamado de *ciclo de strong reference*.
 
-You resolve strong reference cycles
-by defining some of the relationships between classes
-as weak or unowned references instead of as strong references.
-This process is described in
+Você resolve ciclos de strong reference
+definindo algumas das relações entre classes
+como referências weak ou unowned, em vez de strong references.
+Esse processo é descrito em
 <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-Between-Class-Instances>.
-However, before you learn how to resolve a strong reference cycle,
-it's useful to understand how such a cycle is caused.
+Porém, antes de aprender a resolver um ciclo de strong reference,
+é útil entender como esse ciclo é causado.
 
-Here's an example of how a strong reference cycle can be created by accident.
-This example defines two classes called `Person` and `Apartment`,
-which model a block of apartments and its residents:
+Veja a seguir um exemplo de como um ciclo de strong reference pode ser criado sem querer.
+Este exemplo define duas classes, `Person` e `Apartment`,
+que modelam um prédio de apartamentos e seus moradores:
 
 ```swift
 class Person {
@@ -259,23 +257,23 @@ class Apartment {
   ```
 -->
 
-Every `Person` instance has a `name` property of type `String`
-and an optional `apartment` property that's initially `nil`.
-The `apartment` property is optional, because a person may not always have an apartment.
+Toda instância de `Person` tem uma propriedade `name` do tipo `String`
+e uma propriedade `apartment` optional, que começa como `nil`.
+A propriedade `apartment` é optional porque uma pessoa nem sempre tem um apartamento.
 
-Similarly, every `Apartment` instance has a `unit` property of type `String`
-and has an optional `tenant` property that's initially `nil`.
-The tenant property is optional because an apartment may not always have a tenant.
+De forma semelhante, toda instância de `Apartment` tem uma propriedade `unit` do tipo `String`
+e uma propriedade `tenant` optional, que começa como `nil`.
+A propriedade `tenant` é optional porque um apartamento nem sempre tem um inquilino.
 
-Both of these classes also define a deinitializer,
-which prints the fact that an instance of that class is being deinitialized.
-This enables you to see whether
-instances of `Person` and `Apartment` are being deallocated as expected.
+As duas classes também definem um desinicializador,
+que imprime uma mensagem informando que uma instância da classe está sendo desinicializada.
+Isso permite verificar se as instâncias de `Person` e `Apartment`
+estão sendo desalocadas como esperado.
 
-This next code snippet defines two variables of optional type
-called `john` and `unit4A`,
-which will be set to a specific `Apartment` and `Person` instance below.
-Both of these variables have an initial value of `nil`, by virtue of being optional:
+Este próximo trecho de código define duas variáveis de tipo optional
+chamadas `john` e `unit4A`,
+que serão definidas com uma instância específica de `Apartment` e de `Person` mais adiante.
+As duas variáveis têm valor inicial `nil`, por serem optionals:
 
 ```swift
 var john: Person?
@@ -291,8 +289,8 @@ var unit4A: Apartment?
   ```
 -->
 
-You can now create a specific `Person` instance and `Apartment` instance
-and assign these new instances to the `john` and `unit4A` variables:
+Agora você pode criar uma instância específica de `Person` e uma de `Apartment`
+e atribuir essas novas instâncias às variáveis `john` e `unit4A`:
 
 ```swift
 john = Person(name: "John Appleseed")
@@ -308,17 +306,17 @@ unit4A = Apartment(unit: "4A")
   ```
 -->
 
-Here's how the strong references look after creating and assigning these two instances.
-The `john` variable now has a strong reference to the new `Person` instance,
-and the `unit4A` variable has a strong reference to the new `Apartment` instance:
+Veja como ficam as strong references depois de criar e atribuir essas duas instâncias.
+A variável `john` agora tem uma strong reference para a nova instância de `Person`,
+e a variável `unit4A` tem uma strong reference para a nova instância de `Apartment`:
 
 ![](referenceCycle01)
 
-You can now link the two instances together
-so that the person has an apartment, and the apartment has a tenant.
-Note that an exclamation point (`!`) is used to unwrap and access
-the instances stored inside the `john` and `unit4A` optional variables,
-so that the properties of those instances can be set:
+Agora você pode conectar as duas instâncias,
+para que a pessoa tenha um apartamento e o apartamento tenha um inquilino.
+Observe que um ponto de exclamação (`!`) é usado para fazer unwrap
+e acessar as instâncias armazenadas dentro das variáveis optional `john` e `unit4A`,
+para que as propriedades dessas instâncias possam ser definidas:
 
 ```swift
 john!.apartment = unit4A
@@ -334,18 +332,17 @@ unit4A!.tenant = john
   ```
 -->
 
-Here's how the strong references look after you link the two instances together:
+Veja como ficam as strong references depois que você conecta as duas instâncias:
 
 ![](referenceCycle02)
 
-Unfortunately, linking these two instances creates
-a strong reference cycle between them.
-The `Person` instance now has a strong reference to the `Apartment` instance,
-and the `Apartment` instance has a strong reference to the `Person` instance.
-Therefore, when you break the strong references held by
-the `john` and `unit4A` variables,
-the reference counts don't drop to zero,
-and the instances aren't deallocated by ARC:
+Infelizmente, conectar essas duas instâncias cria
+um ciclo de strong reference entre elas.
+A instância de `Person` agora tem uma strong reference para a instância de `Apartment`,
+e a instância de `Apartment` tem uma strong reference para a instância de `Person`.
+Por isso, quando você quebra as strong references mantidas pelas variáveis `john` e `unit4A`,
+as contagens de referência não chegam a zero,
+e o ARC não desaloca as instâncias:
 
 ```swift
 john = nil
@@ -361,37 +358,37 @@ unit4A = nil
   ```
 -->
 
-Note that neither deinitializer was called
-when you set these two variables to `nil`.
-The strong reference cycle prevents the `Person` and `Apartment` instances
-from ever being deallocated, causing a memory leak in your app.
+Observe que nenhum dos desinicializadores foi chamado
+quando você definiu essas duas variáveis como `nil`.
+O ciclo de strong reference impede que as instâncias de `Person` e `Apartment`
+nunca sejam desalocadas, o que causa um vazamento de memória no seu app.
 
-Here's how the strong references look after you set
-the `john` and `unit4A` variables to `nil`:
+Veja como ficam as strong references depois que você define
+as variáveis `john` e `unit4A` como `nil`:
 
 ![](referenceCycle03)
 
-The strong references between the `Person` instance
-and the `Apartment` instance remain and can't be broken.
+As strong references entre a instância de `Person` e a instância de `Apartment`
+permanecem e não podem ser quebradas.
 
-## Resolving Strong Reference Cycles Between Class Instances
+## Resolvendo ciclos de strong reference entre instâncias de classe
 
-Swift provides two ways to resolve strong reference cycles
-when you work with properties of class type:
-weak references and unowned references.
+O Swift oferece duas formas de resolver ciclos de strong reference
+quando você trabalha com propriedades de tipo classe:
+referências weak e referências unowned.
 
-Weak and unowned references enable one instance in a reference cycle
-to refer to the other instance *without* keeping a strong hold on it.
-The instances can then refer to each other without creating a strong reference cycle.
+Referências weak e unowned permitem que uma instância em um ciclo de strong reference
+se refira à outra instância *sem* manter um vínculo forte com ela.
+As instâncias podem então se referir uma à outra
+sem criar um ciclo de strong reference.
 
-Use a weak reference when the other instance has a shorter lifetime ---
-that is, when the other instance can be deallocated first.
-In the `Apartment` example above,
-it's appropriate for an apartment to be able to have
-no tenant at some point in its lifetime,
-and so a weak reference is an appropriate way to break the reference cycle in this case.
-In contrast, use an unowned reference when the other instance
-has the same lifetime or a longer lifetime.
+Use uma referência weak quando a outra instância tiver um tempo de vida mais curto,
+ou seja, quando a outra instância puder ser desalocada primeiro.
+No exemplo de `Apartment` acima,
+é apropriado que um apartamento possa ficar sem inquilino em algum momento do seu tempo de vida,
+então uma referência weak é uma forma adequada de quebrar o ciclo nesse caso.
+Já uma referência unowned é indicada quando a outra instância
+tem o mesmo tempo de vida ou um tempo de vida maior.
 
 <!--
   QUESTION: how do I answer the question
@@ -399,31 +396,29 @@ has the same lifetime or a longer lifetime.
   should be marked as weak or unowned?"
 -->
 
-### Weak References
+### Referências weak
 
-A *weak reference* is a reference that doesn't keep a strong hold
-on the instance it refers to,
-and so doesn't stop ARC from disposing of the referenced instance.
-This behavior prevents the reference from becoming part of a strong reference cycle.
-You indicate a weak reference by placing the `weak` keyword
-before a property or variable declaration.
+Uma *referência weak* é uma referência que não mantém uma strong reference
+sobre a instância a que se refere,
+e por isso não impede o ARC de desalocar a instância referenciada.
+Esse comportamento impede que a referência faça parte de um ciclo de strong reference.
+Você indica uma referência weak colocando a palavra-chave `weak`
+antes da declaração de uma propriedade ou variável.
 
-Because a weak reference doesn't keep a strong hold on the instance it refers to,
-it's possible for that instance to be deallocated
-while the weak reference is still referring to it.
-Therefore, ARC automatically sets a weak reference to `nil`
-when the instance that it refers to is deallocated.
-And, because weak references need to allow
-their value to be changed to `nil` at runtime,
-they're always declared as variables, rather than constants, of an optional type.
+Como uma referência weak não mantém uma strong reference sobre a instância a que se refere,
+é possível que essa instância seja desalocada
+enquanto a referência weak ainda aponta para ela.
+Por isso, o ARC define automaticamente uma referência weak como `nil`
+quando a instância a que ela se refere é desalocada.
+E, como as referências weak precisam permitir que o valor seja alterado para `nil` em tempo de execução,
+elas são sempre declaradas como variáveis, e não como constantes, de um tipo optional.
 
-You can check for the existence of a value in the weak reference,
-just like any other optional value,
-and you will never end up with
-a reference to an invalid instance that no longer exists.
+Você pode verificar a existência de um valor na referência weak,
+como faria com qualquer outro valor optional,
+e nunca terá uma referência a uma instância inválida que não existe mais.
 
-> Note: Property observers aren't called
-> when ARC sets a weak reference to `nil`.
+> Nota: Observadores de propriedade não são chamados
+> quando o ARC define uma referência weak como `nil`.
 
 <!--
   - test: `weak-reference-doesnt-trigger-didset`
@@ -444,10 +439,10 @@ a reference to an invalid instance that no longer exists.
   ```
 -->
 
-The example below is identical to the `Person` and `Apartment` example from above,
-with one important difference.
-This time around, the `Apartment` type's `tenant` property
-is declared as a weak reference:
+O exemplo a seguir é idêntico ao exemplo de `Person` e `Apartment` acima,
+com uma diferença importante.
+Desta vez, a propriedade `tenant` do tipo `Apartment`
+é declarada como uma referência weak:
 
 ```swift
 class Person {
@@ -485,8 +480,8 @@ class Apartment {
   ```
 -->
 
-The strong references from the two variables (`john` and `unit4A`)
-and the links between the two instances are created as before:
+As strong references das duas variáveis (`john` e `unit4A`)
+e as conexões entre as duas instâncias são criadas como antes:
 
 ```swift
 var john: Person?
@@ -514,15 +509,14 @@ unit4A!.tenant = john
   ```
 -->
 
-Here's how the references look now that you've linked the two instances together:
+Veja como ficam as referências agora que você conectou as duas instâncias:
 
 ![](weakReference01)
 
-The `Person` instance still has a strong reference to the `Apartment` instance,
-but the `Apartment` instance now has a *weak* reference to the `Person` instance.
-This means that when you break the strong reference held by
-the `john` variable by setting it to `nil`,
-there are no more strong references to the `Person` instance:
+A instância de `Person` ainda tem uma strong reference para a instância de `Apartment`,
+mas a instância de `Apartment` agora tem uma referência *weak* para a instância de `Person`.
+Isso significa que, quando você quebra a strong reference mantida pela variável `john`
+ao defini-la como `nil`, não há mais strong references para a instância de `Person`:
 
 ```swift
 john = nil
@@ -538,16 +532,15 @@ john = nil
   ```
 -->
 
-Because there are no more strong references to the `Person` instance,
-it's deallocated
-and the `tenant` property is set to `nil`:
+Como não há mais strong references para a instância de `Person`,
+ela é desalocada e a propriedade `tenant` é definida como `nil`:
 
 ![](weakReference02)
 
-The only remaining strong reference to the `Apartment` instance
-is from the `unit4A` variable.
-If you break *that* strong reference,
-there are no more strong references to the `Apartment` instance:
+A única strong reference restante para a instância de `Apartment`
+vem da variável `unit4A`.
+Se você quebrar *essa* strong reference,
+não há mais strong references para a instância de `Apartment`:
 
 ```swift
 unit4A = nil
@@ -563,35 +556,33 @@ unit4A = nil
   ```
 -->
 
-Because there are no more strong references to the `Apartment` instance,
-it too is deallocated:
+Como não há mais strong references para a instância de `Apartment`,
+ela também é desalocada:
 
 ![](weakReference03)
 
-> Note: In systems that use garbage collection,
-> weak pointers are sometimes used to implement a simple caching mechanism
-> because objects with no strong references are deallocated
-> only when memory pressure triggers garbage collection.
-> However, with ARC, values are deallocated
-> as soon as their last strong reference is removed,
-> making weak references unsuitable for such a purpose.
+> Nota: Em sistemas que usam coleta de lixo,
+> ponteiros weak às vezes são usados para implementar um mecanismo de cache simples,
+> porque objetos sem strong references só são desalocados
+> quando a pressão de memória dispara a coleta de lixo.
+> No entanto, com o ARC, os valores são desalocados
+> assim que a última strong reference é removida,
+> o que torna as referências weak inadequadas para essa finalidade.
 
-### Unowned References
+### Referências unowned
 
-Like a weak reference,
-an *unowned reference* doesn't keep
-a strong hold on the instance it refers to.
-Unlike a weak reference, however,
-an unowned reference is used when the other instance
-has the same lifetime or a longer lifetime.
-You indicate an unowned reference by placing the `unowned` keyword
-before a property or variable declaration.
+Assim como uma referência weak, uma *referência unowned*
+não mantém uma strong reference sobre a instância a que se refere.
+Diferente da referência weak, porém,
+uma referência unowned é usada quando a outra instância
+tem o mesmo tempo de vida ou um tempo de vida maior.
+Você indica uma referência unowned colocando a palavra-chave `unowned`
+antes da declaração de uma propriedade ou variável.
 
-Unlike a weak reference,
-an unowned reference is expected to always have a value.
-As a result,
-marking a value as unowned doesn't make it optional,
-and ARC never sets an unowned reference's value to `nil`.
+Diferente de uma referência weak,
+uma referência unowned deve sempre ter um valor.
+Por isso, marcar um valor como unowned não o torna optional,
+e o ARC nunca define o valor de uma referência unowned como `nil`.
 
 <!--
   Everything that unowned can do, weak can do slower and more awkwardly
@@ -600,12 +591,12 @@ and ARC never sets an unowned reference's value to `nil`.
   in the cases where it's actually correct for your data.
 -->
 
-> Important: Use an unowned reference only when you are sure that
-> the reference *always* refers to an instance that hasn't been deallocated.
+> Importante: Use uma referência unowned apenas quando tiver certeza de que
+> a referência *sempre* se refere a uma instância que não foi desalocada.
 >
-> If you try to access the value of an unowned reference
-> after that instance has been deallocated,
-> you'll get a runtime error.
+> Se você tentar acessar o valor de uma referência unowned
+> depois que essa instância foi desalocada,
+> você vai receber um erro de tempo de execução.
 
 <!--
   One way to satisfy that requirement is to
@@ -616,29 +607,29 @@ and ARC never sets an unowned reference's value to `nil`.
   is a backpointer from an object up to its owner.
 -->
 
-The following example defines two classes, `Customer` and `CreditCard`,
-which model a bank customer and a possible credit card for that customer.
-These two classes each store an instance of the other class as a property.
-This relationship has the potential to create a strong reference cycle.
+O exemplo a seguir define duas classes, `Customer` e `CreditCard`,
+que modelam um cliente de banco e um possível cartão de crédito desse cliente.
+Essas duas classes armazenam uma instância da outra como propriedade.
+Essa relação tem potencial para criar um ciclo de strong reference.
 
-The relationship between `Customer` and `CreditCard` is slightly different from
-the relationship between `Apartment` and `Person`
-seen in the weak reference example above.
-In this data model, a customer may or may not have a credit card,
-but a credit card will *always* be associated with a customer.
-A `CreditCard` instance never outlives the `Customer` that it refers to.
-To represent this, the `Customer` class has an optional `card` property,
-but the `CreditCard` class has an unowned (and non-optional) `customer` property.
+A relação entre `Customer` e `CreditCard` é um pouco diferente
+da relação entre `Apartment` e `Person`
+vista no exemplo de referência weak acima.
+Nesse modelo de dados, um cliente pode ter ou não um cartão de crédito,
+mas um cartão de crédito sempre estará associado a um cliente.
+Uma instância de `CreditCard` nunca sobrevive ao `Customer` a que se refere.
+Para representar isso, a classe `Customer` tem uma propriedade `card` optional,
+mas a classe `CreditCard` tem uma propriedade `customer` unowned e não optional.
 
-Furthermore, a new `CreditCard` instance can *only* be created
-by passing a `number` value and a `customer` instance
-to a custom `CreditCard` initializer.
-This ensures that a `CreditCard` instance always has
-a `customer` instance associated with it when the `CreditCard` instance is created.
+Além disso, uma nova instância de `CreditCard` só pode ser criada
+passando um valor `number` e uma instância de `customer`
+para um inicializador personalizado de `CreditCard`.
+Isso garante que uma instância de `CreditCard` sempre tenha
+uma instância de `customer` associada no momento da criação.
 
-Because a credit card will always have a customer,
-you define its `customer` property as an unowned reference,
-to avoid a strong reference cycle:
+Como um cartão de crédito sempre terá um cliente,
+você define a propriedade `customer` como uma referência unowned,
+para evitar um ciclo de strong reference:
 
 ```swift
 class Customer {
@@ -686,14 +677,15 @@ class CreditCard {
   ```
 -->
 
-> Note: The `number` property of the `CreditCard` class is defined with
-> a type of `UInt64` rather than `Int`,
-> to ensure that the `number` property's capacity is large enough to store
-> a 16-digit card number on both 32-bit and 64-bit systems.
+> Nota: A propriedade `number` da classe `CreditCard` é definida
+> com o tipo `UInt64` em vez de `Int`,
+> para garantir que a capacidade da propriedade `number` seja grande o bastante
+> para armazenar um número de cartão de 16 dígitos
+> tanto em sistemas de 32 bits quanto de 64 bits.
 
-This next code snippet defines an optional `Customer` variable called `john`,
-which will be used to store a reference to a specific customer.
-This variable has an initial value of nil, by virtue of being optional:
+Este próximo trecho de código define uma variável `Customer` optional chamada `john`,
+que será usada para armazenar uma referência a um cliente específico.
+Essa variável tem valor inicial `nil`, por ser optional:
 
 ```swift
 var john: Customer?
@@ -707,9 +699,9 @@ var john: Customer?
   ```
 -->
 
-You can now create a `Customer` instance,
-and use it to initialize and assign a new `CreditCard` instance
-as that customer's `card` property:
+Agora você pode criar uma instância de `Customer`
+e usá-la para inicializar e atribuir uma nova instância de `CreditCard`
+como a propriedade `card` desse cliente:
 
 ```swift
 john = Customer(name: "John Appleseed")
@@ -725,24 +717,22 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
   ```
 -->
 
-Here's how the references look, now that you've linked the two instances:
+Veja como ficam as referências agora que você conectou as duas instâncias:
 
 ![](unownedReference01)
 
-The `Customer` instance now has a strong reference to the `CreditCard` instance,
-and the `CreditCard` instance has an unowned reference to the `Customer` instance.
+A instância de `Customer` agora tem uma strong reference para a instância de `CreditCard`,
+e a instância de `CreditCard` tem uma referência unowned para a instância de `Customer`.
 
-Because of the unowned `customer` reference,
-when you break the strong reference held by the `john` variable,
-there are no more strong references to the `Customer` instance:
+Por causa da referência unowned `customer`,
+quando você quebra a strong reference mantida pela variável `john`,
+não há mais strong references para a instância de `Customer`:
 
 ![](unownedReference02)
 
-Because there are no more strong references to the `Customer` instance,
-it's deallocated.
-After this happens,
-there are no more strong references to the `CreditCard` instance,
-and it too is deallocated:
+Como não há mais strong references para a instância de `Customer`, ela é desalocada.
+Depois disso, não há mais strong references para a instância de `CreditCard`,
+que também é desalocada:
 
 ```swift
 john = nil
@@ -760,42 +750,39 @@ john = nil
   ```
 -->
 
-The final code snippet above shows that
-the deinitializers for the `Customer` instance and `CreditCard` instance
-both print their “deinitialized” messages
-after the `john` variable is set to `nil`.
+O último trecho de código acima mostra que
+os desinicializadores da instância de `Customer` e da instância de `CreditCard`
+imprimem suas mensagens de “deinitialized” depois que a variável `john` é definida como `nil`.
 
-> Note: The examples above show how to use *safe* unowned references.
-> Swift also provides *unsafe* unowned references for cases where
-> you need to disable runtime safety checks ---
-> for example, for performance reasons.
-> As with all unsafe operations,
-> you take on the responsibility for checking that code for safety.
+> Nota: Os exemplos acima mostram como usar unowned references *seguras*.
+> O Swift também oferece unowned references *inseguras* para casos em que
+> você precisa desativar as verificações de segurança em tempo de execução,
+> por exemplo, por motivos de desempenho.
+> Como em todas as operações inseguras, você assume a responsabilidade
+> de verificar a segurança desse código.
 >
-> You indicate an unsafe unowned reference by writing `unowned(unsafe)`.
-> If you try to access an unsafe unowned reference
-> after the instance that it refers to is deallocated,
-> your program will try to access the memory location
-> where the instance used to be,
-> which is an unsafe operation.
+> Você indica uma unowned reference insegura escrevendo `unowned(unsafe)`.
+> Se você tentar acessar uma unowned reference insegura
+> depois que a instância a que ela se refere foi desalocada,
+> seu programa vai tentar acessar a posição de memória
+> onde a instância estava, o que é uma operação insegura.
 
 <!--
   <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
   Try expanding the example above so each customer has an array of credit cards.
 -->
 
-### Unowned Optional References
+### Referências unowned optional
 
-You can mark an optional reference to a class as unowned.
-In terms of the ARC ownership model,
-an unowned optional reference and a weak reference
-can both be used in the same contexts.
-The difference is that when you use an unowned optional reference,
-you're responsible for making sure it always
-refers to a valid object or is set to `nil`.
+Você pode marcar uma referência optional a uma classe como unowned.
+No modelo de posse do ARC, uma referência unowned optional e uma referência weak
+podem ser usadas nos mesmos contextos.
+A diferença é que, ao usar uma referência unowned optional,
+você é responsável por garantir que ela sempre se refira a um objeto válido
+ou seja definida como `nil`.
 
-Here's an example that keeps track of the courses
-offered by a particular department at a school:
+Aqui está um exemplo que acompanha os cursos oferecidos
+por um departamento de uma escola:
 
 ```swift
 class Department {
@@ -845,20 +832,17 @@ class Course {
   ```
 -->
 
-`Department` maintains a strong reference
-to each course that the department offers.
-In the ARC ownership model, a department owns its courses.
-`Course` has two unowned references,
-one to the department
-and one to the next course a student should take;
-a course doesn't own either of these objects.
-Every course is part of some department
-so the `department` property isn't an optional.
-However,
-because some courses don't have a recommended follow-on course,
-the `nextCourse` property is an optional.
+`Department` mantém uma strong reference para cada curso que o departamento oferece.
+No modelo de posse do ARC, um departamento é dono dos seus cursos.
+`Course` tem duas referências unowned,
+uma para o departamento e outra para o próximo curso que um aluno deve fazer;
+um curso não é dono de nenhum desses objetos.
+Todo curso faz parte de algum departamento,
+então a propriedade `department` não é optional.
+No entanto, como alguns cursos não têm um curso seguinte recomendado,
+a propriedade `nextCourse` é optional.
 
-Here's an example of using these classes:
+Veja um exemplo de uso dessas classes:
 
 ```swift
 let department = Department(name: "Horticulture")
@@ -888,36 +872,35 @@ department.courses = [intro, intermediate, advanced]
   ```
 -->
 
-The code above creates a department and its three courses.
-The intro and intermediate courses both have a suggested next course
-stored in their `nextCourse` property,
-which maintains an unowned optional reference to
-the course a student should take after completing this one.
+O código acima cria um departamento e seus três cursos.
+Os cursos introdutório e intermediário têm um próximo curso sugerido
+armazenado na propriedade `nextCourse`,
+que mantém uma referência unowned optional ao curso
+que o aluno deve fazer depois de concluir aquele.
 
 ![](unownedOptionalReference)
 
-An unowned optional reference doesn't keep a strong hold
-on the instance of the class that it wraps,
-and so it doesn't prevent ARC from deallocating the instance.
-It behaves the same as an unowned reference does under ARC,
-except that an unowned optional reference can be `nil`.
+Uma referência unowned optional não mantém uma strong reference
+sobre a instância da classe que ela envolve,
+e por isso não impede o ARC de desalocar a instância.
+Ela se comporta da mesma forma que uma referência unowned se comporta sob o ARC,
+com a diferença de que uma referência unowned optional pode ser `nil`.
 
-Like non-optional unowned references,
-you're responsible for ensuring that `nextCourse`
-always refers to a course that hasn't been deallocated.
-In this case, for example,
-when you delete a course from `department.courses`
-you also need to remove any references to it
-that other courses might have.
+Assim como nas referências unowned não optional,
+você é responsável por garantir que `nextCourse`
+sempre se refira a um curso que ainda não foi desalocado.
+Neste caso, por exemplo, quando você remove um curso de `department.courses`,
+também precisa remover quaisquer referências a ele
+que outros cursos possam ter.
 
-> Note: The underlying type of an optional value is `Optional`,
-> which is an enumeration in the Swift standard library.
-> However, optionals are an exception to the rule that
-> value types can't be marked with `unowned`.
+> Nota: O tipo subjacente de um valor optional é `Optional`,
+> que é um enum da biblioteca padrão do Swift.
+> No entanto, optionals são uma exceção à regra de que
+> tipos de valor não podem ser marcados com `unowned`.
 >
-> The optional that wraps the class
-> doesn't use reference counting,
-> so you don't need to maintain a strong reference to the optional.
+> O optional que envolve a classe
+> não usa contagem de referências,
+> então você não precisa manter uma strong reference para o optional.
 
 <!--
   - test: `unowned-can-be-optional`
@@ -947,40 +930,40 @@ that other courses might have.
   ```
 -->
 
-### Unowned References and Implicitly Unwrapped Optional Properties
+### Referências unowned e propriedades optional com unwrap implícito
 
-The examples for weak and unowned references above
-cover two of the more common scenarios
-in which it's necessary to break a strong reference cycle.
+Os exemplos de referências weak e unowned acima
+cobrem dois dos cenários mais comuns
+em que é necessário quebrar um ciclo de strong reference.
 
-The `Person` and `Apartment` example shows
-a situation where two properties, both of which are allowed to be `nil`,
-have the potential to cause a strong reference cycle.
-This scenario is best resolved with a weak reference.
+O exemplo de `Person` e `Apartment` mostra uma situação
+em que duas propriedades, ambas com permissão de ser `nil`,
+têm potencial para causar um ciclo de strong reference.
+Esse cenário é mais bem resolvido com uma referência weak.
 
-The `Customer` and `CreditCard` example
-shows a situation where one property that's allowed to be `nil`
-and another property that can't be `nil`
-have the potential to cause a strong reference cycle.
-This scenario is best resolved with an unowned reference.
+O exemplo de `Customer` e `CreditCard` mostra uma situação
+em que uma propriedade que pode ser `nil`
+e outra que não pode ser `nil`
+têm potencial para causar um ciclo de strong reference.
+Esse cenário é mais bem resolvido com uma referência unowned.
 
-However, there's a third scenario,
-in which *both* properties should always have a value,
-and neither property should ever be `nil` once initialization is complete.
-In this scenario, it's useful to combine an unowned property on one class
-with an implicitly unwrapped optional property on the other class.
+Existe, porém, um terceiro cenário,
+em que *as duas* propriedades devem sempre ter um valor,
+e nenhuma delas deve ser `nil` depois que a inicialização termina.
+Nesse cenário, é útil combinar uma propriedade unowned em uma classe
+com uma propriedade optional com unwrap implícito na outra classe.
 
-This enables both properties to be accessed directly
-(without optional unwrapping) once initialization is complete,
-while still avoiding a reference cycle.
-This section shows you how to set up such a relationship.
+Isso permite que as duas propriedades sejam acessadas diretamente
+(sem fazer unwrap do optional) depois que a inicialização termina,
+ao mesmo tempo em que evita um ciclo de strong reference.
+Esta seção mostra como configurar esse relacionamento.
 
-The example below defines two classes, `Country` and `City`,
-each of which stores an instance of the other class as a property.
-In this data model, every country must always have a capital city,
-and every city must always belong to a country.
-To represent this, the `Country` class has a `capitalCity` property,
-and the `City` class has a `country` property:
+O exemplo a seguir define duas classes, `Country` e `City`,
+cada uma armazenando uma instância da outra como propriedade.
+Nesse modelo de dados, todo país precisa ter sempre uma capital,
+e toda cidade precisa sempre pertencer a um país.
+Para representar isso, a classe `Country` tem uma propriedade `capitalCity`,
+e a classe `City` tem uma propriedade `country`:
 
 ```swift
 class Country {
@@ -1026,37 +1009,36 @@ class City {
   ```
 -->
 
-To set up the interdependency between the two classes,
-the initializer for `City` takes a `Country` instance,
-and stores this instance in its `country` property.
+Para configurar a interdependência entre as duas classes,
+o inicializador de `City` recebe uma instância de `Country`
+e armazena essa instância na propriedade `country`.
 
-The initializer for `City` is called from within the initializer for `Country`.
-However, the initializer for `Country` can't pass `self` to the `City` initializer
-until a new `Country` instance is fully initialized,
-as described in <doc:Initialization#Two-Phase-Initialization>.
+O inicializador de `City` é chamado de dentro do inicializador de `Country`.
+No entanto, o inicializador de `Country` não pode passar `self` para o inicializador de `City`
+até que uma nova instância de `Country` esteja totalmente inicializada,
+como descrito em <doc:Initialization#Two-Phase-Initialization>.
 
-To cope with this requirement,
-you declare the `capitalCity` property of `Country` as
-an implicitly unwrapped optional property,
-indicated by the exclamation point at the end of its type annotation (`City!`).
-This means that the `capitalCity` property has a default value of `nil`,
-like any other optional,
-but can be accessed without the need to unwrap its value
-as described in <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
+Para lidar com esse requisito, você declara a propriedade `capitalCity` de `Country`
+como uma propriedade optional com unwrap implícito,
+indicada pelo ponto de exclamação no fim da anotação de tipo (`City!`).
+Isso significa que a propriedade `capitalCity` tem valor padrão `nil`,
+como qualquer outro optional,
+mas pode ser acessada sem a necessidade de fazer unwrap do valor,
+como descrito em <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
-Because `capitalCity` has a default `nil` value,
-a new `Country` instance is considered fully initialized
-as soon as the `Country` instance sets its `name` property within its initializer.
-This means that the `Country` initializer can start to reference and pass around
-the implicit `self` property as soon as the `name` property is set.
-The `Country` initializer can therefore pass `self` as one of the parameters for
-the `City` initializer when the `Country` initializer is setting
-its own `capitalCity` property.
+Como `capitalCity` tem valor padrão `nil`,
+uma nova instância de `Country` é considerada totalmente inicializada
+assim que define sua propriedade `name` dentro do inicializador.
+Isso significa que o inicializador de `Country` pode começar a referenciar
+e passar a propriedade `self` implícita assim que `name` é definida.
+Por isso, o inicializador de `Country` pode passar `self`
+como um dos parâmetros do inicializador de `City`
+enquanto define a própria propriedade `capitalCity`.
 
-All of this means that you can create the `Country` and `City` instances
-in a single statement, without creating a strong reference cycle,
-and the `capitalCity` property can be accessed directly,
-without needing to use an exclamation point to unwrap its optional value:
+Assim, é possível criar as instâncias de `Country` e `City` em uma única instrução,
+sem criar um ciclo de strong reference,
+e a propriedade `capitalCity` pode ser acessada diretamente,
+sem precisar usar um ponto de exclamação para fazer unwrap do seu valor optional:
 
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -1074,45 +1056,46 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
   ```
 -->
 
-In the example above, the use of an implicitly unwrapped optional
-means that all of the two-phase class initializer requirements are satisfied.
-The `capitalCity` property can be used and accessed like a non-optional value
-once initialization is complete,
-while still avoiding a strong reference cycle.
+No exemplo acima, o uso de um optional com unwrap implícito
+faz com que todos os requisitos do inicializador de classe em duas fases sejam atendidos.
+A propriedade `capitalCity` pode ser usada e acessada como um valor não optional
+depois que a inicialização termina,
+ao mesmo tempo em que evita um ciclo de strong reference.
 
-## Strong Reference Cycles for Closures
+## Ciclos de strong reference para closures
 
-You saw above how a strong reference cycle can be created
-when two class instance properties hold a strong reference to each other.
-You also saw how to use weak and unowned references to break these strong reference cycles.
+Você viu acima como um ciclo de strong reference pode ser criado
+quando duas propriedades de instâncias de classe mantêm uma strong reference uma para a outra.
+Você também viu como usar referências weak e unowned para quebrar esses ciclos.
 
-A strong reference cycle can also occur
-if you assign a closure to a property of a class instance,
-and the body of that closure captures the instance.
-This capture might occur because the closure's body accesses a property of the instance,
-such as `self.someProperty`,
-or because the closure calls a method on the instance,
-such as `self.someMethod()`.
-In either case, these accesses cause the closure to “capture” `self`,
-creating a strong reference cycle.
+Um ciclo de strong reference também pode ocorrer
+se você atribuir uma closure a uma propriedade de uma instância de classe,
+e o corpo dessa closure capturar a instância.
+Essa captura pode acontecer porque o corpo da closure acessa uma propriedade da instância,
+como `self.someProperty`,
+ou porque a closure chama um método da instância,
+como `self.someMethod()`.
+Em qualquer um dos casos, esses acessos fazem a closure “capturar” `self`,
+criando um ciclo de strong reference.
 
-This strong reference cycle occurs because closures, like classes, are *reference types*.
-When you assign a closure to a property,
-you are assigning a *reference* to that closure.
-In essence, it's the same problem as above ---
-two strong references are keeping each other alive.
-However, rather than two class instances,
-this time it's a class instance and a closure that are keeping each other alive.
+Esse ciclo de strong reference ocorre porque closures, assim como classes,
+são *tipos de referência*.
+Quando você atribui uma closure a uma propriedade,
+está atribuindo uma *referência* a essa closure.
+Na essência, é o mesmo problema de antes:
+duas strong references que mantêm uma à outra vivas.
+No entanto, em vez de duas instâncias de classe,
+desta vez são uma instância de classe e uma closure que se mantêm vivas mutuamente.
 
-Swift provides an elegant solution to this problem,
-known as a *closure capture list*.
-However, before you learn how to break a strong reference cycle with a closure capture list,
-it's useful to understand how such a cycle can be caused.
+O Swift oferece uma solução elegante para esse problema,
+conhecida como *lista de captura de closure*.
+No entanto, antes de aprender a quebrar um ciclo de strong reference com uma lista de captura,
+é útil entender como esse ciclo pode ser causado.
 
-The example below shows how you can create a strong reference cycle
-when using a closure that references `self`.
-This example defines a class called `HTMLElement`,
-which provides a simple model for an individual element within an HTML document:
+O exemplo a seguir mostra como criar um ciclo de strong reference
+ao usar uma closure que se refere a `self`.
+Este exemplo define uma classe chamada `HTMLElement`,
+que fornece um modelo simples para um elemento individual dentro de um documento HTML:
 
 ```swift
 class HTMLElement {
@@ -1166,37 +1149,38 @@ class HTMLElement {
   ```
 -->
 
-The `HTMLElement` class defines a `name` property,
-which indicates the name of the element,
-such as `"h1"` for a heading element,
-`"p"` for a paragraph element,
-or `"br"` for a line break element.
-`HTMLElement` also defines an optional `text` property,
-which you can set to a string that represents
-the text to be rendered within that HTML element.
+A classe `HTMLElement` define uma propriedade `name`,
+que indica o nome do elemento,
+como `"h1"` para um elemento de título,
+`"p"` para um elemento de parágrafo
+ou `"br"` para um elemento de quebra de linha.
+`HTMLElement` também define uma propriedade `text` optional,
+que você pode definir como uma string que representa
+o texto a ser renderizado dentro desse elemento HTML.
 
-In addition to these two simple properties,
-the `HTMLElement` class defines a lazy property called `asHTML`.
-This property references a closure that combines `name` and `text`
-into an HTML string fragment.
-The `asHTML` property is of type `() -> String`,
-or “a function that takes no parameters, and returns a `String` value”.
+Além dessas duas propriedades simples,
+a classe `HTMLElement` define uma propriedade lazy chamada `asHTML`.
+Essa propriedade referencia uma closure que combina `name` e `text`
+em um fragmento de string HTML.
+A propriedade `asHTML` é do tipo `() -> String`,
+ou seja, “uma função que não recebe parâmetros e retorna um valor `String`”.
 
-By default, the `asHTML` property is assigned a closure that returns
-a string representation of an HTML tag.
-This tag contains the optional `text` value if it exists,
-or no text content if `text` doesn't exist.
-For a paragraph element, the closure would return `"<p>some text</p>"` or `"<p />"`,
-depending on whether the `text` property equals `"some text"` or `nil`.
+Por padrão, a propriedade `asHTML` recebe uma closure
+que retorna uma representação em string de uma tag HTML.
+Essa tag contém o valor optional de `text`, se ele existir,
+ou nenhum conteúdo de texto, se `text` não existir.
+Para um elemento de parágrafo, a closure retornaria `"<p>some text</p>"` ou `"<p />"`,
+dependendo de a propriedade `text` ser igual a `"some text"` ou a `nil`.
 
-The `asHTML` property is named and used somewhat like an instance method.
-However, because `asHTML` is a closure property rather than an instance method,
-you can replace the default value of the `asHTML` property with a custom closure,
-if you want to change the HTML rendering for a particular HTML element.
+A propriedade `asHTML` é nomeada e usada de forma parecida com um método de instância.
+No entanto, como `asHTML` é uma propriedade de closure e não um método de instância,
+você pode substituir o valor padrão da propriedade `asHTML`
+por uma closure personalizada,
+se quiser mudar a renderização HTML de um elemento específico.
 
-For example, the `asHTML` property could be set to a closure
-that defaults to some text if the `text` property is `nil`,
-in order to prevent the representation from returning an empty HTML tag:
+Por exemplo, a propriedade `asHTML` poderia ser definida com uma closure
+que usa algum texto padrão se a propriedade `text` for `nil`,
+para evitar que a representação retorne uma tag HTML vazia:
 
 ```swift
 let heading = HTMLElement(name: "h1")
@@ -1222,21 +1206,21 @@ print(heading.asHTML())
   ```
 -->
 
-> Note: The `asHTML` property is declared as a lazy property,
-> because it's only needed if and when the element actually needs to be rendered
-> as a string value for some HTML output target.
-> The fact that `asHTML` is a lazy property means that you can refer to `self`
-> within the default closure,
-> because the lazy property will not be accessed until
-> after initialization has been completed and `self` is known to exist.
+> Nota: A propriedade `asHTML` é declarada como lazy
+> porque só é necessária se e quando o elemento precisar ser renderizado
+> como um valor de string para algum destino de saída HTML.
+> Como `asHTML` é uma propriedade lazy,
+> você pode se referir a `self` dentro da closure padrão,
+> porque a propriedade lazy não é acessada
+> até que a inicialização esteja completa e `self` exista.
 
-The `HTMLElement` class provides a single initializer,
-which takes a `name` argument and (if desired) a `text` argument
-to initialize a new element.
-The class also defines a deinitializer,
-which prints a message to show when an `HTMLElement` instance is deallocated.
+A classe `HTMLElement` oferece um único inicializador,
+que recebe um argumento `name` e, se desejado, um argumento `text`
+para inicializar um novo elemento.
+A classe também define um desinicializador,
+que imprime uma mensagem para mostrar quando uma instância de `HTMLElement` é desalocada.
 
-Here's how you use the `HTMLElement` class to create and print a new instance:
+Veja como usar a classe `HTMLElement` para criar e imprimir uma nova instância:
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
@@ -1254,33 +1238,33 @@ print(paragraph!.asHTML())
   ```
 -->
 
-> Note: The `paragraph` variable above is defined as an *optional* `HTMLElement`,
-> so that it can be set to `nil` below to demonstrate
-> the presence of a strong reference cycle.
+> Nota: A variável `paragraph` acima é definida como um `HTMLElement` *optional*,
+> para que possa ser definida como `nil` mais adiante
+> e demonstrar a presença de um ciclo de strong reference.
 
-Unfortunately, the `HTMLElement` class, as written above,
-creates a strong reference cycle between
-an `HTMLElement` instance and the closure used for its default `asHTML` value.
-Here's how the cycle looks:
+Infelizmente, a classe `HTMLElement`, como escrita acima,
+cria um ciclo de strong reference entre
+uma instância de `HTMLElement` e a closure usada para o valor padrão de `asHTML`.
+Veja como fica o ciclo:
 
 ![](closureReferenceCycle01)
 
-The instance's `asHTML` property holds a strong reference to its closure.
-However, because the closure refers to `self` within its body
-(as a way to reference `self.name` and `self.text`),
-the closure *captures* self,
-which means that it holds a strong reference back to the `HTMLElement` instance.
-A strong reference cycle is created between the two.
-(For more information about capturing values in a closure,
-see <doc:Closures#Capturing-Values>.)
+A propriedade `asHTML` da instância tem uma strong reference para a closure.
+No entanto, como a closure se refere a `self` no seu corpo
+(para acessar `self.name` e `self.text`),
+a closure *captura* `self`,
+o que significa que ela mantém uma strong reference de volta para a instância de `HTMLElement`.
+Um ciclo de strong reference é criado entre as duas.
+(Para mais informações sobre a captura de valores em uma closure,
+consulte <doc:Closures#Capturing-Values>.)
 
-> Note: Even though the closure refers to `self` multiple times,
-> it only captures one strong reference to the `HTMLElement` instance.
+> Nota: Mesmo que a closure se refira a `self` várias vezes,
+> ela captura apenas uma strong reference para a instância de `HTMLElement`.
 
-If you set the `paragraph` variable to `nil`
-and break its strong reference to the `HTMLElement` instance,
-the strong reference cycle prevents deallocating
-both the `HTMLElement` instance and its closure:
+Se você definir a variável `paragraph` como `nil`
+e quebrar a strong reference para a instância de `HTMLElement`,
+o ciclo de strong reference impede a desalocação
+tanto da instância de `HTMLElement` quanto da sua closure:
 
 ```swift
 paragraph = nil
@@ -1294,35 +1278,35 @@ paragraph = nil
   ```
 -->
 
-Note that the message in the `HTMLElement` deinitializer isn't printed,
-which shows that the `HTMLElement` instance isn't deallocated.
+Observe que a mensagem do desinicializador de `HTMLElement` não é impressa,
+o que mostra que a instância de `HTMLElement` não é desalocada.
 
-## Resolving Strong Reference Cycles for Closures
+## Resolvendo ciclos de strong reference para closures
 
-You resolve a strong reference cycle between a closure and a class instance
-by defining a *capture list* as part of the closure's definition.
-A capture list defines the rules to use when capturing one or more reference types
-within the closure's body.
-As with strong reference cycles between two class instances,
-you declare each captured reference to be a weak or unowned reference
-rather than a strong reference.
-The appropriate choice of weak or unowned depends on
-the relationships between the different parts of your code.
+Você resolve um ciclo de strong reference entre uma closure e uma instância de classe
+definindo uma *lista de captura* como parte da definição da closure.
+Uma lista de captura define as regras a serem usadas ao capturar
+uma ou mais referências a tipos de referência dentro do corpo da closure.
+Assim como nos ciclos de strong reference entre duas instâncias de classe,
+você declara cada referência capturada como uma referência weak ou unowned,
+em vez de uma strong reference.
+A escolha entre weak e unowned depende
+do relacionamento entre as diferentes partes do seu código.
 
-> Note: Swift requires you to write `self.someProperty` or `self.someMethod()`
-> (rather than just `someProperty` or `someMethod()`)
-> whenever you refer to a member of `self` within a closure.
-> This helps you remember that it's possible to capture `self` by accident.
+> Nota: O Swift exige que você escreva `self.someProperty` ou `self.someMethod()`
+> (em vez de apenas `someProperty` ou `someMethod()`)
+> sempre que se referir a um membro de `self` dentro de uma closure.
+> Isso ajuda a lembrar que é possível capturar `self` sem querer.
 
-### Defining a Capture List
+### Definindo uma lista de captura
 
-Each item in a capture list is a pairing of the `weak` or `unowned` keyword
-with a reference to a class instance (such as `self`)
-or a variable initialized with some value (such as `delegate = self.delegate`).
-These pairings are written within a pair of square braces, separated by commas.
+Cada item de uma lista de captura é um par formado pela palavra-chave `weak` ou `unowned`
+e uma referência a uma instância de classe (como `self`)
+ou a uma variável inicializada com algum valor (como `delegate = self.delegate`).
+Esses pares são escritos entre colchetes, separados por vírgulas.
 
-Place the capture list before a closure's parameter list and return type
-if they're provided:
+Coloque a lista de captura antes da lista de parâmetros e do tipo de retorno da closure,
+se eles forem informados:
 
 ```swift
 lazy var someClosure = {
@@ -1348,10 +1332,10 @@ lazy var someClosure = {
   ```
 -->
 
-If a closure doesn't specify a parameter list or return type
-because they can be inferred from context,
-place the capture list at the very start of the closure,
-followed by the `in` keyword:
+Se uma closure não especificar uma lista de parâmetros nem um tipo de retorno,
+porque eles podem ser inferidos pelo contexto,
+coloque a lista de captura no início da closure,
+seguida da palavra-chave `in`:
 
 ```swift
 lazy var someClosure = {
@@ -1375,30 +1359,30 @@ lazy var someClosure = {
   ```
 -->
 
-### Weak and Unowned References
+### Referências weak e unowned
 
-Define a capture in a closure as an unowned reference
-when the closure and the instance it captures will always refer to each other,
-and will always be deallocated at the same time.
+Defina uma captura em uma closure como uma referência unowned
+quando a closure e a instância que ela captura sempre se referirem uma à outra,
+e sempre forem desalocadas ao mesmo tempo.
 
-Conversely, define a capture as a weak reference when the captured reference
-may become `nil` at some point in the future.
-Weak references are always of an optional type,
-and automatically become `nil` when the instance they reference is deallocated.
-This enables you to check for their existence within the closure's body.
+Por outro lado, defina uma captura como referência weak
+quando a referência capturada puder se tornar `nil` em algum momento no futuro.
+Referências weak são sempre de um tipo optional
+e se tornam `nil` automaticamente quando a instância a que se referem é desalocada.
+Isso permite verificar a existência delas dentro do corpo da closure.
 
 <!--
   <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
 -->
 
-> Note: If the captured reference will never become `nil`,
-> it should always be captured as an unowned reference,
-> rather than a weak reference.
+> Nota: Se a referência capturada nunca vai se tornar `nil`,
+> ela deve sempre ser capturada como unowned,
+> e não como weak.
 
-An unowned reference is the appropriate capture method to use to resolve
-the strong reference cycle in the `HTMLElement` example
-from <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> above.
-Here's how you write the `HTMLElement` class to avoid the cycle:
+Uma unowned reference é a forma de captura apropriada para resolver
+o ciclo de strong reference do exemplo `HTMLElement`
+de <doc:AutomaticReferenceCounting#Strong-Reference-Cycles-for-Closures> acima.
+Veja como escrever a classe `HTMLElement` para evitar o ciclo:
 
 ```swift
 class HTMLElement {
@@ -1454,12 +1438,13 @@ class HTMLElement {
   ```
 -->
 
-This implementation of `HTMLElement` is identical to the previous implementation,
-apart from the addition of a capture list within the `asHTML` closure.
-In this case, the capture list is `[unowned self]`,
-which means “capture self as an unowned reference rather than a strong reference”.
+Esta implementação de `HTMLElement` é idêntica à anterior,
+exceto pela adição de uma lista de captura na closure de `asHTML`.
+Nesse caso, a lista de captura é `[unowned self]`,
+o que significa “capturar `self` como uma unowned reference
+em vez de uma strong reference”.
 
-You can create and print an `HTMLElement` instance as before:
+Você pode criar e imprimir uma instância de `HTMLElement` como antes:
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
@@ -1477,15 +1462,15 @@ print(paragraph!.asHTML())
   ```
 -->
 
-Here's how the references look with the capture list in place:
+Veja como ficam as referências com a lista de captura no lugar:
 
 ![](closureReferenceCycle02)
 
-This time, the capture of `self` by the closure is an unowned reference,
-and doesn't keep a strong hold on the `HTMLElement` instance it has captured.
-If you set the strong reference from the `paragraph` variable to `nil`,
-the `HTMLElement` instance is deallocated,
-as can be seen from the printing of its deinitializer message in the example below:
+Desta vez, a captura de `self` pela closure é uma unowned reference,
+e não mantém uma strong reference sobre a instância de `HTMLElement` que ela capturou.
+Se você definir a strong reference da variável `paragraph` como `nil`,
+a instância de `HTMLElement` é desalocada,
+como se vê pela impressão da mensagem do seu desinicializador no exemplo abaixo:
 
 ```swift
 paragraph = nil
@@ -1501,8 +1486,8 @@ paragraph = nil
   ```
 -->
 
-For more information about capture lists,
-see <doc:Expressions#Capture-Lists>.
+Para mais informações sobre listas de captura,
+consulte <doc:Expressions#Capture-Lists>.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -1513,3 +1498,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

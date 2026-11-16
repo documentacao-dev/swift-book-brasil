@@ -1417,11 +1417,11 @@ let sideLength = optionalSquare?.sideLength
   ```
 -->
 
-## Enumerações e estruturas
+## Enums e structs
 
-Use `enum` para criar uma enumeração.
+Use `enum` para criar um enum.
 Assim como classes e todos os outros tipos nomeados,
-enumerações podem ter métodos associados a elas.
+enums podem ter métodos associados a eles.
 
 <!--
   REFERENCE
@@ -1498,12 +1498,12 @@ mas você pode mudar esse comportamento especificando valores explicitamente.
 No exemplo acima, `Ace` recebe explicitamente o raw value `1`,
 e os demais raw values são atribuídos em ordem.
 Você também pode usar strings ou números de ponto flutuante
-como raw type de uma enumeração.
-Use a propriedade `rawValue` para acessar o raw value de um caso da enumeração.
+como raw type de um enum.
+Use a propriedade `rawValue` para acessar o raw value de um caso do enum.
 
 Use o inicializador `init?(rawValue:)`
-para criar uma instância de uma enumeração a partir de um raw value.
-Ele retorna o caso da enumeração que corresponde ao raw value,
+para criar uma instância de um enum a partir de um raw value.
+Ele retorna o caso do enum que corresponde ao raw value,
 ou `nil` se não houver nenhum `Rank` correspondente.
 
 ```swift
@@ -1524,7 +1524,7 @@ if let convertedRank = Rank(rawValue: 3) {
   ```
 -->
 
-Os valores dos casos de uma enumeração são valores de verdade,
+Os valores dos casos de um enum são valores de verdade,
 não apenas outra forma de escrever seus raw values.
 Na verdade,
 nos casos em que não há um raw value significativo,
@@ -1587,26 +1587,26 @@ let heartsDescription = hearts.simpleDescription()
   Wikipedia lists a good half dozen orders.
 -->
 
-Repare nas duas formas como o caso `hearts` da enumeração é mencionado acima:
+Repare nas duas formas como o caso `hearts` do enum é mencionado acima:
 ao atribuir um valor à constante `hearts`,
-o caso da enumeração `Suit.hearts` é referenciado pelo nome completo,
+o caso do enum `Suit.hearts` é referenciado pelo nome completo,
 porque a constante não tem um tipo explícito especificado.
 Dentro do `switch`,
-o caso da enumeração é referenciado pela forma abreviada `.hearts`,
+o caso do enum é referenciado pela forma abreviada `.hearts`,
 porque já se sabe que o valor de `self` é um naipe.
 Você pode usar a forma abreviada
 sempre que o tipo do valor já for conhecido.
 
-Se uma enumeração tem raw values,
+Se um enum tem raw values,
 esses valores são determinados como parte da declaração,
-o que significa que toda instância de um determinado caso da enumeração
+o que significa que toda instância de um determinado caso do enum
 sempre tem o mesmo raw value.
-Outra opção para os casos de enumeração
-é ter valores associados ao caso:
+Outra opção para os casos de enum
+é ter associated values ao caso:
 esses valores são determinados quando você cria a instância,
-e podem ser diferentes para cada instância de um caso da enumeração.
-Você pode pensar nos valores associados
-como se comportando como propriedades armazenadas da instância do caso da enumeração.
+e podem ser diferentes para cada instância de um caso do enum.
+Você pode pensar nos associated values
+como se comportando como propriedades armazenadas da instância do caso do enum.
 Por exemplo,
 considere o caso de solicitar
 os horários de nascer e pôr do sol a um servidor.
@@ -1904,7 +1904,7 @@ let userID = await server.connect()
   ```
 -->
 
-## Protocolos e extensões
+## Protocolos e extensions
 
 Use `protocol` para declarar um protocolo.
 
@@ -1926,7 +1926,7 @@ protocol ExampleProtocol {
   ```
 -->
 
-Classes, enumerações e estruturas podem todas adotar protocolos.
+Classes, enums e structs podem todas adotar protocolos.
 
 <!--
   REFERENCE
@@ -1997,7 +1997,7 @@ let bDescription = b.simpleDescription
 
 Repare no uso da palavra-chave `mutating`
 na declaração de `SimpleStructure`,
-para marcar um método que modifica a estrutura.
+para marcar um método que modifica a struct.
 A declaração de `SimpleClass` não precisa
 de nenhum de seus métodos marcados como `mutating`,
 porque métodos de uma classe sempre podem modificar a classe.
@@ -2362,7 +2362,7 @@ makeArray(repeating: "knock", numberOfTimes: 4)
 -->
 
 Você pode criar formas genéricas de funções e métodos,
-assim como de classes, enumerações e estruturas.
+assim como de classes, enums e structs.
 
 ```swift
 // Reimplement the Swift standard library's optional type

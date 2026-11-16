@@ -1,24 +1,24 @@
-# Memory Safety
+# Segurança de memória
 
-Structure your code to avoid conflicts when accessing memory.
+Estruture seu código para evitar conflitos ao acessar a memória.
 
-By default, Swift prevents unsafe behavior from happening in your code.
-For example,
-Swift ensures that variables are initialized before they're used,
-memory isn't accessed after it's been deallocated,
-and array indices are checked for out-of-bounds errors.
+Por padrão, o Swift impede que comportamentos inseguros aconteçam no seu código.
+Por exemplo,
+o Swift garante que variáveis sejam inicializadas antes de serem usadas,
+que a memória não seja acessada depois de liberada,
+e que os índices de array sejam verificados contra erros de limites.
 
-Swift also makes sure that multiple accesses
-to the same area of memory don't conflict,
-by requiring code that modifies a location in memory
-to have exclusive access to that memory.
-Because Swift manages memory automatically,
-most of the time you don't have to think about accessing memory at all.
-However,
-it's important to understand where potential conflicts can occur,
-so you can avoid writing code that has conflicting access to memory.
-If your code does contain conflicts,
-you'll get a compile-time or runtime error.
+O Swift também garante que vários acessos
+à mesma área da memória não entrem em conflito,
+exigindo que o código que modifica um local da memória
+tenha acesso exclusivo a essa memória.
+Como o Swift gerencia a memória automaticamente,
+na maior parte do tempo você não precisa pensar em acesso à memória de forma alguma.
+No entanto,
+é importante entender onde podem ocorrer conflitos,
+para que você evite escrever código com acesso conflitante à memória.
+Se seu código contiver conflitos,
+você receberá um erro em tempo de compilação ou em tempo de execução.
 
 <!--
   TODO: maybe re-introduce this text...
@@ -28,13 +28,13 @@ you'll get a compile-time or runtime error.
   Unsafe access to memory is available, if you ask for it explicitly...
 -->
 
-## Understanding Conflicting Access to Memory
+## Entendendo o acesso conflitante à memória
 
-Access to memory happens in your code
-when you do things like set the value of a variable
-or pass an argument to a function.
-For example,
-the following code contains both a read access and a write access:
+Acessos à memória acontecem no seu código
+quando você faz coisas como definir o valor de uma variável
+ou passar um argumento para uma função.
+Por exemplo,
+o código a seguir contém um acesso de leitura e um acesso de escrita:
 
 ```swift
 // A write access to the memory where one is stored.
@@ -62,101 +62,100 @@ print("We're number \(one)!")
   or else I'm going to keep getting "We are Number One" stuck in my head.
 -->
 
-A conflicting access to memory can occur
-when different parts of your code are trying
-to access the same location in memory at the same time.
-Multiple accesses to a location in memory at the same time
-can produce unpredictable or inconsistent behavior.
-In Swift, there are ways to modify a value
-that span several lines of code,
-making it possible to attempt to access a value
-in the middle of its own modification.
+Um acesso conflitante à memória pode acontecer
+quando partes diferentes do código tentam
+acessar o mesmo local da memória ao mesmo tempo.
+Vários acessos ao mesmo local da memória ao mesmo tempo
+podem produzir um comportamento imprevisível ou inconsistente.
+No Swift, há maneiras de modificar um valor
+que se estendem por várias linhas de código,
+o que torna possível tentar acessar um valor
+no meio da própria modificação.
 
-You can see a similar problem
-by thinking about how you update a budget
-that's written on a piece of paper.
-Updating the budget is a two-step process:
-First you add the items' names and prices,
-and then you change the total amount
-to reflect the items currently on the list.
-Before and after the update,
-you can read any information from the budget
-and get a correct answer,
-as shown in the figure below.
+Você pode ver um problema parecido
+pensando em como atualizar um orçamento
+escrito em uma folha de papel.
+Atualizar o orçamento é um processo de duas etapas:
+primeiro você acrescenta os nomes e os preços dos itens,
+e depois altera o valor total
+para refletir os itens que estão na lista no momento.
+Antes e depois da atualização,
+você pode ler qualquer informação do orçamento
+e obter uma resposta correta,
+como mostra a figura abaixo.
 
 ![](memory_shopping)
 
-While you're adding items to the budget,
-it's in a temporary, invalid state
-because the total amount hasn't been updated
-to reflect the newly added items.
-Reading the total amount
-during the process of adding an item
-gives you incorrect information.
+Enquanto você acrescenta itens ao orçamento,
+ele está em um estado temporário e inválido,
+porque o valor total ainda não foi atualizado
+para refletir os itens recém-acrescentados.
+Ler o valor total
+durante o processo de acrescentar um item
+fornece uma informação incorreta.
 
-This example also demonstrates
-a challenge you may encounter
-when fixing conflicting access to memory:
-There are sometimes multiple ways to fix the conflict
-that produce different answers,
-and it's not always obvious which answer is correct.
-In this example,
-depending on whether you wanted the original total amount
-or the updated total amount,
-either $5 or $320 could be the correct answer.
-Before you can fix the conflicting access,
-you have to determine what it was intended to do.
+Este exemplo também mostra um desafio
+que você pode encontrar ao corrigir acessos conflitantes à memória:
+às vezes há mais de uma forma de corrigir o conflito,
+e cada uma produz uma resposta diferente,
+e nem sempre é óbvio qual resposta está correta.
+Neste exemplo,
+dependendo de você querer o valor total original
+ou o valor total atualizado,
+$5 ou $320 podem ser a resposta correta.
+Antes de corrigir o acesso conflitante,
+você precisa determinar o que ele deveria fazer.
 
-> Note: If you've written concurrent or multithreaded code,
-> conflicting access to memory might be a familiar problem.
-> However,
-> the conflicting access discussed here can happen
-> on a single thread and
-> *doesn't* involve concurrent or multithreaded code.
+> Nota: Se você já escreveu código concorrente ou multithread,
+> o acesso conflitante à memória pode ser um problema familiar.
+> No entanto,
+> o acesso conflitante discutido aqui pode acontecer
+> em uma única thread e
+> *não* envolve código concorrente nem multithread.
 >
-> If you have conflicting access to memory
-> from within a single thread,
-> Swift guarantees that you'll get an error
-> at either compile time or runtime.
-> For multithreaded code,
-> use [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early)
-> to help detect conflicting access across threads.
+> Se houver acesso conflitante à memória
+> dentro de uma única thread,
+> o Swift garante que você receberá um erro
+> em tempo de compilação ou em tempo de execução.
+> Para código multithread,
+> use o [Thread Sanitizer](https://developer.apple.com/documentation/xcode/diagnosing_memory_thread_and_crash_issues_early)
+> para ajudar a detectar acessos conflitantes entre threads.
 
 <!--
   TODO: The xref above doesn't seem to give enough information.
   What should I be looking for when I get to the linked page?
 -->
 
-### Characteristics of Memory Access
+### Características do acesso à memória
 
-There are three characteristics of memory access
-to consider in the context of conflicting access:
-whether the access is a read or a write,
-the duration of the access,
-and the location in memory being accessed.
-Specifically,
-a conflict occurs if you have two accesses
-that meet all of the following conditions:
+Há três características do acesso à memória
+a considerar no contexto de acesso conflitante:
+se o acesso é de leitura ou de escrita,
+a duração do acesso
+e o local da memória acessado.
+Especificamente,
+existe um conflito quando há dois acessos
+que atendem a todas as condições a seguir:
 
-- The accesses aren't both reads, and aren't both atomic.
-- They access the same location in memory.
-- Their durations overlap.
+- Os acessos não são ambos de leitura, e não são ambos atômicos.
+- Eles acessam o mesmo local da memória.
+- As durações deles se sobrepõem.
 
-The difference between a read and write access
-is usually obvious:
-a write access changes the location in memory,
-but a read access doesn't.
-The location in memory
-refers to what is being accessed ---
-for example, a variable, constant, or property.
-The duration of a memory access
-is either instantaneous or long-term.
+A diferença entre acesso de leitura e de escrita
+geralmente é óbvia:
+um acesso de escrita altera o local da memória,
+mas um acesso de leitura não altera.
+O local da memória
+se refere ao que está sendo acessado ---
+por exemplo, uma variável, constante ou propriedade.
+A duração de um acesso à memória
+é instantânea ou de longo prazo.
 
-An access is *atomic* if
-it's a call to an atomic operation on [`Atomic`] or [`AtomicLazyReference`],
-or if it uses only C atomic operations;
-otherwise it's nonatomic.
-For a list of C atomic functions, see the `stdatomic(3)` man page.
+Um acesso é *atômico* se
+for uma chamada a uma operação atômica em [`Atomic`] ou [`AtomicLazyReference`],
+ou se usar apenas operações atômicas do C;
+caso contrário, ele é não atômico.
+Para uma lista de funções atômicas do C, veja a página de manual `stdatomic(3)`.
 
 [`Atomic`]: https://developer.apple.com/documentation/synchronization/atomic
 [`AtomicLazyReference`]: https://developer.apple.com/documentation/synchronization/atomiclazyreference
@@ -167,13 +166,13 @@ For a list of C atomic functions, see the `stdatomic(3)` man page.
   https://github.com/apple/swift-atomics/tree/main/Sources/_AtomicsShims
 -->
 
-An access is *instantaneous*
-if it's not possible for other code to run
-after that access starts but before it ends.
-By their nature, two instantaneous accesses can't happen at the same time.
-Most memory access is instantaneous.
-For example,
-all the read and write accesses in the code listing below are instantaneous:
+Um acesso é *instantâneo*
+se não for possível que outro código seja executado
+depois que esse acesso começa, mas antes de ele terminar.
+Por natureza, dois acessos instantâneos não podem acontecer ao mesmo tempo.
+A maior parte dos acessos à memória é instantânea.
+Por exemplo,
+todos os acessos de leitura e de escrita no código abaixo são instantâneos:
 
 ```swift
 func oneMore(than number: Int) -> Int {
@@ -201,39 +200,39 @@ print(myNumber)
   ```
 -->
 
-However,
-there are several ways to access memory,
-called *long-term* accesses,
-that span the execution of other code.
-The difference between instantaneous access and long-term access
-is that it’s possible for other code to run
-after a long-term access starts but before it ends,
-which is called *overlap*.
-A long-term access can overlap
-with other long-term accesses and instantaneous accesses.
+No entanto,
+há várias formas de acessar a memória,
+chamadas acessos de *longo prazo*,
+que se estendem pela execução de outro código.
+A diferença entre acesso instantâneo e acesso de longo prazo
+é que pode ser que outro código seja executado
+depois que um acesso de longo prazo começa, mas antes de ele terminar,
+o que se chama *sobreposição*.
+Um acesso de longo prazo pode se sobrepor
+a outros acessos de longo prazo e a acessos instantâneos.
 
-Overlapping accesses appear primarily in code that uses
-in-out parameters in functions and methods
-or mutating methods of a structure.
-The specific kinds of Swift code that use long-term accesses
-are discussed in the sections below.
+Sobreposições aparecem principalmente em código que usa
+parâmetros in-out em funções e métodos,
+ou métodos mutating de uma struct.
+Os tipos específicos de código Swift que usam acessos de longo prazo
+são discutidos nas seções a seguir.
 
-## Conflicting Access to In-Out Parameters
+## Acesso conflitante a parâmetros in-out
 
-A function has long-term write access
-to all of its in-out parameters.
-The write access for an in-out parameter starts
-after all of the non-in-out parameters have been evaluated
-and lasts for the entire duration of that function call.
-If there are multiple in-out parameters,
-the write accesses start in the same order as the parameters appear.
+Uma função tem acesso de escrita de longo prazo
+a todos os seus parâmetros in-out.
+O acesso de escrita de um parâmetro in-out começa
+depois que todos os parâmetros que não são in-out foram avaliados
+e dura por toda a chamada da função.
+Se houver vários parâmetros in-out,
+os acessos de escrita começam na mesma ordem em que os parâmetros aparecem.
 
-One consequence of this long-term write access
-is that you can't access the original
-variable that was passed as in-out,
-even if scoping rules and access control would otherwise permit it ---
-any access to the original creates a conflict.
-For example:
+Uma consequência desse acesso de escrita de longo prazo
+é que você não pode acessar a variável original
+que foi passada como in-out,
+mesmo que as regras de escopo e de controle de acesso permitissem ---
+qualquer acesso à original cria um conflito.
+Por exemplo:
 
 ```swift
 var stepSize = 1
@@ -264,22 +263,22 @@ increment(&stepSize)
   ```
 -->
 
-In the code above,
-`stepSize` is a global variable,
-and it's normally accessible from within `increment(_:)`.
-However,
-the read access to `stepSize` overlaps with
-the write access to `number`.
-As shown in the figure below,
-both `number` and `stepSize` refer to the same location in memory.
-The read and write accesses
-refer to the same memory and they overlap,
-producing a conflict.
+No código acima,
+`stepSize` é uma variável global,
+e normalmente ela é acessível de dentro de `increment(_:)`.
+No entanto,
+o acesso de leitura a `stepSize` se sobrepõe
+ao acesso de escrita a `number`.
+Como mostra a figura abaixo,
+tanto `number` quanto `stepSize` se referem ao mesmo local da memória.
+Os acessos de leitura e de escrita
+se referem à mesma memória e se sobrepõem,
+o que produz um conflito.
 
 ![](memory_increment)
 
-One way to solve this conflict
-is to make an explicit copy of `stepSize`:
+Uma forma de resolver esse conflito
+é fazer uma cópia explícita de `stepSize`:
 
 ```swift
 // Make an explicit copy.
@@ -310,19 +309,18 @@ stepSize = copyOfStepSize
   ```
 -->
 
-When you make a copy of `stepSize` before calling `increment(_:)`,
-it's clear that the value of `copyOfStepSize` is incremented
-by the current step size.
-The read access ends before the write access starts,
-so there isn't a conflict.
+Quando você faz uma cópia de `stepSize` antes de chamar `increment(_:)`,
+fica claro que o valor de `copyOfStepSize` é incrementado
+pelo tamanho do passo atual.
+O acesso de leitura termina antes de o acesso de escrita começar,
+então não há conflito.
 
-Another consequence of long-term write access
-to in-out parameters is that
-passing a single variable
-as the argument for multiple in-out parameters
-of the same function
-produces a conflict.
-For example:
+Outra consequência do acesso de escrita de longo prazo
+aos parâmetros in-out é que
+passar uma mesma variável como argumento de vários parâmetros in-out
+da mesma função
+produz um conflito.
+Por exemplo:
 
 ```swift
 func balance(_ x: inout Int, _ y: inout Int) {
@@ -366,27 +364,27 @@ balance(&playerOneScore, &playerOneScore)
   ```
 -->
 
-The `balance(_:_:)` function above
-modifies its two parameters
-to divide the total value evenly between them.
-Calling it with `playerOneScore` and `playerTwoScore` as arguments
-doesn't produce a conflict ---
-there are two write accesses that overlap in time,
-but they access different locations in memory.
-In contrast,
-passing `playerOneScore` as the value for both parameters
-produces a conflict
-because it tries to perform two write accesses
-to the same location in memory at the same time.
+A função `balance(_:_:)` acima
+modifica seus dois parâmetros
+para dividir o valor total igualmente entre eles.
+Chamá-la com `playerOneScore` e `playerTwoScore` como argumentos
+não produz conflito ---
+há dois acessos de escrita que se sobrepõem no tempo,
+mas eles acessam locais diferentes da memória.
+Em contraste,
+passar `playerOneScore` como valor para os dois parâmetros
+produz um conflito,
+porque tenta fazer dois acessos de escrita
+ao mesmo local da memória ao mesmo tempo.
 
-> Note: Because operators are functions,
-> they can also have long-term accesses to their in-out parameters.
-> For example, if `balance(_:_:)` was an operator function named `<^>`,
-> writing `playerOneScore <^> playerOneScore`
-> would result in the same conflict
-> as `balance(&playerOneScore, &playerOneScore)`.
+> Nota: Como operadores são funções,
+> eles também podem ter acessos de longo prazo aos seus parâmetros in-out.
+> Por exemplo, se `balance(_:_:)` fosse uma função operadora chamada `<^>`,
+> escrever `playerOneScore <^> playerOneScore`
+> resultaria no mesmo conflito
+> que `balance(&playerOneScore, &playerOneScore)`.
 
-## Conflicting Access to self in Methods
+## Acesso conflitante a self em métodos
 
 <!--
   This (probably?) applies to all value types,
@@ -401,11 +399,11 @@ to the same location in memory at the same time.
   because, under the hood, that's exactly what happens.
 -->
 
-A mutating method on a structure has write access to `self`
-for the duration of the method call.
-For example, consider a game where each player
-has a health amount, which decreases when taking damage,
-and an energy amount, which decreases when using special abilities.
+Um método mutating de uma struct tem acesso de escrita a `self`
+durante toda a chamada do método.
+Por exemplo, considere um jogo em que cada jogador
+tem uma quantidade de vida, que diminui ao receber dano,
+e uma quantidade de energia, que diminui ao usar habilidades especiais.
 
 ```swift
 struct Player {
@@ -442,15 +440,15 @@ struct Player {
   ```
 -->
 
-In the `restoreHealth()` method above,
-a write access to `self` starts at the beginning of the method
-and lasts until the method returns.
-In this case, there's no other code
-inside `restoreHealth()`
-that could have an overlapping access to the properties of a `Player` instance.
-The `shareHealth(with:)` method below
-takes another `Player` instance as an in-out parameter,
-creating the possibility of overlapping accesses.
+No método `restoreHealth()` acima,
+um acesso de escrita a `self` começa no início do método
+e dura até o método retornar.
+Nesse caso, não há outro código
+dentro de `restoreHealth()`
+que possa ter um acesso sobreposto às propriedades de uma instância de `Player`.
+O método `shareHealth(with:)` abaixo
+recebe outra instância de `Player` como parâmetro in-out,
+criando a possibilidade de acessos sobrepostos.
 
 ```swift
 extension Player {
@@ -480,25 +478,25 @@ oscar.shareHealth(with: &maria)  // OK
   ```
 -->
 
-In the example above,
-calling the `shareHealth(with:)` method
-for Oscar's player to share health with Maria's player
-doesn't cause a conflict.
-There's a write access to `oscar` during the method call
-because `oscar` is the value of `self` in a mutating method,
-and there's a write access to `maria`
-for the same duration
-because `maria` was passed as an in-out parameter.
-As shown in the figure below,
-they access different locations in memory.
-Even though the two write accesses overlap in time,
-they don't conflict.
+No exemplo acima,
+chamar o método `shareHealth(with:)`
+para que o jogador do Oscar compartilhe vida com o jogador da Maria
+não causa conflito.
+Há um acesso de escrita a `oscar` durante a chamada do método
+porque `oscar` é o valor de `self` em um método mutating,
+e há um acesso de escrita a `maria`
+pela mesma duração
+porque `maria` foi passada como parâmetro in-out.
+Como mostra a figura abaixo,
+eles acessam locais diferentes da memória.
+Mesmo que os dois acessos de escrita se sobreponham no tempo,
+eles não entram em conflito.
 
 ![](memory_share_health_maria)
 
-However,
-if you pass `oscar` as the argument to `shareHealth(with:)`,
-there's a conflict:
+No entanto,
+se você passar `oscar` como argumento para `shareHealth(with:)`,
+há um conflito:
 
 ```swift
 oscar.shareHealth(with: &oscar)
@@ -526,32 +524,32 @@ oscar.shareHealth(with: &oscar)
   ```
 -->
 
-The mutating method needs write access to `self`
-for the duration of the method,
-and the in-out parameter needs write access to `teammate`
-for the same duration.
-Within the method,
-both `self` and `teammate` refer to
-the same location in memory ---
-as shown in the figure below.
-The two write accesses
-refer to the same memory and they overlap,
-producing a conflict.
+O método mutating precisa de acesso de escrita a `self`
+durante toda a duração do método,
+e o parâmetro in-out precisa de acesso de escrita a `teammate`
+pela mesma duração.
+Dentro do método,
+tanto `self` quanto `teammate` se referem ao
+mesmo local da memória ---
+como mostra a figura abaixo.
+Os dois acessos de escrita
+se referem à mesma memória e se sobrepõem,
+o que produz um conflito.
 
 ![](memory_share_health_oscar)
 
-## Conflicting Access to Properties
+## Acesso conflitante a propriedades
 
-Types like structures, tuples, and enumerations
-are made up of individual constituent values,
-such as the properties of a structure or the elements of a tuple.
-Because these are value types, mutating any piece of the value
-mutates the whole value,
-meaning read or write access to one of the properties
-requires read or write access to the whole value.
-For example,
-overlapping write accesses to the elements of a tuple
-produces a conflict:
+Tipos como structs, tuplas e enums
+são formados por valores constituintes individuais,
+como as propriedades de uma struct ou os elementos de uma tupla.
+Como são tipos por valor, modificar qualquer parte do valor
+modifica o valor inteiro,
+o que significa que o acesso de leitura ou de escrita a uma das propriedades
+exige acesso de leitura ou de escrita ao valor inteiro.
+Por exemplo,
+acessos de escrita sobrepostos aos elementos de uma tupla
+produzem um conflito:
 
 ```swift
 var playerInformation = (health: 10, energy: 20)
@@ -577,24 +575,24 @@ balance(&playerInformation.health, &playerInformation.energy)
   ```
 -->
 
-In the example above,
-calling `balance(_:_:)` on the elements of a tuple
-produces a conflict
-because there are overlapping write accesses to `playerInformation`.
-Both `playerInformation.health` and `playerInformation.energy`
-are passed as in-out parameters,
-which means `balance(_:_:)` needs write access to them
-for the duration of the function call.
-In both cases, a write access to the tuple element
-requires a write access to the entire tuple.
-This means there are two write accesses to `playerInformation`
-with durations that overlap,
-causing a conflict.
+No exemplo acima,
+chamar `balance(_:_:)` nos elementos de uma tupla
+produz um conflito
+porque há acessos de escrita sobrepostos a `playerInformation`.
+Tanto `playerInformation.health` quanto `playerInformation.energy`
+são passados como parâmetros in-out,
+o que significa que `balance(_:_:)` precisa de acesso de escrita a eles
+durante toda a chamada da função.
+Nos dois casos, um acesso de escrita a um elemento da tupla
+exige um acesso de escrita à tupla inteira.
+Isso significa que há dois acessos de escrita a `playerInformation`
+com durações sobrepostas,
+o que causa um conflito.
 
-The code below shows that the same error appears
-for overlapping write accesses
-to the properties of a structure
-that's stored in a global variable.
+O código abaixo mostra que o mesmo erro aparece
+em acessos de escrita sobrepostos
+às propriedades de uma struct
+armazenada em uma variável global.
 
 ```swift
 var holly = Player(name: "Holly", health: 10, energy: 10)
@@ -623,14 +621,14 @@ balance(&holly.health, &holly.energy)  // Error
   ```
 -->
 
-In practice,
-most access to the properties of a structure
-can overlap safely.
-For example,
-if the variable `holly` in the example above
-is changed to a local variable instead of a global variable,
-the compiler can prove that overlapping access
-to stored properties of the structure is safe:
+Na prática,
+a maioria dos acessos às propriedades de uma struct
+pode se sobrepor com segurança.
+Por exemplo,
+se a variável `holly` no exemplo acima
+for trocada por uma variável local em vez de uma variável global,
+o compilador consegue provar que o acesso sobreposto
+às propriedades armazenadas da struct é seguro:
 
 ```swift
 func someFunction() {
@@ -661,34 +659,34 @@ func someFunction() {
   ```
 -->
 
-In the example above,
-Oscar's health and energy are passed
-as the two in-out parameters to `balance(_:_:)`.
-The compiler can prove that memory safety is preserved
-because the two stored properties don't interact in any way.
+No exemplo acima,
+a vida e a energia do Oscar são passadas
+como os dois parâmetros in-out de `balance(_:_:)`.
+O compilador consegue provar que a segurança de memória é preservada
+porque as duas propriedades armazenadas não interagem de nenhuma forma.
 
-The restriction against
-overlapping access to properties of a structure
-isn't always necessary to preserve memory safety.
-Memory safety is the desired guarantee,
-but exclusive access is a stricter requirement than memory safety ---
-which means some code preserves memory safety,
-even though it violates exclusive access to memory.
-Swift allows this memory-safe code if the compiler can prove
-that the nonexclusive access to memory is still safe.
-Specifically, it can prove
-that overlapping access to properties of a structure is safe
-if the following conditions apply:
+A restrição contra
+o acesso sobreposto às propriedades de uma struct
+nem sempre é necessária para preservar a segurança de memória.
+A segurança de memória é a garantia desejada,
+mas o acesso exclusivo é um requisito mais rígido do que a segurança de memória ---
+o que significa que algum código preserva a segurança de memória,
+mesmo violando o acesso exclusivo à memória.
+O Swift permite esse código seguro para a memória se o compilador conseguir provar
+que o acesso não exclusivo à memória ainda é seguro.
+Especificamente, ele consegue provar
+que o acesso sobreposto às propriedades de uma struct é seguro
+se as condições a seguir forem atendidas:
 
-- You're accessing only stored properties of an instance,
-  not computed properties or class properties.
-- The structure is the value of a local variable,
-  not a global variable.
-- The structure is either not captured by any closures,
-  or it's captured only by nonescaping closures.
+- Você está acessando apenas propriedades armazenadas de uma instância,
+  não propriedades computadas nem propriedades de classe.
+- A struct é o valor de uma variável local,
+  não de uma variável global.
+- A struct não é capturada por nenhuma closure,
+  ou é capturada apenas por closures *nonescaping*.
 
-If the compiler can't prove the access is safe,
-it doesn't allow the access.
+Se o compilador não conseguir provar que o acesso é seguro,
+ele não permite o acesso.
 
 <!--
   Because there's no syntax
@@ -756,3 +754,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

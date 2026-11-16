@@ -1,33 +1,33 @@
-# Lexical Structure
+# Estrutura léxica
 
-Use the lowest-level components of the syntax.
+Use os componentes de mais baixo nível da sintaxe.
 
-The *lexical structure* of Swift describes what sequence of characters
-form valid tokens of the language.
-These valid tokens form the lowest-level building blocks of the language
-and are used to describe the rest of the language in subsequent chapters.
-A token consists of an identifier, keyword, punctuation, literal, or operator.
+A *estrutura léxica* do Swift descreve quais sequências de caracteres
+formam tokens válidos da linguagem.
+Esses tokens válidos são os blocos de construção de mais baixo nível da linguagem
+e são usados para descrever o restante da linguagem nos capítulos seguintes.
+Um token é formado por um identificador, uma palavra-chave, pontuação, um literal ou um operador.
 
-In most cases, tokens are generated from the characters of a Swift source file
-by considering the longest possible substring from the input text,
-within the constraints of the grammar that are specified below.
-This behavior is referred to as *longest match*
-or *maximal munch*.
+Na maioria dos casos, os tokens são gerados a partir dos caracteres de um arquivo-fonte do Swift
+considerando a maior subcadeia possível do texto de entrada,
+dentro das restrições da gramática especificada abaixo.
+Esse comportamento é chamado de *longest match*
+ou *maximal munch*.
 
-## Whitespace and Comments
+## Espaço em branco e comentários
 
-Whitespace has two uses: to separate tokens in the source file
-and to distinguish between prefix, postfix, and infix operators
-(see <doc:LexicalStructure#Operators>),
-but is otherwise ignored.
-The following characters are considered whitespace:
-space (U+0020),
-line feed (U+000A),
-carriage return (U+000D),
-horizontal tab (U+0009),
-vertical tab (U+000B),
-form feed (U+000C)
-and null (U+0000).
+O espaço em branco tem duas funções: separar tokens no arquivo-fonte
+e distinguir operadores prefixos, pós-fixos e infixos
+(veja <doc:LexicalStructure#Operators>),
+mas, fora isso, é ignorado.
+São considerados espaço em branco os seguintes caracteres:
+espaço (U+0020),
+quebra de linha (U+000A),
+retorno de carro (U+000D),
+tabulação horizontal (U+0009),
+tabulação vertical (U+000B),
+avanço de página (U+000C)
+e nulo (U+0000).
 
 <!--
   Whitespace characters are listed roughly from
@@ -35,17 +35,17 @@ and null (U+0000).
   not in order of Unicode scalar value.
 -->
 
-Comments are treated as whitespace by the compiler.
-Single line comments begin with `//`
-and continue until a line feed (U+000A)  or carriage return (U+000D).
-Multiline comments begin with `/*` and end with `*/`.
-Nesting multiline comments is allowed,
-but the comment markers must be balanced.
+Comentários são tratados como espaço em branco pelo compilador.
+Comentários de uma linha começam com `//`
+e continuam até uma quebra de linha (U+000A) ou um retorno de carro (U+000D).
+Comentários de várias linhas começam com `/*` e terminam com `*/`.
+Comentários de várias linhas podem ser aninhados,
+mas os marcadores de comentário precisam estar balanceados.
 
-Comments can contain additional formatting and markup,
-as described in [Markup Formatting Reference](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html).
+Comentários podem conter formatação e marcação adicionais,
+como descrito na [Referência de formatação de marcação](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html).
 
-> Grammar of whitespace:
+> Gramática de espaço em branco:
 >
 > *whitespace* → *whitespace-item* *whitespace*_?_ \
 > *whitespace-item* → *line-break* \
@@ -72,37 +72,34 @@ as described in [Markup Formatting Reference](https://developer.apple.com/librar
 > *multiline-comment-text-item* → *comment-text-item* \
 > *multiline-comment-text-item* → Any Unicode scalar value except  **`/*`** or  **`*/`**
 
-## Identifiers
+## Identificadores
 
-*Identifiers* begin with
-an uppercase or lowercase letter A through Z,
-an underscore (`_`),
-a noncombining alphanumeric Unicode character
-in the Basic Multilingual Plane,
-or a character outside the Basic Multilingual Plane
-that isn't in a Private Use Area.
-After the first character,
-digits and combining Unicode characters are also allowed.
+*Identificadores* começam com
+uma letra maiúscula ou minúscula de A a Z,
+um sublinhado (`_`),
+um caractere alfanumérico Unicode não combinante no Plano Multilíngue Básico,
+ou um caractere fora do Plano Multilíngue Básico
+que não esteja em uma Área de Uso Privado.
+Depois do primeiro caractere,
+dígitos e caracteres Unicode combinantes também são permitidos.
 
-Treat identifiers that begin with an underscore,
-subscripts whose first argument label begins with an underscore,
-and initializers whose first argument label begins with an underscore,
-as internal,
-even if their declaration has the `public` access-level modifier.
-This convention lets framework authors mark part of an API
-that clients must not interact with or depend on,
-even though some limitation requires the declaration to be public.
-In addition,
-identifiers that begin with two underscores
-are reserved for the Swift compiler and standard library.
+Trate como internos os identificadores que começam com sublinhado,
+os subscripts cujo primeiro rótulo de argumento começa com sublinhado
+e os inicializadores cujo primeiro rótulo de argumento começa com sublinhado,
+mesmo que a declaração tenha o modificador de nível de acesso `public`.
+Essa convenção permite que autores de frameworks marquem parte de uma API
+com a qual os clientes não devem interagir nem da qual devem depender,
+mesmo quando alguma limitação exige que a declaração seja pública.
+Além disso, identificadores que começam com dois sublinhados
+são reservados para o compilador do Swift e para a biblioteca padrão.
 
-To use a reserved word as an identifier
-or to include special characters like whitespace,
-put a backtick (\`) before and after it.
-For example, `class`, `100`, and `model & test` aren't valid identifiers,
-but `` `class` ``, `` `100` `` and `` `model & test` `` are valid.
-The backticks aren't considered part of the identifier;
-`` `x` `` and `x` have the same meaning.
+Para usar uma palavra reservada como identificador
+ou para incluir caracteres especiais como espaço em branco,
+coloque um acento grave (\`) antes e depois dela.
+Por exemplo, `class`, `100` e `model & test` não são identificadores válidos,
+mas `` `class` ``, `` `100` `` e `` `model & test` `` são válidos.
+Os acentos graves não são considerados parte do identificador;
+`` `x` `` e `x` têm o mesmo significado.
 
 <!--
 The paragraph above produces a link-resolution warning
@@ -112,34 +109,34 @@ https://github.com/swiftlang/swift-book/issues/71
 https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
-A raw identifier can contain any Unicode scalar value except the following:
+Um identificador bruto pode conter qualquer escalar Unicode, exceto os seguintes:
 
-- Backtick (`` ` ``)
-- Backslash (`\`)
-- Null (U+0000)
-- Horizontal tab (U+0009)
-- Line feed (U+000A)
-- Vertical tab (U+000B)
-- Carriage return (U+000D)
-- Next line (U+0085)
-- Nonbreaking space (U+00A0)
-- Ogham space mark (U+1680)
-- En quad (U+2000)
-- Em quad (U+2001)
-- En space (U+2002)
-- Em space (U+2003)
-- Three-per-em space (U+2004)
-- Four-per-em space (U+2005)
-- Six-per-em space (U+2006)
-- Figure space (U+2007)
-- Punctuation space (U+2008)
-- Thin space (U+2009)
-- Hair space (U+200A)
-- Line separator (U+2028)
-- Paragraph separator (U+2029)
-- Narrow nonbreaking space (U+202F)
-- Medium mathematical space (U+205F)
-- Ideographic space (U+3000)
+- Acento grave (`` ` ``)
+- Barra invertida (`\`)
+- Nulo (U+0000)
+- Tabulação horizontal (U+0009)
+- Quebra de linha (U+000A)
+- Tabulação vertical (U+000B)
+- Retorno de carro (U+000D)
+- Próxima linha (U+0085)
+- Espaço não separável (U+00A0)
+- Marca de espaço Ogham (U+1680)
+- Quad de en (U+2000)
+- Quad de em (U+2001)
+- Espaço de en (U+2002)
+- Espaço de em (U+2003)
+- Espaço de três por em (U+2004)
+- Espaço de quatro por em (U+2005)
+- Espaço de seis por em (U+2006)
+- Espaço de figura (U+2007)
+- Espaço de pontuação (U+2008)
+- Espaço fino (U+2009)
+- Espaço de cabelo (U+200A)
+- Separador de linha (U+2028)
+- Separador de parágrafo (U+2029)
+- Espaço não separável estreito (U+202F)
+- Espaço matemático médio (U+205F)
+- Espaço ideográfico (U+3000)
 
 <!--
 The list above states the rules from SE-0451 without nested negation.
@@ -182,31 +179,31 @@ from what's in the Whitespace and Comments section above.
 From https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt
 -->
 
-Raw identifiers can contain whitespace,
-but can't consist of only whitespace.
-In a raw identifier,
-a left-to-right mark (U+200E) or right-to-left mark (U+200F)
-is allowed and considered whitespace.
-Raw identifiers can contain operator characters,
-as described in <doc:LexicalStructure#Operators>,
-but can't consist of only operator characters.
+Identificadores brutos podem conter espaço em branco,
+mas não podem consistir apenas de espaço em branco.
+Em um identificador bruto,
+uma marca de esquerda para direita (U+200E) ou uma marca de direita para esquerda (U+200F)
+é permitida e considerada espaço em branco.
+Identificadores brutos podem conter caracteres de operador,
+como descrito em <doc:LexicalStructure#Operators>,
+mas não podem consistir apenas de caracteres de operador.
 
-> Note:
-> Prior to Swift 6.2,
-> writing backticks before and after an identifier
-> was known as *escaped identifier*,
-> and was limited to using a keyword as an identifier.
+> Nota:
+> Antes do Swift 6.2,
+> escrever acentos graves antes e depois de um identificador
+> era conhecido como *identificador escapado*,
+> e era limitado a usar uma palavra-chave como identificador.
 
-Inside a closure with no explicit parameter names,
-the parameters are implicitly named `$0`, `$1`, `$2`, and so on.
-These names are valid identifiers within the scope of the closure.
+Dentro de uma closure sem nomes explícitos de parâmetros,
+os parâmetros são nomeados implicitamente como `$0`, `$1`, `$2`, e assim por diante.
+Esses nomes são identificadores válidos dentro do escopo da closure.
 
-The compiler synthesizes identifiers that begin with a dollar sign (`$`)
-for properties that have a property wrapper projection.
-Your code can interact with these identifiers,
-but you can't declare identifiers with that prefix.
-For more information, see the <doc:Attributes#propertyWrapper> section
-of the <doc:Attributes> chapter.
+O compilador sintetiza identificadores que começam com cifrão (`$`)
+para propriedades que têm uma projeção de property wrapper.
+Seu código pode interagir com esses identificadores,
+mas você não pode declarar identificadores com esse prefixo.
+Para mais informações, veja a seção <doc:Attributes#propertyWrapper>
+do capítulo <doc:Attributes>.
 
 <!--
   The cross reference above includes both the section and chapter because,
@@ -223,7 +220,7 @@ https://github.com/swiftlang/swift-book/issues/71
 https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
-> Grammar of an identifier:
+> Gramática de um identificador:
 >
 > *identifier* → *identifier-head* *identifier-characters*_?_ \
 > *identifier* → *raw-identifier* \
@@ -260,22 +257,22 @@ https://github.com/swiftlang/swift-markdown/issues/93
 > *raw-identifier-character* → Any Unicode scalar value except  **`` ` ``**,  **`\`**, U+0000, U+000A, or U+000D
 > *raw-identifier-characters* → *raw-identifier-character* *raw-identifier-characters*_?_
 
-## Keywords and Punctuation
+## Palavras-chave e pontuação
 
-The following keywords are reserved and can't be used as identifiers,
-unless they're escaped with backticks,
-as described above in <doc:LexicalStructure#Identifiers>.
-Keywords other than `inout`, `var`, and `let`
-can be used as parameter names
-in a function declaration or function call
-without being escaped with backticks.
-When a member has the same name as a keyword,
-references to that member don't need to be escaped with backticks,
-except when there's ambiguity between referring to the member
-and using the keyword ---
-for example, `self`, `Type`, and `Protocol`
-have special meaning in an explicit member expression,
-so they must be escaped with backticks in that context.
+As palavras-chave a seguir são reservadas e não podem ser usadas como identificadores,
+a menos que sejam escapadas com acentos graves,
+como descrito acima em <doc:LexicalStructure#Identifiers>.
+Palavras-chave diferentes de `inout`, `var` e `let`
+podem ser usadas como nomes de parâmetros
+em uma declaração ou chamada de função
+sem serem escapadas com acentos graves.
+Quando um membro tem o mesmo nome de uma palavra-chave,
+as referências a esse membro não precisam ser escapadas com acentos graves,
+exceto quando há ambiguidade entre se referir ao membro
+e usar a palavra-chave:
+por exemplo, `self`, `Type` e `Protocol` têm significado especial
+em uma expressão de membro explícita,
+então precisam ser escapados com acentos graves nesse contexto.
 
 <!--
   - test: `keywords-without-backticks`
@@ -335,7 +332,7 @@ so they must be escaped with backticks in that context.
   Last updated at Swift commit 2f1987567f5, for Swift 5.4.
 -->
 
-- Keywords used in declarations:
+- Palavras-chave usadas em declarações:
   `associatedtype`,
   `borrowing`,
   `class`,
@@ -362,13 +359,13 @@ so they must be escaped with backticks in that context.
   `struct`,
   `subscript`,
   `typealias`,
-  and `var`.
+  e `var`.
 
 <!--
   Token.py doesn't include 'open' but DeclNodes.py does.
 -->
 
-- Keywords used in statements:
+- Palavras-chave usadas em instruções:
   `break`,
   `case`,
   `catch`,
@@ -387,8 +384,8 @@ so they must be escaped with backticks in that context.
   `switch`,
   `throw`,
   `where`,
-  and `while`.
-- Keywords used in expressions and types:
+  e `while`.
+- Palavras-chave usadas em expressões e tipos:
   `Any`,
   `as`,
   `await`,
@@ -403,10 +400,10 @@ so they must be escaped with backticks in that context.
   `throw`,
   `throws`,
   `true`,
-  and `try`.
-- Keywords used in patterns:
+  e `try`.
+- Palavras-chave usadas em padrões:
   `_`.
-- Keywords that begin with a number sign (`#`):
+- Palavras-chave que começam com sinal de número (`#`):
   `#available`,
   `#colorLiteral`,
   `#else`,
@@ -420,9 +417,9 @@ so they must be escaped with backticks in that context.
   `#sourceLocation`,
   `#unavailable`.
 
-> Note:
-> Prior to Swift 5.9,
-> the following keywords were reserved:
+> Nota:
+> Antes do Swift 5.9,
+> as seguintes palavras-chave eram reservadas:
 > `#column`,
 > `#dsohandle`,
 > `#error`,
@@ -431,8 +428,8 @@ so they must be escaped with backticks in that context.
 > `#file`,
 > `#function`,
 > `#line`,
-> and `#warning`.
-> These are now implemented as macros in the Swift standard library:
+> e `#warning`.
+> Agora elas são implementadas como macros na biblioteca padrão do Swift:
 > [`column`](https://developer.apple.com/documentation/swift/column()),
 > [`dsohandle`](https://developer.apple.com/documentation/swift/dsohandle()),
 > [`error(_:)`](https://developer.apple.com/documentation/swift/error(_:)),
@@ -441,7 +438,7 @@ so they must be escaped with backticks in that context.
 > [`file`](https://developer.apple.com/documentation/swift/file()),
 > [`function`](https://developer.apple.com/documentation/swift/function()),
 > [`line`](https://developer.apple.com/documentation/swift/line()),
-> and [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
+> e [`warning(_:)`](https://developer.apple.com/documentation/swift/warning(_:)).
 
 <!--
   Token.py includes #assert,
@@ -461,7 +458,7 @@ so they must be escaped with backticks in that context.
   which looks like it's related to a future feature around memory ownership.
 -->
 
-- Keywords reserved in particular contexts:
+- Palavras-chave reservadas em contextos específicos:
   `associativity`,
   `async`,
   `convenience`,
@@ -490,9 +487,9 @@ so they must be escaped with backticks in that context.
   `Type`,
   `unowned`,
   `weak`,
-  and `willSet`.
-  Outside the context in which they appear in the grammar,
-  they can be used as identifiers.
+  e `willSet`.
+  Fora do contexto em que aparecem na gramática,
+  elas podem ser usadas como identificadores.
 
 <!--
   NOTE: The list of context-sensitive keywords above
@@ -501,19 +498,19 @@ so they must be escaped with backticks in that context.
   However, not all context-sensitive keywords appear there;
 -->
 
-The following tokens are reserved as punctuation
-and can't be used as custom operators:
+Os tokens a seguir são reservados como pontuação
+e não podem ser usados como operadores personalizados:
 `(`, `)`, `{`, `}`, `[`, `]`,
 `.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&` (as a prefix operator), `->`, `` ` ``,
-`?`, and `!` (as a postfix operator).
+`&` (como operador prefixo), `->`, `` ` ``,
+`?` e `!` (como operador pós-fixo).
 
-## Literals
+## Literais
 
-A *literal* is the source code representation of a value of a type,
-such as a number or string.
+Um *literal* é a representação, no código-fonte,
+de um valor de um tipo, como um número ou uma string.
 
-The following are examples of literals:
+São exemplos de literais:
 
 ```swift
 42               // Integer literal
@@ -550,35 +547,35 @@ true             // Boolean literal
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A literal doesn't have a type on its own.
-Instead, a literal is parsed as having infinite precision and Swift's type inference
-attempts to infer a type for the literal. For example,
-in the declaration `let x: Int8 = 42`,
-Swift uses the explicit type annotation (`: Int8`) to infer
-that the type of the integer literal `42` is `Int8`.
-If there isn't suitable type information available,
-Swift infers that the literal's type is one of the default literal types
-defined in the Swift standard library
-and listed in the table below.
-When specifying the type annotation for a literal value,
-the annotation's type must be a type that can be instantiated from that literal value.
-That is, the type must conform to the Swift standard library protocols
-listed in the table below.
+Um literal não tem tipo por conta própria.
+Em vez disso, ele é analisado como tendo precisão infinita,
+e a inferência de tipos do Swift tenta inferir um tipo para o literal.
+Por exemplo,
+na declaração `let x: Int8 = 42`,
+o Swift usa a anotação de tipo explícita (`: Int8`) para inferir
+que o tipo do literal inteiro `42` é `Int8`.
+Se não houver informação de tipo adequada disponível,
+o Swift infere que o tipo do literal é um dos tipos literais padrão
+definidos na biblioteca padrão do Swift
+e listados na tabela abaixo.
+Ao especificar a anotação de tipo para um valor literal,
+o tipo da anotação deve ser um tipo que possa ser instanciado a partir desse valor literal.
+Ou seja, o tipo precisa estar em conformidade
+com os protocolos da biblioteca padrão do Swift listados na tabela abaixo.
 
-| Literal | Default type | Protocol |
+| Literal | Tipo padrão | Protocolo |
 | ------- | ------------ | -------- |
-| Integer | `Int` | `ExpressibleByIntegerLiteral` |
-| Floating-point | `Double` | `ExpressibleByFloatLiteral` |
-| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` for string literals that contain only a single Unicode scalar, `ExpressibleByExtendedGraphemeClusterLiteral` for string literals that contain only a single extended grapheme cluster |
-| Regular expression | `Regex` | None |
-| Boolean | `Bool` | `ExpressibleByBooleanLiteral` |
+| Inteiro | `Int` | `ExpressibleByIntegerLiteral` |
+| Ponto flutuante | `Double` | `ExpressibleByFloatLiteral` |
+| String | `String` | `ExpressibleByStringLiteral`, `ExpressibleByUnicodeScalarLiteral` para literais de string que contêm apenas um único escalar Unicode, `ExpressibleByExtendedGraphemeClusterLiteral` para literais de string que contêm apenas um único cluster de grafemas estendido |
+| Expressão regular | `Regex` | Nenhum |
+| Booleano | `Bool` | `ExpressibleByBooleanLiteral` |
 
-For example, in the declaration `let str = "Hello, world"`,
-the default inferred type of the string
-literal `"Hello, world"` is `String`.
-Also, `Int8` conforms to the `ExpressibleByIntegerLiteral` protocol,
-and therefore it can be used in the type annotation for the integer literal `42`
-in the declaration `let x: Int8 = 42`.
+Por exemplo, na declaração `let str = "Hello, world"`,
+o tipo inferido padrão do literal de string `"Hello, world"` é `String`.
+Além disso, `Int8` está em conformidade com o protocolo `ExpressibleByIntegerLiteral`,
+e por isso pode ser usado na anotação de tipo do literal inteiro `42`
+na declaração `let x: Int8 = 42`.
 
 <!--
   The list of ExpressibleBy... protocols above also appears in Declarations_EnumerationsWithRawCaseValues.
@@ -586,7 +583,7 @@ in the declaration `let x: Int8 = 42`.
   There is no protocol for regex literal in the list because the stdlib intentionally omits that.
 -->
 
-> Grammar of a literal:
+> Gramática de um literal:
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
@@ -594,34 +591,34 @@ in the declaration `let x: Int8 = 42`.
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
-### Integer Literals
+### Literais inteiros
 
-*Integer literals* represent integer values of unspecified precision.
-By default, integer literals are expressed in decimal;
-you can specify an alternate base using a prefix.
-Binary literals begin with `0b`,
-octal literals begin with `0o`,
-and hexadecimal literals begin with `0x`.
+*Literais inteiros* representam valores inteiros de precisão não especificada.
+Por padrão, literais inteiros são expressos em decimal;
+você pode especificar outra base usando um prefixo.
+Literais binários começam com `0b`,
+literais octais começam com `0o`,
+e literais hexadecimais começam com `0x`.
 
-Decimal literals contain the digits `0` through `9`.
-Binary literals contain `0` and `1`,
-octal literals contain `0` through `7`,
-and hexadecimal literals contain `0` through `9`
-as well as `A` through `F` in upper- or lowercase.
+Literais decimais contêm os dígitos `0` a `9`.
+Literais binários contêm `0` e `1`,
+literais octais contêm `0` a `7`,
+e literais hexadecimais contêm `0` a `9`
+bem como `A` a `F`, em maiúsculas ou minúsculas.
 
-Negative integers literals are expressed by prepending a minus sign (`-`)
-to an integer literal, as in `-42`.
+Literais inteiros negativos são expressos colocando um sinal de menos (`-`)
+antes de um literal inteiro, como em `-42`.
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Integer literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+Sublinhados (`_`) são permitidos entre dígitos para facilitar a leitura,
+mas são ignorados e, portanto, não afetam o valor do literal.
+Literais inteiros podem começar com zeros à esquerda (`0`),
+mas eles também são ignorados e não afetam a base nem o valor do literal.
 
-Unless otherwise specified,
-the default inferred type of an integer literal is the Swift standard library type `Int`.
-The Swift standard library also defines types for various sizes of
-signed and unsigned integers,
-as described in <doc:TheBasics#Integers>.
+A menos que seja especificado de outra forma,
+o tipo inferido padrão de um literal inteiro é o tipo `Int` da biblioteca padrão do Swift.
+A biblioteca padrão do Swift também define tipos para diversos tamanhos
+de inteiros com e sem sinal,
+como descrito em <doc:TheBasics#Integers>.
 
 <!--
   TR: The prose assumes underscores only belong between digits.
@@ -640,7 +637,7 @@ as described in <doc:TheBasics#Integers>.
   (Doug confirmed this, 4/2/2014.)
 -->
 
-> Grammar of an integer literal:
+> Gramática de um literal inteiro:
 >
 > *signed-integer-literal* → **`-`**_?_ *integer-literal*
 > *integer-literal* → *binary-literal* \
@@ -669,53 +666,50 @@ as described in <doc:TheBasics#Integers>.
 > *hexadecimal-literal-character* → *hexadecimal-digit* | **`_`** \
 > *hexadecimal-literal-characters* → *hexadecimal-literal-character* *hexadecimal-literal-characters*_?_
 
-### Floating-Point Literals
+### Literais de ponto flutuante
 
-*Floating-point literals* represent floating-point values of unspecified precision.
+*Literais de ponto flutuante* representam valores de ponto flutuante de precisão não especificada.
 
-By default, floating-point literals are expressed in decimal (with no prefix),
-but they can also be expressed in hexadecimal (with a `0x` prefix).
+Por padrão, literais de ponto flutuante são expressos em decimal (sem prefixo),
+mas também podem ser expressos em hexadecimal (com prefixo `0x`).
 
-Decimal floating-point literals consist of a sequence of decimal digits
-followed by either a decimal fraction, a decimal exponent, or both.
-The decimal fraction consists of a decimal point (`.`)
-followed by a sequence of decimal digits.
-The exponent consists of an upper- or lowercase `e` prefix
-followed by a sequence of decimal digits that indicates
-what power of 10 the value preceding the `e` is multiplied by.
-For example, `1.25e2` represents 1.25 x 10²,
-which evaluates to `125.0`.
-Similarly, `1.25e-2` represents 1.25 x 10⁻²,
-which evaluates to `0.0125`.
+Literais decimais de ponto flutuante consistem em uma sequência de dígitos decimais
+seguida por uma fração decimal, um expoente decimal, ou ambos.
+A fração decimal consiste em um ponto decimal (`.`)
+seguido por uma sequência de dígitos decimais.
+O expoente consiste em um prefixo `e`, em maiúscula ou minúscula,
+seguido por uma sequência de dígitos decimais que indica
+por qual potência de 10 o valor antes do `e` é multiplicado.
+Por exemplo, `1.25e2` representa 1.25 x 10², o que resulta em `125.0`.
+Da mesma forma, `1.25e-2` representa 1.25 x 10⁻²,
+o que resulta em `0.0125`.
 
-Hexadecimal floating-point literals consist of a `0x` prefix,
-followed by an optional hexadecimal fraction,
-followed by a hexadecimal exponent.
-The hexadecimal fraction consists of a decimal point
-followed by a sequence of hexadecimal digits.
-The exponent consists of an upper- or lowercase `p` prefix
-followed by a sequence of decimal digits that indicates
-what power of 2 the value preceding the `p` is multiplied by.
-For example, `0xFp2` represents 15 x 2²,
-which evaluates to `60`.
-Similarly, `0xFp-2` represents 15 x 2⁻²,
-which evaluates to `3.75`.
+Literais hexadecimais de ponto flutuante consistem em um prefixo `0x`,
+seguido por uma fração hexadecimal opcional,
+seguida por um expoente hexadecimal.
+A fração hexadecimal consiste em um ponto decimal
+seguido por uma sequência de dígitos hexadecimais.
+O expoente consiste em um prefixo `p`, em maiúscula ou minúscula,
+seguido por uma sequência de dígitos decimais que indica
+por qual potência de 2 o valor antes do `p` é multiplicado.
+Por exemplo, `0xFp2` representa 15 x 2², o que resulta em `60`.
+Da mesma forma, `0xFp-2` representa 15 x 2⁻², o que resulta em `3.75`.
 
-Negative floating-point literals are expressed by prepending a minus sign (`-`)
-to a floating-point literal, as in `-42.5`.
+Literais de ponto flutuante negativos são expressos colocando um sinal de menos (`-`)
+antes de um literal de ponto flutuante, como em `-42.5`.
 
-Underscores (`_`) are allowed between digits for readability,
-but they're ignored and therefore don't affect the value of the literal.
-Floating-point literals can begin with leading zeros (`0`),
-but they're likewise ignored and don't affect the base or value of the literal.
+Sublinhados (`_`) são permitidos entre dígitos para facilitar a leitura,
+mas são ignorados e, portanto, não afetam o valor do literal.
+Literais de ponto flutuante podem começar com zeros à esquerda (`0`),
+mas eles também são ignorados e não afetam a base nem o valor do literal.
 
-Unless otherwise specified,
-the default inferred type of a floating-point literal is the Swift standard library type `Double`,
-which represents a 64-bit floating-point number.
-The Swift standard library also defines a `Float` type,
-which represents a 32-bit floating-point number.
+A menos que seja especificado de outra forma,
+o tipo inferido padrão de um literal de ponto flutuante é o tipo `Double`
+da biblioteca padrão do Swift, que representa um número de ponto flutuante de 64 bits.
+A biblioteca padrão do Swift também define o tipo `Float`,
+que representa um número de ponto flutuante de 32 bits.
 
-> Grammar of a floating-point literal:
+> Gramática de um literal de ponto flutuante:
 >
 > *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal*
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
@@ -731,23 +725,23 @@ which represents a 32-bit floating-point number.
 > *floating-point-p* → **`p`** | **`P`** \
 > *sign* → **`+`** | **`-`**
 
-### String Literals
+### Literais de string
 
-A string literal is a sequence of characters surrounded by quotation marks.
-A single-line string literal is surrounded by double quotation marks
-and has the following form:
+Um literal de string é uma sequência de caracteres delimitada por aspas.
+Um literal de string de uma linha é delimitado por aspas duplas
+e tem a seguinte forma:
 
 ```swift
 "<#characters#>"
 ```
 
-String literals can't contain
-an unescaped double quotation mark (`"`),
-an unescaped backslash (`\`),
-a carriage return, or a line feed.
+Literais de string não podem conter
+aspas duplas sem escape (`"`),
+barra invertida sem escape (`\`),
+retorno de carro ou quebra de linha.
 
-A multiline string literal is surrounded by three double quotation marks
-and has the following form:
+Um literal de string de múltiplas linhas é delimitado por três aspas duplas
+e tem a seguinte forma:
 
 ```swift
 """
@@ -755,61 +749,56 @@ and has the following form:
 """
 ```
 
-Unlike a single-line string literal,
-a multiline string literal can contain
-unescaped double quotation marks (`"`), carriage returns, and line feeds.
-It can't contain three unescaped double quotation marks next to each other.
+Diferente de um literal de string de uma linha,
+um literal de string de múltiplas linhas pode conter
+aspas duplas sem escape (`"`), retornos de carro e quebras de linha.
+Ele não pode conter três aspas duplas sem escape seguidas umas das outras.
 
-The line break after the `"""`
-that begins the multiline string literal
-isn't part of the string.
-The line break before the `"""`
-that ends the literal is also not part of the string.
-To make a multiline string literal
-that begins or ends with a line feed,
-write a blank line as its first or last line.
+A quebra de linha após o `"""` que inicia o literal de string de múltiplas linhas
+não faz parte da string.
+A quebra de linha antes do `"""` que termina o literal também não faz parte da string.
+Para criar um literal de string de múltiplas linhas
+que comece ou termine com uma quebra de linha,
+escreva uma linha em branco como primeira ou última linha.
 
-A multiline string literal can be indented
-using any combination of spaces and tabs;
-this indentation isn't included in the string.
-The `"""` that ends the literal
-determines the indentation:
-Every nonblank line in the literal must begin
-with exactly the same indentation
-that appears before the closing `"""`;
-there's no conversion between tabs and spaces.
-You can include additional spaces and tabs after that indentation;
-those spaces and tabs appear in the string.
+Um literal de string de múltiplas linhas pode ser indentado
+usando qualquer combinação de espaços e tabulações;
+essa indentação não é incluída na string.
+O `"""` que termina o literal determina a indentação:
+cada linha não vazia do literal deve começar
+exatamente com a mesma indentação que aparece antes do `"""` de fechamento;
+não há conversão entre tabulações e espaços.
+Você pode incluir espaços e tabulações adicionais depois dessa indentação;
+esses espaços e tabulações aparecem na string.
 
-Line breaks in a multiline string literal are
-normalized to use the line feed character.
-Even if your source file has a mix of carriage returns and line feeds,
-all of the line breaks in the string will be the same.
+As quebras de linha em um literal de string de múltiplas linhas são normalizadas
+para usar o caractere de quebra de linha.
+Mesmo que seu arquivo-fonte tenha uma mistura de retornos de carro e quebras de linha,
+todas as quebras de linha na string serão iguais.
 
-In a multiline string literal,
-writing a backslash (`\`) at the end of a line
-omits that line break from the string.
-Any whitespace between the backslash and the line break
-is also omitted.
-You can use this syntax
-to hard wrap a multiline string literal in your source code,
-without changing the value of the resulting string.
+Em um literal de string de múltiplas linhas,
+escrever uma barra invertida (`\`) no fim de uma linha
+omite essa quebra de linha da string.
+Qualquer espaço em branco entre a barra invertida e a quebra de linha
+também é omitido.
+Você pode usar essa sintaxe para quebrar um literal de string de múltiplas linhas
+em várias linhas no código-fonte,
+sem alterar o valor da string resultante.
 
-Special characters
-can be included in string literals
-of both the single-line and multiline forms
-using the following escape sequences:
+Caracteres especiais podem ser incluídos em literais de string
+de uma linha e de múltiplas linhas
+usando as seguintes sequências de escape:
 
-- Null character (`\0`)
-- Backslash (`\\`)
-- Horizontal tab (`\t`)
-- Line feed (`\n`)
-- Carriage return (`\r`)
-- Double quotation mark (`\"`)
-- Single quotation mark (`\'`)
-- Unicode scalar (`\u{`*n*`}`),
-  where *n* is a hexadecimal number
-  that has one to eight digits
+- Caractere nulo (`\0`)
+- Barra invertida (`\\`)
+- Tabulação horizontal (`\t`)
+- Quebra de linha (`\n`)
+- Retorno de carro (`\r`)
+- Aspas duplas (`\"`)
+- Aspas simples (`\'`)
+- Escalar Unicode (`\u{`*n*`}`),
+  em que *n* é um número hexadecimal
+  com um a oito dígitos
 
 <!--
   The behavior of \n and \r isn't the same as C.
@@ -819,13 +808,13 @@ using the following escape sequences:
   which could be CR or LF or CRLF.
 -->
 
-The value of an expression can be inserted into a string literal
-by placing the expression in parentheses after a backslash (`\`).
-The interpolated expression can contain a string literal,
-but can't contain an unescaped backslash,
-a carriage return, or a line feed.
+O valor de uma expressão pode ser inserido em um literal de string
+colocando a expressão entre parênteses depois de uma barra invertida (`\`).
+A expressão interpolada pode conter um literal de string,
+mas não pode conter uma barra invertida sem escape,
+um retorno de carro ou uma quebra de linha.
 
-For example, all of the following string literals have the same value:
+Por exemplo, todos os literais de string a seguir têm o mesmo valor:
 
 ```swift
 "1 2 3"
@@ -863,9 +852,9 @@ let x = 3; "1 2 \(x)"
   Tracking bug is <rdar://problem/35301593>
 -->
 
-A string delimited by extended delimiters is a sequence of characters
-surrounded by quotation marks and a balanced set of one or more number signs (`#`).
-A string delimited by extended delimiters has the following forms:
+Uma string delimitada por delimitadores estendidos é uma sequência de caracteres
+delimitada por aspas e por um conjunto balanceado de um ou mais sinais de número (`#`).
+Uma string delimitada por delimitadores estendidos tem as seguintes formas:
 
 ```swift
 #"<#characters#>"#
@@ -875,18 +864,18 @@ A string delimited by extended delimiters has the following forms:
 """#
 ```
 
-Special characters in a string delimited by extended delimiters
-appear in the resulting string as normal characters
-rather than as special characters.
-You can use extended delimiters to create strings with characters
-that would ordinarily have a special effect
-such as generating a string interpolation,
-starting an escape sequence,
-or terminating the string.
+Caracteres especiais em uma string delimitada por delimitadores estendidos
+aparecem na string resultante como caracteres normais,
+e não como caracteres especiais.
+Você pode usar delimitadores estendidos para criar strings com caracteres
+que normalmente teriam um efeito especial,
+como gerar uma interpolação de string,
+iniciar uma sequência de escape
+ou encerrar a string.
 
-The following example shows a string literal
-and a string delimited by extended delimiters
-that create equivalent string values:
+O exemplo a seguir mostra um literal de string
+e uma string delimitada por delimitadores estendidos
+que criam valores de string equivalentes:
 
 ```swift
 let string = #"\(x) \ " \u{2603}"#
@@ -910,9 +899,9 @@ print(string == escaped)
   ```
 -->
 
-If you use more than one number sign to form
-a string delimited by extended delimiters,
-don't place whitespace in between the number signs:
+Se você usar mais de um sinal de número para formar
+uma string delimitada por delimitadores estendidos,
+não coloque espaço em branco entre os sinais de número:
 
 <!--
   - test: `extended-string-delimiters`
@@ -944,19 +933,18 @@ print(# # #"Line 1\# # #nLine 2"# # #) // Error
   ```
 -->
 
-Multiline string literals that you create using extended delimiters
-have the same indentation requirements as regular multiline string literals.
+Literais de string de múltiplas linhas criados com delimitadores estendidos
+têm os mesmos requisitos de indentação que os literais de string de múltiplas linhas comuns.
 
-The default inferred type of a string literal is `String`.
-For more information about the `String` type,
-see <doc:StringsAndCharacters>
-and [`String`](https://developer.apple.com/documentation/swift/string).
+O tipo inferido padrão de um literal de string é `String`.
+Para mais informações sobre o tipo `String`,
+veja <doc:StringsAndCharacters>
+e [`String`](https://developer.apple.com/documentation/swift/string).
 
-String literals that are concatenated by the `+` operator
-are concatenated at compile time.
-For example, the values of `textA` and `textB`
-in the example below are identical ---
-no runtime concatenation is performed.
+Literais de string concatenados com o operador `+`
+são concatenados em tempo de compilação.
+Por exemplo, os valores de `textA` e `textB` no exemplo abaixo são idênticos:
+nenhuma concatenação em tempo de execução é realizada.
 
 ```swift
 let textA = "Hello " + "world"
@@ -972,7 +960,7 @@ let textB = "Hello world"
   ```
 -->
 
-> Grammar of a string literal:
+> Gramática de um literal de string:
 >
 > *string-literal* → *static-string-literal* | *interpolated-string-literal*
 >
@@ -1028,31 +1016,27 @@ let textB = "Hello world"
   quoted-character -> Any Unicode scalar value except ``'``, ``\``, U+000A, or U+000D
 -->
 
-### Regular Expression Literals
+### Literais de expressão regular
 
-A regular expression literal is a sequence of characters
-surrounded by slashes (`/`) with the following form:
+Um literal de expressão regular é uma sequência de caracteres
+delimitada por barras (`/`), com a seguinte forma:
 
 ```swift
 /<#regular expression#>/
 ```
 
-Regular expression literals
-must not begin with an unescaped tab or space,
-and they can't contain
-an unescaped slash (`/`),
-a carriage return, or a line feed.
+Literais de expressão regular não podem começar com uma tabulação
+ou espaço sem escape,
+e não podem conter
+uma barra (`/`) sem escape, um retorno de carro ou uma quebra de linha.
 
-Within a regular expression literal,
-a backslash is understood as a part of that regular expression,
-not just as an escape character like in string literals.
-It indicates that the following special character
-should be interpreted literally,
-or that the following nonspecial character
-should be interpreted in a special way.
-For example,
-`/\(/` matches a single left parenthesis
-and `/\d/` matches a single digit.
+Dentro de um literal de expressão regular,
+a barra invertida é entendida como parte da expressão regular,
+e não apenas como caractere de escape como nos literais de string.
+Ela indica que o caractere especial seguinte deve ser interpretado literalmente,
+ou que o caractere não especial seguinte deve ser interpretado de forma especial.
+Por exemplo, `/\(/` corresponde a um único parêntese de abertura
+e `/\d/` corresponde a um único dígito.
 
 <!--
   OUTLINE
@@ -1078,11 +1062,11 @@ and `/\d/` matches a single digit.
   and regex literal parsing continues as normal.
 -->
 
-A regular expression literal delimited by extended delimiters
-is a sequence of characters surrounded by slashes (`/`)
-and a balanced set of one or more number signs (`#`).
-A regular expression literal
-delimited by extended delimiters has the following forms:
+Um literal de expressão regular delimitado por delimitadores estendidos
+é uma sequência de caracteres delimitada por barras (`/`)
+e por um conjunto balanceado de um ou mais sinais de número (`#`).
+Um literal de expressão regular delimitado por delimitadores estendidos
+tem as seguintes formas:
 
 ```swift
 #/<#regular expression#>/#
@@ -1092,16 +1076,16 @@ delimited by extended delimiters has the following forms:
 /#
 ```
 
-A regular expression literal that uses extended delimiters
-can begin with an unescaped space or tab,
-contain unescaped slashes (`/`),
-and span across multiple lines.
-For a multiline regular expression literal,
-the opening delimiter must be at the end of a line,
-and the closing delimiter must be on its own line.
-Inside a multiline regular expression literal,
-the extended regular expression syntax is enabled by default ---
-specifically, whitespace is ignored and comments are allowed.
+Um literal de expressão regular que usa delimitadores estendidos
+pode começar com um espaço ou tabulação sem escape,
+conter barras (`/`) sem escape
+e se estender por várias linhas.
+Para um literal de expressão regular de múltiplas linhas,
+o delimitador de abertura deve estar no fim de uma linha,
+e o delimitador de fechamento deve estar em uma linha própria.
+Dentro de um literal de expressão regular de múltiplas linhas,
+a sintaxe estendida de expressões regulares fica habilitada por padrão:
+especificamente, espaços em branco são ignorados e comentários são permitidos.
 
 <!--
   TODO As details about the multiline syntax shake out during SE review,
@@ -1109,9 +1093,9 @@ specifically, whitespace is ignored and comments are allowed.
   add them above or spin out a separate paragraph.
 -->
 
-If you use more than one number sign to form
-a regular expression literal delimited by extended delimiters,
-don't place whitespace in between the number signs:
+Se você usar mais de um sinal de número para formar
+um literal de expressão regular delimitado por delimitadores estendidos,
+não coloque espaço em branco entre os sinais de número:
 
 ```swift
 let regex1 = ##/abc/##       // OK
@@ -1127,10 +1111,10 @@ let regex2 = # #/abc/# #     // Error
   ```
 -->
 
-If you need to make an empty regular expression literal,
-you must use the extended delimiter syntax.
+Se precisar criar um literal de expressão regular vazio,
+você deve usar a sintaxe de delimitadores estendidos.
 
-> Grammar of a regular expression literal:
+> Gramática de um literal de expressão regular:
 >
 > *regular-expression-literal* → *regular-expression-literal-opening-delimiter* *regular-expression* *regular-expression-literal-closing-delimiter* \
 > *regular-expression* → Any regular expression
@@ -1140,31 +1124,30 @@ you must use the extended delimiter syntax.
 >
 > *extended-regular-expression-literal-delimiter* → **`#`** *extended-regular-expression-literal-delimiter*_?_
 
-## Operators
+## Operadores
 
-The Swift standard library defines a number of operators for your use,
-many of which are discussed in <doc:BasicOperators>
-and <doc:AdvancedOperators>.
-The present section describes which characters can be used to define custom operators.
+A biblioteca padrão do Swift define diversos operadores para uso geral,
+muitos dos quais são discutidos em <doc:BasicOperators>
+e <doc:AdvancedOperators>.
+Esta seção descreve quais caracteres podem ser usados para definir operadores personalizados.
 
-Custom operators can begin with one of the ASCII characters
+Operadores personalizados podem começar com um dos caracteres ASCII
 `/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`,
-`&`, `|`, `^`, `?`, or `~`, or one of the Unicode characters
-defined in the grammar below
-(which include characters from the
-*Mathematical Operators*, *Miscellaneous Symbols*, and *Dingbats*
-Unicode blocks, among others).
-After the first character,
-combining Unicode characters are also allowed.
+`&`, `|`, `^`, `?` ou `~`, ou com um dos caracteres Unicode
+definidos na gramática abaixo
+(que incluem caracteres dos blocos Unicode
+*Operadores Matemáticos*, *Símbolos Diversos* e *Dingbats*, entre outros).
+Depois do primeiro caractere,
+caracteres Unicode combinantes também são permitidos.
 
-You can also define custom operators
-that begin with a dot (`.`).
-These operators can contain additional dots.
-For example, `.+.` is treated as a single operator.
-If an operator doesn't begin with a dot,
-it can't contain a dot elsewhere.
-For example, `+.+` is treated as
-the `+` operator followed by the `.+` operator.
+Você também pode definir operadores personalizados
+que começam com um ponto (`.`).
+Esses operadores podem conter pontos adicionais.
+Por exemplo, `.+.` é tratado como um único operador.
+Se um operador não começar com ponto,
+ele não pode conter ponto em outra posição.
+Por exemplo, `+.+` é tratado como
+o operador `+` seguido do operador `.+`.
 
 <!--
   - test: `dot-operator-must-start-with-dot`
@@ -1186,10 +1169,12 @@ the `+` operator followed by the `.+` operator.
   ```
 -->
 
-Although you can define custom operators that contain a question mark (`?`),
-they can't consist of a single question mark character only.
-Additionally, although operators can contain an exclamation point (`!`),
-postfix operators can't begin with either a question mark or an exclamation point.
+Embora você possa definir operadores personalizados que contenham
+um ponto de interrogação (`?`),
+eles não podem consistir apenas nesse único caractere.
+Além disso, embora operadores possam conter um ponto de exclamação (`!`),
+operadores pós-fixos não podem começar com ponto de interrogação
+nem com ponto de exclamação.
 
 <!--
   - test: `postfix-operators-dont-need-unique-prefix`
@@ -1229,55 +1214,58 @@ postfix operators can't begin with either a question mark or an exclamation poin
   ```
 -->
 
-> Note: The tokens `=`, `->`, `//`, `/*`, `*/`, `.`,
-> the prefix operators `<`, `&`, and `?`,
-> the infix operator `?`,
-> and the postfix operators `>`, `!`, and `?` are reserved.
-> These tokens can't be overloaded, nor can they be used as custom operators.
+> Nota:
+> Os tokens `=`, `->`, `//`, `/*`, `*/`, `.`,
+> os operadores prefixos `<`, `&` e `?`,
+> o operador infixo `?`,
+> e os operadores pós-fixos `>`, `!` e `?` são reservados.
+> Esses tokens não podem ser sobrecarregados,
+> nem usados como operadores personalizados.
 
-The whitespace around an operator is used to determine
-whether an operator is used as a prefix operator, a postfix operator,
-or an infix operator. This behavior has the following rules:
+O espaço em branco ao redor de um operador é usado para determinar
+se ele é usado como operador prefixo, pós-fixo ou infixo.
+Esse comportamento segue as seguintes regras:
 
-- If an operator has whitespace around both sides or around neither side,
-  it's treated as an infix operator.
-  As an example, the `+++` operator in `a+++b` and `a +++ b` is treated as an infix operator.
-- If an operator has whitespace on the left side only,
-  it's treated as a prefix unary operator.
-  As an example, the `+++` operator in `a +++b` is treated as a prefix unary operator.
-- If an operator has whitespace on the right side only,
-  it's treated as a postfix unary operator.
-  As an example, the `+++` operator in `a+++ b` is treated as a postfix unary operator.
-- If an operator has no whitespace on the left but is followed immediately by a dot (`.`),
-  it's treated as a postfix unary operator.
-  As an example, the  `+++` operator in `a+++.b` is treated as a postfix unary operator
-  (`a+++ .b` rather than `a +++ .b`).
+- Se um operador tem espaço em branco dos dois lados ou não tem espaço em branco de nenhum lado,
+  ele é tratado como operador infixo.
+  Por exemplo, o operador `+++` em `a+++b` e em `a +++ b` é tratado como operador infixo.
+- Se um operador tem espaço em branco apenas do lado esquerdo,
+  ele é tratado como operador unário prefixo.
+  Por exemplo, o operador `+++` em `a +++b` é tratado como operador unário prefixo.
+- Se um operador tem espaço em branco apenas do lado direito,
+  ele é tratado como operador unário pós-fixo.
+  Por exemplo, o operador `+++` em `a+++ b` é tratado como operador unário pós-fixo.
+- Se um operador não tem espaço em branco à esquerda, mas é seguido imediatamente por um ponto (`.`),
+  ele é tratado como operador unário pós-fixo.
+  Por exemplo, o operador `+++` em `a+++.b` é tratado como operador unário pós-fixo
+  (`a+++ .b`, e não `a +++ .b`).
 
-For the purposes of these rules,
-the characters `(`, `[`, and `{` before an operator,
-the characters `)`, `]`, and `}` after an operator,
-and the characters `,`, `;`, and `:`
-are also considered whitespace.
+Para os fins dessas regras,
+os caracteres `(`, `[` e `{` antes de um operador,
+os caracteres `)`, `]` e `}` depois de um operador,
+e os caracteres `,`, `;` e `:`
+também são considerados espaço em branco.
 
-If the `!` or `?` predefined operator has no whitespace on the left,
-it's treated as a postfix operator,
-regardless of whether it has whitespace on the right.
-To use the `?` as the optional-chaining operator,
-it must not have whitespace on the left.
-To use it in the ternary conditional (`?` `:`) operator,
-it must have whitespace around both sides.
+Se o operador predefinido `!` ou `?` não tiver espaço em branco à esquerda,
+ele é tratado como operador pós-fixo,
+independentemente de ter ou não espaço em branco à direita.
+Para usar o `?` como operador de optional chaining,
+ele não pode ter espaço em branco à esquerda.
+Para usá-lo no operador condicional ternário (`?` `:`),
+ele deve ter espaço em branco dos dois lados.
 
-If one of the arguments to an infix operator is a regular expression literal,
-then the operator must have whitespace around both sides.
+Se um dos argumentos de um operador infixo for um literal de expressão regular,
+então o operador deve ter espaço em branco dos dois lados.
 
-In certain constructs, operators with a leading `<` or `>`
-may be split into two or more tokens. The remainder is treated the same way
-and may be split again.
-As a result, you don't need to add whitespace
-to disambiguate between the closing `>` characters in constructs like
-`Dictionary<String, Array<Int>>`.
-In this example, the closing `>` characters aren't treated as a single token
-that may then be misinterpreted as a bit shift `>>` operator.
+Em certas construções, operadores que começam com `<` ou `>`
+podem ser divididos em dois ou mais tokens.
+O restante é tratado da mesma forma e pode ser dividido novamente.
+Por isso, você não precisa adicionar espaço em branco
+para desambiguar os caracteres `>` de fechamento em construções
+como `Dictionary<String, Array<Int>>`.
+Nesse exemplo, os caracteres `>` de fechamento não são tratados
+como um único token que poderia ser interpretado
+erroneamente como o operador de deslocamento de bits `>>`.
 
 <!--
   NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
@@ -1292,10 +1280,11 @@ that may then be misinterpreted as a bit shift `>>` operator.
   C++ typically needs whitespace to resolve the ambiguity.
 -->
 
-To learn how to define new, custom operators,
-see <doc:AdvancedOperators#Custom-Operators> and <doc:Declarations#Operator-Declaration>.
-To learn how to overload existing operators,
-see <doc:AdvancedOperators#Operator-Methods>.
+Para aprender a definir novos operadores personalizados,
+veja <doc:AdvancedOperators#Custom-Operators>
+e <doc:Declarations#Operator-Declaration>.
+Para aprender a sobrecarregar operadores existentes,
+veja <doc:AdvancedOperators#Operator-Methods>.
 
 <!--
   NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
@@ -1303,7 +1292,7 @@ see <doc:AdvancedOperators#Operator-Methods>.
   The current list of reserved punctuation is in Tokens.def.
 -->
 
-> Grammar of operators:
+> Gramática de operadores:
 >
 > *operator* → *operator-head* *operator-characters*_?_ \
 > *operator* → *dot-operator-head* *dot-operator-characters*
@@ -1353,3 +1342,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

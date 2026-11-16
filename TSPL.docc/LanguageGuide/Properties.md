@@ -1,12 +1,12 @@
-# Properties
+# Propriedades
 
-Access stored and computed values that are part of an instance or type.
+Acesse valores armazenados e calculados que fazem parte de uma instância ou de um tipo.
 
-*Properties* associate values with a particular class, structure, or enumeration.
-Stored properties store constant and variable values as part of an instance,
-whereas computed properties calculate (rather than store) a value.
-Computed properties are provided by classes, structures, and enumerations.
-Stored properties are provided only by classes and structures.
+*Propriedades* associam valores a uma classe, struct ou enum específico.
+Propriedades armazenadas guardam valores constantes e variáveis como parte de uma instância,
+enquanto propriedades computadas calculam um valor (em vez de armazená-lo).
+Classes, structs e enums oferecem propriedades computadas.
+Propriedades armazenadas são oferecidas apenas por classes e structs.
 
 <!--
   - test: `enumerationsCantProvideStoredProperties`
@@ -19,14 +19,14 @@ Stored properties are provided only by classes and structures.
   ```
 -->
 
-Stored and computed properties are usually associated with instances of a particular type.
-However, properties can also be associated with the type itself.
-Such properties are known as type properties.
+Propriedades armazenadas e computadas costumam estar associadas a instâncias de um tipo específico.
+No entanto, propriedades também podem estar associadas ao próprio tipo.
+Essas propriedades são chamadas de propriedades de tipo.
 
-In addition, you can define property observers to monitor changes in a property's value,
-which you can respond to with custom actions.
-Property observers can be added to stored properties you define yourself,
-and also to properties that a subclass inherits from its superclass.
+Além disso, você pode definir observadores de propriedade para monitorar mudanças no valor de uma propriedade,
+e responder a essas mudanças com ações personalizadas.
+Observadores de propriedade podem ser adicionados a propriedades armazenadas que você mesmo define,
+e também a propriedades que uma subclasse herda da sua superclasse.
 
 <!--
   - test: `propertyObserverIntroClaims`
@@ -55,26 +55,26 @@ and also to properties that a subclass inherits from its superclass.
   ```
 -->
 
-You can also use a property wrapper
-to reuse code in the getter and setter of multiple properties.
+Você também pode usar um property wrapper
+para reaproveitar código nos getters e setters de várias propriedades.
 
-## Stored Properties
+## Propriedades armazenadas
 
-In its simplest form, a stored property is a constant or variable
-that's stored as part of an instance of a particular class or structure.
-Stored properties can be either
-*variable stored properties* (introduced by the `var` keyword)
-or *constant stored properties* (introduced by the `let` keyword).
+Na forma mais simples, uma propriedade armazenada é uma constante ou variável
+que fica guardada como parte de uma instância de uma classe ou struct específica.
+Propriedades armazenadas podem ser
+*propriedades armazenadas variáveis* (introduzidas pela palavra-chave `var`)
+ou *propriedades armazenadas constantes* (introduzidas pela palavra-chave `let`).
 
-You can provide a default value for a stored property as part of its definition,
-as described in <doc:Initialization#Default-Property-Values>.
-You can also set and modify the initial value for a stored property during initialization.
-This is true even for constant stored properties,
-as described in <doc:Initialization#Assigning-Constant-Properties-During-Initialization>.
+Você pode fornecer um valor padrão para uma propriedade armazenada como parte da sua definição,
+conforme descrito em <doc:Initialization#Default-Property-Values>.
+Você também pode definir e modificar o valor inicial de uma propriedade armazenada durante a inicialização.
+Isso vale até para propriedades armazenadas constantes,
+conforme descrito em <doc:Initialization#Assigning-Constant-Properties-During-Initialization>.
 
-The example below defines a structure called `FixedLengthRange`,
-which describes a range of integers
-whose range length can't be changed after it's created:
+O exemplo abaixo define uma struct chamada `FixedLengthRange`,
+que descreve um intervalo de inteiros
+cujo tamanho não pode ser alterado depois de criado:
 
 ```swift
 struct FixedLengthRange {
@@ -102,18 +102,18 @@ rangeOfThreeItems.firstValue = 6
   ```
 -->
 
-Instances of `FixedLengthRange` have
-a variable stored property called `firstValue`
-and a constant stored property called `length`.
-In the example above, `length` is initialized when the new range is created
-and can't be changed thereafter, because it's a constant property.
+Instâncias de `FixedLengthRange` têm
+uma propriedade armazenada variável chamada `firstValue`
+e uma propriedade armazenada constante chamada `length`.
+No exemplo acima, `length` é inicializada quando o novo intervalo é criado
+e não pode mudar depois, porque é uma propriedade constante.
 
-### Stored Properties of Constant Structure Instances
+### Propriedades armazenadas de instâncias constantes de struct
 
-If you create an instance of a structure
-and assign that instance to a constant,
-you can't modify the instance's properties,
-even if they were declared as variable properties:
+Se você criar uma instância de struct
+e atribuí-la a uma constante,
+não poderá modificar as propriedades dessa instância,
+mesmo que elas tenham sido declaradas como propriedades variáveis:
 
 ```swift
 let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
@@ -140,39 +140,39 @@ rangeOfFourItems.firstValue = 6
   ```
 -->
 
-Because `rangeOfFourItems` is declared as a constant (with the `let` keyword),
-it isn't possible to change its `firstValue` property,
-even though `firstValue` is a variable property.
+Como `rangeOfFourItems` é declarada como constante (com a palavra-chave `let`),
+não é possível alterar a propriedade `firstValue` dela,
+mesmo que `firstValue` seja uma propriedade variável.
 
-This behavior is due to structures being *value types*.
-When an instance of a value type is marked as a constant,
-so are all of its properties.
+Esse comportamento se deve ao fato de structs serem *tipos de valor*.
+Quando uma instância de tipo de valor é marcada como constante,
+todas as suas propriedades também são.
 
-The same isn't true for classes, which are *reference types*.
-If you assign an instance of a reference type to a constant,
-you can still change that instance's variable properties.
+O mesmo não vale para classes, que são *tipos de referência*.
+Se você atribuir uma instância de tipo de referência a uma constante,
+ainda poderá alterar as propriedades variáveis dessa instância.
 
 <!--
   TODO: this explanation could still do to be improved.
 -->
 
-### Lazy Stored Properties
+### Propriedades armazenadas lazy
 
 <!--
   QUESTION: is this section too complex for this point in the book?
   Should it go in the Default Property Values section of Initialization instead?
 -->
 
-A *lazy stored property* is a property whose initial value isn't calculated
-until the first time it's used.
-You indicate a lazy stored property by writing
-the `lazy` modifier before its declaration.
+Uma *propriedade armazenada lazy* é uma propriedade cujo valor inicial só é calculado
+na primeira vez que ela é usada.
+Você indica uma propriedade armazenada lazy escrevendo
+o modificador `lazy` antes da declaração.
 
-> Note: You must always declare a lazy property as a variable (with the `var` keyword),
-> because its initial value might not be retrieved until
-> after instance initialization completes.
-> Constant properties must always have a value *before* initialization completes,
-> and therefore can't be declared as lazy.
+> Nota: Você deve sempre declarar uma propriedade lazy como variável (com a palavra-chave `var`),
+> porque o valor inicial dela pode não ser obtido até
+> depois que a inicialização da instância terminar.
+> Propriedades constantes precisam ter um valor *antes* de a inicialização terminar,
+> por isso não podem ser declaradas como lazy.
 
 <!--
   - test: `lazyPropertiesMustAlwaysBeVariables`
@@ -186,22 +186,22 @@ the `lazy` modifier before its declaration.
   ```
 -->
 
-Lazy properties are useful when the initial value for a property
-is dependent on outside factors whose values aren't known
-until after an instance's initialization is complete.
-Lazy properties are also useful when the initial value for a property requires
-complex or computationally expensive setup that shouldn't be performed
-unless or until it's needed.
+Propriedades lazy são úteis quando o valor inicial de uma propriedade
+depende de fatores externos cujos valores só são conhecidos
+depois que a inicialização da instância termina.
+Também são úteis quando o valor inicial de uma propriedade exige
+uma configuração complexa ou custosa, que não deve ser feita
+a menos que ou até que seja realmente necessária.
 
 <!--
   TODO: add a note that if you assign a value to a lazy property before first access,
   the initial value you give in your code will be ignored.
 -->
 
-The example below uses a lazy stored property to avoid
-unnecessary initialization of a complex class.
-This example defines two classes called `DataImporter` and `DataManager`,
-neither of which is shown in full:
+O exemplo abaixo usa uma propriedade armazenada lazy para evitar
+a inicialização desnecessária de uma classe complexa.
+Ele define duas classes chamadas `DataImporter` e `DataManager`,
+e nenhuma das duas é mostrada por completo:
 
 ```swift
 class DataImporter {
@@ -254,30 +254,30 @@ manager.data.append("Some more data")
   ```
 -->
 
-The `DataManager` class has a stored property called `data`,
-which is initialized with a new, empty array of `String` values.
-Although the rest of its functionality isn't shown,
-the purpose of this `DataManager` class is to manage and provide access to
-this array of `String` data.
+A classe `DataManager` tem uma propriedade armazenada chamada `data`,
+que é inicializada com um novo array vazio de valores `String`.
+Embora o restante da funcionalidade não seja mostrado,
+a finalidade dessa classe `DataManager` é gerenciar e dar acesso
+a esse array de dados `String`.
 
-Part of the functionality of the `DataManager` class
-is the ability to import data from a file.
-This functionality is provided by the `DataImporter` class,
-which is assumed to take a nontrivial amount of time to initialize.
-This might be because a `DataImporter` instance needs to open a file
-and read its contents into memory when the `DataImporter` instance is initialized.
+Parte da funcionalidade da classe `DataManager`
+é a capacidade de importar dados de um arquivo.
+Essa funcionalidade é oferecida pela classe `DataImporter`,
+que supostamente leva um tempo considerável para ser inicializada.
+Isso pode acontecer porque uma instância de `DataImporter` precisa abrir um arquivo
+e ler o conteúdo dele para a memória quando é inicializada.
 
-Because it's possible for a `DataManager` instance to manage its data
-without ever importing data from a file,
-`DataManager` doesn't create a new `DataImporter` instance
-when the `DataManager` itself is created.
-Instead, it makes more sense to create the `DataImporter` instance
-if and when it's first used.
+Como é possível que uma instância de `DataManager` gerencie seus dados
+sem nunca importar dados de um arquivo,
+`DataManager` não cria uma nova instância de `DataImporter`
+quando ele mesmo é criado.
+Em vez disso, faz mais sentido criar a instância de `DataImporter`
+se e quando ela for usada pela primeira vez.
 
-Because it's marked with the `lazy` modifier,
-the `DataImporter` instance for the `importer` property
-is only created when the `importer` property is first accessed,
-such as when its `filename` property is queried:
+Como está marcada com o modificador `lazy`,
+a instância de `DataImporter` da propriedade `importer`
+só é criada quando `importer` é acessada pela primeira vez,
+como quando sua propriedade `filename` é consultada:
 
 ```swift
 print(manager.importer.filename)
@@ -295,43 +295,43 @@ print(manager.importer.filename)
   ```
 -->
 
-> Note: If a property marked with the `lazy` modifier
-> is accessed by multiple threads simultaneously
-> and the property hasn't yet been initialized,
-> there's no guarantee that the property will be initialized only once.
+> Nota: Se uma propriedade marcada com o modificador `lazy`
+> for acessada por várias threads ao mesmo tempo
+> e ainda não tiver sido inicializada,
+> não há garantia de que a propriedade será inicializada apenas uma vez.
 
 <!--
   6/19/14, 10:54 PM [Contributor 7746]: @lazy isn't thread safe.  Global variables (and static struct/enum fields) *are*.
 -->
 
-### Stored Properties and Instance Variables
+### Propriedades armazenadas e variáveis de instância
 
-If you have experience with Objective-C,
-you may know that it provides *two* ways
-to store values and references as part of a class instance.
-In addition to properties,
-you can use instance variables as a backing store for the values stored in a property.
+Se você tem experiência com Objective-C,
+talvez você saiba que ele oferece *duas* formas
+de armazenar valores e referências como parte de uma instância de classe.
+Além de propriedades,
+você pode usar variáveis de instância como armazenamento de apoio para os valores guardados em uma propriedade.
 
-Swift unifies these concepts into a single property declaration.
-A Swift property doesn't have a corresponding instance variable,
-and the backing store for a property isn't accessed directly.
-This approach avoids confusion about how the value is accessed in different contexts
-and simplifies the property's declaration into a single, definitive statement.
-All information about the property ---
-including its name, type, and memory management characteristics ---
-is defined in a single location as part of the type's definition.
+O Swift unifica esses conceitos em uma única declaração de propriedade.
+Uma propriedade do Swift não tem uma variável de instância correspondente,
+e o armazenamento de apoio de uma propriedade não é acessado diretamente.
+Essa abordagem evita confusão sobre como o valor é acessado em diferentes contextos
+e simplifica a declaração da propriedade em uma única instrução definitiva.
+Todas as informações sobre a propriedade ---
+incluindo nome, tipo e características de gerenciamento de memória ---
+são definidas em um único lugar, como parte da definição do tipo.
 
 <!--
   TODO: what happens if one property of a constant structure is an object reference?
 -->
 
-## Computed Properties
+## Propriedades computadas
 
-In addition to stored properties,
-classes, structures, and enumerations can define *computed properties*,
-which don't actually store a value.
-Instead, they provide a getter and an optional setter
-to retrieve and set other properties and values indirectly.
+Além de propriedades armazenadas,
+classes, structs e enums podem definir *propriedades computadas*,
+que não armazenam um valor de fato.
+Em vez disso, elas oferecem um getter e um setter opcional
+para ler e definir outras propriedades e valores indiretamente.
 
 ```swift
 struct Point {
@@ -400,47 +400,47 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   ```
 -->
 
-This example defines three structures for working with geometric shapes:
+Este exemplo define três structs para trabalhar com formas geométricas:
 
-- `Point` encapsulates the x- and y-coordinate of a point.
-- `Size` encapsulates a `width` and a `height`.
-- `Rect` defines a rectangle by an origin point and a size.
+- `Point` encapsula a coordenada x e a coordenada y de um ponto.
+- `Size` encapsula uma `width` e uma `height`.
+- `Rect` define um retângulo por um ponto de origem e um tamanho.
 
-The `Rect` structure also provides a computed property called `center`.
-The current center position of a `Rect` can always be determined from its `origin` and `size`,
-and so you don't need to store the center point as an explicit `Point` value.
-Instead, `Rect` defines a custom getter and setter for a computed variable called `center`,
-to enable you to work with the rectangle's `center` as if it were a real stored property.
+A struct `Rect` também oferece uma propriedade computada chamada `center`.
+O centro atual de um `Rect` sempre pode ser determinado a partir de `origin` e `size`,
+então você não precisa armazenar o ponto central como um valor `Point` explícito.
+Em vez disso, `Rect` define um getter e um setter personalizados para uma variável computada chamada `center`,
+para que você possa trabalhar com o centro do retângulo como se fosse uma propriedade armazenada de verdade.
 
-The example above creates a new `Rect` variable called `square`.
-The `square` variable is initialized with an origin point of `(0, 0)`,
-and a width and height of `10`.
-This square is represented by the light green square in the diagram below.
+O exemplo acima cria uma nova variável `Rect` chamada `square`.
+A variável `square` é inicializada com um ponto de origem `(0, 0)`
+e com largura e altura `10`.
+Esse quadrado é representado pelo quadrado verde-claro no diagrama abaixo.
 
-The `square` variable's `center` property is then accessed through dot syntax (`square.center`),
-which causes the getter for `center` to be called,
-to retrieve the current property value.
-Rather than returning an existing value,
-the getter actually calculates and returns a new `Point` to represent the center of the square.
-As can be seen above, the getter correctly returns a center point of `(5, 5)`.
+A propriedade `center` da variável `square` é então acessada pela sintaxe de ponto (`square.center`),
+o que faz o getter de `center` ser chamado
+para obter o valor atual da propriedade.
+Em vez de retornar um valor já existente,
+o getter na verdade calcula e retorna um novo `Point` que representa o centro do quadrado.
+Como se vê acima, o getter retorna corretamente um ponto central `(5, 5)`.
 
-The `center` property is then set to a new value of `(15, 15)`,
-which moves the square up and to the right,
-to the new position shown by the dark green square in the diagram below.
-Setting the `center` property calls the setter for `center`,
-which modifies the `x` and `y` values of the stored `origin` property,
-and moves the square to its new position.
+Em seguida, a propriedade `center` recebe um novo valor `(15, 15)`,
+o que move o quadrado para cima e para a direita,
+até a nova posição mostrada pelo quadrado verde-escuro no diagrama abaixo.
+Definir a propriedade `center` chama o setter de `center`,
+que modifica os valores `x` e `y` da propriedade armazenada `origin`
+e move o quadrado para a nova posição.
 
 <!-- Apple Books screenshot begins here. -->
 
 ![](computedProperties)
 
-### Shorthand Setter Declaration
+### Declaração abreviada do setter
 
-If a computed property's setter doesn't define a name for the new value to be set,
-a default name of `newValue` is used.
-Here's an alternative version of the `Rect` structure
-that takes advantage of this shorthand notation:
+Se o setter de uma propriedade computada não define um nome para o novo valor a ser atribuído,
+o Swift usa o nome padrão `newValue`.
+Aqui está uma versão alternativa da struct `Rect`
+que aproveita essa notação abreviada:
 
 ```swift
 struct AlternativeRect {
@@ -484,13 +484,12 @@ struct AlternativeRect {
 
 <!-- Apple Books screenshot ends here. -->
 
-### Shorthand Getter Declaration
+### Declaração abreviada do getter
 
-If the entire body of a getter is a single expression,
-the getter implicitly returns that expression.
-Here's another version of the `Rect` structure
-that takes advantage of this shorthand notation
-and the shorthand notation for setters:
+Se o corpo inteiro de um getter for uma única expressão,
+o getter retorna implicitamente essa expressão.
+Aqui está outra versão da struct `Rect`
+que aproveita essa notação abreviada e a notação abreviada dos setters:
 
 ```swift
 struct CompactRect {
@@ -530,21 +529,21 @@ struct CompactRect {
   ```
 -->
 
-Omitting the `return` from a getter
-follows the same rules as omitting `return` from a function,
-as described in <doc:Functions#Functions-With-an-Implicit-Return>.
+Omitir o `return` de um getter
+segue as mesmas regras de omitir `return` em uma função,
+conforme descrito em <doc:Functions#Functions-With-an-Implicit-Return>.
 
-### Read-Only Computed Properties
+### Propriedades computadas somente leitura
 
-A computed property with a getter but no setter is known as a *read-only computed property*.
-A read-only computed property always returns a value,
-and can be accessed through dot syntax, but can't be set to a different value.
+Uma propriedade computada com getter, mas sem setter, é conhecida como *propriedade computada somente leitura*.
+Uma propriedade computada somente leitura sempre retorna um valor,
+pode ser acessada pela sintaxe de ponto, mas não pode ser definida com outro valor.
 
-> Note: You must declare computed properties --- including read-only computed properties ---
-> as variable properties with the `var` keyword, because their value isn't fixed.
-> The `let` keyword is only used for constant properties,
-> to indicate that their values can't be changed once they're set
-> as part of instance initialization.
+> Nota: Você deve declarar propriedades computadas --- incluindo as somente leitura ---
+> como propriedades variáveis, com a palavra-chave `var`, porque o valor delas não é fixo.
+> A palavra-chave `let` é usada apenas para propriedades constantes,
+> para indicar que os valores não podem ser alterados depois de definidos
+> como parte da inicialização da instância.
 
 <!--
   - test: `readOnlyComputedPropertiesMustBeVariables`
@@ -565,8 +564,8 @@ and can be accessed through dot syntax, but can't be set to a different value.
   ```
 -->
 
-You can simplify the declaration of a read-only computed property
-by removing the `get` keyword and its braces:
+Você pode simplificar a declaração de uma propriedade computada somente leitura
+removendo a palavra-chave `get` e suas chaves:
 
 ```swift
 struct Cuboid {
@@ -596,15 +595,15 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   ```
 -->
 
-This example defines a new structure called `Cuboid`,
-which represents a 3D rectangular box with `width`, `height`, and `depth` properties.
-This structure also has a read-only computed property called `volume`,
-which calculates and returns the current volume of the cuboid.
-It doesn't make sense for `volume` to be settable,
-because it would be ambiguous as to which values of `width`, `height`, and `depth`
-should be used for a particular `volume` value.
-Nonetheless, it's useful for a `Cuboid` to provide a read-only computed property
-to enable external users to discover its current calculated volume.
+Este exemplo define uma nova struct chamada `Cuboid`,
+que representa uma caixa retangular 3D com as propriedades `width`, `height` e `depth`.
+Essa struct também tem uma propriedade computada somente leitura chamada `volume`,
+que calcula e retorna o volume atual do paralelepípedo.
+Não faz sentido que o valor de `volume` possa ser definido,
+porque seria ambíguo saber quais valores de `width`, `height` e `depth`
+deveriam ser usados para um determinado valor de `volume`.
+Ainda assim, é útil que um `Cuboid` ofereça uma propriedade computada somente leitura
+para que usuários externos possam descobrir o volume calculado atual.
 
 <!--
   NOTE: getters and setters are also allowed for constants and variables
@@ -621,11 +620,11 @@ to enable external users to discover its current calculated volume.
   (now that the Enumerations chapter no longer has an example of this itself).
 -->
 
-## Property Observers
+## Observadores de propriedade
 
-Property observers observe and respond to changes in a property's value.
-Property observers are called every time a property's value is set,
-even if the new value is the same as the property's current value.
+Observadores de propriedade observam e respondem a mudanças no valor de uma propriedade.
+Observadores de propriedade são chamados sempre que o valor de uma propriedade é definido,
+mesmo que o novo valor seja igual ao valor atual da propriedade.
 
 <!--
   - test: `observersAreCalledEvenIfNewValueIsTheSameAsOldValue`
@@ -642,18 +641,18 @@ even if the new value is the same as the property's current value.
   ```
 -->
 
-You can add property observers in the following places:
+Você pode adicionar observadores de propriedade nos seguintes lugares:
 
-- Stored properties that you define
-- Stored properties that you inherit
-- Computed properties that you inherit
+- Em propriedades armazenadas que você define
+- Em propriedades armazenadas que você herda
+- Em propriedades computadas que você herda
 
-For an inherited property,
-you add a property observer by overriding that property in a subclass.
-For a computed property that you define,
-use the property's setter to observe and respond to value changes,
-instead of trying to create an observer.
-Overriding properties is described in <doc:Inheritance#Overriding>.
+Para uma propriedade herdada,
+você adiciona um observador de propriedade sobrescrevendo essa propriedade em uma subclasse.
+Para uma propriedade computada que você define,
+use o setter da propriedade para observar e responder a mudanças de valor,
+em vez de tentar criar um observador.
+Sobrescrever propriedades é descrito em <doc:Inheritance#Overriding>.
 
 <!--
   - test: `lazyPropertiesCanHaveObservers`
@@ -704,22 +703,22 @@ Overriding properties is described in <doc:Inheritance#Overriding>.
   ```
 -->
 
-You have the option to define either or both of these observers on a property:
+Você pode definir um ou ambos os observadores em uma propriedade:
 
-- `willSet` is called just before the value is stored.
-- `didSet` is called immediately after the new value is stored.
+- `willSet` é chamado logo antes de o valor ser armazenado.
+- `didSet` é chamado imediatamente depois que o novo valor é armazenado.
 
-If you implement a `willSet` observer,
-it's passed the new property value as a constant parameter.
-You can specify a name for this parameter as part of your `willSet` implementation.
-If you don't write the parameter name and parentheses within your implementation,
-the parameter is made available with a default parameter name of `newValue`.
+Se você implementar um observador `willSet`,
+ele recebe o novo valor da propriedade como um parâmetro constante.
+Você pode especificar um nome para esse parâmetro como parte da implementação de `willSet`.
+Se você não escrever o nome do parâmetro e os parênteses na implementação,
+o parâmetro fica disponível com o nome padrão `newValue`.
 
-Similarly, if you implement a `didSet` observer,
-it's passed a constant parameter containing the old property value.
-You can name the parameter or use the default parameter name of `oldValue`.
-If you assign a value to a property within its own `didSet` observer,
-the new value that you assign replaces the one that was just set.
+De forma semelhante, se você implementar um observador `didSet`,
+ele recebe um parâmetro constante com o valor antigo da propriedade.
+Você pode dar um nome ao parâmetro ou usar o nome padrão `oldValue`.
+Se você atribuir um valor a uma propriedade dentro do próprio observador `didSet`,
+o novo valor que você atribuir substitui o que acabou de ser definido.
 
 <!--
   - test: `assigningANewValueInADidSetReplacesTheNewValue`
@@ -733,15 +732,15 @@ the new value that you assign replaces the one that was just set.
   ```
 -->
 
-> Note: The `willSet` and `didSet` observers of superclass properties
-> are called when a property is set in a subclass initializer,
-> after the superclass initializer has been called.
-> They aren't called while a class is setting its own properties
-> in the body of the initializer.
+> Nota: Os observadores `willSet` e `didSet` de propriedades da superclasse
+> são chamados quando uma propriedade é definida em um inicializador de subclasse,
+> depois que o inicializador da superclasse foi chamado.
+> Eles não são chamados enquanto uma classe está definindo as próprias propriedades
+> no corpo do inicializador.
 >
-> For more information about initializer delegation,
-> see <doc:Initialization#Initializer-Delegation-for-Value-Types>
-> and <doc:Initialization#Initializer-Delegation-for-Class-Types>.
+> Para mais informações sobre delegação de inicializadores,
+> veja <doc:Initialization#Initializer-Delegation-for-Value-Types>
+> e <doc:Initialization#Initializer-Delegation-for-Class-Types>.
 
 <!--
   - test: `observersDuringInitialization`
@@ -771,11 +770,11 @@ the new value that you assign replaces the one that was just set.
   ```
 -->
 
-Here's an example of `willSet` and `didSet` in action.
-The example below defines a new class called `StepCounter`,
-which tracks the total number of steps that a person takes while walking.
-This class might be used with input data from a pedometer or other step counter
-to keep track of a person's exercise during their daily routine.
+Aqui está um exemplo de `willSet` e `didSet` em ação.
+O exemplo abaixo define uma nova classe chamada `StepCounter`,
+que registra o número total de passos que uma pessoa dá caminhando.
+Essa classe poderia ser usada com dados de entrada de um podômetro ou outro contador de passos
+para acompanhar os exercícios de uma pessoa na rotina diária.
 
 ```swift
 class StepCounter {
@@ -831,31 +830,31 @@ stepCounter.totalSteps = 896
   ```
 -->
 
-The `StepCounter` class declares a `totalSteps` property of type `Int`.
-This is a stored property with `willSet` and `didSet` observers.
+A classe `StepCounter` declara uma propriedade `totalSteps` do tipo `Int`.
+Trata-se de uma propriedade armazenada com observadores `willSet` e `didSet`.
 
-The `willSet` and `didSet` observers for `totalSteps` are called
-whenever the property is assigned a new value.
-This is true even if the new value is the same as the current value.
+Os observadores `willSet` e `didSet` de `totalSteps` são chamados
+sempre que a propriedade recebe um novo valor.
+Isso vale mesmo se o novo valor for igual ao valor atual.
 
-This example's `willSet` observer uses
-a custom parameter name of `newTotalSteps` for the upcoming new value.
-In this example, it simply prints out the value that's about to be set.
+O observador `willSet` deste exemplo usa um nome de parâmetro personalizado,
+`newTotalSteps`, para o próximo valor.
+Neste exemplo, ele apenas imprime o valor que está prestes a ser definido.
 
-The `didSet` observer is called after the value of `totalSteps` is updated.
-It compares the new value of `totalSteps` against the old value.
-If the total number of steps has increased,
-a message is printed to indicate how many new steps have been taken.
-The `didSet` observer doesn't provide a custom parameter name for the old value,
-and the default name of `oldValue` is used instead.
+O observador `didSet` é chamado depois que o valor de `totalSteps` é atualizado.
+Ele compara o novo valor de `totalSteps` com o valor antigo.
+Se o total de passos aumentou,
+uma mensagem é impressa para indicar quantos passos novos foram dados.
+O observador `didSet` não define um nome personalizado para o valor antigo,
+e o nome padrão `oldValue` é usado.
 
-> Note: If you pass a property that has observers
-> to a function as an in-out parameter,
-> the `willSet` and `didSet` observers are always called.
-> This is because of the copy-in copy-out memory model for in-out parameters:
-> The value is always written back to the property at the end of the function.
-> For a detailed discussion of the behavior of in-out parameters,
-> see <doc:Declarations#In-Out-Parameters>.
+> Nota: Se você passar para uma função, como parâmetro in-out,
+> uma propriedade que tem observadores,
+> os observadores `willSet` e `didSet` são sempre chamados.
+> Isso acontece por causa do modelo de memória copy-in copy-out dos parâmetros in-out:
+> o valor é sempre gravado de volta na propriedade no fim da função.
+> Para uma discussão detalhada sobre o comportamento dos parâmetros in-out,
+> veja <doc:Declarations#In-Out-Parameters>.
 
 <!--
   - test: `observersCalledAfterInout`
@@ -880,27 +879,27 @@ and the default name of `oldValue` is used instead.
   Provide an example of it here.
 -->
 
-## Property Wrappers
+## Property wrappers
 
-A property wrapper adds a layer of separation
-between code that manages how a property is stored
-and the code that defines a property.
-For example,
-if you have properties that
-provide thread-safety checks
-or store their underlying data in a database,
-you have to write that code on every property.
-When you use a property wrapper,
-you write the management code once when you define the wrapper,
-and then reuse that management code by applying it to multiple properties.
+Um property wrapper cria uma camada de separação
+entre o código que gerencia como uma propriedade é armazenada
+e o código que define a propriedade.
+Por exemplo,
+se você tem propriedades que
+fazem verificações de thread-safety
+ou armazenam os dados em um banco de dados,
+precisa escrever esse código em cada propriedade.
+Ao usar um property wrapper,
+você escreve o código de gerenciamento uma vez, ao definir o wrapper,
+e depois reaproveita esse código aplicando-o a várias propriedades.
 
-To define a property wrapper,
-you make a structure, enumeration, or class
-that defines a `wrappedValue` property.
-In the code below,
-the `TwelveOrLess` structure ensures that
-the value it wraps always contains a number less than or equal to 12.
-If you ask it to store a larger number, it stores 12 instead.
+Para definir um property wrapper,
+você cria uma struct, enum ou classe
+que define uma propriedade `wrappedValue`.
+No código abaixo,
+a struct `TwelveOrLess` garante que
+o valor que ela envolve sempre contenha um número menor ou igual a 12.
+Se você pedir para armazenar um número maior, ela armazena 12.
 
 ```swift
 @propertyWrapper
@@ -933,17 +932,17 @@ struct TwelveOrLess {
   Always initializing the wrapped value is a simpler starting point.
 -->
 
-The setter ensures that new values are less than or equal to 12,
-and the getter returns the stored value.
+O setter garante que novos valores sejam menores ou iguais a 12,
+e o getter retorna o valor armazenado.
 
-> Note: The declaration for `number` in the example above
-> marks the variable as `private`,
-> which ensures `number` is used only
-> in the implementation of `TwelveOrLess`.
-> Code that's written anywhere else
-> accesses the value using the getter and setter for `wrappedValue`,
-> and can't use `number` directly.
-> For information about `private`, see <doc:AccessControl>.
+> Nota: A declaração de `number` no exemplo acima
+> marca a variável como `private`,
+> o que garante que `number` seja usada apenas
+> na implementação de `TwelveOrLess`.
+> Código escrito em qualquer outro lugar
+> acessa o valor pelo getter e pelo setter de `wrappedValue`,
+> e não pode usar `number` diretamente.
+> Para informações sobre `private`, veja <doc:AccessControl>.
 
 <!--
   In this example,
@@ -989,12 +988,12 @@ and the getter returns the stored value.
   ```
 -->
 
-You apply a wrapper to a property
-by writing the wrapper's name before the property
-as an attribute.
-Here's a structure that stores a rectangle
-that uses the `TwelveOrLess` property wrapper
-to ensure its dimensions are always 12 or less:
+Você aplica um wrapper a uma propriedade
+escrevendo o nome do wrapper antes da propriedade,
+como um atributo.
+Aqui está uma struct que armazena um retângulo
+que usa o property wrapper `TwelveOrLess`
+para garantir que suas dimensões sejam sempre 12 ou menos:
 
 ```swift
 struct SmallRectangle {
@@ -1038,27 +1037,24 @@ print(rectangle.height)
   ```
 -->
 
-The `height` and `width` properties get their initial values
-from the definition of `TwelveOrLess`,
-which sets `TwelveOrLess.number` to zero.
-The setter in `TwelveOrLess` treats 10 as a valid value
-so storing the number 10 in `rectangle.height` proceeds as written.
-However, 24 is larger than `TwelveOrLess` allows,
-so trying to store 24 end up setting `rectangle.height`
-to 12 instead, the largest allowed value.
+As propriedades `height` e `width` recebem seus valores iniciais
+da definição de `TwelveOrLess`, que define `TwelveOrLess.number` como zero.
+O setter de `TwelveOrLess` aceita 10 como valor válido,
+então armazenar o número 10 em `rectangle.height` funciona normalmente.
+No entanto, 24 é maior do que `TwelveOrLess` permite,
+então tentar armazenar 24 faz `rectangle.height` ser definido como 12, o maior valor permitido.
 
-When you apply a wrapper to a property,
-the compiler synthesizes code that provides storage for the wrapper
-and code that provides access to the property through the wrapper.
-(The property wrapper is responsible for storing the wrapped value,
-so there's no synthesized code for that.)
-You could write code that uses the behavior of a property wrapper,
-without taking advantage of the special attribute syntax.
-For example,
-here's a version of `SmallRectangle`
-from the previous code listing
-that wraps its properties in the `TwelveOrLess` structure explicitly,
-instead of writing `@TwelveOrLess` as an attribute:
+Quando você aplica um wrapper a uma propriedade,
+o compilador sintetiza código que fornece o armazenamento para o wrapper
+e código que dá acesso à propriedade por meio do wrapper.
+(O property wrapper é responsável por armazenar o valor envolvido,
+então não há código sintetizado para isso.)
+Você poderia escrever código que usa o comportamento de um property wrapper
+sem aproveitar a sintaxe especial de atributo.
+Por exemplo,
+aqui está uma versão de `SmallRectangle` do exemplo anterior
+que envolve suas propriedades na struct `TwelveOrLess` explicitamente,
+em vez de escrever `@TwelveOrLess` como atributo:
 
 ```swift
 struct SmallRectangle {
@@ -1094,26 +1090,26 @@ struct SmallRectangle {
   ```
 -->
 
-The `_height` and `_width` properties
-store an instance of the property wrapper, `TwelveOrLess`.
-The getter and setter for `height` and `width`
-wrap access to the `wrappedValue` property.
+As propriedades `_height` e `_width`
+armazenam uma instância do property wrapper, `TwelveOrLess`.
+O getter e o setter de `height` e `width`
+envolvem o acesso à propriedade `wrappedValue`.
 
-### Setting Initial Values for Wrapped Properties
+### Definindo valores iniciais para propriedades com wrapper
 
-The code in the examples above
-sets the initial value for the wrapped property
-by giving `number` an initial value in the definition of `TwelveOrLess`.
-Code that uses this property wrapper
-can't specify a different initial value for a property
-that's wrapped by `TwelveOrLess` ---
-for example,
-the definition of `SmallRectangle`
-can't give `height` or `width` initial values.
-To support setting an initial value or other customization,
-the property wrapper needs to add an initializer.
-Here's an expanded version of `TwelveOrLess` called `SmallNumber`
-that defines initializers that set the wrapped and maximum value:
+O código dos exemplos acima
+define o valor inicial da propriedade envolvida
+dando a `number` um valor inicial na definição de `TwelveOrLess`.
+O código que usa esse property wrapper
+não pode especificar um valor inicial diferente para uma propriedade
+envolvida por `TwelveOrLess` ---
+por exemplo,
+a definição de `SmallRectangle`
+não pode dar valores iniciais a `height` ou `width`.
+Para permitir definir um valor inicial ou outra personalização,
+o property wrapper precisa adicionar um inicializador.
+Aqui está uma versão expandida de `TwelveOrLess`, chamada `SmallNumber`,
+que define inicializadores que configuram o valor envolvido e o valor máximo:
 
 ```swift
 @propertyWrapper
@@ -1181,16 +1177,16 @@ struct SmallNumber {
   so it's clearer to make each init stand on its own.
 -->
 
-The definition of `SmallNumber` includes three initializers ---
-`init()`, `init(wrappedValue:)`, and `init(wrappedValue:maximum:)` ---
-which the examples below use
-to set the wrapped value and the maximum value.
-For information about initialization and initializer syntax,
-see <doc:Initialization>.
+A definição de `SmallNumber` inclui três inicializadores ---
+`init()`, `init(wrappedValue:)` e `init(wrappedValue:maximum:)` ---
+que os exemplos abaixo usam
+para definir o valor envolvido e o valor máximo.
+Para informações sobre inicialização e sintaxe de inicializadores,
+veja <doc:Initialization>.
 
-When you apply a wrapper to a property and you don't specify an initial value,
-Swift uses the `init()` initializer to set up the wrapper.
-For example:
+Quando você aplica um wrapper a uma propriedade e não especifica um valor inicial,
+o Swift usa o inicializador `init()` para configurar o wrapper.
+Por exemplo:
 
 ```swift
 struct ZeroRectangle {
@@ -1240,20 +1236,20 @@ print(zeroRectangle.height, zeroRectangle.width)
   ```
 -->
 
-The instances of `SmallNumber` that wrap `height` and `width`
-are created by calling `SmallNumber()`.
-The code inside that initializer
-sets the initial wrapped value and the initial maximum value,
-using the default values of zero and 12.
-The property wrapper still provides all of the initial values,
-like the earlier example that used `TwelveOrLess` in `SmallRectangle`.
-Unlike that example,
-`SmallNumber` also supports writing those initial values
-as part of declaring the property.
+As instâncias de `SmallNumber` que envolvem `height` e `width`
+são criadas chamando `SmallNumber()`.
+O código dentro desse inicializador
+define o valor envolvido inicial e o valor máximo inicial,
+usando os valores padrão zero e 12.
+O property wrapper ainda fornece todos os valores iniciais,
+como no exemplo anterior que usou `TwelveOrLess` em `SmallRectangle`.
+Diferente desse exemplo,
+`SmallNumber` também permite escrever esses valores iniciais
+como parte da declaração da propriedade.
 
-When you specify an initial value for the property,
-Swift uses the `init(wrappedValue:)` initializer to set up the wrapper.
-For example:
+Quando você especifica um valor inicial para a propriedade,
+o Swift usa o inicializador `init(wrappedValue:)` para configurar o wrapper.
+Por exemplo:
 
 ```swift
 struct UnitRectangle {
@@ -1303,17 +1299,17 @@ print(unitRectangle.height, unitRectangle.width)
   ```
 -->
 
-When you write `= 1` on a property with a wrapper,
-that's translated into a call to the `init(wrappedValue:)` initializer.
-The instances of `SmallNumber` that wrap `height` and `width`
-are created by calling `SmallNumber(wrappedValue: 1)`.
-The initializer uses the wrapped value that's specified here,
-and it uses the default maximum value of 12.
+Quando você escreve `= 1` em uma propriedade com wrapper,
+isso é traduzido em uma chamada ao inicializador `init(wrappedValue:)`.
+As instâncias de `SmallNumber` que envolvem `height` e `width`
+são criadas chamando `SmallNumber(wrappedValue: 1)`.
+O inicializador usa o valor envolvido especificado aqui,
+e usa o valor máximo padrão de 12.
 
-When you write arguments in parentheses after the custom attribute,
-Swift uses the initializer that accepts those arguments to set up the wrapper.
-For example, if you provide an initial value and a maximum value,
-Swift uses the `init(wrappedValue:maximum:)` initializer:
+Quando você escreve argumentos entre parênteses depois do atributo personalizado,
+o Swift usa o inicializador que aceita esses argumentos para configurar o wrapper.
+Por exemplo, se você fornecer um valor inicial e um valor máximo,
+o Swift usa o inicializador `init(wrappedValue:maximum:)`:
 
 ```swift
 struct NarrowRectangle {
@@ -1377,23 +1373,23 @@ print(narrowRectangle.height, narrowRectangle.width)
   ```
 -->
 
-The instance of `SmallNumber` that wraps `height`
-is created by calling `SmallNumber(wrappedValue: 2, maximum: 5)`,
-and the instance that wraps `width`
-is created by calling `SmallNumber(wrappedValue: 3, maximum: 4)`.
+A instância de `SmallNumber` que envolve `height`
+é criada chamando `SmallNumber(wrappedValue: 2, maximum: 5)`,
+e a instância que envolve `width`
+é criada chamando `SmallNumber(wrappedValue: 3, maximum: 4)`.
 
-By including arguments to the property wrapper,
-you can set up the initial state in the wrapper
-or pass other options to the wrapper when it's created.
-This syntax is the most general way to use a property wrapper.
-You can provide whatever arguments you need to the attribute,
-and they're passed to the initializer.
+Ao incluir argumentos no property wrapper,
+você pode definir o estado inicial no wrapper
+ou passar outras opções para ele na hora da criação.
+Essa sintaxe é a forma mais geral de usar um property wrapper.
+Você pode fornecer os argumentos que precisar ao atributo,
+e eles são passados para o inicializador.
 
-When you include property wrapper arguments,
-you can also specify an initial value using assignment.
-Swift treats the assignment like a `wrappedValue` argument
-and uses the initializer that accepts the arguments you include.
-For example:
+Quando você inclui argumentos do property wrapper,
+também pode especificar um valor inicial usando atribuição.
+O Swift trata a atribuição como um argumento `wrappedValue`
+e usa o inicializador que aceita os argumentos que você incluiu.
+Por exemplo:
 
 ```swift
 struct MixedRectangle {
@@ -1429,30 +1425,30 @@ print(mixedRectangle.height)
   ```
 -->
 
-The instance of `SmallNumber` that wraps `height`
-is created by calling `SmallNumber(wrappedValue: 1)`,
-which uses the default maximum value of 12.
-The instance that wraps `width`
-is created by calling `SmallNumber(wrappedValue: 2, maximum: 9)`.
+A instância de `SmallNumber` que envolve `height`
+é criada chamando `SmallNumber(wrappedValue: 1)`,
+que usa o valor máximo padrão de 12.
+A instância que envolve `width`
+é criada chamando `SmallNumber(wrappedValue: 2, maximum: 9)`.
 
-### Projecting a Value From a Property Wrapper
+### Projetando um valor de um property wrapper
 
-In addition to the wrapped value,
-a property wrapper can expose additional functionality
-by defining a *projected value* ---
-for example, a property wrapper that manages access to a database
-can expose a `flushDatabaseConnection()` method on its projected value.
-The name of the projected value is the same as the wrapped value,
-except it begins with a dollar sign (`$`).
-Because your code can't define properties that start with `$`
-the projected value never interferes with properties you define.
+Além do valor envolvido,
+um property wrapper pode expor funcionalidades adicionais
+definindo um *valor projetado* ---
+por exemplo, um property wrapper que gerencia o acesso a um banco de dados
+pode expor um método `flushDatabaseConnection()` em seu valor projetado.
+O nome do valor projetado é o mesmo do valor envolvido,
+exceto que começa com um cifrão (`$`).
+Como seu código não pode definir propriedades que começam com `$`,
+o valor projetado nunca interfere nas propriedades que você define.
 
-In the `SmallNumber` example above,
-if you try to set the property to a number that's too large,
-the property wrapper adjusts the number before storing it.
-The code below adds a `projectedValue` property to the `SmallNumber` structure
-to keep track of whether the property wrapper
-adjusted the new value for the property before storing that new value.
+No exemplo `SmallNumber` acima,
+se você tentar definir a propriedade com um número grande demais,
+o property wrapper ajusta o número antes de armazená-lo.
+O código abaixo adiciona uma propriedade `projectedValue` à struct `SmallNumber`
+para registrar se o property wrapper
+ajustou o novo valor da propriedade antes de armazená-lo.
 
 ```swift
 @propertyWrapper
@@ -1534,29 +1530,29 @@ print(someStructure.$someNumber)
   ```
 -->
 
-Writing `someStructure.$someNumber` accesses the wrapper's projected value.
-After storing a small number like four,
-the value of `someStructure.$someNumber` is `false`.
-However,
-the projected value is `true`
-after trying to store a number that's too large, like 55.
+Escrever `someStructure.$someNumber` acessa o valor projetado do wrapper.
+Depois de armazenar um número pequeno como quatro,
+o valor de `someStructure.$someNumber` é `false`.
+No entanto,
+o valor projetado é `true`
+depois de tentar armazenar um número grande demais, como 55.
 
-A property wrapper can return a value of any type as its projected value.
-In this example,
-the property wrapper exposes only one piece of information ---
-whether the number was adjusted ---
-so it exposes that Boolean value as its projected value.
-A wrapper that needs to expose more information
-can return an instance of some other type,
-or it can return `self`
-to expose the instance of the wrapper as its projected value.
+Um property wrapper pode retornar um valor de qualquer tipo como seu valor projetado.
+Neste exemplo,
+o property wrapper expõe apenas uma informação ---
+se o número foi ajustado ---
+então ele expõe esse valor booleano como seu valor projetado.
+Um wrapper que precisa expor mais informações
+pode retornar uma instância de algum outro tipo,
+ou pode retornar `self`
+para expor a instância do wrapper como seu valor projetado.
 
-When you access a projected value from code that's part of the type,
-like a property getter or an instance method,
-you can omit `self.` before the property name,
-just like accessing other properties.
-The code in the following example refers to the projected value
-of the wrapper around `height` and `width` as `$height` and `$width`:
+Quando você acessa um valor projetado a partir de código que faz parte do tipo,
+como um getter de propriedade ou um método de instância,
+pode omitir `self.` antes do nome da propriedade,
+da mesma forma que ao acessar outras propriedades.
+O código no exemplo a seguir se refere ao valor projetado
+do wrapper em torno de `height` e `width` como `$height` e `$width`:
 
 ```swift
 enum Size {
@@ -1614,43 +1610,43 @@ struct SizedRectangle {
   ```
 -->
 
-Because property wrapper syntax is just syntactic sugar
-for a property with a getter and a setter,
-accessing `height` and `width`
-behaves the same as accessing any other property.
-For example,
-the code in `resize(to:)` accesses `height` and `width`
-using their property wrapper.
-If you call `resize(to: .large)`,
-the switch case for `.large` sets the rectangle's height and width to 100.
-The wrapper prevents the value of those properties
-from being larger than 12,
-and it sets the projected value to `true`,
-to record the fact that it adjusted their values.
-At the end of `resize(to:)`,
-the return statement checks `$height` and `$width`
-to determine whether
-the property wrapper adjusted either `height` or `width`.
+Como a sintaxe de property wrapper é apenas açúcar sintático
+para uma propriedade com getter e setter,
+acessar `height` e `width`
+se comporta da mesma forma que acessar qualquer outra propriedade.
+Por exemplo,
+o código em `resize(to:)` acessa `height` e `width`
+usando o property wrapper deles.
+Se você chamar `resize(to: .large)`,
+o caso `.large` do switch define a altura e a largura do retângulo como 100.
+O wrapper impede que o valor dessas propriedades
+seja maior que 12,
+e define o valor projetado como `true`,
+para registrar o fato de ter ajustado os valores.
+No fim de `resize(to:)`,
+a instrução return verifica `$height` e `$width`
+para determinar se
+o property wrapper ajustou `height` ou `width`.
 
-## Global and Local Variables
+## Variáveis globais e locais
 
-The capabilities described above for computing and observing properties
-are also available to *global variables* and *local variables*.
-Global variables are variables that are defined outside of any
-function, method, closure, or type context.
-Local variables are variables that are defined within
-a function, method, or closure context.
+As capacidades descritas acima para calcular e observar propriedades
+também estão disponíveis para *variáveis globais* e *variáveis locais*.
+Variáveis globais são variáveis definidas fora de qualquer
+função, método, closure ou contexto de tipo.
+Variáveis locais são variáveis definidas dentro
+de um contexto de função, método ou closure.
 
-The global and local variables you have encountered in previous chapters
-have all been *stored variables*.
-Stored variables, like stored properties,
-provide storage for a value of a certain type and allow that value to be set and retrieved.
+As variáveis globais e locais que você viu nos capítulos anteriores
+sempre foram *variáveis armazenadas*.
+Variáveis armazenadas, como propriedades armazenadas,
+fornecem armazenamento para um valor de determinado tipo e permitem que esse valor seja definido e lido.
 
-However, you can also define *computed variables*
-and define observers for stored variables,
-in either a global or local scope.
-Computed variables calculate their value, rather than storing it,
-and they're written in the same way as computed properties.
+No entanto, você também pode definir *variáveis computadas*
+e definir observadores para variáveis armazenadas,
+tanto em escopo global quanto em escopo local.
+Variáveis computadas calculam o valor em vez de armazená-lo,
+e são escritas da mesma forma que propriedades computadas.
 
 <!--
   - test: `computedVariables`
@@ -1675,17 +1671,17 @@ and they're written in the same way as computed properties.
   ```
 -->
 
-> Note: Global constants and variables are always computed lazily,
-> in a similar manner to <doc:Properties#Lazy-Stored-Properties>.
-> Unlike lazy stored properties,
-> global constants and variables don't need to be marked with the `lazy` modifier.
+> Nota: Constantes e variáveis globais são sempre calculadas de forma lazy,
+> de maneira semelhante às <doc:Properties#Lazy-Stored-Properties>.
+> Ao contrário das propriedades armazenadas lazy,
+> constantes e variáveis globais não precisam ser marcadas com o modificador `lazy`.
 >
-> Local constants and variables are never computed lazily.
+> Constantes e variáveis locais nunca são calculadas de forma lazy.
 
-You can apply a property wrapper to a local stored variable,
-but not to a global variable or a computed variable.
-For example,
-in the code below, `myNumber` uses `SmallNumber` as a property wrapper.
+Você pode aplicar um property wrapper a uma variável armazenada local,
+mas não a uma variável global nem a uma variável computada.
+Por exemplo,
+no código abaixo, `myNumber` usa `SmallNumber` como property wrapper.
 
 ```swift
 func someFunction() {
@@ -1720,10 +1716,10 @@ func someFunction() {
   ```
 -->
 
-Like when you apply `SmallNumber` to a property,
-setting the value of `myNumber` to 10 is valid.
-Because the property wrapper doesn't allow values higher than 12,
-it sets `myNumber` to 12 instead of 24.
+Assim como ao aplicar `SmallNumber` a uma propriedade,
+definir o valor de `myNumber` como 10 é válido.
+Como o property wrapper não permite valores maiores que 12,
+ele define `myNumber` como 12 em vez de 24.
 
 <!--
   The discussion of local variables with property wrappers
@@ -1741,52 +1737,52 @@ it sets `myNumber` to 12 instead of 24.
   TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
 -->
 
-## Type Properties
+## Propriedades de tipo
 
-Instance properties are properties that belong to an instance of a particular type.
-Every time you create a new instance of that type,
-it has its own set of property values, separate from any other instance.
+Propriedades de instância são propriedades que pertencem a uma instância de determinado tipo.
+Toda vez que você cria uma nova instância desse tipo,
+ela tem seu próprio conjunto de valores de propriedade, separado de qualquer outra instância.
 
-You can also define properties that belong to the type itself,
-not to any one instance of that type.
-There will only ever be one copy of these properties,
-no matter how many instances of that type you create.
-These kinds of properties are called *type properties*.
+Você também pode definir propriedades que pertencem ao próprio tipo,
+e não a uma instância específica desse tipo.
+Só existirá uma cópia dessas propriedades,
+não importa quantas instâncias desse tipo você crie.
+Essas propriedades são chamadas de *propriedades de tipo*.
 
-Type properties are useful for defining values that are universal to
-*all* instances of a particular type,
-such as a constant property that all instances can use
-(like a static constant in C),
-or a variable property that stores a value that's global to all instances of that type
-(like a static variable in C).
+Propriedades de tipo são úteis para definir valores universais para
+*todas* as instâncias de um tipo específico,
+como uma propriedade constante que todas as instâncias podem usar
+(como uma constante static em C),
+ou uma propriedade variável que armazena um valor global para todas as instâncias desse tipo
+(como uma variável static em C).
 
-Stored type properties can be variables or constants.
-Computed type properties are always declared as variable properties,
-in the same way as computed instance properties.
+Propriedades de tipo armazenadas podem ser variáveis ou constantes.
+Propriedades de tipo computadas são sempre declaradas como propriedades variáveis,
+do mesmo modo que as propriedades computadas de instância.
 
-> Note: Unlike stored instance properties,
-> you must always give stored type properties a default value.
-> This is because the type itself doesn't have an initializer
-> that can assign a value to a stored type property at initialization time.
+> Nota: Diferente das propriedades armazenadas de instância,
+> você deve sempre dar um valor padrão às propriedades de tipo armazenadas.
+> Isso acontece porque o próprio tipo não tem um inicializador
+> que possa atribuir um valor a uma propriedade de tipo armazenada no momento da inicialização.
 >
-> Stored type properties are lazily initialized on their first access.
-> They're guaranteed to be initialized only once,
-> even when accessed by multiple threads simultaneously,
-> and they don't need to be marked with the `lazy` modifier.
+> Propriedades de tipo armazenadas são inicializadas de forma lazy na primeira vez que são acessadas.
+> Elas têm a garantia de ser inicializadas apenas uma vez,
+> mesmo quando acessadas por várias threads ao mesmo tempo,
+> e não precisam ser marcadas com o modificador `lazy`.
 
-### Type Property Syntax
+### Sintaxe de propriedades de tipo
 
-In C and Objective-C, you define static constants and variables associated with a type
-as *global* static variables.
-In Swift, however, type properties are written as part of the type's definition,
-within the type's outer curly braces,
-and each type property is explicitly scoped to the type it supports.
+Em C e Objective-C, você define constantes e variáveis associadas a um tipo
+como variáveis estáticas *globais*.
+No Swift, porém, propriedades de tipo são escritas como parte da definição do tipo,
+dentro das chaves externas do tipo,
+e cada propriedade de tipo fica explicitamente vinculada ao tipo a que dá suporte.
 
-You define type properties with the `static` keyword.
-For computed type properties for class types,
-you can use the `class` keyword instead
-to allow subclasses to override the superclass’s implementation.
-The example below shows the syntax for stored and computed type properties:
+Você define propriedades de tipo com a palavra-chave `static`.
+Para propriedades de tipo computadas de tipos classe,
+você pode usar a palavra-chave `class` em vez disso,
+para permitir que subclasses sobrescrevam a implementação da superclasse.
+O exemplo abaixo mostra a sintaxe de propriedades de tipo armazenadas e computadas:
 
 ```swift
 struct SomeStructure {
@@ -1866,15 +1862,15 @@ class SomeClass {
   ```
 -->
 
-> Note: The computed type property examples above are for read-only computed type properties,
-> but you can also define read-write computed type properties
-> with the same syntax as for computed instance properties.
+> Nota: Os exemplos de propriedades de tipo computadas acima são de propriedades de tipo computadas somente leitura,
+> mas você também pode definir propriedades de tipo computadas de leitura e escrita
+> com a mesma sintaxe das propriedades computadas de instância.
 
-### Querying and Setting Type Properties
+### Consultando e definindo propriedades de tipo
 
-Type properties are queried and set with dot syntax, just like instance properties.
-However, type properties are queried and set on the *type*, not on an instance of that type.
-For example:
+Propriedades de tipo são consultadas e definidas com a sintaxe de ponto, assim como as propriedades de instância.
+No entanto, propriedades de tipo são consultadas e definidas no *tipo*, e não em uma instância desse tipo.
+Por exemplo:
 
 ```swift
 print(SomeStructure.storedTypeProperty)
@@ -1904,21 +1900,21 @@ print(SomeClass.computedTypeProperty)
   ```
 -->
 
-The examples that follow use two stored type properties as part of a structure
-that models an audio level meter for a number of audio channels.
-Each channel has an integer audio level between `0` and `10` inclusive.
+Os exemplos a seguir usam duas propriedades de tipo armazenadas como parte de uma struct
+que modela um medidor de nível de áudio para vários canais de áudio.
+Cada canal tem um nível de áudio inteiro entre `0` e `10`, inclusive.
 
-The figure below illustrates how two of these audio channels can be combined
-to model a stereo audio level meter.
-When a channel's audio level is `0`, none of the lights for that channel are lit.
-When the audio level is `10`, all of the lights for that channel are lit.
-In this figure, the left channel has a current level of `9`,
-and the right channel has a current level of `7`:
+A figura abaixo mostra como dois desses canais de áudio podem ser combinados
+para modelar um medidor de nível estéreo.
+Quando o nível de um canal é `0`, nenhuma das luzes desse canal fica acesa.
+Quando o nível de áudio é `10`, todas as luzes desse canal ficam acesas.
+Nessa figura, o canal esquerdo tem nível atual `9`,
+e o canal direito tem nível atual `7`:
 
 ![](staticPropertiesVUMeter)
 
-The audio channels described above are represented by
-instances of the `AudioChannel` structure:
+Os canais de áudio descritos acima são representados por
+instâncias da struct `AudioChannel`:
 
 ```swift
 struct AudioChannel {
@@ -1962,40 +1958,40 @@ struct AudioChannel {
   ```
 -->
 
-The `AudioChannel` structure defines two stored type properties to support its functionality.
-The first, `thresholdLevel`, defines the maximum threshold value an audio level can take.
-This is a constant value of `10` for all `AudioChannel` instances.
-If an audio signal comes in with a higher value than `10`,
-it will be capped to this threshold value (as described below).
+A struct `AudioChannel` define duas propriedades de tipo armazenadas para dar suporte às suas funcionalidades.
+A primeira, `thresholdLevel`, define o valor limite máximo que um nível de áudio pode ter.
+Este é um valor constante de `10` para todas as instâncias de `AudioChannel`.
+Se um sinal de áudio chegar com um valor maior que `10`,
+ele é limitado a esse valor limite (como descrito abaixo).
 
-The second type property is
-a variable stored property called `maxInputLevelForAllChannels`.
-This keeps track of the maximum input value that has been received
-by *any* `AudioChannel` instance.
-It starts with an initial value of `0`.
+A segunda propriedade de tipo é
+uma propriedade armazenada variável chamada `maxInputLevelForAllChannels`.
+Ela registra o valor máximo de entrada recebido
+por *qualquer* instância de `AudioChannel`.
+Ela começa com o valor inicial `0`.
 
-The `AudioChannel` structure also defines
-a stored instance property called `currentLevel`,
-which represents the channel's current audio level on a scale of `0` to `10`.
+A struct `AudioChannel` também define
+uma propriedade armazenada de instância chamada `currentLevel`,
+que representa o nível de áudio atual do canal, em uma escala de `0` a `10`.
 
-The `currentLevel` property has a `didSet` property observer
-to check the value of `currentLevel` whenever it's set.
-This observer performs two checks:
+A propriedade `currentLevel` tem um observador de propriedade `didSet`
+que verifica o valor de `currentLevel` sempre que ele é definido.
+Esse observador faz duas verificações:
 
-- If the new value of `currentLevel` is greater than the allowed `thresholdLevel`,
-  the property observer caps `currentLevel` to `thresholdLevel`.
-- If the new value of `currentLevel` (after any capping) is higher than
-  any value previously received by *any* `AudioChannel` instance,
-  the property observer stores the new `currentLevel` value in
-  the `maxInputLevelForAllChannels` type property.
+- Se o novo valor de `currentLevel` for maior que o `thresholdLevel` permitido,
+  o observador de propriedade limita `currentLevel` a `thresholdLevel`.
+- Se o novo valor de `currentLevel` (depois de qualquer limitação) for maior que
+  qualquer valor recebido anteriormente por *qualquer* instância de `AudioChannel`,
+  o observador de propriedade armazena o novo valor de `currentLevel`
+  na propriedade de tipo `maxInputLevelForAllChannels`.
 
-> Note: In the first of these two checks,
-> the `didSet` observer sets `currentLevel` to a different value.
-> This doesn't, however, cause the observer to be called again.
+> Nota: Na primeira dessas duas verificações,
+> o observador `didSet` define `currentLevel` com um valor diferente.
+> Isso, porém, não faz o observador ser chamado de novo.
 
-You can use the `AudioChannel` structure to create
-two new audio channels called `leftChannel` and `rightChannel`,
-to represent the audio levels of a stereo sound system:
+Você pode usar a struct `AudioChannel` para criar
+dois novos canais de áudio chamados `leftChannel` e `rightChannel`,
+para representar os níveis de áudio de um sistema de som estéreo:
 
 ```swift
 var leftChannel = AudioChannel()
@@ -2011,9 +2007,9 @@ var rightChannel = AudioChannel()
   ```
 -->
 
-If you set the `currentLevel` of the *left* channel to `7`,
-you can see that the `maxInputLevelForAllChannels` type property
-is updated to equal `7`:
+Se você definir o `currentLevel` do canal *esquerdo* como `7`,
+verá que a propriedade de tipo `maxInputLevelForAllChannels`
+é atualizada para ser igual a `7`:
 
 ```swift
 leftChannel.currentLevel = 7
@@ -2035,10 +2031,10 @@ print(AudioChannel.maxInputLevelForAllChannels)
   ```
 -->
 
-If you try to set the `currentLevel` of the *right* channel to `11`,
-you can see that the right channel's `currentLevel` property
-is capped to the maximum value of `10`,
-and the `maxInputLevelForAllChannels` type property is updated to equal `10`:
+Se você tentar definir o `currentLevel` do canal *direito* como `11`,
+verá que a propriedade `currentLevel` do canal direito
+é limitada ao valor máximo de `10`,
+e a propriedade de tipo `maxInputLevelForAllChannels` é atualizada para ser igual a `10`:
 
 ```swift
 rightChannel.currentLevel = 11
@@ -2069,3 +2065,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

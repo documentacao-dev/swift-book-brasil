@@ -1,47 +1,47 @@
-# Optional Chaining
+# Optional chaining
 
-Access members of an optional value without unwrapping.
+Acesse membros de um valor optional sem fazer unwrap.
 
-*Optional chaining* is a process for querying and calling
-properties, methods, and subscripts on an optional that might currently be `nil`.
-If the optional contains a value,
-the property, method, or subscript call succeeds;
-if the optional is `nil`, the property, method, or subscript call returns `nil`.
-Multiple queries can be chained together,
-and the entire chain fails gracefully if any link in the chain is `nil`.
+*Optional chaining* é um processo para consultar e chamar
+propriedades, métodos e subscripts de um optional que pode estar `nil` no momento.
+Se o optional contém um valor,
+a chamada da propriedade, do método ou do subscript tem sucesso;
+se o optional é `nil`, a chamada da propriedade, do método ou do subscript retorna `nil`.
+Várias consultas podem ser encadeadas,
+e a cadeia inteira falha de forma controlada se qualquer elo dela for `nil`.
 
-> Note: Optional chaining in Swift is similar to messaging `nil` in Objective-C,
-> but in a way that works for any type, and that can be checked for success or failure.
+> Nota: O optional chaining em Swift é parecido com enviar mensagens para `nil` em Objective-C,
+> mas funciona para qualquer tipo e pode ser verificado para saber se deu certo ou errado.
 
-## Optional Chaining as an Alternative to Forced Unwrapping
+## Optional chaining como alternativa ao unwrap forçado
 
-You specify optional chaining by placing a question mark (`?`)
-after the optional value on which you wish to call a property, method or subscript
-if the optional is non-`nil`.
-This is very similar to placing an exclamation point (`!`)
-after an optional value to force the unwrapping of its value.
-The main difference is that optional chaining fails gracefully when the optional is `nil`,
-whereas forced unwrapping triggers a runtime error when the optional is `nil`.
+Você especifica o optional chaining colocando um ponto de interrogação (`?`)
+depois do valor optional sobre o qual quer acessar uma propriedade, chamar um método ou usar um subscript,
+caso o optional não seja `nil`.
+Isso é muito parecido com colocar um ponto de exclamação (`!`)
+depois de um valor optional para forçar o unwrap do valor.
+A principal diferença é que o optional chaining falha de forma controlada quando o optional é `nil`,
+enquanto o unwrap forçado dispara um erro em tempo de execução quando o optional é `nil`.
 
-To reflect the fact that optional chaining can be called on a `nil` value,
-the result of an optional chaining call is always an optional value,
-even if the property, method, or subscript you are querying returns a non-optional value.
-You can use this optional return value to check whether
-the optional chaining call was successful
-(the returned optional contains a value),
-or didn't succeed due to a `nil` value in the chain
-(the returned optional value is `nil`).
+Para refletir o fato de que o optional chaining pode ser usado sobre um valor `nil`,
+o resultado de uma chamada com optional chaining é sempre um valor optional,
+mesmo que a propriedade, o método ou o subscript consultado retorne um valor não optional.
+Você pode usar esse valor de retorno optional para verificar se
+a chamada com optional chaining deu certo
+(o optional retornado contém um valor),
+ou se não deu certo por causa de um valor `nil` na cadeia
+(o valor optional retornado é `nil`).
 
-Specifically, the result of an optional chaining call
-is of the same type as the expected return value, but wrapped in an optional.
-A property that normally returns an `Int` will return an `Int?`
-when accessed through optional chaining.
+Especificamente, o resultado de uma chamada com optional chaining
+tem o mesmo tipo do valor de retorno esperado, mas envolvido em um optional.
+Uma propriedade que normalmente retorna um `Int` vai retornar um `Int?`
+quando acessada por meio de optional chaining.
 
-The next several code snippets demonstrate
-how optional chaining differs from forced unwrapping
-and enables you to check for success.
+Os próximos trechos de código mostram
+como o optional chaining é diferente do unwrap forçado
+e como ele permite verificar se a operação deu certo.
 
-First, two classes called `Person` and `Residence` are defined:
+Primeiro, duas classes chamadas `Person` e `Residence` são definidas:
 
 ```swift
 class Person {
@@ -67,14 +67,14 @@ class Residence {
   ```
 -->
 
-`Residence` instances have a single `Int` property called `numberOfRooms`,
-with a default value of `1`.
-`Person` instances have an optional `residence` property of type `Residence?`.
+Instâncias de `Residence` têm uma única propriedade `Int` chamada `numberOfRooms`,
+com valor padrão `1`.
+Instâncias de `Person` têm uma propriedade `residence` optional, do tipo `Residence?`.
 
-If you create a new `Person` instance,
-its `residence` property is default initialized to `nil`,
-by virtue of being optional.
-In the code below, `john` has a `residence` property value of `nil`:
+Se você criar uma nova instância de `Person`,
+a propriedade `residence` recebe `nil` como valor inicial,
+por ser optional.
+No código abaixo, `john` tem o valor `nil` na propriedade `residence`:
 
 ```swift
 let john = Person()
@@ -88,10 +88,10 @@ let john = Person()
   ```
 -->
 
-If you try to access the `numberOfRooms` property of this person's `residence`,
-by placing an exclamation point after `residence` to force the unwrapping of its value,
-you trigger a runtime error,
-because there's no `residence` value to unwrap:
+Se você tentar acessar a propriedade `numberOfRooms` da `residence` dessa pessoa,
+colocando um ponto de exclamação depois de `residence` para forçar o unwrap do valor,
+você dispara um erro em tempo de execução,
+porque não há valor de `residence` para fazer o unwrap:
 
 ```swift
 let roomCount = john.residence!.numberOfRooms
@@ -108,13 +108,13 @@ let roomCount = john.residence!.numberOfRooms
   ```
 -->
 
-The code above succeeds when `john.residence` has a non-`nil` value
-and will set `roomCount` to an `Int` value containing the appropriate number of rooms.
-However, this code always triggers a runtime error when `residence` is `nil`,
-as illustrated above.
+O código acima funciona quando `john.residence` tem um valor diferente de `nil`
+e vai atribuir a `roomCount` um valor `Int` com a quantidade correta de cômodos.
+No entanto, esse código sempre dispara um erro em tempo de execução quando `residence` é `nil`,
+como mostrado acima.
 
-Optional chaining provides an alternative way to access the value of `numberOfRooms`.
-To use optional chaining, use a question mark in place of the exclamation point:
+O optional chaining oferece outra forma de acessar o valor de `numberOfRooms`.
+Para usar o optional chaining, coloque um ponto de interrogação no lugar do ponto de exclamação:
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
@@ -138,25 +138,25 @@ if let roomCount = john.residence?.numberOfRooms {
   ```
 -->
 
-This tells Swift to “chain” on the optional `residence` property
-and to retrieve the value of `numberOfRooms` if `residence` exists.
+Isso diz ao Swift para “encadear” na propriedade optional `residence`
+e obter o valor de `numberOfRooms` se `residence` existir.
 
-Because the attempt to access `numberOfRooms` has the potential to fail,
-the optional chaining attempt returns a value of type `Int?`, or “optional `Int`”.
-When `residence` is `nil`, as in the example above,
-this optional `Int` will also be `nil`,
-to reflect the fact that it was not possible to access `numberOfRooms`.
-The optional `Int` is accessed through optional binding
-to unwrap the integer and assign the non-optional value
-to the `roomCount` constant.
+Como a tentativa de acessar `numberOfRooms` pode falhar,
+a chamada com optional chaining retorna um valor do tipo `Int?`, ou “`Int` optional”.
+Quando `residence` é `nil`, como no exemplo acima,
+esse `Int` optional também será `nil`,
+para refletir o fato de que não foi possível acessar `numberOfRooms`.
+O `Int` optional é acessado por meio de optional binding
+para extrair o inteiro e atribuir o valor não optional
+à constante `roomCount`.
 
-Note that this is true even though `numberOfRooms` is a non-optional `Int`.
-The fact that it's queried through an optional chain
-means that the call to `numberOfRooms`
-will always return an `Int?` instead of an `Int`.
+Observe que isso vale mesmo que `numberOfRooms` seja um `Int` não optional.
+O fato de a consulta passar por uma cadeia optional
+faz com que a chamada a `numberOfRooms`
+sempre retorne um `Int?` em vez de um `Int`.
 
-You can assign a `Residence` instance to `john.residence`,
-so that it no longer has a `nil` value:
+Você pode atribuir uma instância de `Residence` a `john.residence`,
+para que ela deixe de ser `nil`:
 
 ```swift
 john.residence = Residence()
@@ -170,10 +170,10 @@ john.residence = Residence()
   ```
 -->
 
-`john.residence` now contains an actual `Residence` instance, rather than `nil`.
-If you try to access `numberOfRooms` with the same optional chaining as before,
-it will now return an `Int?` that contains
-the default `numberOfRooms` value of `1`:
+`john.residence` agora contém uma instância real de `Residence`, em vez de `nil`.
+Se você tentar acessar `numberOfRooms` com o mesmo optional chaining de antes,
+ele vai retornar um `Int?` que contém
+o valor padrão de `numberOfRooms`, que é `1`:
 
 ```swift
 if let roomCount = john.residence?.numberOfRooms {
@@ -197,23 +197,23 @@ if let roomCount = john.residence?.numberOfRooms {
   ```
 -->
 
-## Defining Model Classes for Optional Chaining
+## Definindo classes de modelo para o optional chaining
 
-You can use optional chaining with calls to properties, methods, and subscripts
-that are more than one level deep.
-This enables you to drill down into subproperties
-within complex models of interrelated types,
-and to check whether it's possible to access
-properties, methods, and subscripts on those subproperties.
+Você pode usar o optional chaining com chamadas de propriedades, métodos e subscripts
+que estão a mais de um nível de profundidade.
+Isso permite navegar por subpropriedades
+dentro de modelos complexos de tipos inter-relacionados,
+e verificar se é possível acessar
+propriedades, métodos e subscripts nessas subpropriedades.
 
-The code snippets below define four model classes
-for use in several subsequent examples,
-including examples of multilevel optional chaining.
-These classes expand upon the `Person` and `Residence` model from above
-by adding a `Room` and `Address` class,
-with associated properties, methods, and subscripts.
+Os trechos de código abaixo definem quatro classes de modelo
+para uso em vários exemplos seguintes,
+incluindo exemplos de optional chaining em vários níveis.
+Essas classes expandem o modelo de `Person` e `Residence` apresentado acima,
+acrescentando as classes `Room` e `Address`,
+com propriedades, métodos e subscripts associados.
 
-The `Person` class is defined in the same way as before:
+A classe `Person` é definida do mesmo jeito de antes:
 
 ```swift
 class Person {
@@ -231,9 +231,9 @@ class Person {
   ```
 -->
 
-The `Residence` class is more complex than before.
-This time, the `Residence` class defines a variable property called `rooms`,
-which is initialized with an empty array of type `[Room]`:
+A classe `Residence` é mais complexa do que antes.
+Desta vez, ela define uma propriedade variável chamada `rooms`,
+inicializada com um array vazio do tipo `[Room]`:
 
 ```swift
 class Residence {
@@ -281,26 +281,26 @@ class Residence {
   ```
 -->
 
-Because this version of `Residence` stores an array of `Room` instances,
-its `numberOfRooms` property is implemented as a computed property,
-not a stored property.
-The computed `numberOfRooms` property simply returns
-the value of the `count` property from the `rooms` array.
+Como esta versão de `Residence` armazena um array de instâncias de `Room`,
+sua propriedade `numberOfRooms` é implementada como propriedade computada,
+e não como propriedade armazenada.
+A propriedade computada `numberOfRooms` simplesmente retorna
+o valor da propriedade `count` do array `rooms`.
 
-As a shortcut to accessing its `rooms` array,
-this version of `Residence` provides a read-write subscript that provides access to
-the room at the requested index in the `rooms` array.
+Como atalho para acessar o array `rooms`,
+esta versão de `Residence` oferece um subscript de leitura e escrita que dá acesso
+ao cômodo no índice pedido do array `rooms`.
 
-This version of `Residence` also provides a method called `printNumberOfRooms`,
-which simply prints the number of rooms in the residence.
+Esta versão de `Residence` também oferece um método chamado `printNumberOfRooms`,
+que simplesmente imprime a quantidade de cômodos da residência.
 
-Finally, `Residence` defines an optional property called `address`,
-with a type of `Address?`.
-The `Address` class type for this property is defined below.
+Por fim, `Residence` define uma propriedade optional chamada `address`,
+com o tipo `Address?`.
+A classe `Address`, usada como tipo dessa propriedade, é definida a seguir.
 
-The `Room` class used for the `rooms` array is
-a simple class with one property called `name`,
-and an initializer to set that property to a suitable room name:
+A classe `Room`, usada no array `rooms`, é
+uma classe simples com uma propriedade chamada `name`
+e um inicializador que atribui a essa propriedade um nome adequado para o cômodo:
 
 ```swift
 class Room {
@@ -320,11 +320,11 @@ class Room {
   ```
 -->
 
-The final class in this model is called `Address`.
-This class has three optional properties of type `String?`.
-The first two properties, `buildingName` and `buildingNumber`,
-are alternative ways to identify a particular building as part of an address.
-The third property, `street`, is used to name the street for that address:
+A última classe deste modelo se chama `Address`.
+Essa classe tem três propriedades optional do tipo `String?`.
+As duas primeiras propriedades, `buildingName` e `buildingNumber`,
+são formas alternativas de identificar um prédio específico como parte de um endereço.
+A terceira propriedade, `street`, guarda o nome da rua desse endereço:
 
 ```swift
 class Address {
@@ -364,21 +364,21 @@ class Address {
   ```
 -->
 
-The `Address` class also provides a method called `buildingIdentifier()`,
-which has a return type of `String?`.
-This method checks the properties of the address
-and returns `buildingName` if it has a value,
-or `buildingNumber` concatenated with `street` if both have values,
-or `nil` otherwise.
+A classe `Address` também oferece um método chamado `buildingIdentifier()`,
+cujo tipo de retorno é `String?`.
+Esse método verifica as propriedades do endereço
+e retorna `buildingName`, se ele tiver valor,
+ou `buildingNumber` concatenado com `street`, se os dois tiverem valor,
+ou `nil` nos demais casos.
 
-## Accessing Properties Through Optional Chaining
+## Acessando propriedades por meio de optional chaining
 
-As demonstrated in <doc:OptionalChaining#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping>,
-you can use optional chaining to access a property on an optional value,
-and to check if that property access is successful.
+Como demonstrado em <doc:OptionalChaining#Optional-Chaining-as-an-Alternative-to-Forced-Unwrapping>,
+você pode usar o optional chaining para acessar uma propriedade de um valor optional,
+e verificar se o acesso à propriedade deu certo.
 
-Use the classes defined above to create a new `Person` instance,
-and try to access its `numberOfRooms` property as before:
+Use as classes definidas acima para criar uma nova instância de `Person`,
+e tente acessar a propriedade `numberOfRooms` como antes:
 
 ```swift
 let john = Person()
@@ -404,10 +404,10 @@ if let roomCount = john.residence?.numberOfRooms {
   ```
 -->
 
-Because `john.residence` is `nil`,
-this optional chaining call fails in the same way as before.
+Como `john.residence` é `nil`,
+essa chamada com optional chaining falha da mesma forma que antes.
 
-You can also attempt to set a property's value through optional chaining:
+Você também pode tentar definir o valor de uma propriedade por meio de optional chaining:
 
 ```swift
 let someAddress = Address()
@@ -427,21 +427,20 @@ john.residence?.address = someAddress
   ```
 -->
 
-In this example,
-the attempt to set the `address` property of `john.residence` will fail,
-because `john.residence` is currently `nil`.
+Neste exemplo,
+a tentativa de definir a propriedade `address` de `john.residence` vai falhar,
+porque `john.residence` é `nil` no momento.
 
-The assignment is part of the optional chaining,
-which means none of the code on the right-hand side of the `=` operator
-is evaluated.
-In the previous example,
-it's not easy to see that `someAddress` is never evaluated,
-because accessing a constant doesn't have any side effects.
-The listing below does the same assignment,
-but it uses a function to create the address.
-The function prints "Function was called" before returning a value,
-which lets you see
-whether the right-hand side of the `=` operator was evaluated.
+A atribuição faz parte do optional chaining,
+o que significa que nenhum código do lado direito do operador `=` é avaliado.
+No exemplo anterior,
+não é fácil perceber que `someAddress` nunca é avaliado,
+porque acessar uma constante não tem efeitos colaterais.
+O código abaixo faz a mesma atribuição,
+mas usa uma função para criar o endereço.
+A função imprime “Function was called” antes de retornar um valor,
+o que permite ver
+se o lado direito do operador `=` foi avaliado.
 
 ```swift
 func createAddress() -> Address {
@@ -475,18 +474,18 @@ john.residence?.address = createAddress()
   ```
 -->
 
-You can tell that the `createAddress()` function isn't called,
-because nothing is printed.
+Você pode perceber que a função `createAddress()` não é chamada,
+porque nada é impresso.
 
-## Calling Methods Through Optional Chaining
+## Chamando métodos por meio de optional chaining
 
-You can use optional chaining to call a method on an optional value,
-and to check whether that method call is successful.
-You can do this even if that method doesn't define a return value.
+Você pode usar o optional chaining para chamar um método sobre um valor optional,
+e verificar se a chamada ao método deu certo.
+Isso vale até para métodos que não definem um valor de retorno.
 
-The `printNumberOfRooms()` method on the `Residence` class
-prints the current value of `numberOfRooms`.
-Here's how the method looks:
+O método `printNumberOfRooms()` da classe `Residence`
+imprime o valor atual de `numberOfRooms`.
+Veja como o método é definido:
 
 ```swift
 func printNumberOfRooms() {
@@ -505,19 +504,19 @@ func printNumberOfRooms() {
   ```
 -->
 
-This method doesn't specify a return type.
-However, functions and methods with no return type have an implicit return type of `Void`,
-as described in <doc:Functions#Functions-Without-Return-Values>.
-This means that they return a value of `()`, or an empty tuple.
+Esse método não especifica um tipo de retorno.
+No entanto, funções e métodos sem tipo de retorno têm, implicitamente, o tipo de retorno `Void`,
+como descrito em <doc:Functions#Functions-Without-Return-Values>.
+Isso significa que eles retornam um valor `()`, ou uma tupla vazia.
 
-If you call this method on an optional value with optional chaining,
-the method's return type will be `Void?`, not `Void`,
-because return values are always of an optional type when called through optional chaining.
-This enables you to use an `if` statement
-to check whether it was possible to call the `printNumberOfRooms()` method,
-even though the method doesn't itself define a return value.
-Compare the return value from the `printNumberOfRooms` call against `nil`
-to see if the method call was successful:
+Se você chamar esse método sobre um valor optional com optional chaining,
+o tipo de retorno do método será `Void?`, e não `Void`,
+porque valores de retorno de chamadas com optional chaining são sempre de um tipo optional.
+Isso permite usar uma instrução `if`
+para verificar se foi possível chamar o método `printNumberOfRooms()`,
+mesmo que o método não defina um valor de retorno.
+Compare o valor retornado pela chamada a `printNumberOfRooms` com `nil`
+para saber se a chamada ao método deu certo:
 
 ```swift
 if john.residence?.printNumberOfRooms() != nil {
@@ -541,12 +540,12 @@ if john.residence?.printNumberOfRooms() != nil {
   ```
 -->
 
-The same is true if you attempt to set a property through optional chaining.
-The example above in <doc:OptionalChaining#Accessing-Properties-Through-Optional-Chaining>
-attempts to set an `address` value for `john.residence`,
-even though the `residence` property is `nil`.
-Any attempt to set a property through optional chaining returns a value of type `Void?`,
-which enables you to compare against `nil` to see if the property was set successfully:
+O mesmo vale para a tentativa de definir uma propriedade por meio de optional chaining.
+O exemplo acima, em <doc:OptionalChaining#Accessing-Properties-Through-Optional-Chaining>,
+tenta definir um valor de `address` para `john.residence`,
+mesmo que a propriedade `residence` seja `nil`.
+Qualquer tentativa de definir uma propriedade por meio de optional chaining retorna um valor do tipo `Void?`,
+o que permite comparar com `nil` para saber se a propriedade foi definida com sucesso:
 
 ```swift
 if (john.residence?.address = someAddress) != nil {
@@ -570,22 +569,22 @@ if (john.residence?.address = someAddress) != nil {
   ```
 -->
 
-## Accessing Subscripts Through Optional Chaining
+## Acessando subscripts por meio de optional chaining
 
-You can use optional chaining to try to retrieve and set
-a value from a subscript on an optional value,
-and to check whether that subscript call is successful.
+Você pode usar o optional chaining para tentar ler e definir
+um valor por meio de um subscript sobre um valor optional,
+e verificar se a chamada ao subscript deu certo.
 
-> Note: When you access a subscript on an optional value through optional chaining,
-> you place the question mark *before* the subscript's brackets, not after.
-> The optional chaining question mark always follows immediately after
-> the part of the expression that's optional.
+> Nota: Ao acessar um subscript sobre um valor optional por meio de optional chaining,
+> você coloca o ponto de interrogação *antes* dos colchetes do subscript, e não depois.
+> O ponto de interrogação do optional chaining sempre vem logo depois
+> da parte da expressão que é optional.
 
-The example below tries to retrieve the name of
-the first room in the `rooms` array of the `john.residence` property
-using the subscript defined on the `Residence` class.
-Because `john.residence` is currently `nil`,
-the subscript call fails:
+O exemplo abaixo tenta obter o nome do primeiro cômodo
+do array `rooms` da propriedade `john.residence`,
+usando o subscript definido na classe `Residence`.
+Como `john.residence` é `nil` no momento,
+a chamada ao subscript falha:
 
 ```swift
 if let firstRoomName = john.residence?[0].name {
@@ -609,12 +608,12 @@ if let firstRoomName = john.residence?[0].name {
   ```
 -->
 
-The optional chaining question mark in this subscript call
-is placed immediately after `john.residence`, before the subscript brackets,
-because `john.residence` is the optional value
-on which optional chaining is being attempted.
+O ponto de interrogação do optional chaining nessa chamada de subscript
+fica logo depois de `john.residence`, antes dos colchetes do subscript,
+porque `john.residence` é o valor optional
+sobre o qual o optional chaining está sendo tentado.
 
-Similarly, you can try to set a new value through a subscript with optional chaining:
+Da mesma forma, você pode tentar definir um novo valor por meio de um subscript com optional chaining:
 
 ```swift
 john.residence?[0] = Room(name: "Bathroom")
@@ -628,12 +627,12 @@ john.residence?[0] = Room(name: "Bathroom")
   ```
 -->
 
-This subscript setting attempt also fails, because `residence` is currently `nil`.
+Essa tentativa de definir o subscript também falha, porque `residence` é `nil` no momento.
 
-If you create and assign an actual `Residence` instance to `john.residence`,
-with one or more `Room` instances in its `rooms` array,
-you can use the `Residence` subscript to access
-the actual items in the `rooms` array through optional chaining:
+Se você criar uma instância real de `Residence` e atribuí-la a `john.residence`,
+com uma ou mais instâncias de `Room` no array `rooms`,
+pode usar o subscript de `Residence` para acessar
+os itens reais do array `rooms` por meio de optional chaining:
 
 ```swift
 let johnsHouse = Residence()
@@ -667,12 +666,12 @@ if let firstRoomName = john.residence?[0].name {
   ```
 -->
 
-### Accessing Subscripts of Optional Type
+### Acessando subscripts de tipo optional
 
-If a subscript returns a value of optional type ---
-such as the key subscript of Swift's `Dictionary` type ---
-place a question mark *after* the subscript's closing bracket
-to chain on its optional return value:
+Se um subscript retorna um valor de tipo optional ---
+como o subscript por chave do tipo `Dictionary` do Swift ---
+coloque um ponto de interrogação *depois* do fechamento do colchete do subscript
+para encadear no seu valor de retorno optional:
 
 ```swift
 var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]
@@ -697,44 +696,44 @@ testScores["Brian"]?[0] = 72
   ```
 -->
 
-The example above defines a dictionary called `testScores`,
-which contains two key-value pairs that map a `String` key to an array of `Int` values.
-The example uses optional chaining to set the first item in the `"Dave"` array to `91`;
-to increment the first item in the `"Bev"` array by `1`;
-and to try to set the first item in an array for a key of `"Brian"`.
-The first two calls succeed, because the `testScores` dictionary
-contains keys for `"Dave"` and `"Bev"`.
-The third call fails, because the `testScores` dictionary
-doesn't contain a key for `"Brian"`.
+O exemplo acima define um dicionário chamado `testScores`,
+que contém dois pares chave-valor que mapeiam uma chave `String` para um array de valores `Int`.
+O exemplo usa o optional chaining para definir o primeiro item do array de `"Dave"` como `91`;
+para incrementar em `1` o primeiro item do array de `"Bev"`;
+e para tentar definir o primeiro item de um array com a chave `"Brian"`.
+As duas primeiras chamadas dão certo, porque o dicionário `testScores`
+tem chaves para `"Dave"` e `"Bev"`.
+A terceira chamada falha, porque o dicionário `testScores`
+não tem uma chave para `"Brian"`.
 
-## Linking Multiple Levels of Chaining
+## Encadeando vários níveis
 
-You can link together multiple levels of optional chaining
-to drill down to properties, methods, and subscripts deeper within a model.
-However, multiple levels of optional chaining
-don't add more levels of optionality to the returned value.
+Você pode encadear vários níveis de optional chaining
+para chegar a propriedades, métodos e subscripts mais profundos dentro de um modelo.
+No entanto, vários níveis de optional chaining
+não acrescentam mais níveis de optionalidade ao valor retornado.
 
-To put it another way:
+Dito de outra forma:
 
-- If the type you are trying to retrieve isn't optional,
-  it will become optional because of the optional chaining.
-- If the type you are trying to retrieve is *already* optional,
-  it will not become *more* optional because of the chaining.
+- Se o tipo que você está tentando obter não é optional,
+  ele passa a ser optional por causa do optional chaining.
+- Se o tipo que você está tentando obter *já* é optional,
+  ele não se torna *mais* optional por causa do encadeamento.
 
-Therefore:
+Portanto:
 
-- If you try to retrieve an `Int` value through optional chaining,
-  an `Int?` is always returned,
-  no matter how many levels of chaining are used.
-- Similarly, if you try to retrieve an `Int?` value through optional chaining,
-  an `Int?` is always returned,
-  no matter how many levels of chaining are used.
+- Se você tentar obter um valor `Int` por meio de optional chaining,
+  sempre será retornado um `Int?`,
+  não importa quantos níveis de encadeamento sejam usados.
+- Da mesma forma, se você tentar obter um valor `Int?` por meio de optional chaining,
+  sempre será retornado um `Int?`,
+  não importa quantos níveis de encadeamento sejam usados.
 
-The example below tries to access the `street` property of the `address` property
-of the `residence` property of `john`.
-There are *two* levels of optional chaining in use here,
-to chain through the `residence` and `address` properties,
-both of which are of optional type:
+O exemplo abaixo tenta acessar a propriedade `street` da propriedade `address`
+da propriedade `residence` de `john`.
+Há *dois* níveis de optional chaining aqui,
+para navegar pelas propriedades `residence` e `address`,
+ambas de tipo optional:
 
 ```swift
 if let johnsStreet = john.residence?.address?.street {
@@ -758,20 +757,20 @@ if let johnsStreet = john.residence?.address?.street {
   ```
 -->
 
-The value of `john.residence` currently contains a valid `Residence` instance.
-However, the value of `john.residence.address` is currently `nil`.
-Because of this, the call to `john.residence?.address?.street` fails.
+O valor de `john.residence` contém, no momento, uma instância válida de `Residence`.
+No entanto, o valor de `john.residence.address` é `nil` no momento.
+Por isso, a chamada a `john.residence?.address?.street` falha.
 
-Note that in the example above,
-you are trying to retrieve the value of the `street` property.
-The type of this property is `String?`.
-The return value of `john.residence?.address?.street` is therefore also `String?`,
-even though two levels of optional chaining are applied in addition to
-the underlying optional type of the property.
+Observe que, no exemplo acima,
+você está tentando obter o valor da propriedade `street`.
+O tipo dessa propriedade é `String?`.
+Assim, o valor de retorno de `john.residence?.address?.street` também é `String?`,
+mesmo com dois níveis de optional chaining aplicados além
+do próprio tipo optional da propriedade.
 
-If you set an actual `Address` instance as the value for `john.residence.address`,
-and set an actual value for the address's `street` property,
-you can access the value of the `street` property through multilevel optional chaining:
+Se você definir uma instância real de `Address` como valor de `john.residence.address`,
+e definir um valor real para a propriedade `street` desse endereço,
+poderá acessar o valor da propriedade `street` por meio de optional chaining em vários níveis:
 
 ```swift
 let johnsAddress = Address()
@@ -805,22 +804,22 @@ if let johnsStreet = john.residence?.address?.street {
   ```
 -->
 
-In this example,
-the attempt to set the `address` property of `john.residence` will succeed,
-because the value of `john.residence`
-currently contains a valid `Residence` instance.
+Neste exemplo,
+a tentativa de definir a propriedade `address` de `john.residence` vai dar certo,
+porque o valor de `john.residence`
+contém agora uma instância válida de `Residence`.
 
-## Chaining on Methods with Optional Return Values
+## Encadeando em métodos com valores de retorno optional
 
-The previous example shows how to retrieve the value of
-a property of optional type through optional chaining.
-You can also use optional chaining to call a method that returns a value of optional type,
-and to chain on that method's return value if needed.
+O exemplo anterior mostra como obter o valor de
+uma propriedade de tipo optional por meio de optional chaining.
+Você também pode usar o optional chaining para chamar um método que retorna um valor de tipo optional,
+e encadear no valor de retorno desse método, se precisar.
 
-The example below calls the `Address` class's `buildingIdentifier()` method
-through optional chaining. This method returns a value of type `String?`.
-As described above, the ultimate return type of this method call after optional chaining
-is also `String?`:
+O exemplo abaixo chama o método `buildingIdentifier()` da classe `Address`
+por meio de optional chaining. Esse método retorna um valor do tipo `String?`.
+Como descrito acima, o tipo final do retorno dessa chamada, depois do optional chaining,
+também é `String?`:
 
 ```swift
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
@@ -840,8 +839,8 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
   ```
 -->
 
-If you want to perform further optional chaining on this method's return value,
-place the optional chaining question mark *after* the method's parentheses:
+Se você quiser fazer mais optional chaining sobre o valor de retorno desse método,
+coloque o ponto de interrogação do optional chaining *depois* dos parênteses do método:
 
 ```swift
 if let beginsWithThe =
@@ -871,11 +870,11 @@ if let beginsWithThe =
   ```
 -->
 
-> Note: In the example above,
-> you place the optional chaining question mark *after* the parentheses,
-> because the optional value you are chaining on is
-> the `buildingIdentifier()` method's return value,
-> and not the `buildingIdentifier()` method itself.
+> Nota: No exemplo acima,
+> você coloca o ponto de interrogação do optional chaining *depois* dos parênteses,
+> porque o valor optional sobre o qual você está encadeando é
+> o valor de retorno do método `buildingIdentifier()`,
+> e não o método `buildingIdentifier()` em si.
 
 <!--
   TODO: add an example of chaining on a property of optional function type.
@@ -892,3 +891,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

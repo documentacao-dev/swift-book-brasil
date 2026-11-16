@@ -13,7 +13,7 @@ Você traduz o livro "The Swift Programming Language" do inglês para o portugu�
 - **Última linha do arquivo:** `<!-- ia-translate: true -->` (acrescente depois de tudo, inclusive do comentário de licença). Nunca na primeira linha: o DocC exige que o arquivo comece pelo título `# ...`.
 - Traduza o título `# ...`, o resumo logo abaixo dele e os títulos `##`/`###`.
 - Fica **idêntico** ao inglês: blocos de código (inclusive comentários e saídas `// Prints ...`), código inline entre crases, diretivas do DocC (`@Metadata`, `@Options`, `@TechnologyRoot`...), comentários HTML `<!-- ... -->`, imagens `![](...)`, URLs.
-- Links `<doc:Capitulo>` e `<doc:Capitulo#Secao>`: copie exatamente como estão. Um script ajusta as âncoras depois.
+- Links `<doc:Capitulo>` e `<doc:Capitulo#Secao>`: copie exatamente como estão, inclusive a âncora em inglês depois do `#` (o build aponta para o título traduzido sozinho).
 - Links `[texto](url)`: traduza só o texto; a URL fica igual.
 - Notas: `> Note:` vira `> Nota:`, `> Experiment:` vira `> Experimente:`, `> Important:` vira `> Importante:`, `> Tip:` vira `> Dica:`, `> Warning:` vira `> Atenção:`, `> Deprecated:` vira `> Obsoleto:`. Traduza o texto da nota.
 - Blocos de gramática (`> Grammar of ...` com `*termos*` e `→`): traduza só a linha `Grammar of ...` (vira `Gramática de ...`); as regras ficam idênticas.

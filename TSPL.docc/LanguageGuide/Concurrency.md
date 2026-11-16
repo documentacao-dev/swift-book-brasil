@@ -1,61 +1,61 @@
-# Concurrency
+# Concorrência
 
-Perform asynchronous operations.
+Execute operações assíncronas.
 
-Swift has built-in support for writing asynchronous and parallel code
-in a structured way.
-*Asynchronous code* can be suspended and resumed later,
-although only one piece of the program executes at a time.
-Suspending and resuming code in your program
-lets it continue to make progress
-on short-term operations like updating its UI
-while continuing to work on long-running operations
-like fetching data over the network or parsing files.
-*Parallel code* means multiple pieces of code run simultaneously ---
-for example, a computer with a four-core processor
-can run four pieces of code at the same time,
-with each core carrying out one of the tasks.
-A program that uses parallel and asynchronous code
-carries out multiple operations at a time,
-and it suspends operations that are waiting for an external system.
-The rest of this chapter uses the term *concurrency*
-to refer to this common combination of asynchronous and parallel code.
+O Swift tem suporte nativo para escrever código assíncrono e paralelo
+de forma estruturada.
+*Código assíncrono* pode ser suspenso e retomado depois,
+embora apenas um trecho do programa seja executado por vez.
+Suspender e retomar código no seu programa
+permite que ele continue avançando
+em operações de curta duração, como atualizar a interface,
+enquanto continua trabalhando em operações demoradas,
+como buscar dados pela rede ou processar arquivos.
+*Código paralelo* significa que vários trechos de código são executados ao mesmo tempo.
+Por exemplo, um computador com um processador de quatro núcleos
+pode executar quatro trechos de código ao mesmo tempo,
+com cada núcleo realizando uma das tarefas.
+Um programa que usa código paralelo e assíncrono
+executa várias operações ao mesmo tempo
+e suspende as operações que estão esperando por um sistema externo.
+O restante deste capítulo usa o termo *concorrência*
+para se referir a essa combinação comum de código assíncrono e paralelo.
 
-The additional scheduling flexibility from parallel or asynchronous code
-also comes with a cost of increased complexity.
-When you write concurrent code,
-you don't know ahead of time what code will run at the same time,
-and you might not always know the order that code will run.
-A common problem in concurrent code happens
-when multiple pieces of code try to access
-some piece of shared mutable state ---
-this is known as a *data race*.
-When you use the language-level support for concurrency,
-Swift detects and prevents data races,
-and most data races produce a compile-time error.
-Some data races can't be detected until your code is running;
-these data races terminate code execution.
-You use actors and isolation to protect against data races,
-as described in this chapter.
+A flexibilidade extra de agendamento que vem do código paralelo ou assíncrono
+também traz o custo de maior complexidade.
+Ao escrever código concorrente,
+você não sabe com antecedência quais trechos de código vão rodar ao mesmo tempo,
+e nem sempre sabe a ordem em que eles vão rodar.
+Um problema comum em código concorrente acontece
+quando vários trechos de código tentam acessar
+um mesmo estado mutável compartilhado.
+Isso é conhecido como *data race*.
+Quando você usa o suporte à concorrência no nível da linguagem,
+o Swift detecta e previne data races,
+e a maioria delas gera um erro em tempo de compilação.
+Algumas data races só podem ser detectadas quando o código está rodando;
+essas data races encerram a execução do código.
+Você usa actors e isolamento para se proteger contra data races,
+como descrito neste capítulo.
 
-> Note: If you've written concurrent code before,
-> you might be used to working with threads.
-> The concurrency model in Swift is built on top of threads,
-> but you don't interact with them directly.
-> An asynchronous function in Swift
-> can give up the thread that it's running on,
-> which lets another asynchronous function run on that thread
-> while the first function is blocked.
-> When an asynchronous function resumes,
-> Swift doesn't make any guarantee about which thread
-> that function will run on.
+> Nota: Se você já escreveu código concorrente antes,
+> pode estar acostumado a trabalhar com threads.
+> O modelo de concorrência do Swift é construído sobre threads,
+> mas você não interage com elas diretamente.
+> Uma função assíncrona em Swift
+> pode liberar a thread em que está rodando,
+> o que permite que outra função assíncrona rode nessa thread
+> enquanto a primeira função está bloqueada.
+> Quando uma função assíncrona é retomada,
+> o Swift não garante em qual thread
+> essa função vai rodar.
 
-Although it's possible to write concurrent code
-without using Swift's language support,
-that code tends to be harder to read.
-For example, the following code downloads a list of photo names,
-downloads the first photo in that list,
-and shows that photo to the user:
+Embora seja possível escrever código concorrente
+sem usar o suporte da linguagem do Swift,
+esse código tende a ser mais difícil de ler.
+Por exemplo, o código a seguir baixa uma lista de nomes de fotos,
+baixa a primeira foto dessa lista
+e mostra essa foto para o usuário:
 
 ```swift
 listPhotos(inGallery: "Summer Vacation") { photoNames in
@@ -89,31 +89,31 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
   ```
 -->
 
-Even in this simple case,
-because the code has to be written as a series of completion handlers,
-you end up writing nested closures.
-In this style,
-more complex code with deep nesting can quickly become unwieldy.
+Mesmo nesse caso simples,
+como o código precisa ser escrito como uma série de completion handlers,
+você acaba escrevendo closures aninhadas.
+Nesse estilo,
+código mais complexo, com aninhamento profundo, rapidamente se torna difícil de manter.
 
-## Defining and Calling Asynchronous Functions
+## Definindo e chamando funções assíncronas
 
-An *asynchronous function* or *asynchronous method*
-is a special kind of function or method
-that can be suspended while it's partway through execution.
-This is in contrast to ordinary, synchronous functions and methods,
-which either run to completion, throw an error, or never return.
-An asynchronous function or method still does one of those three things,
-but it can also pause in the middle when it's waiting for something.
-Inside the body of an asynchronous function or method,
-you mark each of these places where execution can be suspended.
+Uma *função assíncrona* ou *método assíncrono*
+é um tipo especial de função ou método
+que pode ser suspenso enquanto está no meio da execução.
+Isso contrasta com funções e métodos síncronos comuns,
+que ou executam até o fim, ou lançam um erro, ou nunca retornam.
+Uma função ou método assíncrono ainda faz uma dessas três coisas,
+mas também pode pausar no meio do caminho quando está esperando por algo.
+No corpo de uma função ou método assíncrono,
+você marca cada um dos pontos em que a execução pode ser suspensa.
 
-To indicate that a function or method is asynchronous,
-you write the `async` keyword in its declaration after its parameters,
-similar to how you use `throws` to mark a throwing function.
-If the function or method returns a value,
-you write `async` before the return arrow (`->`).
-For example,
-here's how you might fetch the names of photos in a gallery:
+Para indicar que uma função ou método é assíncrono,
+você escreve a palavra-chave `async` na declaração, depois dos parâmetros,
+de forma parecida com o uso de `throws` para marcar uma função que lança erros.
+Se a função ou método retorna um valor,
+você escreve `async` antes da seta de retorno (`->`).
+Por exemplo,
+veja como você poderia buscar os nomes das fotos de uma galeria:
 
 ```swift
 func listPhotos(inGallery name: String) async -> [String] {
@@ -134,8 +134,8 @@ func listPhotos(inGallery name: String) async -> [String] {
   ```
 -->
 
-For a function or method that's both asynchronous and throwing,
-you write `async` before `throws`.
+Para uma função ou método que é ao mesmo tempo assíncrono e lança erros,
+você escreve `async` antes de `throws`.
 
 <!--
   - test: `async-comes-before-throws`
@@ -150,23 +150,23 @@ you write `async` before `throws`.
   ```
 -->
 
-When calling an asynchronous method,
-execution suspends until that method returns.
-You write `await` in front of the call
-to mark the possible suspension point.
-This is like writing `try` when calling a throwing function,
-to mark the possible change to the program's flow if there's an error.
-Inside an asynchronous method,
-the flow of execution can be suspended
-*only* when you call another asynchronous method ---
-suspension is never implicit or preemptive ---
-which means every possible suspension point is marked with `await`.
-Marking all of the possible suspension points in your code
-helps make concurrent code easier to read and understand.
+Ao chamar um método assíncrono,
+a execução é suspensa até que o método retorne.
+Você escreve `await` antes da chamada
+para marcar o possível ponto de suspensão.
+Isso é parecido com escrever `try` ao chamar uma função que lança erros,
+para marcar a possível mudança no fluxo do programa caso ocorra um erro.
+Dentro de um método assíncrono,
+o fluxo de execução só pode ser suspenso
+*quando* você chama outro método assíncrono ---
+a suspensão nunca é implícita ou preemptiva ---
+o que significa que todo possível ponto de suspensão é marcado com `await`.
+Marcar todos os possíveis pontos de suspensão no seu código
+ajuda a deixar o código concorrente mais fácil de ler e entender.
 
-For example,
-the code below fetches the names of all the pictures in a gallery
-and then shows the first picture:
+Por exemplo,
+o código abaixo busca os nomes de todas as fotos de uma galeria
+e depois mostra a primeira foto:
 
 ```swift
 let photoNames = await listPhotos(inGallery: "Summer Vacation")
@@ -196,62 +196,62 @@ show(photo)
   ```
 -->
 
-Because the `listPhotos(inGallery:)` and `downloadPhoto(named:)` functions
-both need to make network requests,
-they could take a relatively long time to complete.
-Making them both asynchronous by writing `async` before the return arrow
-lets the rest of the app's code keep running
-while this code waits for the picture to be ready.
+Como `listPhotos(inGallery:)` e `downloadPhoto(named:)`
+precisam fazer requisições de rede,
+elas podem levar um tempo relativamente longo para terminar.
+Torná-las assíncronas, escrevendo `async` antes da seta de retorno,
+permite que o restante do código do app continue rodando
+enquanto este código espera a foto ficar pronta.
 
-To understand the concurrent nature of the example above,
-here's one possible order of execution:
+Para entender a natureza concorrente do exemplo acima,
+veja uma das ordens de execução possíveis:
 
-1. The code starts running from the first line
-   and runs up to the first `await`.
-   It calls the `listPhotos(inGallery:)` function
-   and suspends execution while it waits for that function to return.
+1. O código começa a rodar pela primeira linha
+   e executa até o primeiro `await`.
+   Ele chama a função `listPhotos(inGallery:)`
+   e suspende a execução enquanto espera que essa função retorne.
 
-2. While this code's execution is suspended,
-   some other concurrent code in the same program runs.
-   For example, maybe a long-running background task
-   continues updating a list of new photo galleries.
-   That code also runs until the next suspension point, marked by `await`,
-   or until it completes.
+2. Enquanto a execução deste código está suspensa,
+   algum outro código concorrente do mesmo programa roda.
+   Por exemplo, talvez uma task de longa duração em segundo plano
+   continue atualizando uma lista de novas galerias de fotos.
+   Esse código também roda até o próximo ponto de suspensão, marcado com `await`,
+   ou até terminar.
 
-3. After `listPhotos(inGallery:)` returns,
-   this code continues execution starting at that point.
-   It assigns the value that was returned to `photoNames`.
+3. Depois que `listPhotos(inGallery:)` retorna,
+   este código continua a execução a partir desse ponto.
+   Ele atribui o valor retornado a `photoNames`.
 
-4. The lines that define `sortedNames` and `name`
-   are regular, synchronous code.
-   Because nothing is marked `await` on these lines,
-   there aren't any possible suspension points.
+4. As linhas que definem `sortedNames` e `name`
+   são código comum e síncrono.
+   Como nada nessas linhas está marcado com `await`,
+   não há possíveis pontos de suspensão ali.
 
-5. The next `await` marks the call to the `downloadPhoto(named:)` function.
-   This code pauses execution again until that function returns,
-   giving other concurrent code an opportunity to run.
+5. O próximo `await` marca a chamada à função `downloadPhoto(named:)`.
+   Este código pausa a execução novamente até que essa função retorne,
+   dando a outro código concorrente a oportunidade de rodar.
 
-6. After `downloadPhoto(named:)` returns,
-   its return value is assigned to `photo`
-   and then passed as an argument when calling `show(_:)`.
+6. Depois que `downloadPhoto(named:)` retorna,
+   o valor retornado é atribuído a `photo`
+   e depois passado como argumento na chamada a `show(_:)`.
 
-The possible suspension points in your code marked with `await`
-indicate that the current piece of code might pause execution
-while waiting for the asynchronous function or method to return.
-This is also called *yielding the thread*
-because, behind the scenes,
-Swift suspends the execution of your code on the current thread
-and runs some other code on that thread instead.
-Because code with `await` needs to be able to suspend execution,
-only certain places in your program can call asynchronous functions or methods:
+Os possíveis pontos de suspensão no seu código marcados com `await`
+indicam que o trecho atual de código pode pausar a execução
+enquanto espera que a função ou método assíncrono retorne.
+Isso também é chamado de *ceder a thread*,
+porque, nos bastidores,
+o Swift suspende a execução do seu código na thread atual
+e roda outro código nessa thread.
+Como código com `await` precisa poder suspender a execução,
+apenas alguns lugares do seu programa podem chamar funções ou métodos assíncronos:
 
-- Code in the body of an asynchronous function, method, or property.
+- Código no corpo de uma função, método ou propriedade assíncrona.
 
-- Code in the static `main()` method of
-  a structure, class, or enumeration that's marked with `@main`.
+- Código no método estático `main()` de
+  uma struct, classe ou enum marcado com `@main`.
 
-- Code in an unstructured child task,
-  as shown in <doc:Concurrency#Unstructured-Concurrency> below.
+- Código em uma task filha não estruturada,
+  como mostrado em <doc:Concurrency#Unstructured-Concurrency> abaixo.
 
 <!--
   SE-0296 specifically calls out that top-level code is *not* an async context,
@@ -261,12 +261,12 @@ only certain places in your program can call asynchronous functions or methods:
   - Code at the top level that forms an implicit main function.
 -->
 
-The [`Task.sleep(for:tolerance:clock:)`][] method
-is useful when writing simple code
-to learn how concurrency works.
-This method suspends the current task for at least the given amount of time.
-Here's a version of the `listPhotos(inGallery:)` function
-that uses `sleep(for:tolerance:clock:)` to simulate waiting for a network operation:
+O método [`Task.sleep(for:tolerance:clock:)`][]
+é útil ao escrever código simples
+para entender como a concorrência funciona.
+Esse método suspende a task atual por pelo menos o tempo informado.
+Aqui está uma versão da função `listPhotos(inGallery:)`
+que usa `sleep(for:tolerance:clock:)` para simular a espera por uma operação de rede:
 
 [`Task.sleep(for:tolerance:clock:)`]: https://developer.apple.com/documentation/swift/task/sleep(for:tolerance:clock:)
 
@@ -289,29 +289,29 @@ func listPhotos(inGallery name: String) async throws -> [String] {
   ```
 -->
 
-The version of `listPhotos(inGallery:)` in the code above
-is both asynchronous and throwing,
-because the call to `Task.sleep(until:tolerance:clock:)` can throw an error.
-When you call this version of `listPhotos(inGallery:)`,
-you write both `try` and `await`:
+A versão de `listPhotos(inGallery:)` no código acima
+é ao mesmo tempo assíncrona e capaz de lançar erros,
+porque a chamada a `Task.sleep(until:tolerance:clock:)` pode lançar um erro.
+Ao chamar essa versão de `listPhotos(inGallery:)`,
+você escreve `try` e `await` juntos:
 
 ```swift
 let photos = try await listPhotos(inGallery: "A Rainy Weekend")
 ```
 
-Asynchronous functions have some similarities to throwing functions:
-When you define an asynchronous or throwing function,
-you mark it with `async` or `throws`,
-and you mark calls to that function with `await` or `try`.
-An asynchronous function can call another asynchronous function,
-just like a throwing function can call another throwing function.
+Funções assíncronas têm algumas semelhanças com funções que lançam erros:
+ao definir uma função assíncrona ou que lança erros,
+você a marca com `async` ou `throws`,
+e marca as chamadas a essa função com `await` ou `try`.
+Uma função assíncrona pode chamar outra função assíncrona,
+assim como uma função que lança erros pode chamar outra função que lança erros.
 
-However, there's a very important difference.
-You can wrap throwing code in a `do`-`catch` block to handle errors,
-or use `Result` to store the error for code elsewhere to handle it.
-These approaches let you call throwing functions
-from nonthrowing code.
-For example:
+No entanto, existe uma diferença muito importante.
+Você pode envolver código que lança erros em um bloco `do`-`catch` para tratar os erros,
+ou usar `Result` para armazenar o erro e deixar que outro código o trate.
+Essas abordagens permitem chamar funções que lançam erros
+a partir de código que não lança erros.
+Por exemplo:
 
 ```swift
 func availableRainyWeekendPhotos() -> Result<[String], Error> {
@@ -321,20 +321,20 @@ func availableRainyWeekendPhotos() -> Result<[String], Error> {
 }
 ```
 
-In contrast,
-there's no safe way to wrap asynchronous code
-so you can call it from synchronous code and wait for the result.
-The Swift standard library intentionally omits this unsafe functionality ---
-trying to implement it yourself can lead to
-problems like subtle races, threading issues, and deadlocks.
-When adding concurrent code to an existing project,
-work from the top down.
-Specifically,
-start by converting the top-most layer of code to use concurrency,
-and then start converting the functions and methods that it calls,
-working through the project's architecture one layer at a time.
-There's no way to take a bottom-up approach,
-because synchronous code can't ever call asynchronous code.
+Em contraste,
+não existe uma forma segura de envolver código assíncrono
+para que você possa chamá-lo a partir de código síncrono e esperar pelo resultado.
+A biblioteca padrão do Swift intencionalmente omite essa funcionalidade insegura ---
+tentar implementá-la por conta própria pode levar a
+problemas como races sutis, problemas de thread e deadlocks.
+Ao adicionar código concorrente a um projeto existente,
+trabalhe de cima para baixo.
+Ou seja,
+comece convertendo a camada mais alta do código para usar concorrência,
+e depois passe a converter as funções e métodos que ela chama,
+percorrendo a arquitetura do projeto uma camada por vez.
+Não existe forma de seguir uma abordagem de baixo para cima,
+porque código síncrono nunca pode chamar código assíncrono.
 
 <!--
   OUTLINE
@@ -348,15 +348,15 @@ because synchronous code can't ever call asynchronous code.
   (discussion of @MainActor closures can probably go here too)
 -->
 
-## Asynchronous Sequences
+## Sequências assíncronas
 
-The `listPhotos(inGallery:)` function in the previous section
-asynchronously returns the whole array at once,
-after all of the array's elements are ready.
-Another approach
-is to wait for one element of the collection at a time
-using an *asynchronous sequence*.
-Here's what iterating over an asynchronous sequence looks like:
+A função `listPhotos(inGallery:)` na seção anterior
+retorna de forma assíncrona o array inteiro de uma vez,
+depois que todos os elementos do array estão prontos.
+Outra abordagem
+é esperar por um elemento da coleção de cada vez,
+usando uma *sequência assíncrona*.
+Veja como é iterar sobre uma sequência assíncrona:
 
 ```swift
 import Foundation
@@ -382,18 +382,18 @@ for try await line in handle.bytes.lines {
   ```
 -->
 
-Instead of using an ordinary `for`-`in` loop,
-the example above writes `for` with `await` after it.
-Like when you call an asynchronous function or method,
-writing `await` indicates a possible suspension point.
-A `for`-`await`-`in` loop potentially suspends execution
-at the beginning of each iteration,
-when it's waiting for the next element to be available.
+Em vez de usar um loop `for`-`in` comum,
+o exemplo acima escreve `for` seguido de `await`.
+Assim como ao chamar uma função ou método assíncrono,
+escrever `await` indica um possível ponto de suspensão.
+Um loop `for`-`await`-`in` pode suspender a execução
+no início de cada iteração,
+enquanto espera que o próximo elemento esteja disponível.
 
-In the same way that you can use your own types in a `for`-`in` loop
-by adding conformance to the [`Sequence`][] protocol,
-you can use your own types in a `for`-`await`-`in` loop
-by adding conformance to the [`AsyncSequence`] protocol.
+Da mesma forma que você pode usar seus próprios tipos em um loop `for`-`in`
+ao adotar o protocolo [`Sequence`][],
+você pode usar seus próprios tipos em um loop `for`-`await`-`in`
+ao adotar o protocolo [`AsyncSequence`].
 
 [`Sequence`]: https://developer.apple.com/documentation/swift/sequence
 [`AsyncSequence`]: https://developer.apple.com/documentation/swift/asyncsequence
@@ -422,17 +422,17 @@ by adding conformance to the [`AsyncSequence`] protocol.
   }
 -->
 
-## Calling Asynchronous Functions in Parallel
+## Chamando funções assíncronas em paralelo
 
-Calling an asynchronous function with `await`
-runs only one piece of code at a time.
-While the asynchronous code is running,
-the caller waits for that code to finish
-before moving on to run the next line of code.
-For example,
-to fetch the first three photos from a gallery,
-you could await three calls to the `downloadPhoto(named:)` function
-as follows:
+Chamar uma função assíncrona com `await`
+executa apenas um trecho de código por vez.
+Enquanto o código assíncrono está rodando,
+quem chamou espera que esse código termine
+antes de passar para a próxima linha.
+Por exemplo,
+para buscar as três primeiras fotos de uma galeria,
+você poderia esperar três chamadas à função `downloadPhoto(named:)`
+da seguinte forma:
 
 ```swift
 let firstPhoto = await downloadPhoto(named: photoNames[0])
@@ -460,18 +460,18 @@ show(photos)
   ```
 -->
 
-This approach has an important drawback:
-Although the download is asynchronous
-and lets other work happen while it progresses,
-only one call to `downloadPhoto(named:)` runs at a time.
-Each photo downloads completely before the next one starts downloading.
-However, there's no need for these operations to wait ---
-each photo can download independently, or even at the same time.
+Essa abordagem tem uma desvantagem importante:
+embora o download seja assíncrono
+e permita que outro trabalho aconteça enquanto ele avança,
+apenas uma chamada a `downloadPhoto(named:)` roda por vez.
+Cada foto é baixada por completo antes de o download da próxima começar.
+No entanto, não há necessidade de essas operações esperarem ---
+cada foto pode ser baixada de forma independente, ou até ao mesmo tempo.
 
-To call an asynchronous function
-and let it run in parallel with code around it,
-write `async` in front of `let` when you define a constant,
-and then write `await` each time you use the constant.
+Para chamar uma função assíncrona
+e deixá-la rodar em paralelo com o código ao redor,
+escreva `async` antes de `let` ao definir uma constante,
+e depois escreva `await` toda vez que usar a constante.
 
 ```swift
 async let firstPhoto = downloadPhoto(named: photoNames[0])
@@ -501,75 +501,75 @@ show(photos)
   ```
 -->
 
-In this example,
-all three calls to `downloadPhoto(named:)` start
-without waiting for the previous one to complete.
-If there are enough system resources available, they can run at the same time.
-None of these function calls are marked with `await`
-because the code doesn't suspend to wait for the function's result.
-Instead, execution continues
-until the line where `photos` is defined ---
-at that point, the program needs the results from these asynchronous calls,
-so you write `await` to pause execution
-until all three photos finish downloading.
+Neste exemplo,
+as três chamadas a `downloadPhoto(named:)` começam
+sem esperar que a anterior termine.
+Se houver recursos suficientes disponíveis, elas podem rodar ao mesmo tempo.
+Nenhuma dessas chamadas de função é marcada com `await`
+porque o código não suspende para esperar o resultado da função.
+Em vez disso, a execução continua
+até a linha em que `photos` é definido ---
+nesse ponto, o programa precisa dos resultados dessas chamadas assíncronas,
+então você escreve `await` para pausar a execução
+até que as três fotos terminem de baixar.
 
-Here's how you can think about the differences between these two approaches:
+Veja como você pode pensar nas diferenças entre essas duas abordagens:
 
-- Call asynchronous functions with `await`
-  when the code on the following lines depends on that function's result.
-  This creates work that is carried out sequentially.
-- Call asynchronous functions with `async`-`let`
-  when you don't need the result until later in your code.
-  This creates work that can be carried out in parallel.
-- Both `await` and `async`-`let`
-  allow other code to run while they're suspended.
-- In both cases, you mark the possible suspension point with `await`
-  to indicate that execution will pause, if needed,
-  until an asynchronous function has returned.
+- Chame funções assíncronas com `await`
+  quando o código das linhas seguintes depende do resultado dessa função.
+  Isso cria trabalho que é executado de forma sequencial.
+- Chame funções assíncronas com `async`-`let`
+  quando você não precisa do resultado até mais adiante no código.
+  Isso cria trabalho que pode ser executado em paralelo.
+- Tanto `await` quanto `async`-`let`
+  permitem que outro código rode enquanto estão suspensos.
+- Nos dois casos, você marca o possível ponto de suspensão com `await`
+  para indicar que a execução vai pausar, se necessário,
+  até que a função assíncrona retorne.
 
-You can also mix both of these approaches in the same code.
+Você também pode combinar as duas abordagens no mesmo código.
 
-## Tasks and Task Groups
+## Tasks e task groups
 
-A *task* is a unit of work
-that can be run asynchronously as part of your program.
-All asynchronous code runs as part of some task.
-A task itself does only one thing at a time,
-but when you create multiple tasks,
-Swift can schedule them to run simultaneously.
+Uma *task* é uma unidade de trabalho
+que pode ser executada de forma assíncrona como parte do seu programa.
+Todo código assíncrono roda como parte de alguma task.
+Uma task, por si só, faz apenas uma coisa por vez,
+mas, quando você cria várias tasks,
+o Swift pode agendá-las para rodar simultaneamente.
 
-The `async`-`let` syntax described in the previous section
-implicitly creates a child task ---
-this syntax works well when you already know
-what tasks your program needs to run.
-You can also create a task group
-(an instance of [`TaskGroup`][])
-and explicitly add child tasks to that group,
-which gives you more control over priority and cancellation,
-and lets you create a dynamic number of tasks.
+A sintaxe `async`-`let` descrita na seção anterior
+cria implicitamente uma task filha ---
+essa sintaxe funciona bem quando você já sabe
+quais tasks o programa precisa executar.
+Você também pode criar um task group
+(uma instância de [`TaskGroup`][])
+e adicionar tasks filhas a esse grupo explicitamente,
+o que oferece mais controle sobre prioridade e cancelamento,
+e permite criar um número dinâmico de tasks.
 
 [`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
 
-Tasks are arranged in a hierarchy.
-Each task in a given task group has the same parent task,
-and each task can have child tasks.
-Because of the explicit relationship between tasks and task groups,
-this approach is called *structured concurrency*.
-The explicit parent-child relationship between tasks has several advantages:
+As tasks são organizadas em uma hierarquia.
+Cada task de um determinado task group tem a mesma task pai,
+e cada task pode ter tasks filhas.
+Por causa da relação explícita entre tasks e task groups,
+essa abordagem é chamada de *concorrência estruturada*.
+A relação explícita pai-filho entre as tasks traz várias vantagens:
 
-- In a parent task,
-  you can't forget to wait for its child tasks to complete.
+- Em uma task pai,
+  você não pode se esquecer de esperar que as tasks filhas terminem.
 
-- When setting a higher priority on a child task,
-  the parent task's priority is automatically escalated.
+- Ao definir uma prioridade mais alta para uma task filha,
+  a prioridade da task pai é elevada automaticamente.
 
-- When a parent task is canceled,
-  each of its child tasks is also automatically canceled.
+- Quando uma task pai é cancelada,
+  cada uma de suas tasks filhas também é cancelada automaticamente.
 
-- Task-local values propagate to child tasks efficiently and automatically.
+- Valores locais da task se propagam para as tasks filhas de forma eficiente e automática.
 
-Here's another version of the code to download photos
-that handles any number of photos:
+Aqui está outra versão do código para baixar fotos
+que lida com qualquer quantidade de fotos:
 
 ```swift
 await withTaskGroup(of: Data.self) { group in
@@ -586,25 +586,25 @@ await withTaskGroup(of: Data.self) { group in
 }
 ```
 
-The code above creates a new task group,
-and then creates child tasks
-to download each photo in the gallery.
-Swift runs as many of these tasks concurrently as conditions allow.
-As soon as a child task finishes downloading a photo,
-that photo is displayed.
-There's no guarantee about the order that child tasks complete,
-so the photos from this gallery can be shown in any order.
+O código acima cria um novo task group
+e depois cria tasks filhas
+para baixar cada foto da galeria.
+O Swift executa o máximo possível dessas tasks de forma concorrente, conforme as condições permitirem.
+Assim que uma task filha termina de baixar uma foto,
+essa foto é exibida.
+Não há garantia sobre a ordem em que as tasks filhas terminam,
+então as fotos dessa galeria podem ser mostradas em qualquer ordem.
 
-> Note:
-> If the code to download a photo could throw an error,
-> you would call `withThrowingTaskGroup(of:returning:body:)` instead.
+> Nota:
+> Se o código para baixar uma foto puder lançar um erro,
+> você chamaria `withThrowingTaskGroup(of:returning:body:)` no lugar.
 
-In the code listing above,
-each photo is downloaded and then displayed,
-so the task group doesn't return any results.
-For a task group that returns a result,
-you add code that accumulates its result
-inside the closure you pass to `withTaskGroup(of:returning:body:)`.
+No trecho de código acima,
+cada foto é baixada e depois exibida,
+então o task group não retorna nenhum resultado.
+Para um task group que retorna um resultado,
+você adiciona código que acumula esse resultado
+dentro da closure que você passa para `withTaskGroup(of:returning:body:)`.
 
 ```swift
 let photos = await withTaskGroup(of: Data.self) { group in
@@ -624,15 +624,15 @@ let photos = await withTaskGroup(of: Data.self) { group in
 }
 ```
 
-Like the previous example,
-this example creates a child task for each photo to download it.
-Unlike the previous example,
-the `for`-`await`-`in` loop waits for the next child task to finish,
-appends the result of that task to the array of results,
-and then continues waiting until all child tasks have finished.
-Finally,
-the task group returns the array of downloaded photos
-as its overall result.
+Assim como no exemplo anterior,
+este exemplo cria uma task filha para cada foto, para baixá-la.
+Diferente do exemplo anterior,
+o loop `for`-`await`-`in` espera a próxima task filha terminar,
+adiciona o resultado dessa task ao array de resultados,
+e continua esperando até que todas as tasks filhas tenham terminado.
+Por fim,
+o task group retorna o array de fotos baixadas
+como seu resultado geral.
 
 <!--
 TODO:
@@ -652,34 +652,34 @@ since that's optimized for child tasks
 whose values aren't collected.
 -->
 
-### Task Cancellation
+### Cancelamento de task
 
-Swift concurrency uses a cooperative cancellation model.
-Each task checks whether it has been canceled
-at the appropriate points in its execution,
-and responds to cancellation appropriately.
-Depending on what work the task is doing,
-responding to cancellation usually means one of the following:
+A concorrência do Swift usa um modelo de cancelamento cooperativo.
+Cada task verifica se foi cancelada
+nos pontos apropriados da sua execução,
+e responde ao cancelamento de forma adequada.
+Dependendo do trabalho que a task está fazendo,
+responder ao cancelamento normalmente significa uma das seguintes ações:
 
-- Throwing an error like `CancellationError`
-- Returning `nil` or an empty collection
-- Returning the partially completed work
+- Lançar um erro como `CancellationError`
+- Retornar `nil` ou uma coleção vazia
+- Retornar o trabalho parcialmente concluído
 
-Downloading pictures could take a long time
-if the pictures are large or the network is slow.
-To let the user stop this work,
-without waiting for all of the tasks to complete,
-the tasks need to check for cancellation and stop running if they are canceled.
-There are two ways a task can do this:
-by calling the [`Task.checkCancellation()`][] type method,
-or by reading the [`Task.isCancelled`][`Task.isCancelled` type] type property.
-Calling `checkCancellation()` throws an error if the task is canceled;
-a throwing task can propagate the error out of the task,
-stopping all of the task's work.
-This has the advantage of being simple to implement and understand.
-For more flexibility, use the `isCancelled` property,
-which lets you perform clean-up work as part of stopping the task,
-like closing network connections and deleting temporary files.
+Baixar imagens pode levar muito tempo
+se as imagens forem grandes ou a rede for lenta.
+Para permitir que o usuário interrompa esse trabalho,
+sem precisar esperar que todas as tasks terminem,
+as tasks precisam verificar o cancelamento e parar de rodar se forem canceladas.
+Há duas formas de uma task fazer isso:
+chamando o método de tipo [`Task.checkCancellation()`][],
+ou lendo a propriedade de tipo [`Task.isCancelled`][`Task.isCancelled` type].
+Chamar `checkCancellation()` lança um erro se a task foi cancelada;
+uma task que lança erros pode propagar esse erro para fora da task,
+interrompendo todo o trabalho dela.
+Isso tem a vantagem de ser simples de implementar e entender.
+Para mais flexibilidade, use a propriedade `isCancelled`,
+que permite fazer trabalho de limpeza como parte da interrupção da task,
+como fechar conexões de rede e apagar arquivos temporários.
 
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/checkcancellation()
 [`Task.isCancelled` type]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
@@ -702,40 +702,40 @@ let photos = await withTaskGroup { group in
 }
 ```
 
-The code above makes several changes from the previous version:
+O código acima faz várias mudanças em relação à versão anterior:
 
-- Each task is added using the
-  [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] method,
-  to avoid starting new work after cancellation.
+- Cada task é adicionada usando o método
+  [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][],
+  para evitar começar trabalho novo depois do cancelamento.
 
-- After each call to `addTaskUnlessCancelled(priority:operation:)`,
-  the code confirms that the new child task was added.
-  If the group is canceled, the value of `added` is `false` ---
-  in that case, the code stops trying to download additional photos.
+- Depois de cada chamada a `addTaskUnlessCancelled(priority:operation:)`,
+  o código confirma que a nova task filha foi adicionada.
+  Se o grupo for cancelado, o valor de `added` é `false` ---
+  nesse caso, o código para de tentar baixar fotos adicionais.
 
-- Each task checks for cancellation
-  before starting to download the photo.
-  If it has been canceled, the task returns `nil`.
+- Cada task verifica o cancelamento
+  antes de começar a baixar a foto.
+  Se tiver sido cancelada, a task retorna `nil`.
 
-- At the end,
-  the task group skips `nil` values when collecting the results.
-  Handling cancellation by returning `nil`
-  means the task group can return a partial result ---
-  the photos that were already downloaded at the time of cancellation ---
-  instead of discarding that completed work.
+- No final,
+  o task group ignora os valores `nil` ao coletar os resultados.
+  Tratar o cancelamento retornando `nil`
+  permite que o task group retorne um resultado parcial ---
+  as fotos que já tinham sido baixadas no momento do cancelamento ---
+  em vez de descartar o trabalho já concluído.
 
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
-> Note:
-> To check whether a task has been canceled from outside that task,
-> use the [`Task.isCancelled`][`Task.isCancelled` instance] instance property
-> instead of the type property.
+> Nota:
+> Para verificar se uma task foi cancelada a partir de fora dessa task,
+> use a propriedade de instância [`Task.isCancelled`][`Task.isCancelled` instance]
+> em vez da propriedade de tipo.
 
 [`Task.isCancelled` instance]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
-For work that needs immediate notification of cancellation,
-use the [`withTaskCancellationHandler(operation:onCancel:isolation:)`][] function.
-For example:
+Para trabalho que precisa de notificação imediata do cancelamento,
+use a função [`withTaskCancellationHandler(operation:onCancel:isolation:)`][].
+Por exemplo:
 
 [`withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
 
@@ -752,13 +752,13 @@ let task = Task {
 task.cancel()  // Prints "Canceled!"
 ```
 
-When using a cancellation handler,
-task cancellation is still cooperative:
-The task either runs to completion
-or checks for cancellation and stops early.
-Because the task is still running when the cancellation handler starts,
-avoid sharing state between the task and its cancellation handler,
-which could create a race condition.
+Ao usar um cancellation handler,
+o cancelamento da task continua sendo cooperativo:
+a task ou roda até o fim
+ou verifica o cancelamento e para mais cedo.
+Como a task ainda está rodando quando o cancellation handler começa,
+evite compartilhar estado entre a task e o cancellation handler,
+porque isso pode criar uma race condition.
 
 <!--
   OUTLINE
@@ -907,30 +907,30 @@ lets Swift balance between making progress on this task,
 and letting other tasks in your program make progress on their work.
 -->
 
-### Unstructured Concurrency
+### Concorrência não estruturada
 
-In addition to the structured approaches to concurrency
-described in the previous sections,
-Swift also supports unstructured concurrency.
-Unlike tasks that are part of a task group,
-an *unstructured task* doesn't have a parent task.
-You have complete flexibility to manage unstructured tasks
-in whatever way your program needs,
-but you're also completely responsible for their correctness.
+Além das abordagens estruturadas de concorrência
+descritas nas seções anteriores,
+o Swift também oferece suporte a concorrência não estruturada.
+Diferente das tasks que fazem parte de um task group,
+uma *task não estruturada* não tem uma task pai.
+Você tem total liberdade para gerenciar tasks não estruturadas
+do jeito que o programa precisar,
+mas também é totalmente responsável pela corretude delas.
 
-To create an unstructured task
-that runs similarly to the surrounding code,
-call the [`Task.init(name:priority:operation:)`][] initializer.
-The new task defaults to running with
-the same actor isolation, priority, and task-local state as the current task.
-To create an unstructured task
-that's more independent from the surrounding code,
-known more specifically as a *detached task*,
-call the [`Task.detached(name:priority:operation:)`][] static method.
-The new task defaults to running without any actor isolation
-and doesn't inherit the current task's priority or task-local state.
-Both of these operations return a task that you can interact with ---
-for example, to wait for its result or to cancel it.
+Para criar uma task não estruturada
+que roda de forma semelhante ao código ao redor,
+chame o inicializador [`Task.init(name:priority:operation:)`][].
+A nova task, por padrão, roda com
+o mesmo isolamento de actor, prioridade e estado local de task da task atual.
+Para criar uma task não estruturada
+que é mais independente do código ao redor,
+conhecida mais especificamente como *task destacada*,
+chame o método estático [`Task.detached(name:priority:operation:)`][].
+A nova task, por padrão, roda sem nenhum isolamento de actor
+e não herda a prioridade nem o estado local da task atual.
+As duas operações retornam uma task com a qual você pode interagir ---
+por exemplo, para esperar pelo resultado dela ou cancelá-la.
 <!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
@@ -941,8 +941,8 @@ let handle = Task {
 let result = await handle.value
 ```
 
-For more information about managing detached tasks,
-see [`Task`](https://developer.apple.com/documentation/swift/task).
+Para mais informações sobre como gerenciar tasks destacadas,
+veja [`Task`](https://developer.apple.com/documentation/swift/task).
 
 [`Task.init(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(name:priority:operation:)-43wmk
 [`Task.detached(name:priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(name:priority:operation:)-795w1
@@ -954,66 +954,66 @@ see [`Task`](https://developer.apple.com/documentation/swift/task).
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
-## Isolation
+## Isolamento
 
-The previous sections discuss approaches for splitting up concurrent work.
-That work can involve changing shared data, such as an app's UI.
-If different parts of your code can modify the same data at the same time,
-that risks creating a data race.
-Swift protects you from data races in your code:
-Whenever you read or modify a piece of data,
-Swift ensures that no other code is modifying it concurrently.
-This guarantee is called *data isolation*.
-There are three main ways to isolate data:
+As seções anteriores discutem abordagens para dividir trabalho concorrente.
+Esse trabalho pode envolver a alteração de dados compartilhados, como a interface de um app.
+Se partes diferentes do código puderem modificar os mesmos dados ao mesmo tempo,
+isso cria o risco de uma data race.
+O Swift protege você de data races no seu código:
+sempre que você lê ou modifica um dado,
+o Swift garante que nenhum outro código esteja modificando esse dado ao mesmo tempo.
+Essa garantia é chamada de *isolamento de dados*.
+Existem três formas principais de isolar dados:
 
-1. Immutable data is always isolated.
-   Because you can't modify a constant,
-   there's no risk of other code modifying a constant
-   at the same time you're reading it.
+1. Dados imutáveis são sempre isolados.
+   Como você não pode modificar uma constante,
+   não há risco de outro código modificar uma constante
+   no mesmo momento em que você a lê.
 
-2. Data that's referenced by only the current task is always isolated.
-   A local variable is safe to read and write
-   because no code outside the task has a reference to that memory,
-   so no other code can modify that data.
-   In addition,
-   if you capture the variable in a closure,
-   Swift ensures that the closure isn't used concurrently.
+2. Dados referenciados apenas pela task atual são sempre isolados.
+   Uma variável local é segura para ler e escrever
+   porque nenhum código fora da task tem uma referência para essa memória,
+   então nenhum outro código pode modificar esses dados.
+   Além disso,
+   se você capturar a variável em uma closure,
+   o Swift garante que a closure não seja usada de forma concorrente.
 
-3. Data that's protected by an actor is isolated
-   if the code accessing that data is also isolated to the actor.
-   If the current function is isolated to an actor,
-   it's safe to read and write data that's protected by that actor
-   because any other code that's isolated to that same actor
-   must wait its turn before running.
+3. Dados protegidos por um actor são isolados
+   se o código que acessa esses dados também estiver isolado ao actor.
+   Se a função atual está isolada a um actor,
+   é seguro ler e escrever os dados protegidos por esse actor,
+   porque qualquer outro código isolado a esse mesmo actor
+   precisa esperar a sua vez para rodar.
 
-## The Main Actor
+## O main actor
 
-An actor is an object that protects access to mutable data
-by forcing code to take turns accessing that data.
-The most important actor in many programs is the *main actor*.
-In an app,
-the main actor protects all of the data that's used to show the UI.
-The main actor takes turns rendering the UI,
-handling UI events,
-and running code that you write that needs to query or update the UI.
+Um actor é um objeto que protege o acesso a dados mutáveis,
+forçando o código a se revezar no acesso a esses dados.
+O actor mais importante em muitos programas é o *main actor*.
+Em um app,
+o main actor protege todos os dados usados para mostrar a interface.
+O main actor alterna o acesso entre a renderização da interface,
+o tratamento de eventos da interface
+e a execução do código que você escreve e que precisa consultar ou atualizar a interface.
 
-Before you start using concurrency in your code,
-everything runs on the main actor.
-As you identify long-running or resource-intensive code,
-you can move this work off the main actor
-in a way that's still safe and correct.
+Antes de começar a usar concorrência no seu código,
+tudo roda no main actor.
+Conforme você identifica código de longa duração ou que consome muitos recursos,
+pode tirar esse trabalho do main actor
+de uma forma que continua segura e correta.
 
-> Note:
-> The main actor is closely related to the main thread,
-> but they're not the same thing.
-> The main actor has private mutable state,
-> and the main thread serializes access to that state.
-> When you run code on the main actor,
-> Swift executes that code on the main thread.
-> Because of this connection,
-> you might see these two terms used interchangeably.
-> Your code interacts with the main actor;
-> the main thread is a lower-level implementation detail.
+> Nota:
+> O main actor está intimamente relacionado à main thread,
+> mas eles não são a mesma coisa.
+> O main actor tem estado mutável privado,
+> e a main thread serializa o acesso a esse estado.
+> Quando você roda código no main actor,
+> o Swift executa esse código na main thread.
+> Por causa dessa conexão,
+> você pode ver esses dois termos usados como sinônimos.
+> Seu código interage com o main actor;
+> a main thread é um detalhe de implementação de nível mais baixo.
 
 <!--
 TODO: Discuss the SE-0478 syntax for 'using @MainActor'
@@ -1032,9 +1032,9 @@ This can be overridden on a per-file basis
 by writing `using nonisolated` at the top of a file.
 -->
 
-There are several ways to run work on the main actor.
-To ensure a function always runs on the main actor,
-mark it with the `@MainActor` attribute:
+Há várias formas de executar trabalho no main actor.
+Para garantir que uma função sempre rode no main actor,
+marque-a com o atributo `@MainActor`:
 
 ```swift
 @MainActor
@@ -1043,16 +1043,16 @@ func show(_: Data) {
 }
 ```
 
-In the code above,
-the `@MainActor` attribute on the `show(_:)` function
-requires this function to run only on the main actor.
-Within other code that's running on the main actor,
-you can call `show(_:)` as a synchronous function.
-However,
-to call `show(_:)` from code that isn't running on the main actor,
-you have to include `await` and call it as an asynchronous function
-because switching to the main actor introduces a potential suspension point.
-For example:
+No código acima,
+o atributo `@MainActor` na função `show(_:)`
+exige que essa função rode somente no main actor.
+Dentro de outro código que está rodando no main actor,
+você pode chamar `show(_:)` como uma função síncrona.
+No entanto,
+para chamar `show(_:)` a partir de código que não está rodando no main actor,
+você precisa incluir `await` e chamá-la como uma função assíncrona,
+porque mudar para o main actor introduz um possível ponto de suspensão.
+Por exemplo:
 
 ```swift
 func downloadAndShowPhoto(named name: String) async {
@@ -1061,16 +1061,16 @@ func downloadAndShowPhoto(named name: String) async {
 }
 ```
 
-In the code above,
-both the `downloadPhoto(named:)` and `show(_:)` functions
-might suspend when you call them.
-This code also shows a common pattern:
-Perform long-running and CPU-intensive work in the background,
-and then switch to the main actor to update the UI.
-Because the `downloadAndShowPhoto(named:)` function isn't on the main actor,
-the work in `downloadPhoto(named:)` also doesn't run on the main actor.
-Only the work in `show(_:)` to update the UI runs on the main actor,
-because that function is marked with the `@MainActor` attribute.
+No código acima,
+tanto `downloadPhoto(named:)` quanto `show(_:)`
+podem suspender quando você as chama.
+Este código também mostra um padrão comum:
+execute o trabalho de longa duração e intensivo em CPU em segundo plano,
+e depois mude para o main actor para atualizar a interface.
+Como a função `downloadAndShowPhoto(named:)` não está no main actor,
+o trabalho em `downloadPhoto(named:)` também não roda no main actor.
+Apenas o trabalho em `show(_:)` para atualizar a interface roda no main actor,
+porque essa função é marcada com o atributo `@MainActor`.
 <!-- TODO
 When updating for SE-0461,
 this is a good place to note
@@ -1078,9 +1078,9 @@ that downloadPhoto(named:) runs
 on whatever actor you were on when you called it.
 -->
 
-To ensure that a closure runs on the main actor,
-you write `@MainActor` before the capture list and before `in`,
-at the start of the closure.
+Para garantir que uma closure rode no main actor,
+você escreve `@MainActor` antes da lista de captura e antes de `in`,
+no início da closure.
 
 ```swift
 let photo = await downloadPhoto(named: "Trees at Sunrise")
@@ -1089,12 +1089,12 @@ Task { @MainActor in
 }
 ```
 
-The code above is similar to
-`downloadAndShowPhoto(named:)` from the previous code listing,
-but the code in this example doesn't wait for the UI update.
-You can also write `@MainActor` on a structure, class, or enumeration
-to ensure all of its methods and all access to its properties
-run on the main actor:
+O código acima é parecido com
+`downloadAndShowPhoto(named:)` da listagem anterior,
+mas o código deste exemplo não espera a atualização da interface.
+Você também pode escrever `@MainActor` em uma struct, classe ou enum
+para garantir que todos os seus métodos e todo acesso às suas propriedades
+rodem no main actor:
 
 ```swift
 @MainActor
@@ -1104,19 +1104,19 @@ struct PhotoGallery {
 }
 ```
 
-The `PhotoGallery` structure in the code above
-draws the photos on screen,
-using the names from its `photoNames` property
-to determine which photos to display.
-Because `photoNames` affects the UI,
-code that changes it needs to run on the main actor
-to serialize that access.
+A struct `PhotoGallery` no código acima
+desenha as fotos na tela,
+usando os nomes da propriedade `photoNames`
+para determinar quais fotos exibir.
+Como `photoNames` afeta a interface,
+o código que a altera precisa rodar no main actor
+para serializar esse acesso.
 
-When you're building on top of a framework,
-that framework's protocols and base classes
-are typically already marked `@MainActor`,
-so you don't usually write `@MainActor` on your own types in that case.
-Here's a simplified example:
+Ao construir sobre um framework,
+os protocolos e classes base desse framework
+normalmente já são marcados com `@MainActor`,
+então você não costuma escrever `@MainActor` nos seus próprios tipos nesse caso.
+Aqui está um exemplo simplificado:
 
 ```swift
 @MainActor
@@ -1126,20 +1126,20 @@ protocol View { /* ... */ }
 struct PhotoGalleryView: View { /* ... */ }
 ```
 
-In the code above,
-a framework like SwiftUI defines the `View` protocol.
-By writing `@MainActor` on the protocol declaration,
-types like `PhotoGalleryView` that conform to the protocol
-are also implicitly marked `@MainActor`.
-You'd see the same behavior if `View` were a base class
-and `PhotoGalleryView` were a subclass ---
-the subclass would be implicitly marked `@MainActor`.
+No código acima,
+um framework como o SwiftUI define o protocolo `View`.
+Ao escrever `@MainActor` na declaração do protocolo,
+tipos como `PhotoGalleryView` que adotam o protocolo
+também são marcados implicitamente com `@MainActor`.
+O mesmo comportamento aconteceria se `View` fosse uma classe base
+e `PhotoGalleryView` fosse uma subclasse ---
+a subclasse seria marcada implicitamente com `@MainActor`.
 
-In the examples above,
-`PhotoGallery` protects the entire structure on the main actor.
-For more fine-grained control,
-you can write `@MainActor` on just the properties or methods
-that need to be accessed or run on the main thread:
+Nos exemplos acima,
+`PhotoGallery` protege a struct inteira no main actor.
+Para um controle mais refinado,
+você pode escrever `@MainActor` apenas nas propriedades ou métodos
+que precisam ser acessados ou executados na main thread:
 
 ```swift
 struct PhotoGallery {
@@ -1151,43 +1151,43 @@ struct PhotoGallery {
 }
 ```
 
-In the version of `PhotoGallery` above,
-the `drawUI()` method draws the gallery's pictures on screen,
-so it needs to be isolated to the main actor.
-The `photoNames` property doesn't directly create the UI,
-but it does store state that the `drawUI()` function uses to draw the UI,
-so this property also needs to be accessed only on the main actor.
-In contrast,
-changes to the `hasCachedPhotos` property
-don't interact with the UI,
-and the `cachePhotos()` method doesn't access any state
-that requires running it on the main actor.
-So these aren't marked with `@MainActor`.
+Na versão de `PhotoGallery` acima,
+o método `drawUI()` desenha as imagens da galeria na tela,
+então precisa ser isolado ao main actor.
+A propriedade `photoNames` não cria a interface diretamente,
+mas armazena o estado que a função `drawUI()` usa para desenhar a interface,
+então essa propriedade também precisa ser acessada somente no main actor.
+Em contraste,
+mudanças na propriedade `hasCachedPhotos`
+não interagem com a interface,
+e o método `cachePhotos()` não acessa nenhum estado
+que exija rodar no main actor.
+Por isso, eles não são marcados com `@MainActor`.
 
-As with the earlier examples,
-if you're using a framework to build your UI,
-the property wrappers from that framework
-probably already mark your UI state properties as `@MainActor`.
-When defining a property wrapper,
-if its `wrappedValue` property is marked `@MainActor`,
-then any property you apply that property wrapper to
-is also implicitly marked `@MainActor`.
+Assim como nos exemplos anteriores,
+se você estiver usando um framework para construir sua interface,
+os property wrappers desse framework
+provavelmente já marcam as propriedades de estado da interface como `@MainActor`.
+Ao definir um property wrapper,
+se a propriedade `wrappedValue` dele for marcada com `@MainActor`,
+qualquer propriedade à qual você aplicar esse property wrapper
+também fica implicitamente marcada com `@MainActor`.
 
 ## Actors
 
-Swift provides the main actor for you ---
-you can also define your own actors.
-Actors let you safely share information between concurrent code.
+O Swift fornece o main actor para você ---
+você também pode definir os seus próprios actors.
+Actors permitem compartilhar informações com segurança entre código concorrente.
 
-Like classes, actors are reference types,
-so the comparison of value types and reference types
-in <doc:ClassesAndStructures#Classes-Are-Reference-Types>
-applies to actors as well as classes.
-Unlike classes,
-actors allow only one task to access their mutable state at a time,
-which makes it safe for code in multiple tasks
-to interact with the same instance of an actor.
-For example, here's an actor that records temperatures:
+Assim como classes, actors são tipos por referência,
+então a comparação entre tipos por valor e tipos por referência
+em <doc:ClassesAndStructures#Classes-Are-Reference-Types>
+vale para actors tanto quanto para classes.
+Diferente de classes,
+actors permitem que apenas uma task acesse o estado mutável deles por vez,
+o que torna seguro que código de várias tasks
+interaja com a mesma instância de um actor.
+Por exemplo, aqui está um actor que registra temperaturas:
 
 ```swift
 actor TemperatureLogger {
@@ -1221,18 +1221,18 @@ actor TemperatureLogger {
   ```
 -->
 
-You introduce an actor with the `actor` keyword,
-followed by its definition in a pair of braces.
-The `TemperatureLogger` actor has properties
-that other code outside the actor can access,
-and restricts the `max` property so only code inside the actor
-can update the maximum value.
+Você declara um actor com a palavra-chave `actor`,
+seguida da definição entre um par de chaves.
+O actor `TemperatureLogger` tem propriedades
+que outro código fora do actor pode acessar,
+e restringe a propriedade `max` para que somente código dentro do actor
+possa atualizar o valor máximo.
 
-You create an instance of an actor
-using the same initializer syntax as structures and classes.
-When you access a property or method of an actor,
-you use `await` to mark the potential suspension point.
-For example:
+Você cria uma instância de um actor
+usando a mesma sintaxe de inicializador de structs e classes.
+Ao acessar uma propriedade ou método de um actor,
+você usa `await` para marcar o possível ponto de suspensão.
+Por exemplo:
 
 ```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
@@ -1240,17 +1240,17 @@ print(await logger.max)
 // Prints "25".
 ```
 
-In this example,
-accessing `logger.max` is a possible suspension point.
-Because the actor allows only one task at a time to access its mutable state,
-if code from another task is already interacting with the logger,
-this code suspends while it waits to access the property.
+Neste exemplo,
+acessar `logger.max` é um possível ponto de suspensão.
+Como o actor permite que apenas uma task por vez acesse o estado mutável,
+se código de outra task já estiver interagindo com o logger,
+este código fica suspenso enquanto espera para acessar a propriedade.
 
-In contrast,
-code that's part of the actor doesn't write `await`
-when accessing the actor's properties.
-For example,
-here's a method that updates a `TemperatureLogger` with a new temperature:
+Em contraste,
+código que faz parte do actor não escreve `await`
+ao acessar as propriedades do actor.
+Por exemplo,
+aqui está um método que atualiza um `TemperatureLogger` com uma nova temperatura:
 
 ```swift
 extension TemperatureLogger {
@@ -1263,75 +1263,74 @@ extension TemperatureLogger {
 }
 ```
 
-The `update(with:)` method is already running on the actor,
-so it doesn't mark its access to properties like `max` with `await`.
-This method also shows one of the reasons
-why actors allow only one task at a time to interact with their mutable state:
-Some updates to an actor's state temporarily break invariants.
-The `TemperatureLogger` actor keeps track of
-a list of temperatures and a maximum temperature,
-and it updates the maximum temperature when you record a new measurement.
-In the middle of an update,
-after appending the new measurement but before updating `max`,
-the temperature logger is in a temporary inconsistent state.
-Preventing multiple tasks from interacting with the same instance simultaneously
-prevents problems like the following sequence of events:
+O método `update(with:)` já está rodando no actor,
+então ele não marca o acesso às propriedades como `max` com `await`.
+Este método também mostra um dos motivos
+pelos quais os actors permitem que apenas uma task por vez interaja com o estado mutável:
+algumas atualizações do estado de um actor quebram temporariamente invariantes.
+O actor `TemperatureLogger` mantém uma lista de temperaturas
+e uma temperatura máxima,
+e atualiza a temperatura máxima quando você registra uma nova medição.
+No meio da atualização,
+depois de acrescentar a nova medição, mas antes de atualizar `max`,
+o logger de temperatura está em um estado temporário inconsistente.
+Impedir que várias tasks interajam com a mesma instância ao mesmo tempo
+evita problemas como a seguinte sequência de eventos:
 
-1. Your code calls the `update(with:)` method.
-   It updates the `measurements` array first.
-2. Before your code can update `max`,
-   code elsewhere reads the maximum value and the array of temperatures.
-3. Your code finishes its update by changing `max`.
+1. Seu código chama o método `update(with:)`.
+   Ele atualiza primeiro o array `measurements`.
+2. Antes que seu código consiga atualizar `max`,
+   outro código lê o valor máximo e o array de temperaturas.
+3. Seu código termina a atualização alterando `max`.
 
-In this case,
-the code running elsewhere would read incorrect information
-because its access to the actor was interleaved
-in the middle of the call to `update(with:)`
-while the data was temporarily invalid.
-You can prevent this problem when using Swift actors
-because they only allow one operation on their state at a time,
-and because that code can be interrupted
-only in places where `await` marks a suspension point.
-Because `update(with:)` doesn't contain any suspension points,
-no other code can access the data in the middle of an update.
+Nesse caso, o código que roda em outro lugar leria informações incorretas,
+porque o acesso dele ao actor foi intercalado
+no meio da chamada a `update(with:)`,
+enquanto os dados estavam temporariamente inválidos.
+Você pode evitar esse problema ao usar actors do Swift,
+porque eles permitem apenas uma operação sobre o estado por vez,
+e porque esse código só pode ser interrompido
+nos lugares em que `await` marca um ponto de suspensão.
+Como `update(with:)` não contém nenhum ponto de suspensão,
+nenhum outro código pode acessar os dados no meio de uma atualização.
 
-If code outside the actor tries to access those properties directly,
-like accessing a structure or class's properties,
-you'll get a compile-time error.
-For example:
+Se código fora do actor tentar acessar essas propriedades diretamente,
+como acessar as propriedades de uma struct ou classe,
+você receberá um erro em tempo de compilação.
+Por exemplo:
 
 ```swift
 print(logger.max)  // Error
 ```
 
-Accessing `logger.max` without writing `await` fails because
-the properties of an actor are part of that actor's isolated local state.
-The code to access this property needs to run as part of the actor,
-which is an asynchronous operation and requires writing `await`.
-Swift guarantees that
-only code running on an actor can access that actor's local state.
-This guarantee is known as *actor isolation*.
+Acessar `logger.max` sem escrever `await` falha porque
+as propriedades de um actor fazem parte do estado local isolado desse actor.
+O código para acessar essa propriedade precisa rodar como parte do actor,
+o que é uma operação assíncrona e exige escrever `await`.
+O Swift garante que
+somente código rodando em um actor pode acessar o estado local desse actor.
+Essa garantia é conhecida como *isolamento de actor*.
 
-The following aspects of the Swift concurrency model
-work together to make it easier to reason about shared mutable state:
+Os seguintes aspectos do modelo de concorrência do Swift
+trabalham juntos para facilitar o raciocínio sobre estado mutável compartilhado:
 
-- Code in between possible suspension points runs sequentially,
-  without the possibility of interruption from other concurrent code.
-  However,
-  multiple pieces of concurrent code can run at the same time,
-  so other code could be running simultaneously.
+- O código entre os possíveis pontos de suspensão roda de forma sequencial,
+  sem a possibilidade de ser interrompido por outro código concorrente.
+  No entanto,
+  vários trechos de código concorrente podem rodar ao mesmo tempo,
+  então outro código pode estar rodando simultaneamente.
 
-- Code that interacts with an actor's local state
-  runs only on that actor.
+- O código que interage com o estado local de um actor
+  roda somente nesse actor.
 
-- An actor runs only one piece of code at a time.
+- Um actor executa apenas um trecho de código por vez.
 
-Because of these guarantees,
-code that doesn't include `await` and that's inside an actor
-can make the updates without a risk of other places in your program
-observing the temporarily invalid state.
-For example,
-the code below converts measured temperatures from Fahrenheit to Celsius:
+Por causa dessas garantias,
+código que não inclui `await` e que está dentro de um actor
+pode fazer as atualizações sem o risco de outros pontos do programa
+observarem o estado temporariamente inválido.
+Por exemplo,
+o código abaixo converte temperaturas medidas de Fahrenheit para Celsius:
 
 ```swift
 extension TemperatureLogger {
@@ -1343,56 +1342,56 @@ extension TemperatureLogger {
 }
 ```
 
-The code above converts the array of measurements, one at a time.
-While the map operation is in progress,
-some temperatures are in Fahrenheit and others are in Celsius.
-However, because none of the code includes `await`,
-there are no potential suspension points in this method.
-The state that this method modifies belongs to the actor,
-which protects it against code reading or modifying it
-except when that code runs on the actor.
-This means there's no way for other code
-to read a list of partially converted temperatures
-while unit conversion is in progress.
+O código acima converte o array de medições, uma por vez.
+Enquanto a operação de mapeamento está em andamento,
+algumas temperaturas estão em Fahrenheit e outras em Celsius.
+No entanto, como nenhum trecho do código contém `await`,
+não há pontos de suspensão possíveis nesse método.
+O estado que esse método modifica pertence ao actor,
+que o protege contra código que o leia ou modifique,
+exceto quando esse código roda no actor.
+Isso significa que não há como outro código
+ler uma lista de temperaturas parcialmente convertidas
+enquanto a conversão de unidades está em andamento.
 
-In addition to writing code in an actor
-that protects temporary invalid state by omitting potential suspension points,
-you can move that code into a synchronous method.
-The `convertFahrenheitToCelsius()` method above is a synchronous method,
-so it's guaranteed to *never* contain potential suspension points.
-This function encapsulates the code
-that temporarily makes the data model inconsistent,
-and makes it easier for anyone reading the code
-to recognize that no other code can run
-before data consistency is restored by completing the work.
-It's important that Swift doesn't switch from this code
-to run code from another part of the program
-during that period of time.
-In the future,
-if you try to add concurrent code to this function,
-introducing a possible suspension point,
-you'll get a compile-time error instead of introducing a bug.
+Além de escrever código em um actor
+que protege estados temporariamente inválidos ao omitir pontos de suspensão possíveis,
+você pode mover esse código para um método síncrono.
+O método `convertFahrenheitToCelsius()` acima é um método síncrono,
+então é garantido que ele *nunca* contenha pontos de suspensão possíveis.
+Essa função encapsula o código
+que torna temporariamente o modelo de dados inconsistente,
+e facilita para quem lê o código reconhecer
+que nenhum outro código pode rodar
+antes de a consistência dos dados ser restaurada com a conclusão do trabalho.
+É importante que o Swift não troque de execução deste código
+para rodar código de outra parte do programa
+durante esse período.
+No futuro,
+se você tentar adicionar código concorrente a essa função,
+introduzindo um possível ponto de suspensão,
+você receberá um erro em tempo de compilação em vez de introduzir um bug.
 
 
-## Global Actors
+## Global actors
 
-The main actor is a global singleton instance of the [`MainActor`][] type.
-An actor can normally have multiple instances,
-each of which provides independent isolation.
-This is why you declare all of an actor's isolated data
-as instance properties of that actor.
-However, because `MainActor` is a singleton ---
-there is only ever a single instance of this type ---
-the type alone is sufficient to identify the actor,
-allowing you to mark main-actor isolation using just an attribute.
-This approach gives you more flexibility to organize your code
-in the way that works best for you.
+O main actor é uma instância global única do tipo [`MainActor`][].
+Um actor normalmente pode ter várias instâncias,
+cada uma fornecendo um isolamento independente.
+É por isso que você declara todos os dados isolados de um actor
+como propriedades de instância desse actor.
+No entanto, como `MainActor` é um singleton ---
+existe somente uma instância desse tipo ---
+o tipo sozinho basta para identificar o actor,
+permitindo marcar o isolamento ao main actor usando apenas um atributo.
+Essa abordagem dá mais flexibilidade para organizar seu código
+da forma que funciona melhor para você.
 
 [`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
 
-You can define your own singleton global actors
-using the `@globalActor` attribute,
-as described in <doc:Attributes#globalActor>.
+Você pode definir os seus próprios global actors singleton
+usando o atributo `@globalActor`,
+como descrito em <doc:Attributes#globalActor>.
 
 
 <!--
@@ -1448,50 +1447,50 @@ as described in <doc:Attributes#globalActor>.
        print(await logger.getMax())
 -->
 
-## Sendable Types
+## Tipos Sendable
 
-Tasks and actors let you divide a program
-into pieces that can safely run concurrently.
-Inside of a task or an instance of an actor,
-the part of a program that contains mutable state,
-like variables and properties,
-is called a *concurrency domain*.
-Some kinds of data can't be shared between concurrency domains,
-because that data contains mutable state,
-but it doesn't protect against overlapping access.
+Tasks e actors permitem dividir um programa
+em partes que podem rodar de forma concorrente com segurança.
+Dentro de uma task ou de uma instância de um actor,
+a parte do programa que contém estado mutável,
+como variáveis e propriedades,
+é chamada de *domínio de concorrência*.
+Alguns tipos de dados não podem ser compartilhados entre domínios de concorrência,
+porque esses dados contêm estado mutável,
+mas não protegem contra acesso sobreposto.
 
-A type that can be shared from one concurrency domain to another
-is known as a *sendable* type.
-For example, it can be passed as an argument when calling an actor method
-or be returned as the result of a task.
-The examples earlier in this chapter didn't discuss sendability
-because those examples use simple value types
-that are always safe to share
-for the data being passed between concurrency domains.
-In contrast,
-some types aren't safe to pass across concurrency domains.
-For example, a class that contains mutable properties
-and doesn't serialize access to those properties
-can produce unpredictable and incorrect results
-when you pass instances of that class between different tasks.
+Um tipo que pode ser compartilhado de um domínio de concorrência para outro
+é conhecido como tipo *sendable*.
+Por exemplo, ele pode ser passado como argumento ao chamar um método de actor
+ou ser retornado como resultado de uma task.
+Os exemplos anteriores neste capítulo não discutiram sendability
+porque usam tipos por valor simples,
+que são sempre seguros para compartilhar,
+para os dados passados entre domínios de concorrência.
+Em contraste,
+alguns tipos não são seguros para passar entre domínios de concorrência.
+Por exemplo, uma classe que contém propriedades mutáveis
+e não serializa o acesso a essas propriedades
+pode produzir resultados imprevisíveis e incorretos
+quando você passa instâncias dessa classe entre tasks diferentes.
 
-You mark a type as being sendable
-by declaring conformance to the `Sendable` protocol.
-That protocol doesn't have any code requirements,
-but it does have semantic requirements that Swift enforces.
-In general, there are three ways for a type to be sendable:
+Você marca um tipo como sendable
+declarando conformidade com o protocolo `Sendable`.
+Esse protocolo não tem nenhum requisito de código,
+mas tem requisitos semânticos que o Swift verifica.
+Em geral, há três formas de um tipo ser sendable:
 
-- The type is a value type,
-  and its mutable state is made up of other sendable data ---
-  for example, a structure with stored properties that are sendable
-  or an enumeration with associated values that are sendable.
-- The type doesn't have any mutable state,
-  and its immutable state is made up of other sendable data ---
-  for example, a structure or class that has only read-only properties.
-- The type has code that ensures the safety of its mutable state,
-  like a class that's marked `@MainActor`
-  or a class that serializes access to its properties
-  on a particular thread or queue.
+- O tipo é um tipo por valor,
+  e seu estado mutável é formado por outros dados sendable ---
+  por exemplo, uma struct com propriedades armazenadas que são sendable
+  ou um enum com associated values que são sendable.
+- O tipo não tem nenhum estado mutável,
+  e seu estado imutável é formado por outros dados sendable ---
+  por exemplo, uma struct ou classe que tem apenas propriedades somente leitura.
+- O tipo tem código que garante a segurança do estado mutável,
+  como uma classe marcada com `@MainActor`
+  ou uma classe que serializa o acesso às suas propriedades
+  em uma thread ou fila específica.
 
 <!--
   There's no example of the third case,
@@ -1503,13 +1502,13 @@ In general, there are three ways for a type to be sendable:
   and copy-on-write is also probably too involved for TSPL.
 -->
 
-For a detailed list of the semantic requirements,
-see the [`Sendable`](https://developer.apple.com/documentation/swift/sendable) protocol reference.
+Para uma lista detalhada dos requisitos semânticos,
+veja a referência do protocolo [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
 
-Some types are always sendable,
-like structures that have only sendable properties
-and enumerations that have only sendable associated values.
-For example:
+Alguns tipos são sempre sendable,
+como structs que têm apenas propriedades sendable
+e enums que têm apenas associated values sendable.
+Por exemplo:
 
 ```swift
 struct TemperatureReading: Sendable {
@@ -1547,11 +1546,11 @@ await logger.addReading(from: reading)
   ```
 -->
 
-Because `TemperatureReading` is a structure that has only sendable properties,
-and the structure isn't marked `public` or `@usableFromInline`,
-it's implicitly sendable.
-Here's a version of the structure
-where conformance to the `Sendable` protocol is implied:
+Como `TemperatureReading` é uma struct que tem apenas propriedades sendable,
+e a struct não é marcada como `public` nem como `@usableFromInline`,
+ela é implicitamente sendable.
+Aqui está uma versão da struct
+em que a conformidade com o protocolo `Sendable` é implícita:
 
 ```swift
 struct TemperatureReading {
@@ -1569,8 +1568,8 @@ struct TemperatureReading {
   ```
 -->
 
-To explicitly mark a type as not being sendable,
-write an unavailable conformance to `Sendable`:
+Para marcar explicitamente um tipo como não sendable,
+escreva uma conformidade indisponível com `Sendable`:
 
 ```swift
 struct FileDescriptor {
@@ -1589,9 +1588,9 @@ See also this PR that adds Sendable conformance to FileDescriptor:
 https://github.com/apple/swift-system/pull/112
 -->
 
-You can also use an unavailable conformance
-to suppress implicit conformance to a protocol,
-as discussed in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+Você também pode usar uma conformidade indisponível
+para suprimir a conformidade implícita a um protocolo,
+como discutido em <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
 <!--
   LEFTOVER OUTLINE BITS
@@ -1636,3 +1635,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

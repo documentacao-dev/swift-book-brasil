@@ -1,40 +1,40 @@
-# Types
+# Tipos
 
-Use built-in named and compound types.
+Use os tipos nomeados e compostos integrados da linguagem.
 
-In Swift, there are two kinds of types: named types and compound types.
-A *named type* is a type that can be given a particular name when it's defined.
-Named types include classes, structures, enumerations, and protocols.
-For example,
-instances of a user-defined class named `MyClass` have the type `MyClass`.
-In addition to user-defined named types,
-the Swift standard library defines many commonly used named types,
-including those that represent arrays, dictionaries, and optional values.
+No Swift, existem duas categorias de tipos: tipos nomeados e tipos compostos.
+Um *tipo nomeado* é um tipo que pode receber um nome específico quando é definido.
+Tipos nomeados incluem classes, structs, enums e protocolos.
+Por exemplo,
+instâncias de uma classe definida pelo usuário chamada `MyClass` têm o tipo `MyClass`.
+Além dos tipos nomeados definidos pelo usuário,
+a biblioteca padrão do Swift define muitos tipos nomeados de uso comum,
+incluindo os que representam arrays, dicionários e valores optional.
 
-Data types that are normally considered basic or primitive in other languages ---
-such as types that represent numbers, characters, and strings ---
-are actually named types,
-defined and implemented in the Swift standard library using structures.
-Because they're named types,
-you can extend their behavior to suit the needs of your program,
-using an extension declaration,
-discussed in <doc:Extensions> and <doc:Declarations#Extension-Declaration>.
+Tipos de dados que, em outras linguagens, costumam ser considerados básicos ou primitivos,
+como os tipos que representam números, caracteres e strings,
+são na verdade tipos nomeados,
+definidos e implementados na biblioteca padrão do Swift usando structs.
+Como são tipos nomeados,
+você pode estender o comportamento deles para atender às necessidades do programa,
+usando uma declaração de extension,
+discutida em <doc:Extensions> e <doc:Declarations#Extension-Declaration>.
 
-A *compound type* is a type without a name, defined in the Swift language itself.
-There are two compound types: function types and tuple types.
-A compound type may contain named types and other compound types.
-For example, the tuple type `(Int, (Int, Int))` contains two elements:
-The first is the named type `Int`,
-and the second is another compound type `(Int, Int)`.
+Um *tipo composto* é um tipo sem nome, definido na própria linguagem Swift.
+Existem dois tipos compostos: tipos de função e tipos tupla.
+Um tipo composto pode conter tipos nomeados e outros tipos compostos.
+Por exemplo, o tipo tupla `(Int, (Int, Int))` tem dois elementos:
+o primeiro é o tipo nomeado `Int`,
+e o segundo é outro tipo composto, `(Int, Int)`.
 
-You can put parentheses around a named type or a compound type.
-However, adding parentheses around a type doesn't have any effect.
-For example, `(Int)` is equivalent to `Int`.
+Você pode colocar parênteses em volta de um tipo nomeado ou de um tipo composto.
+No entanto, colocar parênteses em volta de um tipo não tem efeito.
+Por exemplo, `(Int)` é equivalente a `Int`.
 
-This chapter discusses the types defined in the Swift language itself
-and describes the type inference behavior of Swift.
+Este capítulo discute os tipos definidos na própria linguagem Swift
+e descreve o comportamento de inferência de tipos do Swift.
 
-> Grammar of a type:
+> Gramática de um tipo:
 >
 > *type* → *function-type* \
 > *type* → *array-type* \
@@ -51,11 +51,11 @@ and describes the type inference behavior of Swift.
 > *type* → *self-type* \
 > *type* → **`(`** *type* **`)`**
 
-## Type Annotation
+## Anotação de tipo
 
-A *type annotation* explicitly specifies the type of a variable or expression.
-Type annotations begin with a colon (`:`) and end with a type,
-as the following examples show:
+Uma *anotação de tipo* especifica explicitamente o tipo de uma variável ou expressão.
+Anotações de tipo começam com dois-pontos (`:`) e terminam com um tipo,
+como mostram os exemplos a seguir:
 
 ```swift
 let someTuple: (Double, Double) = (3.14159, 2.71828)
@@ -71,32 +71,32 @@ func someFunction(a: Int) { /* ... */ }
   ```
 -->
 
-In the first example,
-the expression `someTuple` is specified to have the tuple type `(Double, Double)`.
-In the second example,
-the parameter `a` to the function `someFunction` is specified to have the type `Int`.
+No primeiro exemplo,
+a expressão `someTuple` é declarada com o tipo tupla `(Double, Double)`.
+No segundo exemplo,
+o parâmetro `a` da função `someFunction` é declarado com o tipo `Int`.
 
-Type annotations can contain an optional list of type attributes before the type.
+Anotações de tipo podem conter uma lista opcional de atributos de tipo antes do tipo.
 
-> Grammar of a type annotation:
+> Gramática de uma anotação de tipo:
 >
 > *type-annotation* → **`:`** *attributes*_?_ *type*
 
-## Type Identifier
+## Identificador de tipo
 
-A *type identifier* refers to either a named type
-or a type alias of a named or compound type.
+Um *identificador de tipo* faz referência a um tipo nomeado
+ou a um alias de tipo de um tipo nomeado ou composto.
 
-Most of the time, a type identifier directly refers to a named type
-with the same name as the identifier.
-For example, `Int` is a type identifier that directly refers to the named type `Int`,
-and the type identifier `Dictionary<String, Int>` directly refers
-to the named type `Dictionary<String, Int>`.
+Na maioria das vezes, um identificador de tipo faz referência diretamente a um tipo nomeado
+com o mesmo nome do identificador.
+Por exemplo, `Int` é um identificador de tipo que faz referência diretamente ao tipo nomeado `Int`,
+e o identificador de tipo `Dictionary<String, Int>` faz referência diretamente
+ao tipo nomeado `Dictionary<String, Int>`.
 
-There are two cases in which a type identifier doesn't refer to a type with the same name.
-In the first case, a type identifier refers to a type alias of a named or compound type.
-For instance, in the example below,
-the use of `Point` in the type annotation refers to the tuple type `(Int, Int)`.
+Há dois casos em que um identificador de tipo não faz referência a um tipo com o mesmo nome.
+No primeiro caso, um identificador de tipo faz referência a um alias de tipo de um tipo nomeado ou composto.
+Por exemplo, no exemplo abaixo,
+o uso de `Point` na anotação de tipo faz referência ao tipo tupla `(Int, Int)`.
 
 ```swift
 typealias Point = (Int, Int)
@@ -112,10 +112,11 @@ let origin: Point = (0, 0)
   ```
 -->
 
-In the second case, a type identifier uses dot (`.`) syntax to refer to named types
-declared in other modules or nested within other types.
-For example, the type identifier in the following code references the named type `MyType`
-that's declared in the `ExampleModule` module.
+No segundo caso, um identificador de tipo usa a sintaxe de ponto (`.`)
+para fazer referência a tipos nomeados declarados em outros módulos
+ou aninhados dentro de outros tipos.
+Por exemplo, o identificador de tipo no código a seguir faz referência ao tipo nomeado `MyType`
+que é declarado no módulo `ExampleModule`.
 
 ```swift
 var someValue: ExampleModule.MyType
@@ -132,24 +133,24 @@ var someValue: ExampleModule.MyType
   ```
 -->
 
-> Grammar of a type identifier:
+> Gramática de um identificador de tipo:
 >
 > *type-identifier* → *type-name* *generic-argument-clause*_?_ | *type-name* *generic-argument-clause*_?_ **`.`** *type-identifier* \
 > *type-name* → *identifier*
 
-## Tuple Type
+## Tipo tupla
 
-A *tuple type* is a comma-separated list of types, enclosed in parentheses.
+Um *tipo tupla* é uma lista de tipos separados por vírgula e envolvida por parênteses.
 
-You can use a tuple type as the return type of a function
-to enable the function to return a single tuple containing multiple values.
-You can also name the elements of a tuple type and use those names to refer to
-the values of the individual elements. An element name consists of an identifier
-followed immediately by a colon (:). For an example that demonstrates both of
-these features, see <doc:Functions#Functions-with-Multiple-Return-Values>.
+Você pode usar um tipo tupla como tipo de retorno de uma função
+para permitir que a função retorne uma única tupla contendo vários valores.
+Você também pode dar nomes aos elementos de um tipo tupla e usar esses nomes para se referir
+aos valores de cada elemento individual. Um nome de elemento consiste em um identificador
+seguido imediatamente por dois-pontos (:). Para um exemplo que demonstra esses dois recursos,
+veja <doc:Functions#Functions-with-Multiple-Return-Values>.
 
-When an element of a tuple type has a name,
-that name is part of the type.
+Quando um elemento de um tipo tupla tem nome,
+esse nome faz parte do tipo.
 
 ```swift
 var someTuple = (top: 10, bottom: 12)  // someTuple is of type (top: Int, bottom: Int)
@@ -172,75 +173,71 @@ someTuple = (left: 5, right: 5)  // Error: Names don't match.
   ```
 -->
 
-All tuple types contain two or more types,
-except for `Void` which is a type alias for the empty tuple type, `()`.
+Todo tipo tupla contém dois ou mais tipos,
+com exceção de `Void`, que é um alias de tipo para o tipo tupla vazio, `()`.
 
-> Grammar of a tuple type:
+> Gramática de um tipo tupla:
 >
 > *tuple-type* → **`(`** **`)`** | **`(`** *tuple-type-element* **`,`** *tuple-type-element-list* **`)`** \
 > *tuple-type-element-list* → *tuple-type-element* | *tuple-type-element* **`,`** *tuple-type-element-list* \
 > *tuple-type-element* → *element-name* *type-annotation* | *type* \
 > *element-name* → *identifier*
 
-## Function Type
+## Tipo de função
 
-A *function type* represents the type of a function, method, or closure
-and consists of a parameter and return type separated by an arrow (`->`):
+Um *tipo de função* representa o tipo de uma função, de um método ou de uma closure
+e é formado por um tipo de parâmetro e um tipo de retorno, separados por uma seta (`->`):
 
 ```swift
 (<#parameter type#>) -> <#return type#>
 ```
 
-The *parameter type* is comma-separated list of types.
-Because the *return type* can be a tuple type,
-function types support functions and methods
-that return multiple values.
+O *tipo de parâmetro* é uma lista de tipos separados por vírgula.
+Como o *tipo de retorno* pode ser um tipo tupla,
+os tipos de função permitem funções e métodos
+que retornam vários valores.
 
-A parameter of the function type `() -> T`
-(where `T` is any type)
-can apply the `autoclosure` attribute
-to implicitly create a closure at its call sites.
-This provides a syntactically convenient way
-to defer the evaluation of an expression
-without needing to write an explicit closure
-when you call the function.
-For an example of an autoclosure function type parameter,
-see <doc:Closures#Autoclosures>.
+Um parâmetro do tipo de função `() -> T`
+(em que `T` é qualquer tipo)
+pode aplicar o atributo `autoclosure` para criar implicitamente uma closure
+nos pontos de chamada.
+Isso oferece uma forma sintaticamente conveniente de adiar a avaliação de uma expressão
+sem precisar escrever uma closure explícita ao chamar a função.
+Para um exemplo de parâmetro de tipo de função autoclosure,
+veja <doc:Closures#Autoclosures>.
 
-A function type can have variadic parameters in its *parameter type*.
-Syntactically,
-a variadic parameter consists of a base type name followed immediately by three dots (`...`),
-as in `Int...`. A variadic parameter is treated as an array that contains elements
-of the base type name. For instance, the variadic parameter `Int...` is treated
-as `[Int]`. For an example that uses a variadic parameter,
-see <doc:Functions#Variadic-Parameters>.
+Um tipo de função pode ter parâmetros variádicos no *tipo de parâmetro* dele.
+Sintaticamente,
+um parâmetro variádico consiste em um nome de tipo base seguido imediatamente por três pontos (`...`),
+como em `Int...`. Um parâmetro variádico é tratado como um array que contém elementos
+do tipo base. Por exemplo, o parâmetro variádico `Int...` é tratado
+como `[Int]`. Para um exemplo que usa um parâmetro variádico,
+veja <doc:Functions#Variadic-Parameters>.
 
-To specify an in-out parameter, prefix the parameter type with the `inout` keyword.
-You can't mark a variadic parameter or a return type with the `inout` keyword.
-In-out parameters are discussed in <doc:Functions#In-Out-Parameters>.
+Para especificar um parâmetro in-out, coloque a palavra-chave `inout` antes do tipo do parâmetro.
+Você não pode marcar um parâmetro variádico nem um tipo de retorno com a palavra-chave `inout`.
+Parâmetros in-out são discutidos em <doc:Functions#In-Out-Parameters>.
 
-If a function type has only one parameter
-and that parameter's type is a tuple type,
-then the tuple type must be parenthesized when writing the function's type.
-For example,
+Se um tipo de função tiver apenas um parâmetro
+e o tipo desse parâmetro for um tipo tupla,
+então o tipo tupla deve estar entre parênteses ao escrever o tipo da função.
+Por exemplo,
 `((Int, Int)) -> Void`
-is the type of a function that takes a single parameter
-of the tuple type `(Int, Int)`
-and doesn't return any value.
-In contrast, without parentheses,
-`(Int, Int) -> Void` is the type
-of a function that takes two `Int` parameters
-and doesn't return any value.
-Likewise, because `Void` is a type alias for `()`,
-the function type `(Void) -> Void`
-is the same as `(()) -> ()` ---
-a function that takes a single argument that's an empty tuple.
-These types aren't the same as `() -> ()` ---
-a function that takes no arguments.
+é o tipo de uma função que recebe um único parâmetro
+do tipo tupla `(Int, Int)` e não retorna nenhum valor.
+Já sem os parênteses,
+`(Int, Int) -> Void` é o tipo
+de uma função que recebe dois parâmetros `Int` e não retorna nenhum valor.
+Do mesmo modo, como `Void` é um alias de tipo para `()`,
+o tipo de função `(Void) -> Void`
+é o mesmo que `(()) -> ()`:
+uma função que recebe um único argumento que é uma tupla vazia.
+Esses tipos não são iguais a `() -> ()`,
+que é uma função que não recebe argumentos.
 
-Argument names in functions and methods
-aren't part of the corresponding function type.
-For example:
+Os nomes dos argumentos em funções e métodos
+não fazem parte do tipo de função correspondente.
+Por exemplo:
 
 <!--
   - test: `argument-names`
@@ -300,8 +297,8 @@ f = functionWithDifferentNumberOfArguments // Error
   ```
 -->
 
-Because argument labels aren't part of a function's type,
-you omit them when writing a function type.
+Como os rótulos de argumento não fazem parte do tipo de uma função,
+você os omite ao escrever um tipo de função.
 
 ```swift
 var operation: (lhs: Int, rhs: Int) -> Int     // Error
@@ -339,62 +336,62 @@ var operation: (Int, Int) -> Int               // OK
   ```
 -->
 
-If a function type includes more than a single arrow (`->`),
-the function types are grouped from right to left.
-For example,
-the function type `(Int) -> (Int) -> Int` is understood as `(Int) -> ((Int) -> Int)` ---
-that is, a function that takes an `Int` and returns
-another function that takes and returns an `Int`.
+Se um tipo de função incluir mais de uma seta (`->`),
+os tipos de função são agrupados da direita para a esquerda.
+Por exemplo,
+o tipo de função `(Int) -> (Int) -> Int` é entendido como `(Int) -> ((Int) -> Int)`:
+ou seja, uma função que recebe um `Int` e retorna outra função
+que recebe e retorna um `Int`.
 
-Function types for functions
-that can throw or rethrow an error must include the `throws` keyword.
-You can include a type after `throws` in parentheses
-to specify the type of error that the function throws.
-The throw error type must conform to the `Error` protocol.
-Writing `throws` without specifying a type
-is the same as writing `throws(any Error)`.
-Omitting `throws` is the same as writing `throws(Never)`.
-The error type that a function throws
-can be any type that conforms to `Error`,
-including generic types, boxed protocol types, and opaque types.
+Tipos de função para funções
+que podem lançar ou relançar um erro devem incluir a palavra-chave `throws`.
+Você pode incluir um tipo depois de `throws`, entre parênteses,
+para especificar o tipo de erro que a função lança.
+O tipo de erro lançado deve estar em conformidade com o protocolo `Error`.
+Escrever `throws` sem especificar um tipo
+é o mesmo que escrever `throws(any Error)`.
+Omitir `throws` é o mesmo que escrever `throws(Never)`.
+O tipo de erro que uma função lança
+pode ser qualquer tipo que esteja em conformidade com `Error`,
+incluindo tipos genéricos, tipos de protocolo boxed e tipos opacos.
 
-The type of error that a function throws is part of that function's type,
-and a subtype relationship between error types
-means the corresponding function types are also subtypes.
-For example, if you declare a custom `MyError` type,
-the relationship between some function types is as follows,
-from supertype to subtype:
+O tipo de erro que uma função lança faz parte do tipo dessa função,
+e uma relação de subtipo entre tipos de erro
+significa que os tipos de função correspondentes também são subtipos.
+Por exemplo, se você declarar um tipo `MyError` próprio,
+a relação entre alguns tipos de função é a seguinte,
+do supertipo para o subtipo:
 
-1. Functions that throw any error, marked `throws(any Error)`
-1. Functions that throw a specific error, marked `throws(MyError)`
-1. Functions that don't throw, marked `throws(Never)`
+1. Funções que lançam qualquer erro, marcadas com `throws(any Error)`
+1. Funções que lançam um erro específico, marcadas com `throws(MyError)`
+1. Funções que não lançam, marcadas com `throws(Never)`
 
-As a result of these subtype relationships:
+Como consequência dessas relações de subtipo:
 
-- You can use a nonthrowing function
-  in the same places as a throwing function.
-- You can use a function that throws a concrete error type
-  in the same places as a throwing function.
-- You can use a function that throws a more specific error type
-  in the same places as a function that throws a more general error type.
+- Você pode usar uma função que não lança erros
+  nos mesmos lugares de uma função que lança.
+- Você pode usar uma função que lança um tipo de erro concreto
+  nos mesmos lugares de uma função que lança.
+- Você pode usar uma função que lança um tipo de erro mais específico
+  nos mesmos lugares de uma função que lança um tipo de erro mais geral.
 
-If you use an associated type or a generic type parameter
-as the thrown error type in a function type,
-then that associated type or generic type parameter
-is implicitly required to conform to the `Error` protocol.
+Se você usar um tipo associado ou um parâmetro de tipo genérico
+como tipo de erro lançado em um tipo de função,
+então é implicitamente exigido que esse tipo associado ou parâmetro de tipo genérico
+esteja em conformidade com o protocolo `Error`.
 
-Throwing and rethrowing functions are described in
+Funções que lançam erros e funções que relançam erros são descritas em
 <doc:Declarations#Throwing-Functions-and-Methods>
-and <doc:Declarations#Rethrowing-Functions-and-Methods>.
+e <doc:Declarations#Rethrowing-Functions-and-Methods>.
 
-Function types for asynchronous functions
-must be marked with the `async` keyword.
-The `async` keyword is part of a function's type,
-and synchronous functions are subtypes of asynchronous functions.
-As a result, you can use a synchronous function
-in the same places as an asynchronous one.
-For information about asynchronous functions,
-see <doc:Declarations#Asynchronous-Functions-and-Methods>.
+Tipos de função para funções assíncronas
+devem ser marcados com a palavra-chave `async`.
+A palavra-chave `async` faz parte do tipo de uma função,
+e funções síncronas são subtipos de funções assíncronas.
+Como resultado, você pode usar uma função síncrona
+nos mesmos lugares de uma função assíncrona.
+Para informações sobre funções assíncronas,
+veja <doc:Declarations#Asynchronous-Functions-and-Methods>.
 
 <!--
   - test: `function-arrow-is-right-associative`
@@ -417,11 +414,11 @@ see <doc:Declarations#Asynchronous-Functions-and-Methods>.
   ```
 -->
 
-### Restrictions for Nonescaping Closures
+### Restrições para closures nonescaping
 
-A parameter that's a nonescaping function
-can't be stored in a property, variable, or constant of type `Any`,
-because that might allow the value to escape.
+Um parâmetro que é uma função nonescaping
+não pode ser armazenado em uma propriedade, variável ou constante do tipo `Any`,
+porque isso poderia permitir que o valor escapasse.
 
 <!--
   - test: `cant-store-nonescaping-as-Any`
@@ -434,12 +431,11 @@ because that might allow the value to escape.
   ```
 -->
 
-A parameter that's a nonescaping function
-can't be passed as an argument to another nonescaping function parameter.
-This restriction helps Swift perform
-more of its checks for conflicting access to memory
-at compile time instead of at runtime.
-For example:
+Um parâmetro que é uma função nonescaping
+não pode ser passado como argumento para outro parâmetro de função nonescaping.
+Essa restrição ajuda o Swift a fazer mais verificações de acesso conflitante à memória
+em tempo de compilação, em vez de em tempo de execução.
+Por exemplo:
 
 ```swift
 let external: (() -> Void) -> Void = { _ in () }
@@ -485,28 +481,27 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
   ```
 -->
 
-In the code above,
-both of the parameters to `takesTwoFunctions(first:second:)` are functions.
-Neither parameter is marked `@escaping`,
-so they're both nonescaping as a result.
+No código acima,
+os dois parâmetros de `takesTwoFunctions(first:second:)` são funções.
+Nenhum dos dois é marcado com `@escaping`,
+então ambos são nonescaping como resultado.
 
-The four function calls marked "Error" in the example above
-cause compiler errors.
-Because the `first` and `second` parameters
-are nonescaping functions,
-they can't be passed as arguments to another nonescaping function parameter.
-In contrast,
-the two function calls marked "OK" don't cause a compiler error.
-These function calls don't violate the restriction
-because `external` isn't one of the parameters of `takesTwoFunctions(first:second:)`.
+As quatro chamadas de função marcadas com "Error" no exemplo acima
+causam erros do compilador.
+Como os parâmetros `first` e `second` são funções nonescaping,
+eles não podem ser passados como argumentos para outro parâmetro de função nonescaping.
+Em contraste, as duas chamadas marcadas com "OK"
+não causam erro do compilador.
+Essas chamadas não violam a restrição
+porque `external` não é um dos parâmetros de `takesTwoFunctions(first:second:)`.
 
-If you need to avoid this restriction, mark one of the parameters as escaping,
-or temporarily convert one of the nonescaping function parameters to an escaping function
-by using the `withoutActuallyEscaping(_:do:)` function.
-For information about avoiding conflicting access to memory,
-see <doc:MemorySafety>.
+Se você precisar contornar essa restrição, marque um dos parâmetros como escaping,
+ou converta temporariamente um dos parâmetros de função nonescaping
+em uma função escaping usando a função `withoutActuallyEscaping(_:do:)`.
+Para informações sobre como evitar acesso conflitante à memória,
+veja <doc:MemorySafety>.
 
-> Grammar of a function type:
+> Gramática de um tipo de função:
 >
 > *function-type* → *attributes*_?_ *function-type-argument-clause* **`async`**_?_ *throws-clause*_?_ **`->`** *type*
 >
@@ -535,16 +530,15 @@ see <doc:MemorySafety>.
       var myPolymorphicF = polymorphicF
 -->
 
-## Array Type
+## Tipo array
 
-The Swift language provides the following syntactic sugar for the Swift standard library
-`Array<Element>` type:
+A linguagem Swift oferece o seguinte açúcar sintático para o tipo `Array<Element>` da biblioteca padrão do Swift:
 
 ```swift
 [<#type#>]
 ```
 
-In other words, the following two declarations are equivalent:
+Em outras palavras, as duas declarações a seguir são equivalentes:
 
 ```swift
 let someArray: Array<String> = ["Alex", "Brian", "Dave"]
@@ -561,16 +555,15 @@ let someArray: [String] = ["Alex", "Brian", "Dave"]
   ```
 -->
 
-In both cases, the constant `someArray`
-is declared as an array of strings. The elements of an array can be accessed
-through subscripting by specifying a valid index value in square brackets:
-`someArray[0]` refers to the element at index 0, `"Alex"`.
+Nos dois casos, a constante `someArray` é declarada como um array de strings.
+Os elementos de um array podem ser acessados por subscript,
+especificando um índice válido entre colchetes:
+`someArray[0]` se refere ao elemento no índice 0, `"Alex"`.
 
-You can create multidimensional arrays by nesting pairs of square brackets,
-where the name of the base type of the elements is contained in the innermost
-pair of square brackets.
-For example, you can create
-a three-dimensional array of integers using three sets of square brackets:
+Você pode criar arrays multidimensionais aninhando pares de colchetes,
+em que o nome do tipo base dos elementos fica dentro do par de colchetes mais interno.
+Por exemplo, você pode criar um array tridimensional de inteiros
+usando três pares de colchetes:
 
 ```swift
 var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
@@ -584,30 +577,29 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
   ```
 -->
 
-When accessing the elements in a multidimensional array,
-the left-most subscript index refers to the element at that index in the outermost
-array. The next subscript index to the right refers to the element
-at that index in the array that's nested one level in. And so on. This means that in
-the example above, `array3D[0]` refers to `[[1, 2], [3, 4]]`,
-`array3D[0][1]` refers to `[3, 4]`, and `array3D[0][1][1]` refers to the value 4.
+Ao acessar os elementos de um array multidimensional,
+o índice de subscript mais à esquerda se refere ao elemento nesse índice
+do array mais externo. O índice de subscript seguinte, à direita,
+se refere ao elemento nesse índice do array aninhado um nível abaixo. E assim por diante.
+Isso significa que no exemplo acima, `array3D[0]` se refere a `[[1, 2], [3, 4]]`,
+`array3D[0][1]` se refere a `[3, 4]`, e `array3D[0][1][1]` se refere ao valor 4.
 
-For a detailed discussion of the Swift standard library `Array` type,
-see <doc:CollectionTypes#Arrays>.
+Para uma discussão detalhada do tipo `Array` da biblioteca padrão do Swift,
+veja <doc:CollectionTypes#Arrays>.
 
-> Grammar of an array type:
+> Gramática de um tipo array:
 >
 > *array-type* → **`[`** *type* **`]`**
 
-## Dictionary Type
+## Tipo Dictionary
 
-The Swift language provides the following syntactic sugar for the Swift standard library
-`Dictionary<Key, Value>` type:
+A linguagem Swift oferece o seguinte açúcar sintático para o tipo `Dictionary<Key, Value>` da biblioteca padrão do Swift:
 
 ```swift
 [<#key type#>: <#value type#>]
 ```
 
-In other words, the following two declarations are equivalent:
+Em outras palavras, as duas declarações a seguir são equivalentes:
 
 ```swift
 let someDictionary: [String: Int] = ["Alex": 31, "Paul": 39]
@@ -624,36 +616,37 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
   ```
 -->
 
-In both cases, the constant `someDictionary`
-is declared as a dictionary with strings as keys and integers as values.
+Nos dois casos, a constante `someDictionary`
+é declarada como um dicionário com strings como chaves e inteiros como valores.
 
-The values of a dictionary can be accessed through subscripting
-by specifying the corresponding key in
-square brackets: `someDictionary["Alex"]` refers to the value associated
-with the key `"Alex"`.
-The subscript returns an optional value of the dictionary's value type.
-If the specified key isn't contained in the dictionary,
-the subscript returns `nil`.
+Os valores de um dicionário podem ser acessados por subscript
+especificando a chave correspondente entre
+colchetes: `someDictionary["Alex"]` se refere ao valor associado
+à chave `"Alex"`.
+O subscript retorna um valor optional do tipo de valor do dicionário.
+Se a chave especificada não estiver contida no dicionário,
+o subscript retorna `nil`.
 
-The key type of a dictionary must conform to the Swift standard library `Hashable` protocol.
+O tipo da chave de um dicionário deve estar em conformidade com o protocolo `Hashable`
+da biblioteca padrão do Swift.
 
 <!--
   Used to have an xref to :ref:`CollectionTypes_HashValuesForSetTypes` here.
   But it doesn't really work now that the Hashable content moved from Dictionary to Set.
 -->
 
-For a detailed discussion of the Swift standard library `Dictionary` type,
-see <doc:CollectionTypes#Dictionaries>.
+Para uma discussão detalhada do tipo `Dictionary` da biblioteca padrão do Swift,
+veja <doc:CollectionTypes#Dictionaries>.
 
-> Grammar of a dictionary type:
+> Gramática de um tipo Dictionary:
 >
 > *dictionary-type* → **`[`** *type* **`:`** *type* **`]`**
 
-## Optional Type
+## Tipo optional
 
-The Swift language defines the postfix `?` as syntactic sugar for
-the named type `Optional<Wrapped>`, which is defined in the Swift standard library.
-In other words, the following two declarations are equivalent:
+A linguagem Swift define o `?` pós-fixado como açúcar sintático para
+o tipo nomeado `Optional<Wrapped>`, que é definido na biblioteca padrão do Swift.
+Em outras palavras, as duas declarações a seguir são equivalentes:
 
 ```swift
 var optionalInteger: Int?
@@ -675,23 +668,24 @@ var optionalInteger: Optional<Int>
   so we at least test that the syntax shown in it compiles.
 -->
 
-In both cases, the variable `optionalInteger`
-is declared to have the type of an optional integer.
-Note that no whitespace may appear between the type and the `?`.
+Nos dois casos, a variável `optionalInteger`
+é declarada com o tipo de um inteiro optional.
+Observe que não pode haver espaço em branco entre o tipo e o `?`.
 
-The type `Optional<Wrapped>` is an enumeration with two cases, `none` and `some(Wrapped)`,
-which are used to represent values that may or may not be present.
-Any type can be explicitly declared to be (or implicitly converted to) an optional type.
-If you don't provide an initial value when you declare an
-optional variable or property, its value automatically defaults to `nil`.
+O tipo `Optional<Wrapped>` é um enum com dois casos, `none` e `some(Wrapped)`,
+que são usados para representar valores que podem ou não estar presentes.
+Qualquer tipo pode ser declarado explicitamente como optional
+(ou convertido implicitamente para um tipo optional).
+Se você não fornecer um valor inicial ao declarar uma variável
+ou propriedade optional, o valor dela é automaticamente `nil`.
 
 <!--
   TODO Add a link to the Optional Enum Reference page.
   For more information about the Optional type, see ...
 -->
 
-If an instance of an optional type contains a value,
-you can access that value using the postfix operator `!`, as shown below:
+Se uma instância de um tipo optional contiver um valor,
+você pode acessar esse valor usando o operador pós-fixado `!`, como mostrado abaixo:
 
 ```swift
 optionalInteger = 42
@@ -715,44 +709,43 @@ optionalInteger! // 42
   Tracking bug is <rdar://problem/35301593>
 -->
 
-Using the `!` operator to unwrap an optional
-that has a value of `nil` results in a runtime error.
+Usar o operador `!` para fazer force unwrapping de um optional
+que tem valor `nil` resulta em um erro de tempo de execução.
 
-You can also use optional chaining and optional binding to conditionally perform an
-operation on an optional expression. If the value is `nil`,
-no operation is performed and therefore no runtime error is produced.
+Você também pode usar optional chaining e optional binding para executar,
+de forma condicional, uma operação sobre uma expressão optional.
+Se o valor for `nil`, nenhuma operação é executada
+e, portanto, nenhum erro de tempo de execução é gerado.
 
-For more information and to see examples that show how to use optional types,
-see <doc:TheBasics#Optionals>.
+Para mais informações e para ver exemplos que mostram como usar tipos optional,
+veja <doc:TheBasics#Optionals>.
 
-> Grammar of an optional type:
+> Gramática de um tipo optional:
 >
 > *optional-type* → *type* **`?`**
 
-## Implicitly Unwrapped Optional Type
+## Tipo implicitly unwrapped optional
 
-The Swift language defines the postfix `!` as syntactic sugar for
-the named type `Optional<Wrapped>`, which is defined in the Swift standard library,
-with the additional behavior that
-it's automatically unwrapped when it's accessed.
-If you try to use an implicitly unwrapped optional that has a value of `nil`,
-you'll get a runtime error.
-With the exception of the implicit unwrapping behavior,
-the following two declarations are equivalent:
+A linguagem Swift define o `!` pós-fixado como açúcar sintático para
+o tipo nomeado `Optional<Wrapped>`, que é definido na biblioteca padrão do Swift,
+com o comportamento adicional de ser feito unwrap automaticamente quando é acessado.
+Se você tentar usar um implicitly unwrapped optional com valor `nil`,
+receberá um erro de tempo de execução.
+Com exceção do comportamento de unwrap implícito,
+as duas declarações a seguir são equivalentes:
 
 ```swift
 var implicitlyUnwrappedString: String!
 var explicitlyUnwrappedString: Optional<String>
 ```
 
-Note that no whitespace may appear between the type and the `!`.
+Observe que não pode haver espaço em branco entre o tipo e o `!`.
 
-Because implicit unwrapping
-changes the meaning of the declaration that contains that type,
-optional types that are nested inside a tuple type or a generic type
---- such as the element types of a dictionary or array ---
-can't be marked as implicitly unwrapped.
-For example:
+Como o unwrap implícito altera o significado da declaração que contém esse tipo,
+tipos optional aninhados dentro de um tipo tupla ou de um tipo genérico,
+como os tipos dos elementos de um dicionário ou de um array,
+não podem ser marcados como implicitly unwrapped.
+Por exemplo:
 
 ```swift
 let tupleOfImplicitlyUnwrappedElements: (Int!, Int!)  // Error
@@ -762,78 +755,78 @@ let arrayOfImplicitlyUnwrappedElements: [Int!]        // Error
 let implicitlyUnwrappedArray: [Int]!                  // OK
 ```
 
-Because implicitly unwrapped optionals
-have the same `Optional<Wrapped>` type as optional values,
-you can use implicitly unwrapped optionals
-in all the same places in your code
-that you can use optionals.
-For example, you can assign values of implicitly unwrapped
-optionals to variables, constants, and properties of optionals, and vice versa.
+Como implicitly unwrapped optionals
+têm o mesmo tipo `Optional<Wrapped>` dos optionals comuns,
+você pode usar implicitly unwrapped optionals
+em todos os mesmos lugares do seu código em que pode usar optionals.
+Por exemplo, você pode atribuir valores de implicitly unwrapped optionals
+a variáveis, constantes e propriedades optional, e vice-versa.
 
-As with optionals, if you don't provide an initial value when you declare an
-implicitly unwrapped optional variable or property,
-its value automatically defaults to `nil`.
+Assim como com optionals, se você não fornecer um valor inicial ao declarar uma
+variável ou propriedade implicitly unwrapped optional,
+o valor dela é `nil` automaticamente por padrão.
 
-Use optional chaining to conditionally perform an
-operation on an implicitly unwrapped optional expression.
-If the value is `nil`,
-no operation is performed and therefore no runtime error is produced.
+Use optional chaining para executar, de forma condicional, uma operação
+sobre uma expressão implicitly unwrapped optional.
+Se o valor for `nil`, nenhuma operação é executada
+e, portanto, nenhum erro de tempo de execução é gerado.
 
-For more information about implicitly unwrapped optional types,
-see <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
+Para mais informações sobre tipos implicitly unwrapped optional,
+veja <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
-> Grammar of an implicitly unwrapped optional type:
+> Gramática de um tipo implicitly unwrapped optional:
 >
 > *implicitly-unwrapped-optional-type* → *type* **`!`**
 
-## Protocol Composition Type
+## Tipo de composição de protocolos
 
-A *protocol composition type* defines a type that conforms to each protocol
-in a list of specified protocols,
-or a type that's a subclass of a given class
-and conforms to each protocol in a list of specified protocols.
-Protocol composition types may be used only when specifying a type
-in type annotations,
-in generic parameter clauses,
-and in generic `where` clauses.
+Um *tipo de composição de protocolos* define um tipo que está em conformidade
+com cada protocolo de uma lista de protocolos especificados,
+ou um tipo que é subclasse de uma classe dada
+e está em conformidade com cada protocolo de uma lista de protocolos especificados.
+Tipos de composição de protocolos só podem ser usados ao especificar um tipo
+em anotações de tipo,
+em cláusulas de parâmetros genéricos
+e em cláusulas `where` genéricas.
 
 <!--
   In places where a comma-separated list of types is allowed,
   the P&Q syntax isn't allowed.
 -->
 
-Protocol composition types have the following form:
+Tipos de composição de protocolos têm a seguinte forma:
 
 ```swift
 <#Protocol 1#> & <#Protocol 2#>
 ```
 
-A protocol composition type allows you to specify a value whose type conforms to the requirements
-of multiple protocols without explicitly defining a new, named protocol
-that inherits from each protocol you want the type to conform to.
-For example,
-you can use the protocol composition type `ProtocolA & ProtocolB & ProtocolC`
-instead of declaring a new protocol
-that inherits from `ProtocolA`, `ProtocolB`, and `ProtocolC`.
-Likewise, you can use `SuperClass & ProtocolA`
-instead of declaring a new protocol
-that's a subclass of `SuperClass` and conforms to `ProtocolA`.
+Um tipo de composição de protocolos permite especificar um valor cujo tipo
+está em conformidade com os requisitos de vários protocolos,
+sem definir explicitamente um novo protocolo nomeado
+que herde de cada protocolo com o qual você quer que o tipo esteja em conformidade.
+Por exemplo,
+você pode usar o tipo de composição de protocolos `ProtocolA & ProtocolB & ProtocolC`
+em vez de declarar um novo protocolo
+que herde de `ProtocolA`, `ProtocolB` e `ProtocolC`.
+Do mesmo modo, você pode usar `SuperClass & ProtocolA`
+em vez de declarar um novo protocolo
+que seja subclasse de `SuperClass` e esteja em conformidade com `ProtocolA`.
 
-Each item in a protocol composition list is one of the following;
-the list can contain at most one class:
+Cada item de uma lista de composição de protocolos é um dos seguintes itens;
+a lista pode conter no máximo uma classe:
 
-- The name of a class
-- The name of a protocol
-- A type alias whose underlying type
-  is a protocol composition type, a protocol, or a class.
+- O nome de uma classe
+- O nome de um protocolo
+- Um alias de tipo cujo tipo subjacente seja um tipo de composição de protocolos,
+  um protocolo ou uma classe.
 
-When a protocol composition type contains type aliases,
-it's possible for the same protocol to appear
-more than once in the definitions ---
-duplicates are ignored.
-For example,
-the definition of `PQR` in the code below
-is equivalent to `P & Q & R`.
+Quando um tipo de composição de protocolos contém aliases de tipo,
+é possível que o mesmo protocolo apareça
+mais de uma vez nas definições ---
+duplicatas são ignoradas.
+Por exemplo,
+a definição de `PQR` no código abaixo
+é equivalente a `P & Q & R`.
 
 ```swift
 typealias PQ = P & Q
@@ -852,40 +845,39 @@ typealias PQR = PQ & Q & R
   ```
 -->
 
-> Grammar of a protocol composition type:
+> Gramática de um tipo de composição de protocolos:
 >
 > *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation* \
 > *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
 
-## Opaque Type
+## Tipo opaco
 
-An *opaque type* defines a type
-that conforms to a protocol or protocol composition,
-without specifying the underlying concrete type.
+Um *tipo opaco* define um tipo
+que está em conformidade com um protocolo ou com uma composição de protocolos,
+sem especificar o tipo concreto subjacente.
 
-Opaque types appear as the return type of a function or subscript,
-as the type of a parameter to a function, subscript, or initializer,
-or as the type of a property.
-Opaque types can't appear as part of a tuple type or a generic type,
-such as the element type of an array or the wrapped type of an optional.
+Tipos opacos aparecem como tipo de retorno de uma função ou de um subscript,
+como tipo de parâmetro de uma função, de um subscript ou de um inicializador,
+ou como tipo de uma propriedade.
+Tipos opacos não podem aparecer como parte de um tipo tupla ou de um tipo genérico,
+como o tipo dos elementos de um array ou o tipo encapsulado por um optional.
 
-Opaque types have the following form:
+Tipos opacos têm a seguinte forma:
 
 ```swift
 some <#constraint#>
 ```
 
-The *constraint* is a class type,
-protocol type,
-protocol composition type,
-or `Any`.
-A value can be used as an instance of the opaque type
-only if it's an instance of a type
-that conforms to the listed protocol or protocol composition,
-or inherits from the listed class.
-Code that interacts with an opaque value
-can use the value only in ways
-that are part of the interface defined by the *constraint*.
+A *restrição* é um tipo de classe,
+um tipo de protocolo,
+um tipo de composição de protocolos ou `Any`.
+Um valor só pode ser usado como instância do tipo opaco
+se for uma instância de um tipo que esteja em conformidade
+com o protocolo ou a composição de protocolos listados,
+ou que herde da classe listada.
+O código que interage com um valor opaco
+só pode usar esse valor de maneiras
+que façam parte da interface definida pela *restrição*.
 
 <!--
   The wording above intentionally follows generic constraints
@@ -893,52 +885,52 @@ that are part of the interface defined by the *constraint*.
   and the compiler uses the same machinery for both under the hood.
 -->
 
-At compile time,
-a value whose type is opaque has a specific concrete type,
-and Swift can use that underlying type for optimizations.
-However,
-the opaque type forms a boundary
-that information about that underlying type can't cross.
+Em tempo de compilação,
+um valor cujo tipo é opaco tem um tipo concreto específico,
+e o Swift pode usar esse tipo subjacente para otimizações.
+No entanto,
+o tipo opaco forma uma fronteira
+que informações sobre o tipo subjacente não podem atravessar.
 
-Protocol declarations can't include opaque types.
-Classes can't use an opaque type as the return type of a nonfinal method.
+Declarações de protocolo não podem incluir tipos opacos.
+Classes não podem usar um tipo opaco como tipo de retorno de um método não final.
 
-A function that uses an opaque type as its return type
-must return values that share a single underlying type.
-The return type can include types
-that are part of the function's generic type parameters.
-For example, a function `someFunction<T>()`
-could return a value of type `T` or `Dictionary<String, T>`.
+Uma função que usa um tipo opaco como tipo de retorno
+deve retornar valores que compartilhem um único tipo subjacente.
+O tipo de retorno pode incluir tipos
+que fazem parte dos parâmetros de tipo genérico da função.
+Por exemplo, uma função `someFunction<T>()`
+poderia retornar um valor do tipo `T` ou `Dictionary<String, T>`.
 
-Writing an opaque type for a parameter
-is syntactic sugar for using a generic type,
-without specifying a name for the generic type parameter.
-The implicit generic type parameter has a constraint
-that requires it to conform to the protocol named in the opaque type.
-If you write multiple opaque types,
-each one makes its own generic type parameter.
-For example, the following declarations are equivalent:
+Escrever um tipo opaco para um parâmetro
+é açúcar sintático para usar um tipo genérico,
+sem especificar um nome para o parâmetro de tipo genérico.
+O parâmetro de tipo genérico implícito tem uma restrição
+que exige que ele esteja em conformidade com o protocolo nomeado no tipo opaco.
+Se você escrever vários tipos opacos,
+cada um cria o próprio parâmetro de tipo genérico.
+Por exemplo, as declarações a seguir são equivalentes:
 
 ```swift
 func someFunction(x: some MyProtocol, y: some MyProtocol) { }
 func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
 ```
 
-In the second declaration,
-because the generic type parameters `T1` and `T2` have names,
-you can refer use these types elsewhere in the code.
-In contrast,
-the generic type parameters in the first declaration
-don't have names and can't be referenced in other code.
+Na segunda declaração,
+como os parâmetros de tipo genérico `T1` e `T2` têm nomes,
+você pode usar esses tipos em outros pontos do código.
+Em contraste,
+os parâmetros de tipo genérico da primeira declaração
+não têm nomes e não podem ser referenciados em outro código.
 
-You can't use an opaque type in the type of a variadic parameter.
+Você não pode usar um tipo opaco no tipo de um parâmetro variádico.
 
-You can't use an opaque type
-as a parameter to a function type being returned,
-or as a parameter in a parameter type that's a function type.
-In these positions,
-the function's caller would have to construct a value
-of that unknown type.
+Você não pode usar um tipo opaco
+como parâmetro de um tipo de função que está sendo retornado,
+nem como parâmetro em um tipo de parâmetro que seja um tipo de função.
+Nessas posições,
+quem chama a função teria de construir um valor
+desse tipo desconhecido.
 
 ```swift
 protocol MyProtocol { }
@@ -946,42 +938,41 @@ func badFunction() -> (some MyProtocol) -> Void { }  // Error
 func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
 ```
 
-> Grammar of an opaque type:
+> Gramática de um tipo opaco:
 >
 > *opaque-type* → **`some`** *type*
 
-## Boxed Protocol Type
+## Tipo de protocolo boxed
 
-A *boxed protocol type* defines a type
-that conforms to a protocol or protocol composition,
-with the ability for that conforming type
-to vary while the program is running.
+Um *tipo de protocolo boxed* define um tipo
+que está em conformidade com um protocolo ou com uma composição de protocolos,
+com a capacidade de o tipo em conformidade variar enquanto o programa está em execução.
 
-Boxed protocol types have the following form:
+Tipos de protocolo boxed têm a seguinte forma:
 
 ```swift
 any <#constraint#>
 ```
 
-The *constraint* is a protocol type,
-protocol composition type,
-a metatype of a protocol type,
-or a metatype of a protocol composition type.
+A *restrição* é um tipo de protocolo,
+um tipo de composição de protocolos,
+um metatipo de um tipo de protocolo
+ou um metatipo de um tipo de composição de protocolos.
 
-At runtime,
-an instance of a boxed protocol type can contain a value
-of any type that satisfies the *constraint*.
-This behavior contrasts with how an opaque types work,
-where there is some specific conforming type known at compile time.
-The additional level of indirection that's used
-when working with a boxed protocol type is called *boxing*.
-Boxing typically requires a separate memory allocation for storage
-and an additional level of indirection for access,
-which incurs a performance cost at runtime.
+Em tempo de execução,
+uma instância de um tipo de protocolo boxed
+pode conter um valor de qualquer tipo que satisfaça a *restrição*.
+Esse comportamento contrasta com o funcionamento dos tipos opacos,
+em que existe um tipo em conformidade específico, conhecido em tempo de compilação.
+O nível adicional de indireção usado
+ao trabalhar com um tipo de protocolo boxed
+é chamado de *boxing*.
+O boxing normalmente exige uma alocação de memória separada para o armazenamento
+e um nível adicional de indireção para o acesso,
+o que tem um custo de desempenho em tempo de execução.
 
-Applying `any` to the `Any` or `AnyObject` types
-has no effect,
-because those types are already boxed protocol types.
+Aplicar `any` aos tipos `Any` ou `AnyObject` não tem efeito,
+porque esses tipos já são tipos de protocolo boxed.
 
 <!--
   - test: `any-any-does-nothing`
@@ -1015,31 +1006,29 @@ Contrast P.Type with (any P.Type) and (any P).Type
 https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
-> Grammar of a boxed protocol type:
+> Gramática de um tipo de protocolo boxed:
 >
 > *boxed-protocol-type* → **`any`** *type*
 
-## Metatype Type
+## Tipo metatipo
 
-A *metatype type* refers to the type of any type,
-including class types, structure types, enumeration types, and protocol types.
+Um *tipo metatipo* se refere ao tipo de qualquer tipo,
+incluindo tipos de classe, tipos de struct, tipos de enum e tipos de protocolo.
 
-The metatype of a class, structure, or enumeration type is
-the name of that type followed by `.Type`.
-The metatype of a protocol type --- not the concrete type that
-conforms to the protocol at runtime ---
-is the name of that protocol followed by `.Protocol`.
-For example, the metatype of the class type `SomeClass` is `SomeClass.Type`
-and the metatype of the protocol `SomeProtocol` is `SomeProtocol.Protocol`.
+O metatipo de uma classe, struct ou enum é o nome desse tipo seguido de `.Type`.
+O metatipo de um tipo de protocolo (e não o tipo concreto que está em conformidade
+com o protocolo em tempo de execução) é o nome desse protocolo seguido de `.Protocol`.
+Por exemplo, o metatipo da classe `SomeClass` é `SomeClass.Type`,
+e o metatipo do protocolo `SomeProtocol` é `SomeProtocol.Protocol`.
 
-You can use the postfix `self` expression to access a type as a value.
-For example, `SomeClass.self` returns `SomeClass` itself,
-not an instance of `SomeClass`.
-And `SomeProtocol.self` returns `SomeProtocol` itself,
-not an instance of a type that conforms to `SomeProtocol` at runtime.
-You can call the `type(of:)` function with an instance of a type
-to access that instance's dynamic, runtime type as a value,
-as the following example shows:
+Você pode usar a expressão `self` pós-fixada para acessar um tipo como valor.
+Por exemplo, `SomeClass.self` retorna o próprio `SomeClass`,
+e não uma instância de `SomeClass`.
+E `SomeProtocol.self` retorna o próprio `SomeProtocol`,
+e não uma instância de um tipo que esteja em conformidade com `SomeProtocol` em tempo de execução.
+Você pode chamar a função `type(of:)` com uma instância de um tipo
+para acessar o tipo dinâmico, de tempo de execução, dessa instância como valor,
+como mostra o exemplo a seguir:
 
 ```swift
 class SomeBaseClass {
@@ -1081,15 +1070,15 @@ type(of: someInstance).printClassName()
   ```
 -->
 
-For more information,
-see [`type(of:)`](https://developer.apple.com/documentation/swift/type(of:))
-in the Swift standard library.
+Para mais informações,
+veja [`type(of:)`](https://developer.apple.com/documentation/swift/type(of:))
+na biblioteca padrão do Swift.
 
-Use an initializer expression to construct an instance of a type
-from that type's metatype value.
-For class instances,
-the initializer that's called must be marked with the `required` keyword
-or the entire class marked with the `final` keyword.
+Use uma expressão de inicializador para construir uma instância de um tipo
+a partir do valor de metatipo desse tipo.
+Para instâncias de classe,
+o inicializador chamado deve ser marcado com a palavra-chave `required`
+ou toda a classe deve ser marcada com a palavra-chave `final`.
 
 ```swift
 class AnotherSubClass: SomeBaseClass {
@@ -1123,20 +1112,20 @@ let anotherInstance = metatype.init(string: "some string")
   ```
 -->
 
-> Grammar of a metatype type:
+> Gramática de um tipo metatipo:
 >
 > *metatype-type* → *type* **`.`** **`Type`** | *type* **`.`** **`Protocol`**
 
-## Any Type
+## Tipo Any
 
-The `Any` type can contain values from all other types.
-`Any` can be used as the concrete type
-for an instance of any of the following types:
+O tipo `Any` pode conter valores de todos os outros tipos.
+`Any` pode ser usado como o tipo concreto
+de uma instância de qualquer um dos seguintes tipos:
 
-- A class, structure, or enumeration
-- A metatype, such as `Int.self`
-- A tuple with any types of components
-- A closure or function type
+- Uma classe, struct ou enum
+- Um metatipo, como `Int.self`
+- Uma tupla com componentes de quaisquer tipos
+- Uma closure ou um tipo de função
 
 ```swift
 let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
@@ -1150,16 +1139,15 @@ let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
   ```
 -->
 
-When you use `Any` as a concrete type for an instance,
-you need to cast the instance to a known type
-before you can access its properties or methods.
-Instances with a concrete type of `Any`
-maintain their original dynamic type
-and can be cast to that type using one of the type-cast operators ---
-`as`, `as?`, or `as!`.
-For example,
-use `as?` to conditionally downcast the first object in a heterogeneous array
-to a `String` as follows:
+Quando você usa `Any` como tipo concreto de uma instância,
+precisa converter a instância para um tipo conhecido
+antes de acessar suas propriedades ou métodos.
+Instâncias com tipo concreto `Any` mantêm o tipo dinâmico original
+e podem ser convertidas para esse tipo usando um dos operadores de conversão de tipo ---
+`as`, `as?` ou `as!`.
+Por exemplo,
+use `as?` para fazer um downcast condicional do primeiro objeto de um array heterogêneo
+para `String`, da seguinte forma:
 
 ```swift
 if let first = mixed.first as? String {
@@ -1179,45 +1167,44 @@ if let first = mixed.first as? String {
   ```
 -->
 
-For more information about casting, see <doc:TypeCasting>.
+Para mais informações sobre conversões de tipo, veja <doc:TypeCasting>.
 
-The `AnyObject` protocol is similar to the `Any` type.
-All classes implicitly conform to `AnyObject`.
-Unlike `Any`,
-which is defined by the language,
-`AnyObject` is defined by the Swift standard library.
-For more information, see
+O protocolo `AnyObject` é semelhante ao tipo `Any`.
+Todas as classes estão implicitamente em conformidade com `AnyObject`.
+Diferentemente de `Any`, que é definido pela linguagem,
+`AnyObject` é definido pela biblioteca padrão do Swift.
+Para mais informações, veja
 <doc:Protocols#Class-Only-Protocols>
-and [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject).
+e [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject).
 
-> Grammar of an Any type:
+> Gramática de um tipo Any:
 >
 > *any-type* → **`Any`**
 
-## Self Type
+## Tipo Self
 
-The `Self` type isn't a specific type,
-but rather lets you conveniently refer to the current type
-without repeating or knowing that type's name.
+O tipo `Self` não é um tipo específico,
+mas sim um recurso que permite se referir de forma conveniente ao tipo atual
+sem repetir nem precisar conhecer o nome desse tipo.
 
-In a protocol declaration or a protocol member declaration,
-the `Self` type refers to the eventual type that conforms to the protocol.
+Em uma declaração de protocolo ou em uma declaração de membro de protocolo,
+o tipo `Self` se refere ao tipo final que estiver em conformidade com o protocolo.
 
-In a structure, class, or enumeration declaration,
-the `Self` type refers to the type introduced by the declaration.
-Inside the declaration for a member of a type,
-the `Self` type refers to that type.
-In the members of a class declaration,
-`Self` can appear only as follows:
+Em uma declaração de struct, classe ou enum,
+o tipo `Self` se refere ao tipo introduzido pela declaração.
+Dentro da declaração de um membro de um tipo,
+o tipo `Self` se refere a esse tipo.
+Nos membros de uma declaração de classe,
+`Self` só pode aparecer nos seguintes casos:
 
-- As the return type of a method
-- As the return type of a read-only subscript
-- As the type of a read-only computed property
-- In the body of a method
+- Como tipo de retorno de um método
+- Como tipo de retorno de um subscript somente leitura
+- Como tipo de uma propriedade computada somente leitura
+- No corpo de um método
 
-For example,
-the code below shows an instance method `f`
-whose return type is `Self`.
+Por exemplo,
+o código abaixo mostra um método de instância `f`
+cujo tipo de retorno é `Self`.
 
 <!--
   - test: `self-in-class-cant-be-a-parameter-type`
@@ -1291,9 +1278,9 @@ print(type(of: z.f()))
   ```
 -->
 
-The last part of the example above shows that
-`Self` refers to the runtime type `Subclass` of the value of `z`,
-not the compile-time type `Superclass` of the variable itself.
+A última parte do exemplo acima mostra que
+`Self` se refere ao tipo de tempo de execução `Subclass` do valor de `z`,
+e não ao tipo de tempo de compilação `Superclass` da própria variável.
 
 <!--
   TODO: Using Self as the return type from a subscript or property doesn't
@@ -1302,78 +1289,81 @@ not the compile-time type `Superclass` of the variable itself.
   read-only.  See https://bugs.swift.org/browse/SR-10326
 -->
 
-Inside a nested type declaration,
-the `Self` type refers to the type
-introduced by the innermost type declaration.
+Dentro de uma declaração de tipo aninhada,
+o tipo `Self` se refere ao tipo introduzido
+pela declaração de tipo mais interna.
 
-The `Self` type refers to the same type
-as the [`type(of:)`](https://developer.apple.com/documentation/swift/type(of:))
-function in the Swift standard library.
-Writing `Self.someStaticMember` to access a member of the current type
-is the same as writing `type(of: self).someStaticMember`.
+O tipo `Self` se refere ao mesmo tipo que a função
+[`type(of:)`](https://developer.apple.com/documentation/swift/type(of:))
+da biblioteca padrão do Swift.
+Escrever `Self.someStaticMember` para acessar um membro do tipo atual
+é o mesmo que escrever `type(of: self).someStaticMember`.
 
-> Grammar of a Self type:
+> Gramática de um tipo Self:
 >
 > *self-type* → **`Self`**
 
-## Type Inheritance Clause
+## Cláusula de herança de tipo
 
-A *type inheritance clause* is used to specify which class a named type inherits from
-and which protocols a named type conforms to.
-A type inheritance clause begins with a colon (`:`),
-followed by a list of type identifiers.
+Uma *cláusula de herança de tipo* é usada para especificar de qual classe um tipo nomeado herda
+e em conformidade com quais protocolos um tipo nomeado está.
+Uma cláusula de herança de tipo começa com dois-pontos (`:`),
+seguido de uma lista de identificadores de tipo.
 
-Class types can inherit from a single superclass and conform to any number of protocols.
-When defining a class,
-the name of the superclass must appear first in the list of type identifiers,
-followed by any number of protocols the class must conform to.
-If the class doesn't inherit from another class,
-the list can begin with a protocol instead.
-For an extended discussion and several examples of class inheritance,
-see <doc:Inheritance>.
+Tipos de classe podem herdar de uma única superclasse e estar em conformidade com qualquer número de protocolos.
+Ao definir uma classe,
+o nome da superclasse deve aparecer primeiro na lista de identificadores de tipo,
+seguido de quaisquer protocolos com os quais a classe deve estar em conformidade.
+Se a classe não herdar de outra classe,
+a lista pode começar com um protocolo.
+Para uma discussão estendida e vários exemplos de herança de classes,
+veja <doc:Inheritance>.
 
-Other named types can only inherit from or conform to a list of protocols.
-Protocol types can inherit from any number of other protocols.
-When a protocol type inherits from other protocols,
-the set of requirements from those other protocols are aggregated together,
-and any type that inherits from the current protocol must conform to all of those requirements.
-Writing a tilde (`~`) in front of a protocol name in this list
-suppresses an implicit conformance to that protocol,
-as described in <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
+Outros tipos nomeados só podem herdar de uma lista de protocolos ou estar em conformidade com ela.
+Tipos de protocolo podem herdar de qualquer número de outros protocolos.
+Quando um tipo de protocolo herda de outros protocolos,
+os requisitos desses outros protocolos são agregados,
+e qualquer tipo que herde do protocolo atual deve estar em conformidade com todos esses requisitos.
+Escrever um til (`~`) na frente do nome de um protocolo nessa lista
+suprime a conformidade implícita com esse protocolo,
+como descrito em <doc:Protocols#Implicit-Conformance-to-a-Protocol>.
 
-A type inheritance clause in an enumeration definition can be either a list of protocols,
-or in the case of an enumeration that assigns raw values to its cases,
-a single, named type that specifies the type of those raw values.
-For an example of an enumeration definition that uses a type inheritance clause
-to specify the type of its raw values, see <doc:Enumerations#Raw-Values>.
+Uma cláusula de herança de tipo em uma definição de enum pode ser
+uma lista de protocolos
+ou, no caso de um enum que atribui raw values aos seus casos,
+um único tipo nomeado que especifica o tipo desses raw values.
+Para um exemplo de definição de enum que usa uma cláusula de herança de tipo
+para especificar o tipo dos seus raw values,
+veja <doc:Enumerations#Raw-Values>.
 
-> Grammar of a type inheritance clause:
+> Gramática de uma cláusula de herança de tipo:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
 > *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ **`~`**_?_ *type-identifier* **`,`** *type-inheritance-list*
 
-## Type Inference
+## Inferência de tipos
 
-Swift uses *type inference* extensively,
-allowing you to omit the type or part of the type of many variables and expressions in your code.
-For example,
-instead of writing `var x: Int = 0`, you can write `var x = 0`,
-omitting the type completely ---
-the compiler correctly infers that `x` names a value of type `Int`.
-Similarly, you can omit part of a type when the full type can be inferred from context.
-For example, if you write `let dict: Dictionary = ["A": 1]`,
-the compiler infers that `dict` has the type `Dictionary<String, Int>`.
+O Swift usa *inferência de tipos* extensivamente,
+permitindo que você omita o tipo, ou parte do tipo, de muitas variáveis e expressões do seu código.
+Por exemplo,
+em vez de escrever `var x: Int = 0`, você pode escrever `var x = 0`,
+omitindo o tipo por completo:
+o compilador infere corretamente que `x` nomeia um valor do tipo `Int`.
+Do mesmo modo, você pode omitir parte de um tipo quando o tipo completo
+puder ser inferido a partir do contexto.
+Por exemplo, se você escrever `let dict: Dictionary = ["A": 1]`,
+o compilador infere que `dict` tem o tipo `Dictionary<String, Int>`.
 
-In both of the examples above,
-the type information is passed up from the leaves of the expression tree to its root.
-That is,
-the type of `x` in `var x: Int = 0` is inferred by first checking the type of `0`
-and then passing this type information up to the root (the variable `x`).
+Nos dois exemplos acima,
+a informação de tipo é passada das folhas da árvore de expressão até a raiz.
+Ou seja,
+o tipo de `x` em `var x: Int = 0` é inferido primeiro verificando o tipo de `0`
+e depois passando essa informação de tipo para a raiz (a variável `x`).
 
-In Swift, type information can also flow in the opposite direction --- from the root down to the leaves.
-In the following example, for instance,
-the explicit type annotation (`: Float`) on the constant `eFloat`
-causes the numeric literal `2.71828` to have an inferred type of `Float` instead of `Double`.
+No Swift, a informação de tipo também pode fluir no sentido contrário, da raiz para as folhas.
+No exemplo a seguir, por exemplo,
+a anotação de tipo explícita (`: Float`) na constante `eFloat`
+faz com que o literal numérico `2.71828` tenha o tipo inferido `Float`, em vez de `Double`.
 
 ```swift
 let e = 2.71828 // The type of e is inferred to be Double.
@@ -1389,10 +1379,11 @@ let eFloat: Float = 2.71828 // The type of eFloat is Float.
   ```
 -->
 
-Type inference in Swift operates at the level of a single expression or statement.
-This means that all of the information needed to infer an omitted type or part of a type
-in an expression must be accessible from type-checking
-the expression or one of its subexpressions.
+A inferência de tipos no Swift opera no nível de uma única expressão ou instrução.
+Isso significa que todas as informações necessárias para inferir um tipo omitido,
+ou parte dele, em uma expressão
+precisam estar acessíveis durante a verificação de tipos da expressão
+ou de uma de suas subexpressões.
 
 <!--
   TODO: Email Doug for a list of rules or situations describing when type-inference
@@ -1408,3 +1399,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

@@ -106,8 +106,8 @@ para imprimir essa string e ver seu valor de retorno, como mostrado acima.
 > não tem rótulo para o primeiro argumento,
 > e os outros argumentos são opcionais porque têm valor padrão.
 > Essas variações da sintaxe de funções são discutidas abaixo
-> em <doc:Functions#Rótulos-de-argumento-e-nomes-de-parâmetros-de-função>
-> e <doc:Functions#Valores-padrão-de-parâmetros>.
+> em <doc:Functions#Function-Argument-Labels-and-Parameter-Names>
+> e <doc:Functions#Default-Parameter-Values>.
 
 O corpo da função `greet(person:)` começa
 definindo uma nova constante `String` chamada `greeting`

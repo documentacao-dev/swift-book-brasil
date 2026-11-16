@@ -532,7 +532,7 @@ struct CompactRect {
 
 Omitting the `return` from a getter
 follows the same rules as omitting `return` from a function,
-as described in <doc:Functions#Funções-com-retorno-implícito>.
+as described in <doc:Functions#Functions-With-an-Implicit-Return>.
 
 ### Read-Only Computed Properties
 

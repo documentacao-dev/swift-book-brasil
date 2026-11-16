@@ -172,7 +172,7 @@ this example uses subscript assignment to add
 a `String` key of `"bird"` and an `Int` value of `2` to the dictionary.
 
 For more information about `Dictionary` subscripting,
-see <doc:CollectionTypes#Acessando-e-Modificando-um-Dicionário>.
+see <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
 > Note: Swift's `Dictionary` type implements its key-value subscripting
 > as a subscript that takes and returns an *optional* type.
@@ -192,8 +192,8 @@ Subscripts can also return a value of any type.
 Like functions,
 subscripts can take a varying number of parameters
 and provide default values for their parameters,
-as discussed in <doc:Functions#Parâmetros-variádicos>
-and <doc:Functions#Valores-padrão-de-parâmetros>.
+as discussed in <doc:Functions#Variadic-Parameters>
+and <doc:Functions#Default-Parameter-Values>.
 However, unlike functions,
 subscripts can't use in-out parameters.
 
@@ -285,7 +285,7 @@ Each position in the matrix is given an initial value of `0.0`.
 To achieve this, the array's size, and an initial cell value of `0.0`,
 are passed to an array initializer that creates and initializes a new array of the correct size.
 This initializer is described in more detail
-in <doc:CollectionTypes#Criando-um-Array-com-um-Valor-Padrão>.
+in <doc:CollectionTypes#Creating-an-Array-with-a-Default-Value>.
 
 You can construct a new `Matrix` instance by passing
 an appropriate row and column count to its initializer:

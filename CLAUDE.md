@@ -4,7 +4,7 @@ Tradução PT-BR de **The Swift Programming Language** (o "livro do Swift", TSPL
 
 - Conteúdo traduzível: `TSPL.docc/**/*.md`, traduzido no lugar. Primeiro as boas-vindas e o Guia da linguagem até Closures; o Manual de referência por último.
 - Site: Swift-DocC. `tool/site/build.sh` gera `site/` (resumo da gramática, header/footer próprios sem os scripts do swift.org, `lang="pt-BR"`). Deploy no site Firebase `swift-documentacao` (projeto transliteradu).
-- Sync: branch `sync/upstream-AAAA-MM` com merge de `upstream/main`, retradução só do que mudou, `python3 tool/traducao/ancorar_links.py`, atualização de `tool/traducao/ultimo-sync-upstream.txt`.
+- Sync: branch `sync/upstream-AAAA-MM` com merge de `upstream/main`, retradução só do que mudou, atualização de `tool/traducao/ultimo-sync-upstream.txt`.
 
 ## Modelo da tradução: sempre Haiku
 
@@ -15,7 +15,7 @@ Toda tradução e retradução de página roda no **Haiku** (`model: haiku`, age
 - Marcador: **última** linha do arquivo `<!-- ia-translate: true -->` (o DocC exige que o arquivo comece pelo título).
 - Blocos de código, código inline, diretivas `@...`, comentários HTML e URLs ficam idênticos.
 - Notas: `> Nota:`, `> Experimente:`, `> Importante:` (o DocC aceita rótulo próprio).
-- Âncoras: o DocC gera a âncora da seção a partir do texto do título e não aceita id próprio. Depois de traduzir (e depois de cada sync), rode `python3 tool/traducao/ancorar_links.py`: ele troca, em todos os capítulos, `<doc:Capitulo#Ancora-em-ingles>` pela âncora do título traduzido.
+- Âncoras: o DocC gera a âncora da seção a partir do texto do título e não aceita id próprio. No repositório, todo `<doc:Capitulo#Ancora>` fica IGUAL ao original em inglês (o verificar.py cobra), inclusive nos capítulos traduzidos; assim os capítulos ainda em inglês ficam idênticos ao upstream e o sync não dá conflito. Só no build (`tool/site/build.sh`) e no verificador, numa cópia temporária do TSPL.docc, o `ancorar_links.py` troca as âncoras pelas dos títulos traduzidos. Nunca rode a troca no repositório.
 - `python3 tool/traducao/verificar.py` confere tudo contra o inglês do commit em `ultimo-sync-upstream.txt` e roda o DocC para achar link `<doc:...#...>` quebrado.
 
 ## Aviso de página não traduzida

@@ -218,7 +218,7 @@ var red, green, blue: Double
 > Nota: Raramente é preciso escrever anotações de tipo na prática.
 > Se você fornecer um valor inicial para uma constante ou variável no momento em que ela é definida,
 > o Swift quase sempre consegue inferir o tipo a ser usado para essa constante ou variável,
-> como descrito em <doc:TheBasics#Segurança-de-tipos-e-inferência-de-tipos>.
+> como descrito em <doc:TheBasics#Type-Safety-and-Type-Inference>.
 > No exemplo `welcomeMessage` acima, nenhum valor inicial é fornecido,
 > então o tipo da variável `welcomeMessage` é especificado com uma anotação de tipo
 > em vez de ser inferido a partir de um valor inicial.
@@ -336,7 +336,7 @@ Para imprimir um valor sem quebra de linha depois dele,
 passe uma string vazia como `terminator`,
 por exemplo, `print(someValue, terminator: "")`.
 Para saber mais sobre parâmetros com valores padrão,
-veja <doc:Functions#Valores-padrão-de-parâmetros>.
+veja <doc:Functions#Default-Parameter-Values>.
 
 <!--
   - test: `printingWithoutNewline`
@@ -379,7 +379,7 @@ print("The current value of friendlyWelcome is \(friendlyWelcome)")
 -->
 
 > Nota: Todas as opções que você pode usar com a interpolação de string
-> são descritas em <doc:StringsAndCharacters#Interpolação-de-strings>.
+> são descritas em <doc:StringsAndCharacters#String-Interpolation>.
 
 ## Comentários
 
@@ -567,7 +567,7 @@ que tem o mesmo tamanho da palavra nativa da plataforma atual:
 > mesmo quando os valores a armazenar são conhecidamente não negativos.
 > O uso consistente de `Int` para valores inteiros ajuda na interoperabilidade do código,
 > evita a necessidade de converter entre diferentes tipos numéricos
-> e combina com a inferência de tipo inteiro, como descrito em <doc:TheBasics#Segurança-de-tipos-e-inferência-de-tipos>.
+> e combina com a inferência de tipo inteiro, como descrito em <doc:TheBasics#Type-Safety-and-Type-Inference>.
 
 ## Números de ponto flutuante
 
@@ -619,7 +619,7 @@ Se você precisar do mesmo espaçamento entre todos os valores possíveis,
 ou se os cálculos que você faz exigem resultados exatos
 e não envolvem os valores especiais listados acima,
 um número de ponto flutuante talvez não seja o tipo de dado certo.
-Considere usar números de ponto fixo, como descrito em <doc:TheBasics#Inteiros>.
+Considere usar números de ponto fixo, como descrito em <doc:TheBasics#Integers>.
 
 ## Segurança de tipos e inferência de tipos
 
@@ -1292,7 +1292,7 @@ Ao retornar uma tupla com dois valores distintos,
 cada um de um tipo diferente,
 a função fornece informações mais úteis sobre o resultado
 do que se pudesse retornar apenas um valor de um único tipo.
-Para mais informações, veja <doc:Functions#Funções-com-vários-valores-de-retorno>.
+Para mais informações, veja <doc:Functions#Functions-with-Multiple-Return-Values>.
 
 > Nota: Tuplas são úteis para grupos simples de valores relacionados.
 > Elas não são adequadas para criar estruturas de dados complexas.
@@ -1627,7 +1627,7 @@ Constantes e variáveis criadas com optional binding em uma instrução `if`
 ficam disponíveis apenas dentro do corpo dessa instrução.
 Em contraste, as constantes e variáveis criadas com uma instrução `guard`
 ficam disponíveis nas linhas de código que seguem a instrução `guard`,
-como descrito em <doc:ControlFlow#Saída-antecipada>.
+como descrito em <doc:ControlFlow#Early-Exit>.
 
 ### Fornecendo um valor alternativo
 
@@ -1658,7 +1658,7 @@ print(greeting)
 -->
 
 Para mais informações sobre usar `??` para fornecer um valor alternativo,
-veja <doc:BasicOperators#Operador-de-coalescência-nula>.
+veja <doc:BasicOperators#Nil-Coalescing-Operator>.
 
 ### Force unwrapping
 
@@ -1694,7 +1694,7 @@ permite que o código verifique em tempo de execução que a exigência é verda
 
 Para mais informações sobre como impor requisitos de dados
 e verificar premissas em tempo de execução,
-veja <doc:TheBasics#Asserções-e-pré-condições>.
+veja <doc:TheBasics#Assertions-and-Preconditions>.
 
 ### Optionals com unwrap implícito
 
@@ -1833,7 +1833,7 @@ if let definiteString = assumedString {
 ## Segurança de memória
 
 Além das verificações que impedem incompatibilidades de tipo,
-descritas acima em <doc:TheBasics#Segurança-de-tipos-e-inferência-de-tipos>,
+descritas acima em <doc:TheBasics#Type-Safety-and-Type-Inference>,
 o Swift também protege o código contra o trabalho com memória inválida.
 Essa proteção é conhecida como *segurança de memória*
 e inclui os seguintes requisitos:
@@ -1870,7 +1870,7 @@ Código seguro em Swift ainda pode encontrar erros e falhas inesperadas,
 que podem interromper a execução do programa.
 Segurança não garante que seu código seja executado até o fim.
 O Swift oferece várias formas de indicar e se recuperar de erros,
-discutidas em <doc:TheBasics#Tratamento-de-erros> e <doc:TheBasics#Asserções-e-pré-condições>, mais abaixo.
+discutidas em <doc:TheBasics#Error-Handling> e <doc:TheBasics#Assertions-and-Preconditions>, mais abaixo.
 No entanto, em alguns casos, a *única* forma segura de tratar um erro é interromper a execução.
 Se você precisar garantir que um serviço nunca pare inesperadamente,
 incorpore tolerância a falhas na arquitetura geral dele,
@@ -2026,7 +2026,7 @@ e pré-condições ajudam a detectar problemas em produção.
 
 Além de verificar suas expectativas em tempo de execução,
 asserções e pré-condições também se tornam uma forma útil de documentação dentro do código.
-Diferentemente das condições de erro discutidas acima em <doc:TheBasics#Tratamento-de-erros>,
+Diferentemente das condições de erro discutidas acima em <doc:TheBasics#Error-Handling>,
 asserções e pré-condições não são usadas para erros recuperáveis ou esperados.
 Como uma asserção ou pré-condição que falha indica um estado inválido do programa,
 não há como capturar uma asserção que falhou.

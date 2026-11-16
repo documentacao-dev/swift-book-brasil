@@ -507,7 +507,7 @@ func printNumberOfRooms() {
 
 This method doesn't specify a return type.
 However, functions and methods with no return type have an implicit return type of `Void`,
-as described in <doc:Functions#Funções-sem-valores-de-retorno>.
+as described in <doc:Functions#Functions-Without-Return-Values>.
 This means that they return a value of `()`, or an empty tuple.
 
 If you call this method on an optional value with optional chaining,

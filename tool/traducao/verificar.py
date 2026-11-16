@@ -4,8 +4,8 @@
 Para cada TSPL.docc/**/*.md que termina com `<!-- ia-translate: true -->`:
 
 - blocos de código idênticos e na mesma ordem;
-- links <doc:Capitulo> para os mesmos capítulos, na mesma ordem (a âncora
-  depois do # pode mudar: ancorar_links.py reescreve);
+- links <doc:Capitulo#Ancora> idênticos ao inglês, âncora inclusa (a troca
+  para a âncora traduzida só acontece numa cópia, no build: ancorar_links.py);
 - URLs de links e diretivas do DocC (@Metadata, @Options...) idênticas;
 - mesmo número de títulos e de notas (`> Nota:`...);
 - pouca prosa sobrando em inglês.
@@ -21,6 +21,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+from ancorar_links import reescrever
 from comum import CERCA, DOCC, ROOT, capitulos, ingles, titulos, traduzido
 
 DOC = re.compile(r'<doc:([A-Za-z]+)(#[^>]+)?>')
@@ -46,10 +47,8 @@ def conferir(p):
         erros.append(f'blocos de código: {len(a)} no inglês, {len(b)} na tradução'
                      + (' (conteúdo diferente)' if len(a) == len(b) else ''))
     se, sp = sem_codigo(en), sem_codigo(pt)
-    if [m.group(1) for m in DOC.finditer(se)] != [m.group(1) for m in DOC.finditer(sp)]:
-        erros.append('links <doc:...> diferentes do inglês')
-    if [bool(m.group(2)) for m in DOC.finditer(se)] != [bool(m.group(2)) for m in DOC.finditer(sp)]:
-        erros.append('links <doc:...#...> com e sem âncora trocados')
+    if DOC.findall(se) != DOC.findall(sp):
+        erros.append('links <doc:...> diferentes do inglês (âncora inclusa: fica a do original)')
     if URL.findall(se) != URL.findall(sp):
         erros.append('URLs de links diferentes do inglês')
     if DIRETIVA.findall(se) != DIRETIVA.findall(sp):
@@ -85,7 +84,10 @@ def links_quebrados():
     docc = shutil.which('docc') or 'xcrun'
     cmd = [docc] if docc != 'xcrun' else ['xcrun', 'docc']
     with tempfile.TemporaryDirectory() as tmp:
-        r = subprocess.run(cmd + ['convert', str(DOCC), '--output-path', tmp],
+        copia = Path(tmp) / 'TSPL.docc'
+        shutil.copytree(DOCC, copia)
+        reescrever(copia)
+        r = subprocess.run(cmd + ['convert', str(copia), '--output-path', str(Path(tmp) / 'out')],
                            capture_output=True, text=True)
     saida = r.stdout + r.stderr
     nomes = {p.stem for p in capitulos()}

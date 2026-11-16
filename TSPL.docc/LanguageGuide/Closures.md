@@ -14,7 +14,7 @@ Isso é conhecido como *fechar sobre* essas constantes e variáveis.
 O Swift cuida de todo o gerenciamento de memória dessa captura para você.
 
 > Nota: Não se preocupe se você não estiver familiarizado com o conceito de captura.
-> Ele é explicado em detalhes abaixo, em <doc:Closures#Capturando-valores>.
+> Ele é explicado em detalhes abaixo, em <doc:Closures#Capturing-Values>.
 
 Funções globais e aninhadas, como apresentadas em <doc:Functions>,
 são, na verdade, casos especiais de closures.
@@ -38,7 +38,7 @@ Essas otimizações incluem:
 
 ## Expressões de closure
 
-Funções aninhadas, como apresentadas em <doc:Functions#Funções-aninhadas>,
+Funções aninhadas, como apresentadas em <doc:Functions#Nested-Functions>,
 são uma forma prática de nomear e definir blocos de código autocontidos
 como parte de uma função maior.
 No entanto, às vezes é útil escrever versões mais curtas de construções semelhantes a funções
@@ -388,7 +388,7 @@ someFunctionThatTakesAClosure() {
   ```
 -->
 
-A closure de ordenação de strings da seção <doc:Closures#Sintaxe-de-expressão-de-closure> acima
+A closure de ordenação de strings da seção <doc:Closures#Closure-Expression-Syntax> acima
 pode ser escrita fora dos parênteses do método `sorted(by:)` como uma trailing closure:
 
 ```swift
@@ -680,7 +680,7 @@ Isso significa que ela retorna uma *função*, e não um valor simples.
 A função que ela retorna não tem parâmetros
 e retorna um valor `Int` cada vez que é chamada.
 Para saber como funções podem retornar outras funções,
-veja <doc:Functions#Tipos-de-função-como-tipos-de-retorno>.
+veja <doc:Functions#Function-Types-as-Return-Types>.
 
 A função `makeIncrementer(forIncrement:)` define uma variável inteira chamada `runningTotal`,
 para armazenar o total acumulado atual do incrementador que será retornado.
@@ -1273,7 +1273,7 @@ serve(customer: customersInLine.remove(at: 0))
 
 Se você quiser uma autoclosure que possa escapar,
 use os atributos `@autoclosure` e `@escaping` juntos.
-O atributo `@escaping` é descrito acima, em <doc:Closures#Escaping-closures>.
+O atributo `@escaping` é descrito acima, em <doc:Closures#Escaping-Closures>.
 
 ```swift
 // customersInLine is ["Barry", "Daniella"]

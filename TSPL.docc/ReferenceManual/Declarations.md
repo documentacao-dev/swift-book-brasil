@@ -245,7 +245,7 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
 -->
 
 For more information about constants and for guidance about when to use them,
-see <doc:TheBasics#Constantes-e-variáveis> and <doc:Properties#Stored-Properties>.
+see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Properties>.
 
 > Grammar of a constant declaration:
 >
@@ -776,7 +776,7 @@ or passed as a nonescaping function argument.
 Otherwise, the nested function is an escaping function.
 
 For a discussion of nested functions,
-see <doc:Functions#Funções-aninhadas>.
+see <doc:Functions#Nested-Functions>.
 
 ### Parameter Names
 
@@ -1023,7 +1023,7 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 -->
 
 For more discussion and examples of in-out parameters,
-see <doc:Functions#Parâmetros-in-out>.
+see <doc:Functions#In-Out-Parameters>.
 
 <!--
   - test: `escaping-cant-capture-inout`
@@ -1229,7 +1229,7 @@ A function can have multiple variadic parameters.
 A variadic parameter is treated as an array that contains elements of the base type name.
 For example, the variadic parameter `Int...` is treated as `[Int]`.
 For an example that uses a variadic parameter,
-see <doc:Functions#Parâmetros-variádicos>.
+see <doc:Functions#Variadic-Parameters>.
 
 A parameter with an equal sign (`=`) and an expression after its type
 is understood to have a default value of the given expression.

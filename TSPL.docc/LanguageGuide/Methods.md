@@ -110,7 +110,7 @@ counter.reset()
 
 Function parameters can have both a name (for use within the function's body)
 and an argument label (for use when calling the function),
-as described in <doc:Functions#Rótulos-de-argumento-e-nomes-de-parâmetros-de-função>.
+as described in <doc:Functions#Function-Argument-Labels-and-Parameter-Names>.
 The same is true for method parameters,
 because methods are just functions that are associated with a type.
 

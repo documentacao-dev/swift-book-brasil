@@ -41,5 +41,6 @@ rm -rf site
     --transform-for-static-hosting \
     --output-path site \
     "$tmp/TSPL.docc"
+python3 tool/site/interface.py site
 find site -name "*.html" -exec sed -i.bak 's/<html lang="en-US"/<html lang="pt-BR"/' {} + && find site -name "*.bak" -delete
 echo "site/ pronto ($(find site -type f | wc -l | tr -d ' ') arquivos)"

@@ -1,21 +1,21 @@
-# Declarations
+# Declarações
 
-Introduce types, operators, variables, and other names and constructs.
+Introduza tipos, operadores, variáveis e outros nomes e construções.
 
-A *declaration* introduces a new name or construct into your program.
-For example, you use declarations to introduce functions and methods,
-to introduce variables and constants,
-and to define enumeration, structure, class, and protocol types.
-You can also use a declaration to extend the behavior
-of an existing named type and to import symbols into your program that are declared elsewhere.
+Uma *declaração* introduz um novo nome ou construção no seu programa.
+Por exemplo, você usa declarações para introduzir funções e métodos,
+para introduzir variáveis e constantes,
+e para definir tipos enumeração, estrutura, classe e protocolo.
+Você também pode usar uma declaração para estender o comportamento
+de um tipo nomeado existente e para importar para o seu programa símbolos declarados em outro lugar.
 
-In Swift, most declarations are also definitions in the sense that they're implemented
-or initialized at the same time they're declared. That said, because protocols don't
-implement their members, most protocol members are declarations only. For convenience
-and because the distinction isn't that important in Swift,
-the term *declaration* covers both declarations and definitions.
+Em Swift, a maioria das declarações também são definições, no sentido de que são implementadas
+ou inicializadas no mesmo momento em que são declaradas. Dito isso, como protocolos não
+implementam seus membros, a maioria dos membros de protocolos são apenas declarações. Por conveniência
+e porque essa distinção não é tão importante em Swift,
+o termo *declaração* abrange tanto declarações quanto definições.
 
-> Grammar of a declaration:
+> Gramática de uma declaração:
 >
 > *declaration* → *import-declaration* \
 > *declaration* → *constant-declaration* \
@@ -35,44 +35,44 @@ the term *declaration* covers both declarations and definitions.
 > *declaration* → *operator-declaration* \
 > *declaration* → *precedence-group-declaration*
 
-## Top-Level Code
+## Código de nível superior
 
-The top-level code in a Swift source file consists of zero or more statements,
-declarations, and expressions.
-By default, variables, constants, and other named declarations that are declared
-at the top-level of a source file are accessible to code
-in every source file that's part of the same module.
-You can override this default behavior
-by marking the declaration with an access-level modifier,
-as described in <doc:Declarations#Access-Control-Levels>.
+O código de nível superior de um arquivo de código-fonte Swift consiste em zero ou mais instruções,
+declarações e expressões.
+Por padrão, variáveis, constantes e outras declarações nomeadas que são declaradas
+no nível superior de um arquivo de código-fonte podem ser acessadas por código
+em todo arquivo de código-fonte que faz parte do mesmo módulo.
+Você pode substituir esse comportamento padrão
+marcando a declaração com um modificador de nível de acesso,
+como descrito em <doc:Declarations#Access-Control-Levels>.
 
-There are two kinds of top-level code:
-top-level declarations and executable top-level code.
-Top-level declarations consist of only declarations,
-and are allowed in all Swift source files.
-Executable top-level code contains statements and expressions,
-not just declarations,
-and is allowed only as the top-level entry point for the program.
+Há dois tipos de código de nível superior:
+declarações de nível superior e código executável de nível superior.
+Declarações de nível superior consistem apenas em declarações,
+e são permitidas em todos os arquivos de código-fonte Swift.
+Código executável de nível superior contém instruções e expressões,
+não apenas declarações,
+e é permitido somente como ponto de entrada do programa.
 
-The Swift code you compile to make an executable
-can contain at most one of the following approaches
-to mark the top-level entry point,
-regardless of how the code is organized into files and modules:
-a file that contains top-level executable code,
-a `main.swift` file,
-the `main` attribute,
-the `NSApplicationMain` attribute,
-or the `UIApplicationMain` attribute.
+O código Swift que você compila para criar um executável
+pode conter no máximo uma das seguintes abordagens
+para marcar o ponto de entrada de nível superior,
+independentemente de como o código está organizado em arquivos e módulos:
+um arquivo que contém código executável de nível superior,
+um arquivo `main.swift`,
+o atributo `main`,
+o atributo `NSApplicationMain`,
+ou o atributo `UIApplicationMain`.
 
-> Grammar of a top-level declaration:
+> Gramática de uma declaração de nível superior:
 >
 > *top-level-declaration* → *statements*_?_
 
-## Code Blocks
+## Blocos de código
 
-A *code block* is used by a variety of declarations and control structures
-to group statements together.
-It has the following form:
+Um *bloco de código* é usado por diversas declarações e estruturas de controle
+para agrupar instruções.
+Ele tem a seguinte forma:
 
 ```swift
 {
@@ -80,9 +80,9 @@ It has the following form:
 }
 ```
 
-The *statements* inside a code block include declarations,
-expressions, and other kinds of statements and are executed in order
-of their appearance in source code.
+As *instruções* dentro de um bloco de código incluem declarações,
+expressões e outros tipos de instruções, e são executadas em ordem
+de aparição no código-fonte.
 
 <!--
   TR: What exactly are the scope rules for Swift?
@@ -92,28 +92,28 @@ of their appearance in source code.
   TODO: Discuss scope.  I assume a code block creates a new scope?
 -->
 
-> Grammar of a code block:
+> Gramática de um bloco de código:
 >
 > *code-block* → **`{`** *statements*_?_ **`}`**
 
-## Import Declaration
+## Declaração de importação
 
-An *import declaration* lets you access symbols
-that are declared outside the current file.
-The basic form imports the entire module;
-it consists of the `import` keyword followed by a module name:
+Uma *declaração de importação* permite acessar símbolos
+que são declarados fora do arquivo atual.
+A forma básica importa o módulo inteiro;
+ela consiste na palavra-chave `import` seguida do nome do módulo:
 
 ```swift
 import <#module#>
 ```
 
-Providing more detail limits which symbols are imported ---
-you can specify a specific submodule
-or a specific declaration within a module or submodule.
-When this detailed form is used,
-only the imported symbol
-(and not the module that declares it)
-is made available in the current scope.
+Fornecer mais detalhes limita quais símbolos são importados ---
+você pode especificar um submódulo específico
+ou uma declaração específica dentro de um módulo ou submódulo.
+Quando essa forma detalhada é usada,
+somente o símbolo importado
+(e não o módulo que o declara)
+fica disponível no escopo atual.
 
 ```swift
 import <#import kind#> <#module#>.<#symbol name#>
@@ -124,48 +124,48 @@ import <#module#>.<#submodule#>
   TODO: Need to add more to this section.
 -->
 
-> Grammar of an import declaration:
+> Gramática de uma declaração de importação:
 >
 > *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
 >
 > *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
 > *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
-## Constant Declaration
+## Declaração de constante
 
-A *constant declaration* introduces a constant named value into your program.
-Constant declarations are declared using the `let` keyword and have the following form:
+Uma *declaração de constante* introduz um valor nomeado constante no seu programa.
+Declarações de constantes são feitas com a palavra-chave `let` e têm a seguinte forma:
 
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
 
-A constant declaration defines an immutable binding between the *constant name*
-and the value of the initializer *expression*;
-after the value of a constant is set, it can't be changed.
-That said, if a constant is initialized with a class object,
-the object itself can change,
-but the binding between the constant name and the object it refers to can't.
+Uma declaração de constante define uma vinculação imutável entre o *nome da constante*
+e o valor da *expressão* de inicialização;
+depois que o valor de uma constante é definido, ele não pode mais ser alterado.
+Dito isso, se uma constante for inicializada com uma instância de classe,
+o objeto em si pode mudar,
+mas a vinculação entre o nome da constante e o objeto ao qual ela se refere não pode.
 
-When a constant is declared at global scope,
-it must be initialized with a value.
-When a constant declaration occurs in the context of a function or method,
-it can be initialized later,
-as long as it's guaranteed to have a value set
-before the first time its value is read.
-If the compiler can prove that the constant's value is never read,
-the constant isn't required to have a value set at all.
-This analysis is called *definite initialization* ---
-the compiler proves that a value is definitely set before being read.
+Quando uma constante é declarada no escopo global,
+ela precisa ser inicializada com um valor.
+Quando uma declaração de constante ocorre no contexto de uma função ou método,
+ela pode ser inicializada depois,
+desde que seja garantido que ela tenha um valor definido
+antes da primeira vez que seu valor for lido.
+Se o compilador conseguir provar que o valor da constante nunca é lido,
+a constante não precisa ter nenhum valor definido.
+Essa análise é chamada de *inicialização definitiva* ---
+o compilador prova que um valor é definitivamente atribuído antes de ser lido.
 
-> Note:
-> Definite initialization
-> can't construct proofs that require domain knowledge,
-> and its ability to track state across conditionals has a limit.
-> If you can determine that constant always has a value set,
-> but the compiler can't prove this is the case,
-> try simplifying the code paths that set the value,
-> or use a variable declaration instead.
+> Nota:
+> A inicialização definitiva
+> não consegue construir provas que exijam conhecimento do domínio,
+> e sua capacidade de acompanhar o estado através de condicionais tem um limite.
+> Se você consegue determinar que uma constante sempre tem um valor definido,
+> mas o compilador não consegue provar isso,
+> tente simplificar os caminhos de código que definem o valor,
+> ou use uma declaração de variável.
 
 <!--
 In the most general case,
@@ -173,14 +173,14 @@ DI reduces to the halting problem,
 as shown by Rice's theorem.
 -->
 
-When a constant declaration occurs in the context of a class or structure
-declaration, it's considered a *constant property*.
-Constant declarations aren't computed properties and therefore don't have getters
-or setters.
+Quando uma declaração de constante ocorre no contexto de uma declaração de classe ou estrutura,
+ela é considerada uma *propriedade constante*.
+Declarações de constantes não são propriedades computadas e, por isso, não têm getters
+ou setters.
 
-If the *constant name* of a constant declaration is a tuple pattern,
-the name of each item in the tuple is bound to the corresponding value
-in the initializer *expression*.
+Se o *nome da constante* de uma declaração de constante for um padrão de tupla,
+o nome de cada item da tupla é vinculado ao valor correspondente
+na *expressão* de inicialização.
 
 ```swift
 let (firstNumber, secondNumber) = (10, 42)
@@ -194,10 +194,10 @@ let (firstNumber, secondNumber) = (10, 42)
   ```
 -->
 
-In this example,
-`firstNumber` is a named constant for the value `10`,
-and `secondNumber` is a named constant for the value `42`.
-Both constants can now be used independently:
+Neste exemplo,
+`firstNumber` é uma constante nomeada para o valor `10`,
+e `secondNumber` é uma constante nomeada para o valor `42`.
+Ambas as constantes agora podem ser usadas de forma independente:
 
 ```swift
 print("The first number is \(firstNumber).")
@@ -217,16 +217,16 @@ print("The second number is \(secondNumber).")
   ```
 -->
 
-The type annotation (`:` *type*) is optional in a constant declaration
-when the type of the *constant name* can be inferred,
-as described in <doc:Types#Type-Inference>.
+A anotação de tipo (`:` *type*) é opcional em uma declaração de constante
+quando o tipo do *nome da constante* pode ser inferido,
+como descrito em <doc:Types#Type-Inference>.
 
-To declare a constant type property,
-mark the declaration with the `static` declaration modifier.
-A constant type property of a class is always implicitly final;
-you can't mark it with the `class` or `final` declaration modifier
-to allow or disallow overriding by subclasses.
-Type properties are discussed in <doc:Properties#Type-Properties>.
+Para declarar uma propriedade de tipo constante,
+marque a declaração com o modificador de declaração `static`.
+Uma propriedade de tipo constante de uma classe é sempre implicitamente `final`;
+você não pode marcá-la com o modificador de declaração `class` ou `final`
+para permitir ou proibir a sobrescrita por subclasses.
+Propriedades de tipo são discutidas em <doc:Properties#Type-Properties>.
 
 <!--
   - test: `class-constants-cant-have-class-or-final`
@@ -244,10 +244,10 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
   ```
 -->
 
-For more information about constants and for guidance about when to use them,
-see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Properties>.
+Para mais informações sobre constantes e orientações sobre quando usá-las,
+veja <doc:TheBasics#Constants-and-Variables> e <doc:Properties#Stored-Properties>.
 
-> Grammar of a constant declaration:
+> Gramática de uma declaração de constante:
 >
 > *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
 >
@@ -255,58 +255,58 @@ see <doc:TheBasics#Constants-and-Variables> and <doc:Properties#Stored-Propertie
 > *pattern-initializer* → *pattern* *initializer*_?_ \
 > *initializer* → **`=`** *expression*
 
-## Variable Declaration
+## Declaração de variável
 
-A *variable declaration* introduces a variable named value into your program
-and is declared using the `var` keyword.
+Uma *declaração de variável* introduz um valor nomeado mutável no seu programa
+e é feita com a palavra-chave `var`.
 
-Variable declarations have several forms that declare different kinds
-of named, mutable values,
-including stored and computed variables and properties,
-stored variable and property observers, and static variable properties.
-The appropriate form to use depends on
-the scope at which the variable is declared and the kind of variable you intend to declare.
+Declarações de variáveis têm várias formas, que declaram diferentes tipos
+de valores nomeados e mutáveis,
+incluindo variáveis e propriedades armazenadas e computadas,
+observadores de variáveis e propriedades armazenadas e propriedades de variáveis estáticas.
+A forma adequada a usar depende
+do escopo em que a variável é declarada e do tipo de variável que você pretende declarar.
 
-> Note: You can also declare properties in the context of a protocol declaration,
-> as described in <doc:Declarations#Protocol-Property-Declaration>.
+> Nota: Você também pode declarar propriedades no contexto de uma declaração de protocolo,
+> como descrito em <doc:Declarations#Protocol-Property-Declaration>.
 
-You can override a property in a subclass by marking the subclass's property declaration
-with the `override` declaration modifier, as described in <doc:Inheritance#Overriding>.
+Você pode substituir uma propriedade em uma subclasse marcando a declaração da propriedade da subclasse
+com o modificador de declaração `override`, como descrito em <doc:Inheritance#Overriding>.
 
-### Stored Variables and Stored Variable Properties
+### Variáveis armazenadas e propriedades armazenadas
 
-The following form declares a stored variable or stored variable property:
+A forma a seguir declara uma variável armazenada ou uma propriedade de variável armazenada:
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class or structure declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, it's referred to as a *stored variable*.
-When it's declared in the context of a class or structure declaration,
-it's referred to as a *stored variable property*.
+Você define essa forma de declaração de variável no escopo global, no escopo local
+de uma função ou no contexto de uma declaração de classe ou estrutura.
+Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
+de uma função, ela é chamada de *variável armazenada*.
+Quando é declarada no contexto de uma declaração de classe ou estrutura,
+ela é chamada de *propriedade de variável armazenada*.
 
-The initializer *expression* can't be present in a protocol declaration,
-but in all other contexts, the initializer *expression* is optional.
-That said, if no initializer *expression* is present,
-the variable declaration must include an explicit type annotation (`:` *type*).
+A *expressão* de inicialização não pode estar presente em uma declaração de protocolo,
+mas em todos os outros contextos, a *expressão* de inicialização é opcional.
+Dito isso, se nenhuma *expressão* de inicialização estiver presente,
+a declaração de variável precisa incluir uma anotação de tipo explícita (`:` *type*).
 
-As with constant declarations,
-if a variable declaration omits the initializer *expression*,
-the variable must have a value set before the first time it is read.
-Also like constant declarations,
-if the *variable name* is a tuple pattern,
-the name of each item in the tuple is bound to the corresponding value
-in the initializer *expression*.
+Assim como nas declarações de constantes,
+se uma declaração de variável omitir a *expressão* de inicialização,
+a variável precisa ter um valor definido antes da primeira vez que for lida.
+Também como nas declarações de constantes,
+se o *nome da variável* for um padrão de tupla,
+o nome de cada item da tupla é vinculado ao valor correspondente
+na *expressão* de inicialização.
 
-As their names suggest, the value of a stored variable or a stored variable property
-is stored in memory.
+Como o nome sugere, o valor de uma variável armazenada ou de uma propriedade de variável armazenada
+é guardado na memória.
 
-### Computed Variables and Computed Properties
+### Variáveis computadas e propriedades computadas
 
-The following form declares a computed variable or computed property:
+A forma a seguir declara uma variável computada ou uma propriedade computada:
 
 ```swift
 var <#variable name#>: <#type#> {
@@ -319,37 +319,36 @@ var <#variable name#>: <#type#> {
 }
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class, structure, enumeration, or extension declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, it's referred to as a *computed variable*.
-When it's declared in the context of a class,
-structure, or extension declaration,
-it's referred to as a *computed property*.
+Você define essa forma de declaração de variável no escopo global, no escopo local
+de uma função ou no contexto de uma declaração de classe, estrutura, enumeração ou extensão.
+Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
+de uma função, ela é chamada de *variável computada*.
+Quando é declarada no contexto de uma declaração de classe,
+estrutura ou extensão, ela é chamada de *propriedade computada*.
 
-The getter is used to read the value,
-and the setter is used to write the value.
-The setter clause is optional,
-and when only a getter is needed, you can omit both clauses and simply
-return the requested value directly,
-as described in <doc:Properties#Read-Only-Computed-Properties>.
-But if you provide a setter clause, you must also provide a getter clause.
+O getter é usado para ler o valor,
+e o setter é usado para escrever o valor.
+A cláusula de setter é opcional,
+e quando só é preciso um getter, você pode omitir as duas cláusulas e simplesmente
+retornar o valor solicitado diretamente,
+como descrito em <doc:Properties#Read-Only-Computed-Properties>.
+Mas se você fornecer uma cláusula de setter, também precisa fornecer uma cláusula de getter.
 
-The *setter name* and enclosing parentheses is optional.
-If you provide a setter name, it's used as the name of the parameter to the setter.
-If you don't provide a setter name, the default parameter name to the setter is `newValue`,
-as described in <doc:Properties#Shorthand-Setter-Declaration>.
+O *nome do setter* e os parênteses que o envolvem são opcionais.
+Se você fornecer um nome para o setter, ele é usado como nome do parâmetro do setter.
+Se você não fornecer um nome para o setter, o nome padrão do parâmetro do setter é `newValue`,
+como descrito em <doc:Properties#Shorthand-Setter-Declaration>.
 
-Unlike stored named values and stored variable properties,
-the value of a computed named value or a computed property isn't stored in memory.
+Diferentemente dos valores nomeados armazenados e das propriedades de variáveis armazenadas,
+o valor de um valor nomeado computado ou de uma propriedade computada não é guardado na memória.
 
-For more information and to see examples of computed properties,
-see <doc:Properties#Computed-Properties>.
+Para mais informações e para ver exemplos de propriedades computadas,
+veja <doc:Properties#Computed-Properties>.
 
-### Stored Variable Observers and Property Observers
+### Observadores de variáveis armazenadas e observadores de propriedades
 
-You can also declare a stored variable or property with `willSet` and `didSet` observers.
-A stored variable or property declared with observers has the following form:
+Você também pode declarar uma variável ou propriedade armazenada com observadores `willSet` e `didSet`.
+Uma variável ou propriedade armazenada declarada com observadores tem a seguinte forma:
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#> {
@@ -362,23 +361,23 @@ var <#variable name#>: <#type#> = <#expression#> {
 }
 ```
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class or structure declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, the observers are referred to as *stored variable observers*.
-When it's declared in the context of a class or structure declaration,
-the observers are referred to as *property observers*.
+Você define essa forma de declaração de variável no escopo global, no escopo local
+de uma função ou no contexto de uma declaração de classe ou estrutura.
+Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
+de uma função, os observadores são chamados de *observadores de variáveis armazenadas*.
+Quando é declarada no contexto de uma declaração de classe ou estrutura,
+os observadores são chamados de *observadores de propriedade*.
 
-You can add property observers to any stored property. You can also add property
-observers to any inherited property (whether stored or computed) by overriding
-the property within a subclass, as described in <doc:Inheritance#Overriding-Property-Observers>.
+Você pode adicionar observadores de propriedade a qualquer propriedade armazenada. Você também pode adicionar
+observadores de propriedade a qualquer propriedade herdada (armazenada ou computada) ao sobrescrever
+a propriedade dentro de uma subclasse, como descrito em <doc:Inheritance#Overriding-Property-Observers>.
 
-The initializer *expression* is optional in the context of a class or structure declaration,
-but required elsewhere. The *type* annotation is optional
-when the type can be inferred from the initializer *expression*.
-This expression is evaluated the first time you read the property's value.
-If you overwrite the property's initial value without reading it,
-this expression is evaluated before the first time you write to the property.
+A *expressão* de inicialização é opcional no contexto de uma declaração de classe ou estrutura,
+mas obrigatória nos demais casos. A anotação de *tipo* é opcional
+quando o tipo pode ser inferido a partir da *expressão* de inicialização.
+Essa expressão é avaliada na primeira vez que você lê o valor da propriedade.
+Se você sobrescrever o valor inicial da propriedade sem lê-lo,
+essa expressão é avaliada antes da primeira vez que você escrever na propriedade.
 
 <!--
   - test: `overwriting-property-without-writing`
@@ -400,38 +399,38 @@ this expression is evaluated before the first time you write to the property.
   ```
 -->
 
-The `willSet` and `didSet` observers provide a way to observe (and to respond appropriately)
-when the value of a variable or property is being set.
-The observers aren't called when the variable or property
-is first initialized.
-Instead, they're called only when the value is set outside of an initialization context.
+Os observadores `willSet` e `didSet` oferecem uma forma de observar (e de responder adequadamente)
+quando o valor de uma variável ou propriedade está sendo definido.
+Os observadores não são chamados quando a variável ou propriedade
+é inicializada pela primeira vez.
+Em vez disso, eles são chamados somente quando o valor é definido fora de um contexto de inicialização.
 
-A `willSet` observer is called just before the value of the variable or property
-is set. The new value is passed to the `willSet` observer as a constant,
-and therefore it can't be changed in the implementation of the `willSet` clause.
-The `didSet` observer is called immediately after the new value is set. In contrast
-to the `willSet` observer, the old value of the variable or property
-is passed to the `didSet` observer in case you still need access to it. That said,
-if you assign a value to a variable or property within its own `didSet` observer clause,
-that new value that you assign will replace the one that was just set and passed to
-the `willSet` observer.
+Um observador `willSet` é chamado logo antes de o valor da variável ou propriedade
+ser definido. O novo valor é passado ao observador `willSet` como uma constante,
+por isso ele não pode ser alterado na implementação da cláusula `willSet`.
+O observador `didSet` é chamado imediatamente depois que o novo valor é definido. Diferentemente
+do observador `willSet`, o valor antigo da variável ou propriedade
+é passado ao observador `didSet`, caso você ainda precise acessá-lo. Dito isso,
+se você atribuir um valor a uma variável ou propriedade dentro da própria cláusula `didSet`,
+esse novo valor substituirá o que acabou de ser definido e foi passado ao
+observador `willSet`.
 
-The *setter name* and enclosing parentheses in the `willSet` and `didSet` clauses are optional.
-If you provide setter names,
-they're used as the parameter names to the `willSet` and `didSet` observers.
-If you don't provide setter names,
-the default parameter name to the `willSet` observer is `newValue`
-and the default parameter name to the `didSet` observer is `oldValue`.
+O *nome do setter* e os parênteses que o envolvem nas cláusulas `willSet` e `didSet` são opcionais.
+Se você fornecer nomes para os setters,
+eles são usados como nomes dos parâmetros dos observadores `willSet` e `didSet`.
+Se você não fornecer nomes para os setters,
+o nome padrão do parâmetro do observador `willSet` é `newValue`
+e o nome padrão do parâmetro do observador `didSet` é `oldValue`.
 
-The `didSet` clause is optional when you provide a `willSet` clause.
-Likewise, the `willSet` clause is optional when you provide a `didSet` clause.
+A cláusula `didSet` é opcional quando você fornece uma cláusula `willSet`.
+Da mesma forma, a cláusula `willSet` é opcional quando você fornece uma cláusula `didSet`.
 
-If the body of the `didSet` observer refers to the old value,
-the getter is called before the observer,
-to make the old value available.
-Otherwise, the new value is stored without calling the superclass's getter.
-The example below shows a computed property that's defined by the superclass
-and overridden by its subclasses to add an observer.
+Se o corpo do observador `didSet` se referir ao valor antigo,
+o getter é chamado antes do observador,
+para disponibilizar o valor antigo.
+Caso contrário, o novo valor é armazenado sem chamar o getter da superclasse.
+O exemplo abaixo mostra uma propriedade computada definida pela superclasse
+e sobrescrita por suas subclasses para adicionar um observador.
 
 ```swift
 class Superclass {
@@ -511,8 +510,8 @@ newAndOld.x = 200
   ```
 -->
 
-For more information and to see an example of how to use property observers,
-see <doc:Properties#Property-Observers>.
+Para mais informações e para ver um exemplo de como usar observadores de propriedade,
+veja <doc:Properties#Property-Observers>.
 
 <!--
   - test: `cant-mix-get-set-and-didSet`
@@ -531,15 +530,15 @@ see <doc:Properties#Property-Observers>.
   ```
 -->
 
-### Type Variable Properties
+### Propriedades variáveis de tipo
 
-To declare a type variable property,
-mark the declaration with the `static` declaration modifier.
-Classes can mark type computed properties with the `class` declaration modifier instead
-to allow subclasses to override the superclass’s implementation.
-Type properties are discussed in <doc:Properties#Type-Properties>.
+Para declarar uma propriedade variável de tipo,
+marque a declaração com o modificador de declaração `static`.
+Classes podem marcar propriedades computadas de tipo com o modificador de declaração `class`
+para permitir que subclasses sobrescrevam a implementação da superclasse.
+Propriedades de tipo são discutidas em <doc:Properties#Type-Properties>.
 
-> Grammar of a variable declaration:
+> Gramática de uma declaração de variável:
 >
 > *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
 > *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
@@ -573,26 +572,26 @@ Type properties are discussed in <doc:Properties#Type-Properties>.
   types of those properties aren't computed/inferred.
 -->
 
-## Type Alias Declaration
+## Declaração de alias de tipo
 
-A *type alias declaration* introduces a named alias of an existing type into your program.
-Type alias declarations are declared using the `typealias` keyword and have the following form:
+Uma *declaração de alias de tipo* introduz um alias nomeado para um tipo existente no seu programa.
+Declarações de alias de tipo são feitas com a palavra-chave `typealias` e têm a seguinte forma:
 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
 
-After a type alias is declared, the aliased *name* can be used
-instead of the *existing type* everywhere in your program.
-The *existing type* can be a named type or a compound type.
-Type aliases don't create new types;
-they simply allow a name to refer to an existing type.
+Depois que um alias de tipo é declarado, o *nome* do alias pode ser usado
+no lugar do *tipo existente* em qualquer parte do seu programa.
+O *tipo existente* pode ser um tipo nomeado ou um tipo composto.
+Aliases de tipo não criam novos tipos;
+eles apenas permitem que um nome se refira a um tipo existente.
 
-A type alias declaration can use generic parameters
-to give a name to an existing generic type. The type alias
-can provide concrete types for some or all of the generic parameters
-of the existing type.
-For example:
+Uma declaração de alias de tipo pode usar parâmetros genéricos
+para dar um nome a um tipo genérico existente. O alias de tipo
+pode fornecer tipos concretos para alguns ou todos os parâmetros genéricos
+do tipo existente.
+Por exemplo:
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
@@ -614,9 +613,9 @@ var dictionary2: Dictionary<String, Int> = [:]
   ```
 -->
 
-When a type alias is declared with generic parameters, the constraints on those
-parameters must match exactly the constraints on the existing type's generic parameters.
-For example:
+Quando um alias de tipo é declarado com parâmetros genéricos, as restrições sobre esses
+parâmetros precisam corresponder exatamente às restrições dos parâmetros genéricos do tipo existente.
+Por exemplo:
 
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
@@ -630,14 +629,14 @@ typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
   ```
 -->
 
-Because the type alias and the existing type can be used interchangeably,
-the type alias can't introduce additional generic constraints.
+Como o alias de tipo e o tipo existente podem ser usados de forma intercambiável,
+o alias de tipo não pode introduzir restrições genéricas adicionais.
 
-A type alias can forward an existing type's generic parameters
-by omitting all generic parameters from the declaration.
-For example,
-the `Diccionario` type alias declared here
-has the same generic parameters and constraints as `Dictionary`.
+Um alias de tipo pode repassar os parâmetros genéricos de um tipo existente
+omitindo todos os parâmetros genéricos da declaração.
+Por exemplo,
+o alias de tipo `Diccionario` declarado aqui
+tem os mesmos parâmetros genéricos e restrições que `Dictionary`.
 
 ```swift
 typealias Diccionario = Dictionary
@@ -664,10 +663,10 @@ typealias Diccionario = Dictionary
   typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
 -->
 
-Inside a protocol declaration,
-a type alias can give a shorter and more convenient name
-to a type that's used frequently.
-For example:
+Dentro de uma declaração de protocolo,
+um alias de tipo pode dar um nome mais curto e mais conveniente
+a um tipo que é usado com frequência.
+Por exemplo:
 
 ```swift
 protocol Sequence {
@@ -696,13 +695,13 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
   ```
 -->
 
-Without this type alias,
-the `sum` function would have to refer to the associated type
-as `T.Iterator.Element` instead of `T.Element`.
+Sem esse alias de tipo,
+a função `sum` teria que se referir ao tipo associado
+como `T.Iterator.Element` em vez de `T.Element`.
 
-See also <doc:Declarations#Protocol-Associated-Type-Declaration>.
+Veja também <doc:Declarations#Protocol-Associated-Type-Declaration>.
 
-> Grammar of a type alias declaration:
+> Gramática de uma declaração de alias de tipo:
 >
 > *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
 > *typealias-name* → *identifier* \
@@ -716,12 +715,13 @@ See also <doc:Declarations#Protocol-Associated-Type-Declaration>.
   typealias-assignment -> ``=`` type
 -->
 
-## Function Declaration
 
-A *function declaration* introduces a function or method into your program.
-A function declared in the context of class, structure, enumeration, or protocol
-is referred to as a *method*.
-Function declarations are declared using the `func` keyword and have the following form:
+## Declaração de função
+
+Uma *declaração de função* introduz uma função ou método no seu programa.
+Uma função declarada no contexto de uma classe, estrutura, enumeração ou protocolo
+é chamada de *método*.
+Declarações de função são feitas com a palavra-chave `func` e têm a seguinte forma:
 
 ```swift
 func <#function name#>(<#parameters#>) -> <#return type#> {
@@ -729,8 +729,8 @@ func <#function name#>(<#parameters#>) -> <#return type#> {
 }
 ```
 
-If the function has a return type of `Void`,
-the return type can be omitted as follows:
+Se a função tiver o tipo de retorno `Void`,
+o tipo de retorno pode ser omitido, como em:
 
 ```swift
 func <#function name#>(<#parameters#>) {
@@ -738,20 +738,20 @@ func <#function name#>(<#parameters#>) {
 }
 ```
 
-The type of each parameter must be included ---
-it can't be inferred.
-If you write `inout` in front of a parameter's type,
-the parameter can be modified inside the scope of the function.
-In-out parameters are discussed in detail
-in <doc:Declarations#In-Out-Parameters>, below.
+O tipo de cada parâmetro deve ser informado:
+ele não pode ser inferido.
+Se você escrever `inout` antes do tipo de um parâmetro,
+o parâmetro pode ser modificado dentro do escopo da função.
+Parâmetros in-out são discutidos em detalhes
+em <doc:Declarations#In-Out-Parameters>, mais abaixo.
 
-A function declaration whose *statements*
-include only a single expression
-is understood to return the value of that expression.
-This implicit return syntax is considered
-only when the expression's type and the function's return type
-aren't `Void`
-and aren't an enumeration like `Never` that doesn't have any cases.
+Uma declaração de função cujas *instruções*
+incluem apenas uma única expressão
+é entendida como retornando o valor dessa expressão.
+Essa sintaxe de retorno implícito é considerada
+somente quando o tipo da expressão e o tipo de retorno da função
+não são `Void`
+e não são uma enumeração como `Never` que não tem nenhum caso.
 
 <!--
   As of Swift 5.3,
@@ -759,44 +759,44 @@ and aren't an enumeration like `Never` that doesn't have any cases.
   so just say that directly instead of using & defining the compiler jargon.
 -->
 
-Functions can return multiple values using a tuple type
-as the return type of the function.
+Funções podem retornar múltiplos valores usando um tipo tupla
+como tipo de retorno da função.
 
 <!--
   TODO: ^-- Add some more here.
 -->
 
-A function definition can appear inside another function declaration.
-This kind of function is known as a *nested function*.
+A definição de uma função pode aparecer dentro de outra declaração de função.
+Esse tipo de função é conhecido como *função aninhada*.
 
-A nested function is nonescaping if it captures
-a value that's guaranteed to never escape ---
-such as an in-out parameter ---
-or passed as a nonescaping function argument.
-Otherwise, the nested function is an escaping function.
+Uma função aninhada é não escapante se capturar
+um valor que é garantido nunca escapar,
+como um parâmetro in-out,
+ou se for passada como argumento de função não escapante.
+Caso contrário, a função aninhada é uma função escapante.
 
-For a discussion of nested functions,
-see <doc:Functions#Nested-Functions>.
+Para uma discussão sobre funções aninhadas,
+veja <doc:Functions#Nested-Functions>.
 
-### Parameter Names
+### Nomes de parâmetros
 
-Function parameters are a comma-separated list
-where each parameter has one of several forms.
-The order of arguments in a function call
-must match the order of parameters in the function's declaration.
-The simplest entry in a parameter list has the following form:
+Parâmetros de função formam uma lista separada por vírgulas,
+em que cada parâmetro tem uma de várias formas.
+A ordem dos argumentos em uma chamada de função
+deve corresponder à ordem dos parâmetros na declaração da função.
+A entrada mais simples em uma lista de parâmetros tem a seguinte forma:
 
 ```swift
 <#parameter name#>: <#parameter type#>
 ```
 
-A parameter has a name,
-which is used within the function body,
-as well as an argument label,
-which is used when calling the function or method.
-By default,
-parameter names are also used as argument labels.
-For example:
+Um parâmetro tem um nome,
+que é usado dentro do corpo da função,
+e também um rótulo de argumento,
+que é usado ao chamar a função ou o método.
+Por padrão,
+os nomes dos parâmetros também são usados como rótulos de argumento.
+Por exemplo:
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
@@ -819,23 +819,23 @@ f(x: 1, y: 2) // both x and y are labeled
   Tracking bug is <rdar://problem/35301593>
 -->
 
-You can override the default behavior for argument labels
-with one of the following forms:
+Você pode substituir o comportamento padrão dos rótulos de argumento
+com uma das seguintes formas:
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter type#>
 _ <#parameter name#>: <#parameter type#>
 ```
 
-A name before the parameter name
-gives the parameter an explicit argument label,
-which can be different from the parameter name.
-The corresponding argument must use the given argument label
-in function or method calls.
+Um nome antes do nome do parâmetro
+dá ao parâmetro um rótulo de argumento explícito,
+que pode ser diferente do nome do parâmetro.
+O argumento correspondente deve usar esse rótulo de argumento
+nas chamadas de função ou de método.
 
-An underscore (`_`) before a parameter name
-suppresses the argument label.
-The corresponding argument must have no label in function or method calls.
+Um sublinhado (`_`) antes do nome de um parâmetro
+suprime o rótulo de argumento.
+O argumento correspondente não deve ter rótulo nas chamadas de função ou de método.
 
 ```swift
 func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
@@ -851,28 +851,28 @@ repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
   ```
 -->
 
-### Parameter Modifiers
+### Modificadores de parâmetro
 
-A *parameter modifier* changes how an argument is passed to the function.
+Um *modificador de parâmetro* muda a forma como um argumento é passado para a função.
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
 ```
 
-To use a parameter modifier,
-write `inout`, `borrowing`, or `consuming`
-before the argument's type.
+Para usar um modificador de parâmetro,
+escreva `inout`, `borrowing` ou `consuming`
+antes do tipo do argumento.
 
 ```swift
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
 ```
 
-#### In-Out Parameters
+#### Parâmetros in-out
 
-By default, function arguments in Swift are passed by value:
-Any changes made within the function are not visible in the caller.
-To make an in-out parameter instead,
-you apply the `inout` parameter modifier.
+Por padrão, argumentos de função em Swift são passados por valor:
+quaisquer mudanças feitas dentro da função não são visíveis para quem chamou.
+Para criar um parâmetro in-out,
+você aplica o modificador de parâmetro `inout`.
 
 ```swift
 func someFunction(a: inout Int) {
@@ -880,9 +880,9 @@ func someFunction(a: inout Int) {
 }
 ```
 
-When calling a function that includes in-out parameters,
-the in-out argument must be prefixed with an ampersand (`&`)
-to mark that the function call can change the argument's value.
+Ao chamar uma função que inclui parâmetros in-out,
+o argumento in-out deve ser precedido de um e comercial (`&`)
+para marcar que a chamada da função pode alterar o valor do argumento.
 
 ```swift
 var x = 7
@@ -890,38 +890,38 @@ someFunction(a: &x)
 print(x)  // Prints "8"
 ```
 
-In-out parameters are passed as follows:
+Parâmetros in-out são passados da seguinte forma:
 
-1. When the function is called,
-   the value of the argument is copied.
-2. In the body of the function,
-   the copy is modified.
-3. When the function returns,
-   the copy's value is assigned to the original argument.
+1. Quando a função é chamada,
+   o valor do argumento é copiado.
+2. No corpo da função,
+   a cópia é modificada.
+3. Quando a função retorna,
+   o valor da cópia é atribuído ao argumento original.
 
-This behavior is known as *copy-in copy-out*
-or *call by value result*.
-For example,
-when a computed property or a property with observers
-is passed as an in-out parameter,
-its getter is called as part of the function call
-and its setter is called as part of the function return.
+Esse comportamento é conhecido como *copy-in copy-out*
+ou *call by value result*.
+Por exemplo,
+quando uma propriedade computada ou uma propriedade com observadores
+é passada como parâmetro in-out,
+seu getter é chamado como parte da chamada da função
+e seu setter é chamado como parte do retorno da função.
 
-As an optimization,
-when the argument is a value stored at a physical address in memory,
-the same memory location is used both inside and outside the function body.
-The optimized behavior is known as *call by reference*;
-it satisfies all of the requirements
-of the copy-in copy-out model
-while removing the overhead of copying.
-Write your code using the model given by copy-in copy-out,
-without depending on the call-by-reference optimization,
-so that it behaves correctly with or without the optimization.
+Como otimização,
+quando o argumento é um valor armazenado em um endereço físico na memória,
+a mesma posição de memória é usada tanto dentro quanto fora do corpo da função.
+Esse comportamento otimizado é conhecido como *call by reference*;
+ele atende a todos os requisitos
+do modelo copy-in copy-out
+e elimina o custo da cópia.
+Escreva seu código seguindo o modelo copy-in copy-out,
+sem depender da otimização call by reference,
+para que ele se comporte corretamente com ou sem a otimização.
 
-Within a function, don't access a value that was passed as an in-out argument,
-even if the original value is available in the current scope.
-Accessing the original is a simultaneous access of the value,
-which violates memory exclusivity.
+Dentro de uma função, não acesse um valor que foi passado como argumento in-out,
+mesmo que o valor original esteja disponível no escopo atual.
+Acessar o original é um acesso simultâneo ao valor,
+o que viola a exclusividade de memória.
 
 ```swift
 var someValue: Int
@@ -933,8 +933,8 @@ func someFunction(a: inout Int) {
 someFunction(a: &someValue)
 ```
 
-For the same reason,
-you can't pass the same value to multiple in-out parameters.
+Pelo mesmo motivo,
+você não pode passar o mesmo valor para múltiplos parâmetros in-out.
 
 ```swift
 var someValue: Int
@@ -947,8 +947,8 @@ func someFunction(a: inout Int, b: inout Int) {
 someFunction(a: &someValue, b: &someValue)
 ```
 
-For more information about memory safety and memory exclusivity,
-see <doc:MemorySafety>.
+Para mais informações sobre segurança de memória e exclusividade de memória,
+veja <doc:MemorySafety>.
 
 <!--
   When the call-by-reference optimization is in play,
@@ -958,11 +958,11 @@ see <doc:MemorySafety>.
   behavioral differences that happen because of call by reference.
 -->
 
-A closure or nested function
-that captures an in-out parameter must be nonescaping.
-If you need to capture an in-out parameter
-without mutating it,
-use a capture list to explicitly capture the parameter immutably.
+Um closure ou uma função aninhada
+que captura um parâmetro in-out deve ser não escapante.
+Se você precisar capturar um parâmetro in-out
+sem modificá-lo,
+use uma lista de captura para capturar explicitamente o parâmetro de forma imutável.
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
@@ -987,10 +987,10 @@ func someFunction(a: inout Int) -> () -> Int {
   ```
 -->
 
-If you need to capture and mutate an in-out parameter,
-use an explicit local copy,
-such as in multithreaded code that ensures
-all mutation has finished before the function returns.
+Se você precisar capturar e modificar um parâmetro in-out,
+use uma cópia local explícita,
+como em código multithread que garante
+que toda a modificação terminou antes de a função retornar.
 
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
@@ -1022,8 +1022,8 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
   ```
 -->
 
-For more discussion and examples of in-out parameters,
-see <doc:Functions#In-Out-Parameters>.
+Para mais discussão e exemplos de parâmetros in-out,
+veja <doc:Functions#In-Out-Parameters>.
 
 <!--
   - test: `escaping-cant-capture-inout`
@@ -1059,24 +1059,23 @@ see <doc:Functions#In-Out-Parameters>.
   ```
 -->
 
-#### Borrowing and Consuming Parameters
+#### Parâmetros borrowing e consuming
 
-By default, Swift uses a set of rules
-to automatically manage object lifetime across function calls,
-copying values when required.
-The default rules are designed to minimize overhead in most cases ---
-if you want more specific control,
-you can apply the `borrowing` or `consuming` parameter modifier.
-In this case,
-use `copy` to explicitly mark copy operations.
-In addition,
-values of a noncopyable type must be passed as either borrowing or consuming.
+Por padrão, Swift usa um conjunto de regras
+para gerenciar automaticamente o tempo de vida dos objetos entre chamadas de função,
+copiando valores quando necessário.
+As regras padrão são feitas para minimizar o custo na maioria dos casos.
+Se você quiser um controle mais específico,
+pode aplicar o modificador de parâmetro `borrowing` ou `consuming`.
+Nesse caso,
+use `copy` para marcar explicitamente as operações de cópia.
+Além disso,
+valores de um tipo não copiável devem ser passados como borrowing ou consuming.
 
-Regardless of whether you use the default rules,
-Swift guarantees that object lifetime and
-ownership are correctly managed in all cases.
-These parameter modifiers impact only the relative efficiency
-of particular usage patterns, not correctness.
+Independentemente de você usar as regras padrão, o Swift garante que o tempo de vida
+e a posse dos objetos sejam gerenciados corretamente em todos os casos.
+Esses modificadores de parâmetro afetam apenas a eficiência relativa
+de padrões de uso específicos, não a corretude.
 
 <!--
 TODO: Describe the default rules.
@@ -1085,12 +1084,12 @@ and everything else is borrowing.
 Where are copies implicitly inserted?
 -->
 
-The `borrowing` modifier indicates that the function
-does not keep the parameter's value.
-In this case, the caller maintains ownership of the object
-and the responsibility for the object's lifetime.
-Using `borrowing` minimizes overhead when the function
-uses the object only transiently.
+O modificador `borrowing` indica que a função
+não guarda o valor do parâmetro.
+Nesse caso, quem chama mantém a posse do objeto
+e a responsabilidade pelo tempo de vida dele.
+Usar `borrowing` minimiza o custo quando a função
+usa o objeto apenas de forma transitória.
 
 ```swift
 // `isLessThan` does not keep either argument
@@ -1099,9 +1098,9 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-If the function needs to keep the parameter's value
-for example, by storing it in a global variable ---
-you use `copy` to explicitly copy that value.
+Se a função precisar guardar o valor do parâmetro,
+por exemplo, armazenando-o em uma variável global,
+use `copy` para copiar explicitamente esse valor.
 
 ```swift
 // As above, but this `isLessThan` also wants to record the smallest value
@@ -1115,11 +1114,11 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 }
 ```
 
-Conversely,
-the `consuming` parameter modifier indicates
-that the function takes ownership of the value,
-accepting responsibility for either storing or destroying it
-before the function returns.
+Por outro lado,
+o modificador de parâmetro `consuming` indica
+que a função assume a posse do valor,
+assumindo a responsabilidade de armazená-lo ou destruí-lo
+antes de a função retornar.
 
 ```swift
 // `store` keeps its argument, so mark it `consuming`
@@ -1128,17 +1127,17 @@ func store(a: consuming A) {
 }
 ```
 
-Using `consuming` minimizes overhead when the caller no longer
-needs to use the object after the function call.
+Usar `consuming` minimiza o custo quando quem chama
+não precisa mais usar o objeto depois da chamada da função.
 
 ```swift
 // Usually, this is the last thing you do with a value
 store(a: value)
 ```
 
-If you keep using a copyable object after the function call,
-the compiler automatically makes a copy of that object
-before the function call.
+Se você continuar usando um objeto copiável depois da chamada da função,
+o compilador faz automaticamente uma cópia desse objeto
+antes da chamada da função.
 
 ```swift
 // The compiler inserts an implicit copy here
@@ -1146,9 +1145,9 @@ store(a: someValue)  // This function consumes someValue
 print(someValue)  // This uses the copy of someValue
 ```
 
-Unlike `inout`, neither `borrowing` nor
-`consuming` parameters require any special
-notation when you call the function:
+Diferentemente de `inout`, parâmetros `borrowing` e `consuming`
+não exigem nenhuma notação especial
+quando você chama a função:
 
 ```swift
 func someFunction(a: borrowing A, b: consuming B) { ... }
@@ -1156,14 +1155,13 @@ func someFunction(a: borrowing A, b: consuming B) { ... }
 someFunction(a: someA, b: someB)
 ```
 
-The explicit use of either `borrowing` or `consuming`
-indicates your intention to more tightly control
-the overhead of runtime ownership management.
-Because copies can cause unexpected runtime ownership
-operations,
-parameters marked with either of these
-modifiers cannot be copied unless you
-use an explicit `copy` keyword:
+O uso explícito de `borrowing` ou `consuming`
+indica sua intenção de controlar com mais precisão
+o custo do gerenciamento de posse em tempo de execução.
+Como cópias podem causar operações inesperadas de posse em tempo de execução,
+parâmetros marcados com um desses modificadores
+não podem ser copiados, a menos que você
+use a palavra-chave explícita `copy`:
 
 ```swift
 func borrowingFunction1(a: borrowing A) {
@@ -1205,12 +1203,12 @@ func consumingFunction3(a: consuming A) {
   TODO: Any change of parameter modifier is ABI-breaking
 -->
 
-### Special Kinds of Parameters
+### Tipos especiais de parâmetros
 
-Parameters can be ignored,
-take a variable number of values,
-and provide default values
-using the following forms:
+Parâmetros podem ser ignorados,
+receber um número variável de valores
+e ter valores padrão,
+usando as seguintes formas:
 
 ```swift
 _ : <#parameter type#>
@@ -1218,24 +1216,24 @@ _ : <#parameter type#>
 <#parameter name#>: <#parameter type#> = <#default argument value#>
 ```
 
-An underscore (`_`) parameter
-is explicitly ignored and can't be accessed within the body of the function.
+Um parâmetro sublinhado (`_`)
+é explicitamente ignorado e não pode ser acessado dentro do corpo da função.
 
-A parameter with a base type name followed immediately by three dots (`...`)
-is understood as a variadic parameter.
-A parameter that immediately follows a variadic parameter
-must have an argument label.
-A function can have multiple variadic parameters.
-A variadic parameter is treated as an array that contains elements of the base type name.
-For example, the variadic parameter `Int...` is treated as `[Int]`.
-For an example that uses a variadic parameter,
-see <doc:Functions#Variadic-Parameters>.
+Um parâmetro cujo tipo base é seguido imediatamente por três pontos (`...`)
+é entendido como parâmetro variádico.
+Um parâmetro que vem logo depois de um parâmetro variádico
+precisa ter um rótulo de argumento.
+Uma função pode ter múltiplos parâmetros variádicos.
+Um parâmetro variádico é tratado como um array que contém elementos do tipo base.
+Por exemplo, o parâmetro variádico `Int...` é tratado como `[Int]`.
+Para um exemplo que usa parâmetro variádico,
+veja <doc:Functions#Variadic-Parameters>.
 
-A parameter with an equal sign (`=`) and an expression after its type
-is understood to have a default value of the given expression.
-The given expression is evaluated when the function is called.
-If the parameter is omitted when calling the function,
-the default value is used instead.
+Um parâmetro com um sinal de igual (`=`) e uma expressão depois do tipo
+é entendido como tendo um valor padrão igual à expressão dada.
+A expressão dada é avaliada quando a função é chamada.
+Se o parâmetro for omitido na chamada da função,
+o valor padrão é usado no lugar.
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
@@ -1287,24 +1285,24 @@ f(7)      // Invalid, missing argument label
   ```
 -->
 
-### Special Kinds of Methods
+### Tipos especiais de métodos
 
-Methods on an enumeration or a structure
-that modify `self` must be marked with the `mutating` declaration modifier.
+Métodos de uma enumeração ou de uma estrutura
+que modificam `self` devem ser marcados com o modificador de declaração `mutating`.
 
-Methods that override a superclass method
-must be marked with the `override` declaration modifier.
-It's a compile-time error to override a method without the `override` modifier
-or to use the `override` modifier on a method
-that doesn't override a superclass method.
+Métodos que sobrescrevem um método da superclasse
+devem ser marcados com o modificador de declaração `override`.
+É um erro de compilação sobrescrever um método sem o modificador `override`
+ou usar o modificador `override` em um método
+que não sobrescreve um método da superclasse.
 
-Methods associated with a type
-rather than an instance of a type
-must be marked with the `static` declaration modifier for enumerations and structures,
-or with either the `static` or `class` declaration modifier for classes.
-A class type method marked with the `class` declaration modifier
-can be overridden by a subclass implementation;
-a class type method marked with `class final` or `static` can't be overridden.
+Métodos associados a um tipo,
+e não a uma instância do tipo,
+devem ser marcados com o modificador de declaração `static` em enumerações e estruturas,
+ou com `static` ou `class` em classes.
+Um método de tipo de classe marcado com o modificador de declaração `class`
+pode ser sobrescrito pela implementação de uma subclasse;
+um método de tipo de classe marcado com `class final` ou `static` não pode ser sobrescrito.
 
 <!--
   - test: `overriding-class-methods-err`
@@ -1340,32 +1338,32 @@ a class type method marked with `class final` or `static` can't be overridden.
   ```
 -->
 
-### Methods with Special Names
+### Métodos com nomes especiais
 
-Several methods that have special names
-enable syntactic sugar for function call syntax.
-If a type defines one of these methods,
-instances of the type can be used in function call syntax.
-The function call is understood to be a call to
-one of the specially named methods on that instance.
+Vários métodos com nomes especiais
+habilitam açúcar sintático para a sintaxe de chamada de função.
+Se um tipo define um desses métodos,
+instâncias do tipo podem ser usadas na sintaxe de chamada de função.
+A chamada de função é entendida como uma chamada
+a um dos métodos com nome especial nessa instância.
 
-A class, structure, or enumeration type
-can support function call syntax
-by defining a `dynamicallyCall(withArguments:)` method
-or a `dynamicallyCall(withKeywordArguments:)` method,
-as described in <doc:Attributes#dynamicCallable>,
-or by defining a call-as-function method, as described below.
-If the type defines
-both a call-as-function method
-and one of the methods used by the `dynamicCallable` attribute,
-the compiler gives preference to the call-as-function method
-in circumstances where either method could be used.
+Uma classe, estrutura ou tipo enumeração
+pode oferecer suporte à sintaxe de chamada de função
+definindo um método `dynamicallyCall(withArguments:)`
+ou um método `dynamicallyCall(withKeywordArguments:)`,
+como descrito em <doc:Attributes#dynamicCallable>,
+ou definindo um método call-as-function, como descrito abaixo.
+Se o tipo definir
+tanto um método call-as-function
+quanto um dos métodos usados pelo atributo `dynamicCallable`,
+o compilador dá preferência ao método call-as-function
+em situações em que qualquer um dos dois poderia ser usado.
 
-The name of a call-as-function method is `callAsFunction()`,
-or another name that begins with `callAsFunction(`
-and adds labeled or unlabeled arguments ---
-for example, `callAsFunction(_:_:)` and `callAsFunction(something:)`
-are also valid call-as-function method names.
+O nome de um método call-as-function é `callAsFunction()`,
+ou outro nome que começa com `callAsFunction(`
+e acrescenta argumentos com ou sem rótulo ---
+por exemplo, `callAsFunction(_:_:)` e `callAsFunction(something:)`
+também são nomes válidos de método call-as-function.
 
 <!--
   Above, callAsFunction( is in code voice even though
@@ -1374,7 +1372,7 @@ are also valid call-as-function method names.
   to what we're trying to express here.
 -->
 
-The following function calls are equivalent:
+As seguintes chamadas de função são equivalentes:
 
 ```swift
 struct CallableStruct {
@@ -1408,22 +1406,22 @@ callable.callAsFunction(4, scale: 2)
   ```
 -->
 
-The call-as-function methods
-and the methods from the `dynamicCallable` attribute
-make different trade-offs between
-how much information you encode into the type system
-and how much dynamic behavior is possible at runtime.
-When you declare a call-as-function method,
-you specify the number of arguments,
-and each argument's type and label.
-The `dynamicCallable` attribute's methods specify only the type
-used to hold the array of arguments.
+Os métodos call-as-function
+e os métodos do atributo `dynamicCallable`
+fazem trocas diferentes entre
+quanta informação você codifica no sistema de tipos
+e quanto comportamento dinâmico é possível em tempo de execução.
+Ao declarar um método call-as-function,
+você especifica o número de argumentos,
+e o tipo e o rótulo de cada argumento.
+Os métodos do atributo `dynamicCallable` especificam apenas o tipo
+usado para guardar o array de argumentos.
 
-Defining a call-as-function method,
-or a method from the `dynamicCallable` attribute,
-doesn't let you use an instance of that type
-as if it were a function in any context other than a function call expression.
-For example:
+Definir um método call-as-function,
+ou um método do atributo `dynamicCallable`,
+não permite usar uma instância desse tipo
+como se fosse uma função em qualquer contexto que não seja uma expressão de chamada de função.
+Por exemplo:
 
 ```swift
 let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
@@ -1449,16 +1447,16 @@ let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
   ```
 -->
 
-The `subscript(dynamicMember:)` subscript
-enables syntactic sugar for member lookup,
-as described in <doc:Attributes#dynamicMemberLookup>.
+O subscript `subscript(dynamicMember:)`
+habilita açúcar sintático para busca de membros,
+como descrito em <doc:Attributes#dynamicMemberLookup>.
 
-### Throwing Functions and Methods
+### Funções e métodos que lançam erros
 
-Functions and methods that can throw an error must be marked with the `throws` keyword.
-These functions and methods are known as *throwing functions*
-and *throwing methods*.
-They have the following form:
+Funções e métodos que podem lançar um erro devem ser marcados com a palavra-chave `throws`.
+Essas funções e métodos são conhecidos como *funções que lançam erros*
+e *métodos que lançam erros*.
+Eles têm a seguinte forma:
 
 ```swift
 func <#function name#>(<#parameters#>) throws -> <#return type#> {
@@ -1466,7 +1464,7 @@ func <#function name#>(<#parameters#>) throws -> <#return type#> {
 }
 ```
 
-A function that throws a specific error type has the following form:
+Uma função que lança um tipo de erro específico tem a seguinte forma:
 
 ```swift
 func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#> {
@@ -1474,35 +1472,35 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 }
 ```
 
-Calls to a throwing function or method must be wrapped in a `try` or `try!` expression
-(that is, in the scope of a `try` or `try!` operator).
+Chamadas a uma função ou método que lança erros devem ser envolvidas em uma expressão `try` ou `try!`
+(isto é, no escopo de um operador `try` ou `try!`).
 
-A function's type includes whether it can throw an error
-and what type of error it throws.
-This subtype relationship means, for example, you can use a nonthrowing function
-in a context where a throwing one is expected.
-For more information about the type of a throwing function,
-see <doc:Types#Function-Type>.
-For examples of working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-the-Error-Type>.
+O tipo de uma função inclui se ela pode lançar um erro
+e qual tipo de erro ela lança.
+Essa relação de subtipo significa, por exemplo, que você pode usar uma função que não lança erros
+em um contexto em que se espera uma que lança.
+Para mais informações sobre o tipo de uma função que lança erros,
+veja <doc:Types#Function-Type>.
+Para exemplos de trabalho com erros que têm tipo explícito,
+veja <doc:ErrorHandling#Specifying-the-Error-Type>.
 
-You can't overload a function based only on whether the function can throw an error.
-That said,
-you can overload a function based on whether a function *parameter* can throw an error.
+Você não pode sobrecarregar uma função apenas com base em se ela pode lançar um erro.
+Dito isso,
+você pode sobrecarregar uma função com base em se um *parâmetro* da função pode lançar um erro.
 
-A throwing method can't override a nonthrowing method,
-and a throwing method can't satisfy a protocol requirement for a nonthrowing method.
-That said, a nonthrowing method can override a throwing method,
-and a nonthrowing method can satisfy a protocol requirement for a throwing method.
+Um método que lança erros não pode sobrescrever um método que não lança erros,
+e um método que lança erros não pode satisfazer um requisito de protocolo para um método que não lança erros.
+Dito isso, um método que não lança erros pode sobrescrever um método que lança erros,
+e um método que não lança erros pode satisfazer um requisito de protocolo para um método que lança erros.
 
-### Rethrowing Functions and Methods
+### Funções e métodos com rethrows
 
-A function or method can be declared with the `rethrows` keyword
-to indicate that it throws an error only if one of its function parameters throws an error.
-These functions and methods are known as *rethrowing functions*
-and *rethrowing methods*.
-Rethrowing functions and methods
-must have at least one throwing function parameter.
+Uma função ou método pode ser declarado com a palavra-chave `rethrows`
+para indicar que lança um erro somente se um de seus parâmetros de função lançar um erro.
+Essas funções e métodos são conhecidos como *funções com rethrows*
+e *métodos com rethrows*.
+Funções e métodos com rethrows
+precisam ter pelo menos um parâmetro de função que lança erros.
 
 ```swift
 func someFunction(callback: () throws -> Void) rethrows {
@@ -1520,17 +1518,17 @@ func someFunction(callback: () throws -> Void) rethrows {
   ```
 -->
 
-A rethrowing function or method can contain a `throw` statement
-only inside a `catch` clause.
-This lets you call the throwing function inside a `do`-`catch` statement
-and handle errors in the `catch` clause by throwing a different error.
-In addition,
-the `catch` clause must handle
-only errors thrown by one of the rethrowing function's
-throwing parameters.
-For example, the following is invalid
-because the `catch` clause would handle
-the error thrown by `alwaysThrows()`.
+Uma função ou método com rethrows pode conter uma instrução `throw`
+somente dentro de uma cláusula `catch`.
+Isso permite chamar a função que lança erros dentro de uma instrução `do`-`catch`
+e tratar os erros na cláusula `catch` lançando um erro diferente.
+Além disso,
+a cláusula `catch` deve tratar
+apenas erros lançados por um dos parâmetros que lançam erros
+da função com rethrows.
+Por exemplo, o código a seguir é inválido
+porque a cláusula `catch` trataria
+o erro lançado por `alwaysThrows()`.
 
 ```swift
 func alwaysThrows() throws {
@@ -1590,13 +1588,13 @@ func someFunction(callback: () throws -> Void) rethrows {
   ```
 -->
 
-A throwing method can't override a rethrowing method,
-and a throwing method can't satisfy a protocol requirement for a rethrowing method.
-That said, a rethrowing method can override a throwing method,
-and a rethrowing method can satisfy a protocol requirement for a throwing method.
+Um método que lança erros não pode sobrescrever um método com rethrows,
+e um método que lança erros não pode satisfazer um requisito de protocolo para um método com rethrows.
+Dito isso, um método com rethrows pode sobrescrever um método que lança erros,
+e um método com rethrows pode satisfazer um requisito de protocolo para um método que lança erros.
 
-An alternative to rethrowing is throwing a specific error type in generic code.
-For example:
+Uma alternativa a rethrows é lançar um tipo de erro específico em código genérico.
+Por exemplo:
 
 ```swift
 func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
@@ -1604,11 +1602,11 @@ func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
 }
 ```
 
-This approach to propagating an error
-preserves type information about the error.
-However, unlike marking a function `rethrows`,
-this approach doesn't prevent the function
-from throwing an error of the same type.
+Essa abordagem de propagar um erro
+preserva a informação de tipo sobre o erro.
+No entanto, diferentemente de marcar a função com `rethrows`,
+essa abordagem não impede que a função
+lance um erro do mesmo tipo.
 
 <!--
 TODO: Revisit the comparison between rethrows and throws(E) above,
@@ -1617,12 +1615,12 @@ since it seems likely that the latter will generally replace the former.
 See also rdar://128972373
 -->
 
-### Asynchronous Functions and Methods
+### Funções e métodos assíncronos
 
-Functions and methods that run asynchronously must be marked with the `async` keyword.
-These functions and methods are known as *asynchronous functions*
-and *asynchronous methods*.
-They have the following form:
+Funções e métodos que rodam de forma assíncrona devem ser marcados com a palavra-chave `async`.
+Essas funções e métodos são conhecidos como *funções assíncronas*
+e *métodos assíncronos*.
+Eles têm a seguinte forma:
 
 ```swift
 func <#function name#>(<#parameters#>) async -> <#return type#> {
@@ -1630,28 +1628,28 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 }
 ```
 
-Calls to an asynchronous function or method
-must be wrapped in an `await` expression ---
-that is, they must be in the scope of an `await` operator.
+Chamadas a uma função ou método assíncrono
+devem ser envolvidas em uma expressão `await`,
+isto é, precisam estar no escopo de um operador `await`.
 
-The `async` keyword is part of the function's type,
-and synchronous functions are subtypes of asynchronous functions.
-As a result, you can use a synchronous function
-in a context where an asynchronous function is expected.
-For example,
-you can override an asynchronous method with a synchronous method,
-and a synchronous method can satisfy a protocol requirement
-that requires an asynchronous method.
+A palavra-chave `async` faz parte do tipo da função,
+e funções síncronas são subtipos de funções assíncronas.
+Por isso, você pode usar uma função síncrona
+em um contexto em que se espera uma função assíncrona.
+Por exemplo,
+você pode sobrescrever um método assíncrono com um método síncrono,
+e um método síncrono pode satisfazer um requisito de protocolo
+que exige um método assíncrono.
 
-You can overload a function based on whether or not the function is asynchronous.
-At the call site, context determines which overload is used:
-In an asynchronous context, the asynchronous function is used,
-and in a synchronous context, the synchronous function is used.
+Você pode sobrecarregar uma função com base em ela ser ou não assíncrona.
+No ponto de chamada, o contexto determina qual sobrecarga é usada:
+em um contexto assíncrono, a função assíncrona é usada,
+e em um contexto síncrono, a função síncrona é usada.
 
-An asynchronous method can't override a synchronous method,
-and an asynchronous method can't satisfy a protocol requirement for a synchronous method.
-That said, a synchronous method can override an asynchronous method,
-and a synchronous method can satisfy a protocol requirement for an asynchronous method.
+Um método assíncrono não pode sobrescrever um método síncrono,
+e um método assíncrono não pode satisfazer um requisito de protocolo para um método síncrono.
+Dito isso, um método síncrono pode sobrescrever um método assíncrono,
+e um método síncrono pode satisfazer um requisito de protocolo para um método assíncrono.
 
 <!--
   - test: `sync-satisfy-async-protocol-requirements`
@@ -1667,28 +1665,28 @@ and a synchronous method can satisfy a protocol requirement for an asynchronous 
   ```
 -->
 
-### Functions that Never Return
+### Funções que nunca retornam
 
-Swift defines a [`Never`][] type,
-which indicates that a function or method doesn't return to its caller.
-Functions and methods with the `Never` return type are called *nonreturning*.
-Nonreturning functions and methods either cause an irrecoverable error
-or begin a sequence of work that continues indefinitely.
-This means that
-code that would otherwise run immediately after the call is never executed.
-Throwing and rethrowing functions can transfer program control
-to an appropriate `catch` block, even when they're nonreturning.
+O Swift define um tipo [`Never`][],
+que indica que uma função ou método não retorna para quem o chamou.
+Funções e métodos com tipo de retorno `Never` são chamados de *não retornantes*.
+Funções e métodos não retornantes ou causam um erro irrecuperável
+ou iniciam uma sequência de trabalho que continua indefinidamente.
+Isso significa que
+o código que, de outra forma, rodaria logo após a chamada nunca é executado.
+Funções que lançam erros e funções com rethrows podem transferir o controle do programa
+para um bloco `catch` apropriado, mesmo quando são não retornantes.
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
-A nonreturning function or method can be called to conclude the `else` clause
-of a guard statement,
-as discussed in <doc:Statements#Guard-Statement>.
+Uma função ou método não retornante pode ser chamado para concluir a cláusula `else`
+de uma instrução guard,
+como discutido em <doc:Statements#Guard-Statement>.
 
-You can override a nonreturning method,
-but the new method must preserve its return type and nonreturning behavior.
+Você pode sobrescrever um método não retornante,
+mas o novo método deve preservar o tipo de retorno e o comportamento não retornante.
 
-> Grammar of a function declaration:
+> Gramática de uma declaração de função:
 >
 > *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
 >
@@ -1720,42 +1718,41 @@ but the new method must preserve its return type and nonreturning behavior.
   which is a definition and declaration corner case.
   Let's just deal with this difference in prose.
 -->
+## Declaração de enumeração
 
-## Enumeration Declaration
+Uma *declaração de enumeração* introduz um tipo enumeração com nome no seu programa.
 
-An *enumeration declaration* introduces a named enumeration type into your program.
+As declarações de enumeração têm duas formas básicas e são declaradas com a palavra-chave `enum`.
+O corpo de uma enumeração declarada em qualquer uma dessas formas contém
+zero ou mais valores --- chamados *casos de enumeração* ---
+e qualquer quantidade de declarações,
+incluindo propriedades computadas,
+métodos de instância, métodos de tipo, inicializadores, aliases de tipo,
+e até outras declarações de enumeração, estrutura, classe e actor.
+Declarações de enumeração não podem conter declarações de desinicializador ou de protocolo.
 
-Enumeration declarations have two basic forms and are declared using the `enum` keyword.
-The body of an enumeration declared using either form contains
-zero or more values --- called *enumeration cases* ---
-and any number of declarations,
-including computed properties,
-instance methods, type methods, initializers, type aliases,
-and even other enumeration, structure, class, and actor declarations.
-Enumeration declarations can't contain deinitializer or protocol declarations.
+Tipos enumeração podem adotar qualquer número de protocolos, mas não podem herdar de classes,
+estruturas ou de outras enumerações.
 
-Enumeration types can adopt any number of protocols, but can’t inherit from classes,
-structures, or other enumerations.
+Diferentemente de classes e estruturas,
+tipos enumeração não têm um inicializador padrão fornecido implicitamente;
+todos os inicializadores precisam ser declarados explicitamente. Inicializadores podem delegar
+para outros inicializadores da enumeração, mas o processo de inicialização só é concluído
+depois que um inicializador atribui um dos casos da enumeração a `self`.
 
-Unlike classes and structures,
-enumeration types don't have an implicitly provided default initializer;
-all initializers must be declared explicitly. Initializers can delegate
-to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumeration cases to `self`.
+Assim como estruturas, mas diferentemente de classes, enumerações são tipos de valor;
+instâncias de uma enumeração são copiadas quando atribuídas a
+variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
+Para informações sobre tipos de valor,
+veja <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 
-Like structures but unlike classes, enumerations are value types;
-instances of an enumeration are copied when assigned to
-variables or constants, or when passed as arguments to a function call.
-For information about value types,
-see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+Você pode estender o comportamento de um tipo enumeração com uma declaração de extensão,
+como discutido em <doc:Declarations#Extension-Declaration>.
 
-You can extend the behavior of an enumeration type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+### Enumerações com casos de qualquer tipo
 
-### Enumerations with Cases of Any Type
-
-The following form declares an enumeration type that contains
-enumeration cases of any type:
+A forma a seguir declara um tipo enumeração que contém
+casos de enumeração de qualquer tipo:
 
 ```swift
 enum <#enumeration name#>: <#adopted protocols#> {
@@ -1764,20 +1761,20 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-Enumerations declared in this form are sometimes called *discriminated unions*
-in other programming languages.
+Enumerações declaradas nessa forma às vezes são chamadas de *uniões discriminadas*
+em outras linguagens de programação.
 
-In this form, each case block consists of the `case` keyword
-followed by one or more enumeration cases, separated by commas.
-The name of each case must be unique.
-Each case can also specify that it stores values of a given type.
-These types are specified in the *associated value types* tuple,
-immediately following the name of the case.
+Nessa forma, cada bloco de casos consiste na palavra-chave `case`
+seguida de um ou mais casos de enumeração, separados por vírgulas.
+O nome de cada caso precisa ser único.
+Cada caso também pode especificar que armazena valores de um determinado tipo.
+Esses tipos são especificados na tupla de *tipos de valores associados*,
+logo após o nome do caso.
 
-Enumeration cases that store associated values can be used as functions
-that create instances of the enumeration with the specified associated values.
-And just like functions,
-you can get a reference to an enumeration case and apply it later in your code.
+Casos de enumeração que armazenam valores associados podem ser usados como funções
+que criam instâncias da enumeração com os valores associados especificados.
+Assim como funções, você pode obter uma referência a um caso de enumeração
+e aplicá-la depois no seu código.
 
 ```swift
 enum Number {
@@ -1814,22 +1811,22 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   and assert() would require Number to conform to Equatable.
 -->
 
-For more information and to see examples of cases with associated value types,
-see <doc:Enumerations#Associated-Values>.
+Para mais informações e para ver exemplos de casos com tipos de valores associados,
+veja <doc:Enumerations#Associated-Values>.
 
-#### Enumerations with Indirection
+#### Enumerações com indireção
 
-Enumerations can have a recursive structure,
-that is, they can have cases with associated values
-that are instances of the enumeration type itself.
-However, instances of enumeration types have value semantics,
-which means they have a fixed layout in memory.
-To support recursion,
-the compiler must insert a layer of indirection.
+Enumerações podem ter uma estrutura recursiva,
+ou seja, podem ter casos com valores associados
+que são instâncias do próprio tipo enumeração.
+No entanto, instâncias de tipos enumeração têm semântica de valor,
+o que significa que têm um layout fixo na memória.
+Para dar suporte à recursão,
+o compilador precisa inserir uma camada de indireção.
 
-To enable indirection for a particular enumeration case,
-mark it with the `indirect` declaration modifier.
-An indirect case must have an associated value.
+Para habilitar a indireção para um caso específico de enumeração,
+marque-o com o modificador de declaração `indirect`.
+Um caso indireto precisa ter um valor associado.
 
 <!--
   TODO The word "enable" is kind of a weasel word.
@@ -1859,16 +1856,15 @@ enum Tree<T> {
   ```
 -->
 
-To enable indirection for all the cases of an enumeration
-that have an associated value,
-mark the entire enumeration with the `indirect` modifier ---
-this is convenient when the enumeration contains many cases
-that would each need to be marked with the `indirect` modifier.
+Para habilitar a indireção para todos os casos de uma enumeração
+que têm um valor associado,
+marque a enumeração inteira com o modificador `indirect` ---
+isso é prático quando a enumeração contém muitos casos
+que precisariam, cada um, ser marcado com o modificador `indirect`.
 
-An enumeration that's marked with the `indirect` modifier
-can contain a mixture of cases that have associated values and cases those that don't.
-That said,
-it can't contain any cases that are also marked with the `indirect` modifier.
+Uma enumeração marcada com o modificador `indirect` pode conter uma mistura de casos
+que têm valores associados e casos que não têm.
+Dito isso, ela não pode conter casos que também estejam marcados com o modificador `indirect`.
 
 <!--
   It really should be an associated value **that includes the enum type**
@@ -1899,10 +1895,10 @@ it can't contain any cases that are also marked with the `indirect` modifier.
   -> indirect enum E3 { case x }
 -->
 
-### Enumerations with Cases of a Raw-Value Type
+### Enumerações com casos de um tipo de raw value
 
-The following form declares an enumeration type that contains
-enumeration cases of the same basic type:
+A forma a seguir declara um tipo enumeração que contém
+casos de enumeração do mesmo tipo básico:
 
 ```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
@@ -1911,32 +1907,32 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-In this form, each case block consists of the `case` keyword,
-followed by one or more enumeration cases, separated by commas.
-Unlike the cases in the first form, each case has an underlying
-value, called a *raw value*, of the same basic type.
-The type of these values is specified in the *raw-value type* and must represent an
-integer, floating-point number, string, or single character.
-In particular, the *raw-value type* must conform to the `Equatable` protocol
-and one of the following protocols:
-`ExpressibleByIntegerLiteral` for integer literals,
-`ExpressibleByFloatLiteral` for floating-point literals,
-`ExpressibleByStringLiteral` for string literals that contain any number of characters,
-and `ExpressibleByUnicodeScalarLiteral`
-or `ExpressibleByExtendedGraphemeClusterLiteral` for string literals
-that contain only a single character.
-Each case must have a unique name and be assigned a unique raw value.
+Nessa forma, cada bloco de casos consiste na palavra-chave `case`,
+seguida de um ou mais casos de enumeração, separados por vírgulas.
+Diferentemente dos casos da primeira forma, cada caso tem um valor subjacente,
+chamado *raw value*, do mesmo tipo básico.
+O tipo desses valores é especificado no *tipo de raw value* e precisa representar
+um inteiro, um número de ponto flutuante, uma string ou um único caractere.
+Em particular, o *tipo de raw value* precisa estar em conformidade com o protocolo `Equatable`
+e com um dos protocolos a seguir:
+`ExpressibleByIntegerLiteral` para literais inteiros,
+`ExpressibleByFloatLiteral` para literais de ponto flutuante,
+`ExpressibleByStringLiteral` para literais de string que contêm qualquer número de caracteres,
+e `ExpressibleByUnicodeScalarLiteral`
+ou `ExpressibleByExtendedGraphemeClusterLiteral` para literais de string
+que contêm apenas um único caractere.
+Cada caso precisa ter um nome único e receber um raw value único.
 
 <!--
   The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
   This list is shorter because these five protocols are explicitly supported in the compiler.
 -->
 
-If the raw-value type is specified as `Int`
-and you don't assign a value to the cases explicitly,
-they're implicitly assigned the values `0`, `1`, `2`, and so on.
-Each unassigned case of type `Int` is implicitly assigned a raw value
-that's automatically incremented from the raw value of the previous case.
+Se o tipo de raw value for especificado como `Int`
+e você não atribuir valores aos casos explicitamente,
+eles recebem implicitamente os valores `0`, `1`, `2`, e assim por diante.
+Cada caso não atribuído do tipo `Int` recebe implicitamente um raw value
+que é incrementado automaticamente a partir do raw value do caso anterior.
 
 ```swift
 enum ExampleEnum: Int {
@@ -1954,14 +1950,14 @@ enum ExampleEnum: Int {
   ```
 -->
 
-In the above example, the raw value of `ExampleEnum.a` is `0` and the value of
-`ExampleEnum.b` is `1`. And because the value of `ExampleEnum.c` is
-explicitly set to `5`, the value of `ExampleEnum.d` is automatically incremented
-from `5` and is therefore `6`.
+No exemplo acima, o raw value de `ExampleEnum.a` é `0` e o valor de
+`ExampleEnum.b` é `1`. E como o valor de `ExampleEnum.c` é definido explicitamente como `5`,
+o valor de `ExampleEnum.d` é incrementado automaticamente a partir de `5`
+e, portanto, é `6`.
 
-If the raw-value type is specified as `String`
-and you don't assign values to the cases explicitly,
-each unassigned case is implicitly assigned a string with the same text as the name of that case.
+Se o tipo de raw value for especificado como `String`
+e você não atribuir valores aos casos explicitamente,
+cada caso não atribuído recebe implicitamente uma string com o mesmo texto do nome desse caso.
 
 ```swift
 enum GamePlayMode: String {
@@ -1979,35 +1975,35 @@ enum GamePlayMode: String {
   ```
 -->
 
-In the above example, the raw value of `GamePlayMode.cooperative` is `"cooperative"`,
-the raw value of `GamePlayMode.individual` is `"individual"`,
-and the raw value of `GamePlayMode.competitive` is `"competitive"`.
+No exemplo acima, o raw value de `GamePlayMode.cooperative` é `"cooperative"`,
+o raw value de `GamePlayMode.individual` é `"individual"`,
+e o raw value de `GamePlayMode.competitive` é `"competitive"`.
 
-Enumerations that have cases of a raw-value type implicitly conform to the
-`RawRepresentable` protocol, defined in the Swift standard library.
-As a result, they have a `rawValue` property
-and a failable initializer with the signature `init?(rawValue: RawValue)`.
-You can use the `rawValue` property to access the raw value of an enumeration case,
-as in `ExampleEnum.b.rawValue`.
-You can also use a raw value to find a corresponding case, if there is one,
-by calling the enumeration's failable initializer,
-as in `ExampleEnum(rawValue: 5)`, which returns an optional case.
-For more information and to see examples of cases with raw-value types,
-see <doc:Enumerations#Raw-Values>.
+Enumerações que têm casos de um tipo de raw value implicitamente estão em conformidade com
+o protocolo `RawRepresentable`, definido na biblioteca padrão do Swift.
+Como resultado, elas têm uma propriedade `rawValue`
+e um inicializador falível com a assinatura `init?(rawValue: RawValue)`.
+Você pode usar a propriedade `rawValue` para acessar o raw value de um caso de enumeração,
+como em `ExampleEnum.b.rawValue`.
+Você também pode usar um raw value para encontrar o caso correspondente, se houver,
+chamando o inicializador falível da enumeração,
+como em `ExampleEnum(rawValue: 5)`, que retorna um caso opcional.
+Para mais informações e para ver exemplos de casos com tipos de raw value,
+veja <doc:Enumerations#Raw-Values>.
 
-### Accessing Enumeration Cases
+### Acessando casos de enumeração
 
-To reference the case of an enumeration type, use dot (`.`) syntax,
-as in `EnumerationType.enumerationCase`. When the enumeration type can be inferred
-from context, you can omit it (the dot is still required),
-as described in <doc:Enumerations#Enumeration-Syntax>
-and <doc:Expressions#Implicit-Member-Expression>.
+Para referenciar um caso de um tipo enumeração, use a sintaxe de ponto (`.`),
+como em `EnumerationType.enumerationCase`. Quando o tipo enumeração puder ser inferido
+pelo contexto, você pode omiti-lo (o ponto continua obrigatório),
+como descrito em <doc:Enumerations#Enumeration-Syntax>
+e <doc:Expressions#Implicit-Member-Expression>.
 
-To check the values of enumeration cases, use a `switch` statement,
-as shown in <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
-The enumeration type is pattern-matched against the enumeration case patterns
-in the case blocks of the `switch` statement,
-as described in <doc:Patterns#Enumeration-Case-Pattern>.
+Para verificar os valores de casos de enumeração, use uma instrução `switch`,
+como mostrado em <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
+O tipo enumeração é comparado com os padrões de caso de enumeração
+nos blocos `case` da instrução `switch`,
+como descrito em <doc:Patterns#Enumeration-Case-Pattern>.
 
 <!--
   FIXME: Or use if-case:
@@ -2032,7 +2028,7 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   We removed it from our grammar, below.
 -->
 
-> Grammar of an enumeration declaration:
+> Gramática de uma declaração de enumeração:
 >
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
@@ -2069,10 +2065,10 @@ as described in <doc:Patterns#Enumeration-Case-Pattern>.
   and they behave differently.
 -->
 
-## Structure Declaration
+## Declaração de estrutura
 
-A *structure declaration* introduces a named structure type into your program.
-Structure declarations are declared using the `struct` keyword and have the following form:
+Uma *declaração de estrutura* introduz um tipo estrutura com nome no seu programa.
+Declarações de estrutura são feitas com a palavra-chave `struct` e têm a seguinte forma:
 
 ```swift
 struct <#structure name#>: <#adopted protocols#> {
@@ -2080,45 +2076,45 @@ struct <#structure name#>: <#adopted protocols#> {
 }
 ```
 
-The body of a structure contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-type properties, instance methods, type methods, initializers, subscripts,
-type aliases, and even other structure, class, actor, and enumeration declarations.
-Structure declarations can't contain deinitializer or protocol declarations.
-For a discussion and several examples of structures
-that include various kinds of declarations,
-see <doc:ClassesAndStructures>.
+O corpo de uma estrutura contém zero ou mais *declarações*.
+Essas *declarações* podem incluir propriedades armazenadas e computadas,
+propriedades de tipo, métodos de instância, métodos de tipo, inicializadores, subscripts,
+aliases de tipo, e até outras declarações de estrutura, classe, actor e enumeração.
+Declarações de estrutura não podem conter declarações de desinicializador ou de protocolo.
+Para uma discussão e vários exemplos de estruturas
+que incluem vários tipos de declarações,
+veja <doc:ClassesAndStructures>.
 
-Structure types can adopt any number of protocols,
-but can't inherit from classes, enumerations, or other structures.
+Tipos estrutura podem adotar qualquer número de protocolos,
+mas não podem herdar de classes, enumerações ou de outras estruturas.
 
-There are three ways to create an instance of a previously declared structure:
+Há três maneiras de criar uma instância de uma estrutura declarada anteriormente:
 
-- Call one of the initializers declared within the structure,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  call the structure's memberwise initializer,
-  as described in <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
-- If no initializers are declared,
-  and all properties of the structure declaration were given initial values,
-  call the structure's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+- Chamar um dos inicializadores declarados dentro da estrutura,
+  como descrito em <doc:Initialization#Initializers>.
+- Se nenhum inicializador for declarado,
+  chamar o inicializador memberwise da estrutura,
+  como descrito em <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
+- Se nenhum inicializador for declarado,
+  e todas as propriedades da declaração de estrutura receberam valores iniciais,
+  chamar o inicializador padrão da estrutura,
+  como descrito em <doc:Initialization#Default-Initializers>.
 
-The process of initializing a structure's declared properties
-is described in <doc:Initialization>.
+O processo de inicialização das propriedades declaradas de uma estrutura
+é descrito em <doc:Initialization>.
 
-Properties of a structure instance can be accessed using dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+Propriedades de uma instância de estrutura podem ser acessadas usando a sintaxe de ponto (`.`),
+como descrito em <doc:ClassesAndStructures#Accessing-Properties>.
 
-Structures are value types; instances of a structure are copied when assigned to
-variables or constants, or when passed as arguments to a function call.
-For information about value types,
-see <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
+Estruturas são tipos de valor; instâncias de uma estrutura são copiadas quando atribuídas a
+variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
+Para informações sobre tipos de valor,
+veja <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 
-You can extend the behavior of a structure type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+Você pode estender o comportamento de um tipo estrutura com uma declaração de extensão,
+como discutido em <doc:Declarations#Extension-Declaration>.
 
-> Grammar of a structure declaration:
+> Gramática de uma declaração de estrutura:
 >
 > *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
 > *struct-name* → *identifier* \
@@ -2127,10 +2123,10 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 > *struct-members* → *struct-member* *struct-members*_?_ \
 > *struct-member* → *declaration* | *compiler-control-statement*
 
-## Class Declaration
+## Declaração de classe
 
-A *class declaration* introduces a named class type into your program.
-Class declarations are declared using the `class` keyword and have the following form:
+Uma *declaração de classe* introduz um tipo classe com nome no seu programa.
+Declarações de classe são feitas com a palavra-chave `class` e têm a seguinte forma:
 
 ```swift
 class <#class name#>: <#superclass#>, <#adopted protocols#> {
@@ -2138,35 +2134,34 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 }
 ```
 
-The body of a class contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-instance methods, type methods, initializers,
-a single deinitializer, subscripts, type aliases,
-and even other class, structure, actor, and enumeration declarations.
-Class declarations can't contain protocol declarations.
-For a discussion and several examples of classes
-that include various kinds of declarations,
-see <doc:ClassesAndStructures>.
+O corpo de uma classe contém zero ou mais *declarações*.
+Essas *declarações* podem incluir propriedades armazenadas e computadas,
+métodos de instância, métodos de tipo, inicializadores,
+um único desinicializador, subscripts, aliases de tipo,
+e até outras declarações de classe, estrutura, actor e enumeração.
+Declarações de classe não podem conter declarações de protocolo.
+Para uma discussão e vários exemplos de classes
+que incluem vários tipos de declarações,
+veja <doc:ClassesAndStructures>.
 
-A class type can inherit from only one parent class, its *superclass*,
-but can adopt any number of protocols.
-The *superclass* appears first after the *class name* and colon,
-followed by any *adopted protocols*.
-Generic classes can inherit from other generic and nongeneric classes,
-but a nongeneric class can inherit only from other nongeneric classes.
-When you write the name of a generic superclass class after the colon,
-you must include the full name of that generic class,
-including its generic parameter clause.
+Um tipo classe pode herdar de apenas uma classe pai, sua *superclasse*,
+mas pode adotar qualquer número de protocolos.
+A *superclasse* aparece primeiro, depois do nome da classe e dos dois-pontos,
+seguida de quaisquer *protocolos adotados*.
+Classes genéricas podem herdar de outras classes genéricas e não genéricas,
+mas uma classe não genérica só pode herdar de outras classes não genéricas.
+Ao escrever o nome de uma superclasse genérica depois dos dois-pontos,
+você precisa incluir o nome completo dessa classe genérica,
+incluindo a cláusula de parâmetros genéricos.
 
-As discussed in <doc:Declarations#Initializer-Declaration>,
-classes can have designated and convenience initializers.
-The designated initializer of a class must initialize all of the class's
-declared properties and it must do so before calling any of its superclass's
-designated initializers.
+Como discutido em <doc:Declarations#Initializer-Declaration>,
+classes podem ter inicializadores designados e de conveniência.
+O inicializador designado de uma classe precisa inicializar todas as propriedades declaradas da classe,
+e precisa fazê-lo antes de chamar qualquer inicializador designado da sua superclasse.
 
-A class can override properties, methods, subscripts, and initializers of its superclass.
-Overridden properties, methods, subscripts,
-and designated initializers must be marked with the `override` declaration modifier.
+Uma classe pode sobrescrever propriedades, métodos, subscripts e inicializadores da sua superclasse.
+Propriedades, métodos, subscripts e inicializadores designados sobrescritos
+precisam ser marcados com o modificador de declaração `override`.
 
 <!--
   - test: `designatedInitializersRequireOverride`
@@ -2177,38 +2172,38 @@ and designated initializers must be marked with the `override` declaration modif
   ```
 -->
 
-To require that subclasses implement a superclass's initializer,
-mark the superclass's initializer with the `required` declaration modifier.
-The subclass's implementation of that initializer
-must also be marked with the `required` declaration modifier.
+Para exigir que subclasses implementem um inicializador da superclasse,
+marque o inicializador da superclasse com o modificador de declaração `required`.
+A implementação desse inicializador na subclasse também precisa ser marcada
+com o modificador de declaração `required`.
 
-Although properties and methods declared in the *superclass* are inherited by
-the current class, designated initializers declared in the *superclass* are only
-inherited when the subclass meets the conditions described in
+Embora propriedades e métodos declarados na *superclasse* sejam herdados pela classe atual,
+inicializadores designados declarados na *superclasse* só são herdados
+quando a subclasse atende às condições descritas em
 <doc:Initialization#Automatic-Initializer-Inheritance>.
-Swift classes don't inherit from a universal base class.
+Classes Swift não herdam de uma classe base universal.
 
-There are two ways to create an instance of a previously declared class:
+Há duas maneiras de criar uma instância de uma classe declarada anteriormente:
 
-- Call one of the initializers declared within the class,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  and all properties of the class declaration were given initial values,
-  call the class's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+- Chamar um dos inicializadores declarados dentro da classe,
+  como descrito em <doc:Initialization#Initializers>.
+- Se nenhum inicializador for declarado,
+  e todas as propriedades da declaração de classe receberam valores iniciais,
+  chamar o inicializador padrão da classe,
+  como descrito em <doc:Initialization#Default-Initializers>.
 
-Access properties of a class instance with dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+Acesse propriedades de uma instância de classe com a sintaxe de ponto (`.`),
+como descrito em <doc:ClassesAndStructures#Accessing-Properties>.
 
-Classes are reference types; instances of a class are referred to, rather than copied,
-when assigned to variables or constants, or when passed as arguments to a function call.
-For information about reference types,
-see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
+Classes são tipos de referência; instâncias de uma classe são referenciadas, em vez de copiadas,
+quando atribuídas a variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
+Para informações sobre tipos de referência,
+veja <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-You can extend the behavior of a class type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+Você pode estender o comportamento de um tipo classe com uma declaração de extensão,
+como discutido em <doc:Declarations#Extension-Declaration>.
 
-> Grammar of a class declaration:
+> Gramática de uma declaração de classe:
 >
 > *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
 > *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
@@ -2218,10 +2213,10 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 > *class-members* → *class-member* *class-members*_?_ \
 > *class-member* → *declaration* | *compiler-control-statement*
 
-## Actor Declaration
+## Declaração de actor
 
-An *actor declaration* introduces a named actor type into your program.
-Actor declarations are declared using the `actor` keyword and have the following form:
+Uma *declaração de actor* introduz um tipo actor com nome no seu programa.
+Declarações de actor são feitas com a palavra-chave `actor` e têm a seguinte forma:
 
 ```swift
 actor <#actor name#>: <#adopted protocols#> {
@@ -2229,64 +2224,62 @@ actor <#actor name#>: <#adopted protocols#> {
 }
 ```
 
-The body of an actor contains zero or more *declarations*.
-These *declarations* can include both stored and computed properties,
-instance methods, type methods, initializers,
-a single deinitializer, subscripts, type aliases,
-and even other class, structure, and enumeration declarations.
-For a discussion and several examples of actors
-that include various kinds of declarations,
-see <doc:Concurrency#Actors>.
+O corpo de um actor contém zero ou mais *declarações*.
+Essas *declarações* podem incluir propriedades armazenadas e computadas,
+métodos de instância, métodos de tipo, inicializadores,
+um único desinicializador, subscripts, aliases de tipo,
+e até outras declarações de classe, estrutura e enumeração.
+Para uma discussão e vários exemplos de actors
+que incluem vários tipos de declarações,
+veja <doc:Concurrency#Actors>.
 
-Actor types can adopt any number of protocols,
-but can't inherit from classes, enumerations, structures, or other actors.
-However, an actor that is marked with the `@objc` attribute
-implicitly conforms to the `NSObjectProtocol` protocol
-and is exposed to the Objective-C runtime as a subtype of `NSObject`.
+Tipos actor podem adotar qualquer número de protocolos,
+mas não podem herdar de classes, enumerações, estruturas ou de outros actors.
+No entanto, um actor marcado com o atributo `@objc` implicitamente está em conformidade
+com o protocolo `NSObjectProtocol` e é exposto ao tempo de execução (runtime)
+do Objective-C como um subtipo de `NSObject`.
 
-There are two ways to create an instance of a previously declared actor:
+Há duas maneiras de criar uma instância de um actor declarado anteriormente:
 
-- Call one of the initializers declared within the actor,
-  as described in <doc:Initialization#Initializers>.
-- If no initializers are declared,
-  and all properties of the actor declaration were given initial values,
-  call the actor's default initializer,
-  as described in <doc:Initialization#Default-Initializers>.
+- Chamar um dos inicializadores declarados dentro do actor,
+  como descrito em <doc:Initialization#Initializers>.
+- Se nenhum inicializador for declarado,
+  e todas as propriedades da declaração de actor receberam valores iniciais,
+  chamar o inicializador padrão do actor,
+  como descrito em <doc:Initialization#Default-Initializers>.
 
-By default, members of an actor are isolated to that actor.
-Code, such as the body of a method or the getter for a property,
-is executed on that actor.
-Code within the actor can interact with them synchronously
-because that code is already running on the same actor,
-but code outside the actor must mark them with `await`
-to indicate that this code is asynchronously running code on another actor.
-Key paths can't refer to isolated members of an actor.
-Actor-isolated stored properties can be passed as in-out parameters
-to synchronous functions,
-but not to asynchronous functions.
+Por padrão, membros de um actor são isolados a esse actor.
+O código, como o corpo de um método ou o getter de uma propriedade, é executado nesse actor.
+Código dentro do actor pode interagir com eles de forma síncrona,
+porque esse código já está sendo executado no mesmo actor,
+mas código fora do actor precisa marcá-los com `await`
+para indicar que esse código está executando de forma assíncrona em outro actor.
+*Key paths* não podem se referir a membros isolados de um actor.
+Propriedades armazenadas isoladas ao actor podem ser passadas como parâmetros in-out
+para funções síncronas, mas não para funções assíncronas.
 
-Actors can also have nonisolated members,
-whose declarations are marked with the `nonisolated` keyword.
-A nonisolated member executes like code outside of the actor:
-It can't interact with any of the actor's isolated state,
-and callers don't mark it with `await` when using it.
+Actors também podem ter membros não isolados, cujas declarações são marcadas
+com a palavra-chave `nonisolated`.
+Um membro não isolado é executado como código fora do actor:
+ele não pode interagir com nenhum estado isolado do actor,
+e quem o usa não o marca com `await`.
 
-Members of an actor can be marked with the `@objc` attribute
-only if they are nonisolated or asynchronous.
+Membros de um actor só podem ser marcados com o atributo `@objc`
+se forem não isolados ou assíncronos.
 
-The process of initializing an actor's declared properties
-is described in <doc:Initialization>.
+O processo de inicialização das propriedades declaradas de um actor
+é descrito em <doc:Initialization>.
 
-Properties of an actor instance can be accessed using dot (`.`) syntax,
-as described in <doc:ClassesAndStructures#Accessing-Properties>.
+Propriedades de uma instância de actor podem ser acessadas usando a sintaxe de ponto (`.`),
+como descrito em <doc:ClassesAndStructures#Accessing-Properties>.
 
-Actors are reference types; instances of an actor are referred to, rather than copied,
-when assigned to variables or constants, or when passed as arguments to a function call.
-For information about reference types,
-see <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
+Actors são tipos de referência; instâncias de um actor são referenciadas, em vez de copiadas,
+quando atribuídas a variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
+Para informações sobre tipos de referência,
+veja <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-You can extend the behavior of an actor type with an extension declaration,
-as discussed in <doc:Declarations#Extension-Declaration>.
+Você pode estender o comportamento de um tipo actor com uma declaração de extensão,
+como discutido em <doc:Declarations#Extension-Declaration>.
 
 <!--
   TODO Additional bits from the SE-0306 actors proposal:
@@ -2296,7 +2289,7 @@ as discussed in <doc:Declarations#Extension-Declaration>.
   whose corresponding parameter is non-escaping and non-Sendable.
 -->
 
-> Grammar of an actor declaration:
+> Gramática de uma declaração de actor:
 >
 > *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
 > *actor-name* → *identifier* \
@@ -2304,12 +2297,10 @@ as discussed in <doc:Declarations#Extension-Declaration>.
 >
 > *actor-members* → *actor-member* *actor-members*_?_ \
 > *actor-member* → *declaration* | *compiler-control-statement*
+## Declaração de protocolo
 
-## Protocol Declaration
-
-A *protocol declaration* introduces a named protocol type into your program.
-Protocol declarations are declared
-using the `protocol` keyword and have the following form:
+Uma *declaração de protocolo* introduz um tipo protocolo nomeado no seu programa.
+Declarações de protocolo são feitas com a palavra-chave `protocol` e têm a seguinte forma:
 
 ```swift
 protocol <#protocol name#>: <#inherited protocols#> {
@@ -2317,51 +2308,49 @@ protocol <#protocol name#>: <#inherited protocols#> {
 }
 ```
 
-Protocol declarations can appear at global scope,
-or nested inside a nongeneric type or nongeneric function.
+Declarações de protocolo podem aparecer no escopo global,
+ou aninhadas dentro de um tipo não genérico ou de uma função não genérica.
 
-The body of a protocol contains zero or more *protocol member declarations*,
-which describe the conformance requirements that any type adopting the protocol must fulfill.
-In particular, a protocol can declare that conforming types must
-implement certain properties, methods, initializers, and subscripts.
-Protocols can also declare special kinds of type aliases,
-called *associated types*, that can specify relationships
-among the various declarations of the protocol.
-Protocol declarations can't contain
-class, structure, enumeration, or other protocol declarations.
-The *protocol member declarations* are discussed in detail below.
+O corpo de um protocolo contém zero ou mais *declarações de membros do protocolo*,
+que descrevem os requisitos de conformidade que qualquer tipo que adote o protocolo precisa cumprir.
+Em particular, um protocolo pode declarar que os tipos em conformidade devem
+implementar certas propriedades, métodos, inicializadores e subscritos.
+Protocolos também podem declarar tipos especiais de alias,
+chamados *tipos associados*, que podem especificar relações
+entre as várias declarações do protocolo.
+Declarações de protocolo não podem conter
+declarações de classe, estrutura, enumeração ou de outros protocolos.
+As *declarações de membros do protocolo* são discutidas em detalhes abaixo.
 
-Protocol types can inherit from any number of other protocols.
-When a protocol type inherits from other protocols,
-the set of requirements from those other protocols are aggregated,
-and any type that inherits from the current protocol must conform to all those requirements.
-For an example of how to use protocol inheritance,
-see <doc:Protocols#Protocol-Inheritance>.
+Tipos protocolo podem herdar de qualquer número de outros protocolos.
+Quando um tipo protocolo herda de outros protocolos,
+o conjunto de requisitos desses outros protocolos é agregado,
+e qualquer tipo que herde do protocolo atual precisa estar em conformidade com todos esses requisitos.
+Para um exemplo de como usar a herança de protocolos,
+veja <doc:Protocols#Protocol-Inheritance>.
 
-> Note: You can also aggregate the conformance requirements of multiple
-> protocols using protocol composition types,
-> as described in <doc:Types#Protocol-Composition-Type>
-> and <doc:Protocols#Protocol-Composition>.
+> Nota: Você também pode agregar os requisitos de conformidade de vários
+> protocolos usando tipos de composição de protocolos,
+> como descrito em <doc:Types#Protocol-Composition-Type>
+> e <doc:Protocols#Protocol-Composition>.
 
-You can add protocol conformance to a previously declared type
-by adopting the protocol in an extension declaration of that type.
-In the extension, you must implement all of the adopted protocol's
-requirements. If the type already implements all of the requirements,
-you can leave the body of the extension declaration empty.
+Você pode adicionar conformidade com um protocolo a um tipo já declarado
+adotando o protocolo em uma declaração de extensão desse tipo.
+Na extensão, você precisa implementar todos os requisitos do protocolo adotado.
+Se o tipo já implementa todos os requisitos, você pode deixar o corpo da declaração de extensão vazio.
 
-By default, types that conform to a protocol must implement all
-properties, methods, and subscripts declared in the protocol.
-That said, you can mark these protocol member declarations with the `optional` declaration modifier
-to specify that their implementation by a conforming type is optional.
-The `optional` modifier can be applied
-only to members that are marked with the `objc` attribute,
-and only to members of protocols that are marked
-with the `objc` attribute. As a result, only class types can adopt and conform
-to a protocol that contains optional member requirements.
-For more information about how to use the `optional` declaration modifier
-and for guidance about how to access optional protocol members ---
-for example, when you're not sure whether a conforming type implements them ---
-see <doc:Protocols#Optional-Protocol-Requirements>.
+Por padrão, tipos que estão em conformidade com um protocolo precisam implementar todas as
+propriedades, métodos e subscritos declarados no protocolo.
+Dito isso, você pode marcar essas declarações de membros do protocolo com o modificador de declaração `optional`
+para especificar que a implementação delas pelo tipo em conformidade é opcional.
+O modificador `optional` só pode ser aplicado
+a membros marcados com o atributo `objc`, e somente a membros de protocolos marcados
+com o atributo `objc`. Como resultado, apenas tipos classe podem adotar e estar em conformidade
+com um protocolo que contém requisitos de membros opcionais.
+Para mais informações sobre como usar o modificador de declaração `optional`
+e para orientações sobre como acessar membros opcionais de protocolo ---
+por exemplo, quando você não tem certeza se um tipo em conformidade os implementa ---
+veja <doc:Protocols#Optional-Protocol-Requirements>.
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -2371,17 +2360,17 @@ see <doc:Protocols#Optional-Protocol-Requirements>.
   properly for optional initializer requirements.
 -->
 
-The cases of an enumeration can satisfy
-protocol requirements for type members.
-Specifically,
-an enumeration case without any associated values
-satisfies a protocol requirement for
-a get-only type variable of type `Self`,
-and an enumeration case with associated values
-satisfies a protocol requirement for a function that returns `Self`
-whose parameters and their argument labels
-match the case's associated values.
-For example:
+Os casos de uma enumeração podem satisfazer
+requisitos de protocolo para membros de tipo.
+Especificamente,
+um caso de enumeração sem valores associados
+satisfaz um requisito de protocolo para
+uma variável de tipo somente leitura do tipo `Self`,
+e um caso de enumeração com valores associados
+satisfaz um requisito de protocolo para uma função que retorna `Self`
+cujos parâmetros e rótulos de argumento
+correspondem aos valores associados do caso.
+Por exemplo:
 
 ```swift
 protocol SomeProtocol {
@@ -2409,10 +2398,10 @@ enum MyEnum: SomeProtocol {
   ```
 -->
 
-To restrict the adoption of a protocol to class types only,
-include the `AnyObject` protocol in the *inherited protocols*
-list after the colon.
-For example, the following protocol can be adopted only by class types:
+Para restringir a adoção de um protocolo apenas a tipos classe,
+inclua o protocolo `AnyObject` na lista de *protocolos herdados*
+depois dos dois-pontos.
+Por exemplo, o protocolo a seguir só pode ser adotado por tipos classe:
 
 ```swift
 protocol SomeProtocol: AnyObject {
@@ -2430,16 +2419,16 @@ protocol SomeProtocol: AnyObject {
   ```
 -->
 
-Any protocol that inherits from a protocol that's marked with the `AnyObject` requirement
-can likewise be adopted only by class types.
+Qualquer protocolo que herde de um protocolo marcado com o requisito `AnyObject`
+também só pode ser adotado por tipos classe.
 
-> Note: If a protocol is marked with the `objc` attribute,
-> the `AnyObject` requirement is implicitly applied to that protocol;
-> there’s no need to mark the protocol with the `AnyObject` requirement explicitly.
+> Nota: Se um protocolo for marcado com o atributo `objc`,
+> o requisito `AnyObject` é aplicado implicitamente a esse protocolo;
+> não há necessidade de marcar o protocolo com o requisito `AnyObject` explicitamente.
 
-You can also name a specific class in the *inherited protocols* list
-to restrict adoption of the protocol to subclasses of that class.
-For example, the following protocol can be adopted only by subclasses of `SomeBaseClass`:
+Você também pode nomear uma classe específica na lista de *protocolos herdados*
+para restringir a adoção do protocolo a subclasses dessa classe.
+Por exemplo, o protocolo a seguir só pode ser adotado por subclasses de `SomeBaseClass`:
 
 ```swift
 class SomeBaseClass { /* ... */ }
@@ -2459,17 +2448,17 @@ protocol SomeRefinedProtocol: SomeBaseClass {
   ```
 -->
 
-Protocols are named types, and thus they can appear in all the same places
-in your code as other named types, as discussed in <doc:Protocols#Protocols-as-Types>.
-However,
-you can't construct an instance of a protocol,
-because protocols don't actually provide the implementations for the requirements
-they specify.
+Protocolos são tipos nomeados e, por isso, podem aparecer nos mesmos lugares
+do seu código que outros tipos nomeados, como descrito em <doc:Protocols#Protocols-as-Types>.
+Porém,
+você não pode criar uma instância de um protocolo,
+porque protocolos não fornecem as implementações dos requisitos
+que especificam.
 
-You can use protocols to declare which methods a delegate of a class or structure
-should implement, as described in <doc:Protocols#Delegation>.
+Você pode usar protocolos para declarar quais métodos um delegado de uma classe ou estrutura
+deve implementar, como descrito em <doc:Protocols#Delegation>.
 
-> Grammar of a protocol declaration:
+> Gramática de uma declaração de protocolo:
 >
 > *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
 > *protocol-name* → *identifier* \
@@ -2485,44 +2474,42 @@ should implement, as described in <doc:Protocols#Delegation>.
 > *protocol-member-declaration* → *protocol-associated-type-declaration* \
 > *protocol-member-declaration* → *typealias-declaration*
 
-### Protocol Property Declaration
+### Declaração de propriedade de protocolo
 
-Protocols declare that conforming types must implement a property
-by including a *protocol property declaration*
-in the body of the protocol declaration.
-Protocol property declarations have a special form of a variable
-declaration:
+Protocolos declaram que os tipos em conformidade devem implementar uma propriedade
+incluindo uma *declaração de propriedade de protocolo*
+no corpo da declaração do protocolo.
+Declarações de propriedade de protocolo têm uma forma especial de declaração de variável:
 
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
 
-As with other protocol member declarations, these property declarations
-declare only the getter and setter requirements for types
-that conform to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it's declared.
+Assim como outras declarações de membros do protocolo, essas declarações de propriedade
+declaram apenas os requisitos de getter e setter para os tipos
+que estão em conformidade com o protocolo. Por isso, você não implementa o getter ou o setter
+diretamente no protocolo em que ela é declarada.
 
-The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
-If a property declaration includes both the `get` and `set` keywords,
-a conforming type can implement it with a stored variable property
-or a computed property that's both readable and writable
-(that is, one that implements both a getter and a setter). However,
-that property declaration can't be implemented as a constant property
-or a read-only computed property. If a property declaration includes
-only the `get` keyword, it can be implemented as any kind of property.
-For examples of conforming types that implement the property requirements of a protocol,
-see <doc:Protocols#Property-Requirements>.
+Os requisitos de getter e setter podem ser satisfeitos por um tipo em conformidade de várias maneiras.
+Se uma declaração de propriedade incluir as palavras-chave `get` e `set`,
+um tipo em conformidade pode implementá-la com uma propriedade armazenada de variável ou
+com uma propriedade computada que seja legível e gravável (isto é, que implemente tanto um getter quanto um setter). Dito isso,
+essa declaração de propriedade não pode ser implementada como uma propriedade constante
+ou como uma propriedade computada somente leitura. Se a declaração de propriedade incluir
+apenas a palavra-chave `get`, ela pode ser implementada com qualquer tipo de propriedade.
+Para exemplos de tipos em conformidade que implementam os requisitos de propriedade de um protocolo,
+veja <doc:Protocols#Property-Requirements>.
 
-To declare a type property requirement in a protocol declaration,
-mark the property declaration with the `static` keyword.
-Structures and enumerations that conform to the protocol
-declare the property with the `static` keyword,
-and classes that conform to the protocol
-declare the property with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a type property requirement
-use the `static` keyword.
+Para declarar um requisito de propriedade de tipo em uma declaração de protocolo,
+marque a declaração da propriedade com a palavra-chave `static`.
+Estruturas e enumerações que estão em conformidade com o protocolo
+declaram a propriedade com a palavra-chave `static`,
+e classes que estão em conformidade com o protocolo
+declaram a propriedade com a palavra-chave `static` ou `class`.
+Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+usam a mesma palavra-chave que o tipo que elas estendem usa.
+Extensões que fornecem uma implementação padrão para um requisito de propriedade de tipo
+usam a palavra-chave `static`.
 
 <!--
   - test: `protocols-with-type-property-requirements`
@@ -2558,116 +2545,116 @@ use the `static` keyword.
   ```
 -->
 
-See also <doc:Declarations#Variable-Declaration>.
+Veja também <doc:Declarations#Variable-Declaration>.
 
-> Grammar of a protocol property declaration:
+> Gramática de uma declaração de propriedade de protocolo:
 >
 > *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
 
-### Protocol Method Declaration
+### Declaração de método de protocolo
 
-Protocols declare that conforming types must implement a method
-by including a protocol method declaration in the body of the protocol declaration.
-Protocol method declarations have the same form as
-function declarations, with two exceptions: They don't include a function body,
-and you can't provide any default parameter values as part of the function declaration.
-For examples of conforming types that implement the method requirements of a protocol,
-see <doc:Protocols#Method-Requirements>.
+Protocolos declaram que os tipos em conformidade devem implementar um método
+incluindo uma declaração de método de protocolo no corpo da declaração do protocolo.
+Declarações de método de protocolo têm a mesma forma que
+declarações de função, com duas exceções: elas não incluem um corpo de função,
+e você não pode fornecer valores padrão para parâmetros como parte da declaração da função.
+Para exemplos de tipos em conformidade que implementam os requisitos de método de um protocolo,
+veja <doc:Protocols#Method-Requirements>.
 
-To declare a class or static method requirement in a protocol declaration,
-mark the method declaration with the `static` declaration modifier.
-Structures and enumerations that conform to the protocol
-declare the method with the `static` keyword,
-and classes that conform to the protocol
-declare the method with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a type method requirement
-use the `static` keyword.
+Para declarar um requisito de método de classe ou estático em uma declaração de protocolo,
+marque a declaração do método com o modificador de declaração `static`.
+Estruturas e enumerações que estão em conformidade com o protocolo
+declaram o método com a palavra-chave `static`,
+e classes que estão em conformidade com o protocolo
+declaram o método com a palavra-chave `static` ou `class`.
+Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+usam a mesma palavra-chave que o tipo que elas estendem usa.
+Extensões que fornecem uma implementação padrão para um requisito de método de tipo
+usam a palavra-chave `static`.
 
-See also <doc:Declarations#Function-Declaration>.
+Veja também <doc:Declarations#Function-Declaration>.
 
 <!--
   TODO: Talk about using ``Self`` in parameters and return types.
 -->
 
-> Grammar of a protocol method declaration:
+> Gramática de uma declaração de método de protocolo:
 >
 > *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
 
-### Protocol Initializer Declaration
+### Declaração de inicializador de protocolo
 
-Protocols declare that conforming types must implement an initializer
-by including a protocol initializer declaration in the body of the protocol declaration.
-Protocol initializer declarations have the same form as
-initializer declarations, except they don't include the initializer's body.
+Protocolos declaram que os tipos em conformidade devem implementar um inicializador
+incluindo uma declaração de inicializador de protocolo no corpo da declaração do protocolo.
+Declarações de inicializador de protocolo têm a mesma forma que
+declarações de inicializador, exceto que não incluem o corpo do inicializador.
 
-A conforming type can satisfy a nonfailable protocol initializer requirement
-by implementing a nonfailable initializer or an `init!` failable initializer.
-A conforming type can satisfy a failable protocol initializer requirement
-by implementing any kind of initializer.
+Um tipo em conformidade pode satisfazer um requisito de inicializador de protocolo não falível
+implementando um inicializador não falível ou um inicializador falível `init!`.
+Um tipo em conformidade pode satisfazer um requisito de inicializador de protocolo falível
+implementando qualquer tipo de inicializador.
 
-When a class implements an initializer to satisfy a protocol's initializer requirement,
-the initializer must be marked with the `required` declaration modifier
-if the class isn't already marked with the `final` declaration modifier.
+Quando uma classe implementa um inicializador para satisfazer o requisito de inicializador de um protocolo,
+o inicializador precisa ser marcado com o modificador de declaração `required`
+se a classe ainda não estiver marcada com o modificador de declaração `final`.
 
-See also <doc:Declarations#Initializer-Declaration>.
+Veja também <doc:Declarations#Initializer-Declaration>.
 
-> Grammar of a protocol initializer declaration:
+> Gramática de uma declaração de inicializador de protocolo:
 >
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
-### Protocol Subscript Declaration
+### Declaração de subscrito de protocolo
 
-Protocols declare that conforming types must implement a subscript
-by including a protocol subscript declaration in the body of the protocol declaration.
-Protocol subscript declarations have a special form of a subscript declaration:
+Protocolos declaram que os tipos em conformidade devem implementar um subscrito
+incluindo uma declaração de subscrito de protocolo no corpo da declaração do protocolo.
+Declarações de subscrito de protocolo têm uma forma especial de declaração de subscrito:
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-Subscript declarations only declare the minimum getter and setter implementation
-requirements for types that conform to the protocol.
-If the subscript declaration includes both the `get` and `set` keywords,
-a conforming type must implement both a getter and a setter clause.
-If the subscript declaration includes only the `get` keyword,
-a conforming type must implement *at least* a getter clause
-and optionally can implement a setter clause.
+Declarações de subscrito declaram apenas os requisitos mínimos de implementação de getter e setter
+para os tipos que estão em conformidade com o protocolo.
+Se a declaração de subscrito incluir as palavras-chave `get` e `set`,
+um tipo em conformidade precisa implementar tanto a cláusula getter quanto a cláusula setter.
+Se a declaração de subscrito incluir apenas a palavra-chave `get`,
+um tipo em conformidade precisa implementar *pelo menos* uma cláusula getter
+e pode, opcionalmente, implementar uma cláusula setter.
 
-To declare a static subscript requirement in a protocol declaration,
-mark the subscript declaration with the `static` declaration modifier.
-Structures and enumerations that conform to the protocol
-declare the subscript with the `static` keyword,
-and classes that conform to the protocol
-declare the subscript with either the `static` or `class` keyword.
-Extensions that add protocol conformance to a structure, enumeration, or class
-use the same keyword as the type they extend uses.
-Extensions that provide a default implementation for a static subscript requirement
-use the `static` keyword.
+Para declarar um requisito de subscrito estático em uma declaração de protocolo,
+marque a declaração do subscrito com o modificador de declaração `static`.
+Estruturas e enumerações que estão em conformidade com o protocolo
+declaram o subscrito com a palavra-chave `static`,
+e classes que estão em conformidade com o protocolo
+declaram o subscrito com a palavra-chave `static` ou `class`.
+Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+usam a mesma palavra-chave que o tipo que elas estendem usa.
+Extensões que fornecem uma implementação padrão para um requisito de subscrito estático
+usam a palavra-chave `static`.
 
-See also <doc:Declarations#Subscript-Declaration>.
+Veja também <doc:Declarations#Subscript-Declaration>.
 
-> Grammar of a protocol subscript declaration:
+> Gramática de uma declaração de subscrito de protocolo:
 >
 > *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
-### Protocol Associated Type Declaration
+### Declaração de tipo associado de protocolo
 
-Protocols declare associated types using the `associatedtype` keyword.
-An associated type provides an alias for a type
-that's used as part of a protocol's declaration.
-Associated types are similar to type parameters in generic parameter clauses,
-but they're associated with `Self` in the protocol in which they're declared.
-In that context, `Self` refers to the eventual type that conforms to the protocol.
-For more information and examples,
-see <doc:Generics#Associated-Types>.
+Protocolos declaram tipos associados usando a palavra-chave `associatedtype`.
+Um tipo associado fornece um alias para um tipo
+que é usado como parte da declaração de um protocolo.
+Tipos associados são semelhantes a parâmetros de tipo nas cláusulas de parâmetros genéricos,
+mas são associados a `Self` no protocolo em que são declarados.
+Nesse contexto, `Self` se refere ao tipo final que estiver em conformidade com o protocolo.
+Para mais informações e exemplos,
+veja <doc:Generics#Associated-Types>.
 
-You use a generic `where` clause in a protocol declaration
-to add constraints to an associated types inherited from another protocol,
-without redeclaring the associated types.
-For example, the declarations of `SubProtocol` below are equivalent:
+Você usa uma cláusula `where` genérica em uma declaração de protocolo
+para adicionar restrições aos tipos associados herdados de outro protocolo,
+sem declarar novamente os tipos associados.
+Por exemplo, as declarações de `SubProtocol` abaixo são equivalentes:
 
 ```swift
 protocol SomeProtocol {
@@ -2777,27 +2764,27 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   Here you have to pick one or the other -- you can't have both.
 -->
 
-See also <doc:Declarations#Type-Alias-Declaration>.
+Veja também <doc:Declarations#Type-Alias-Declaration>.
 
-> Grammar of a protocol associated type declaration:
+> Gramática de uma declaração de tipo associado de protocolo:
 >
 > *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
 
-## Initializer Declaration
+## Declaração de inicializador
 
-An *initializer declaration* introduces an initializer for a class,
-structure, or enumeration into your program.
-Initializer declarations are declared using the `init` keyword and have
-two basic forms.
+Uma *declaração de inicializador* introduz um inicializador para uma classe,
+estrutura ou enumeração no seu programa.
+Declarações de inicializador são feitas com a palavra-chave `init` e têm
+duas formas básicas.
 
-Structure, enumeration, and class types can have any number of initializers,
-but the rules and associated behavior for class initializers are different.
-Unlike structures and enumerations, classes have two kinds of initializers:
-designated initializers and convenience initializers,
-as described in <doc:Initialization>.
+Tipos estrutura, enumeração e classe podem ter qualquer número de inicializadores,
+mas as regras e o comportamento associado dos inicializadores de classe são diferentes.
+Diferentemente de estruturas e enumerações, classes têm dois tipos de inicializadores:
+inicializadores designados e inicializadores de conveniência,
+como descrito em <doc:Initialization>.
 
-The following form declares initializers for structures, enumerations,
-and designated initializers of classes:
+A forma a seguir declara inicializadores para estruturas, enumerações
+e inicializadores designados de classes:
 
 ```swift
 init(<#parameters#>) {
@@ -2805,22 +2792,22 @@ init(<#parameters#>) {
 }
 ```
 
-A designated initializer of a class initializes
-all of the class's properties directly. It can't call any other initializers
-of the same class, and if the class has a superclass, it must call one of
-the superclass's designated initializers.
-If the class inherits any properties from its superclass, one of the
-superclass's designated initializers must be called before any of these
-properties can be set or modified in the current class.
+Um inicializador designado de uma classe inicializa
+todas as propriedades da classe diretamente. Ele não pode chamar outros inicializadores
+da mesma classe e, se a classe tiver uma superclasse, precisa chamar um dos
+inicializadores designados da superclasse.
+Se a classe herdar quaisquer propriedades da sua superclasse, um dos
+inicializadores designados da superclasse precisa ser chamado antes que qualquer uma dessas
+propriedades possa ser definida ou modificada na classe atual.
 
-Designated initializers can be declared in the context of a class declaration only
-and therefore can't be added to a class using an extension declaration.
+Inicializadores designados podem ser declarados somente no contexto de uma declaração de classe
+e, por isso, não podem ser adicionados a uma classe usando uma declaração de extensão.
 
-Initializers in structures and enumerations can call other declared initializers
-to delegate part or all of the initialization process.
+Inicializadores em estruturas e enumerações podem chamar outros inicializadores declarados
+para delegar parte ou todo o processo de inicialização.
 
-To declare convenience initializers for a class,
-mark the initializer declaration with the `convenience` declaration modifier.
+Para declarar inicializadores de conveniência para uma classe,
+marque a declaração do inicializador com o modificador de declaração `convenience`.
 
 ```swift
 convenience init(<#parameters#>) {
@@ -2828,53 +2815,53 @@ convenience init(<#parameters#>) {
 }
 ```
 
-Convenience initializers can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
+Inicializadores de conveniência podem delegar o processo de inicialização para outro
+inicializador de conveniência ou para um dos inicializadores designados da classe.
+Dito isso, os processos de inicialização precisam terminar com uma chamada a um
+inicializador designado que, no fim, inicializa as propriedades da classe.
+Inicializadores de conveniência não podem chamar inicializadores da superclasse.
 
-You can mark designated and convenience initializers with the `required`
-declaration modifier to require that every subclass implement the initializer.
-A subclass’s implementation of that initializer
-must also be marked with the `required` declaration modifier.
+Você pode marcar inicializadores designados e de conveniência com o modificador de declaração `required`
+para exigir que toda subclasse implemente o inicializador.
+A implementação dessa subclasse para esse inicializador
+também precisa ser marcada com o modificador de declaração `required`.
 
-By default, initializers declared in a superclass
-aren't inherited by subclasses.
-That said, if a subclass initializes all of its stored properties with default values
-and doesn't define any initializers of its own,
-it inherits all of the superclass's initializers.
-If the subclass overrides all of the superclass’s designated initializers,
-it inherits the superclass’s convenience initializers.
+Por padrão, inicializadores declarados em uma superclasse
+não são herdados por subclasses.
+Dito isso, se uma subclasse inicializar todas as suas propriedades armazenadas com valores padrão
+e não definir nenhum inicializador próprio,
+ela herda todos os inicializadores da superclasse.
+Se a subclasse sobrescrever todos os inicializadores designados da superclasse,
+ela herda os inicializadores de conveniência da superclasse.
 
-As with methods, properties, and subscripts,
-you need to mark overridden designated initializers with the `override` declaration modifier.
+Assim como métodos, propriedades e subscritos,
+você precisa marcar inicializadores designados sobrescritos com o modificador de declaração `override`.
 
-> Note: If you mark an initializer with the `required` declaration modifier,
-> you don't also mark the initializer with the `override` modifier
-> when you override the required initializer in a subclass.
+> Nota: Se você marcar um inicializador com o modificador de declaração `required`,
+> você não marca também o inicializador com o modificador `override`
+> ao sobrescrever o inicializador obrigatório em uma subclasse.
 
-Just like functions and methods, initializers can throw or rethrow errors.
-And just like functions and methods,
-you use the `throws` or `rethrows` keyword after an initializer's parameters
-to indicate the appropriate behavior.
-Likewise, initializers can be asynchronous,
-and you use the `async` keyword to indicate this.
+Assim como funções e métodos, inicializadores podem lançar ou relançar erros.
+E, assim como funções e métodos,
+você usa a palavra-chave `throws` ou `rethrows` depois dos parâmetros de um inicializador
+para indicar o comportamento apropriado.
+Da mesma forma, inicializadores podem ser assíncronos,
+e você usa a palavra-chave `async` para indicar isso.
 
-To see examples of initializers in various type declarations,
-see <doc:Initialization>.
+Para ver exemplos de inicializadores em várias declarações de tipo,
+veja <doc:Initialization>.
 
-### Failable Initializers
+### Inicializadores falíveis
 
-A *failable initializer* is a type of initializer that produces an optional instance
-or an implicitly unwrapped optional instance of the type the initializer is declared on.
-As a result, a failable initializer can return `nil` to indicate that initialization failed.
+Um *inicializador falível* é um tipo de inicializador que produz uma instância opcional
+ou uma instância opcional implicitamente desembrulhada do tipo sobre o qual o inicializador é declarado.
+Como resultado, um inicializador falível pode retornar `nil` para indicar que a inicialização falhou.
 
-To declare a failable initializer that produces an optional instance,
-append a question mark to the `init` keyword in the initializer declaration (`init?`).
-To declare a failable initializer that produces an implicitly unwrapped optional instance,
-append an exclamation point instead (`init!`). The example below shows an `init?`
-failable initializer that produces an optional instance of a structure.
+Para declarar um inicializador falível que produz uma instância opcional,
+acrescente um ponto de interrogação à palavra-chave `init` na declaração do inicializador (`init?`).
+Para declarar um inicializador falível que produz uma instância opcional implicitamente desembrulhada,
+acrescente um ponto de exclamação no lugar (`init!`). O exemplo abaixo mostra um inicializador falível `init?`
+que produz uma instância opcional de uma estrutura.
 
 ```swift
 struct SomeStruct {
@@ -2908,8 +2895,8 @@ struct SomeStruct {
   ```
 -->
 
-You call an `init?` failable initializer in the same way that you call a nonfailable initializer,
-except that you must deal with the optionality of the result.
+Você chama um inicializador falível `init?` da mesma forma que chama um inicializador não falível,
+exceto que precisa lidar com a opcionalidade do resultado.
 
 ```swift
 if let actualInstance = SomeStruct(input: "Hello") {
@@ -2932,33 +2919,33 @@ if let actualInstance = SomeStruct(input: "Hello") {
   ```
 -->
 
-A failable initializer can return `nil`
-at any point in the implementation of the initializer's body.
+Um inicializador falível pode retornar `nil`
+em qualquer ponto da implementação do corpo do inicializador.
 
-A failable initializer can delegate to any kind of initializer.
-A nonfailable initializer can delegate to another nonfailable initializer
-or to an `init!` failable initializer.
-A nonfailable initializer can delegate to an `init?` failable initializer
-by force-unwrapping the result of the superclass's initializer ---
-for example, by writing `super.init()!`.
+Um inicializador falível pode delegar para qualquer tipo de inicializador.
+Um inicializador não falível pode delegar para outro inicializador não falível
+ou para um inicializador falível `init!`.
+Um inicializador não falível pode delegar para um inicializador falível `init?`
+desembrulhando à força o resultado do inicializador da superclasse ---
+por exemplo, escrevendo `super.init()!`.
 
-Initialization failure propagates through initializer delegation.
-Specifically,
-if a failable initializer delegates to an initializer that fails and returns `nil`,
-then the initializer that delegated also fails and implicitly returns `nil`.
-If a nonfailable initializer delegates to an `init!` failable initializer that fails and returns `nil`,
-then a runtime error is raised
-(as if you used the `!` operator to unwrap an optional that has a `nil` value).
+A falha de inicialização se propaga pela delegação de inicializadores.
+Especificamente,
+se um inicializador falível delegar para um inicializador que falha e retorna `nil`,
+então o inicializador que delegou também falha e retorna `nil` implicitamente.
+Se um inicializador não falível delegar para um inicializador falível `init!` que falha e retorna `nil`,
+então um erro de tempo de execução é gerado
+(como se você tivesse usado o operador `!` para desembrulhar um opcional que tem valor `nil`).
 
-A failable designated initializer can be overridden in a subclass
-by any kind of designated initializer.
-A nonfailable designated initializer can be overridden in a subclass
-by a nonfailable designated initializer only.
+Um inicializador designado falível pode ser sobrescrito em uma subclasse
+por qualquer tipo de inicializador designado.
+Um inicializador designado não falível pode ser sobrescrito em uma subclasse
+somente por um inicializador designado não falível.
 
-For more information and to see examples of failable initializers,
-see <doc:Initialization#Failable-Initializers>.
+Para mais informações e para ver exemplos de inicializadores falíveis,
+veja <doc:Initialization#Failable-Initializers>.
 
-> Grammar of an initializer declaration:
+> Gramática de uma declaração de inicializador:
 >
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
 > *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
@@ -2967,10 +2954,10 @@ see <doc:Initialization#Failable-Initializers>.
 > *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
 > *initializer-body* → *code-block*
 
-## Deinitializer Declaration
+## Declaração de desinicializador
 
-A *deinitializer declaration* declares a deinitializer for a class type.
-Deinitializers take no parameters and have the following form:
+Uma *declaração de desinicializador* declara um desinicializador para um tipo classe.
+Desinicializadores não recebem parâmetros e têm a seguinte forma:
 
 ```swift
 deinit {
@@ -2978,32 +2965,31 @@ deinit {
 }
 ```
 
-A deinitializer is called automatically when there are no longer any references
-to a class object, just before the class object is deallocated.
-A deinitializer can be declared only in the body of a class declaration ---
-but not in an extension of a class ---
-and each class can have at most one.
+Um desinicializador é chamado automaticamente quando não há mais referências
+a um objeto de classe, logo antes de o objeto de classe ser desalocado.
+Um desinicializador só pode ser declarado no corpo de uma declaração de classe ---
+mas não em uma extensão de classe ---
+e cada classe pode ter no máximo um.
 
-A subclass inherits its superclass's deinitializer,
-which is implicitly called just before the subclass object is deallocated.
-The subclass object isn't deallocated until all deinitializers in its inheritance chain
-have finished executing.
+Uma subclasse herda o desinicializador da sua superclasse,
+que é chamado implicitamente logo antes de o objeto da subclasse ser desalocado.
+O objeto da subclasse só é desalocado depois que todos os desinicializadores na sua cadeia de herança
+terminarem de executar.
 
-Deinitializers aren't called directly.
+Desinicializadores não são chamados diretamente.
 
-For an example of how to use a deinitializer in a class declaration,
-see <doc:Deinitialization>.
+Para um exemplo de como usar um desinicializador em uma declaração de classe,
+veja <doc:Deinitialization>.
 
-> Grammar of a deinitializer declaration:
+> Gramática de uma declaração de desinicializador:
 >
 > *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
+## Declaração de extensão
 
-## Extension Declaration
-
-An *extension declaration* allows you to extend
-the behavior of existing types.
-Extension declarations are declared using the `extension` keyword
-and have the following form:
+Uma *declaração de extensão* permite estender o comportamento
+de tipos existentes.
+Declarações de extensão são feitas com a palavra-chave `extension`
+e têm a seguinte forma:
 
 ```swift
 extension <#type name#> where <#requirements#> {
@@ -3011,39 +2997,39 @@ extension <#type name#> where <#requirements#> {
 }
 ```
 
-The body of an extension declaration contains zero or more *declarations*.
-These *declarations* can include computed properties, computed type properties,
-instance methods, type methods, initializers, subscript declarations,
-and even class, structure, and enumeration declarations.
-Extension declarations can't contain deinitializer or protocol declarations,
-stored properties, property observers, or other extension declarations.
-Declarations in a protocol extension can't be marked `final`.
-For a discussion and several examples of extensions that include various kinds of declarations,
-see <doc:Extensions>.
+O corpo de uma declaração de extensão contém zero ou mais *declarações*.
+Essas *declarações* podem incluir propriedades computadas, propriedades computadas de tipo,
+métodos de instância, métodos de tipo, inicializadores, declarações de subscript,
+e até declarações de classe, estrutura e enumeração.
+Declarações de extensão não podem conter declarações de desinicializador ou de protocolo,
+propriedades armazenadas, observadores de propriedade nem outras declarações de extensão.
+Declarações em uma extensão de protocolo não podem ser marcadas com `final`.
+Para uma discussão e vários exemplos de extensões que incluem diferentes tipos de declarações,
+veja <doc:Extensions>.
 
-If the *type name* is a class, structure, or enumeration type,
-the extension extends that type.
-If the *type name* is a protocol type,
-the extension extends all types that conform to that protocol.
+Se o *nome do tipo* for um tipo classe, estrutura ou enumeração,
+a extensão estende esse tipo.
+Se o *nome do tipo* for um tipo protocolo,
+a extensão estende todos os tipos que estão em conformidade com esse protocolo.
 
-Extension declarations that extend a generic type
-or a protocol with associated types
-can include *requirements*.
-If an instance of the extended type
-or of a type that conforms to the extended protocol
-satisfies the *requirements*,
-the instance gains the behavior specified in the declaration.
+Declarações de extensão que estendem um tipo genérico
+ou um protocolo com tipos associados
+podem incluir *requisitos*.
+Se uma instância do tipo estendido
+ou de um tipo que está em conformidade com o protocolo estendido
+satisfizer os *requisitos*,
+a instância ganha o comportamento especificado na declaração.
 
-Extension declarations can contain initializer declarations. That said,
-if the type you're extending is defined in another module,
-an initializer declaration must delegate to an initializer already defined in that module
-to ensure members of that type are properly initialized.
+Declarações de extensão podem conter declarações de inicializador. Dito isso,
+se o tipo que você está estendendo for definido em outro módulo,
+uma declaração de inicializador deve delegar a um inicializador já definido nesse módulo
+para garantir que os membros desse tipo sejam inicializados corretamente.
 
-Properties, methods, and initializers of an existing type
-can't be overridden in an extension of that type.
+Propriedades, métodos e inicializadores de um tipo existente
+não podem ser sobrescritos em uma extensão desse tipo.
 
-Extension declarations can add protocol conformance to an existing
-class, structure, or enumeration type by specifying *adopted protocols*:
+Declarações de extensão podem adicionar conformidade a protocolo a um
+tipo classe, estrutura ou enumeração existente, especificando os *protocolos adotados*:
 
 ```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
@@ -3051,27 +3037,27 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 }
 ```
 
-Extension declarations can't add class inheritance to an existing class,
-and therefore you can specify only a list of protocols after the *type name* and colon.
+Declarações de extensão não podem adicionar herança de classe a uma classe existente,
+por isso você pode especificar apenas uma lista de protocolos depois do *nome do tipo* e dos dois-pontos.
 
-### Conditional Conformance
+### Conformidade condicional
 
-You can extend a generic type
-to conditionally conform to a protocol,
-so that instances of the type conform to the protocol
-only when certain requirements are met.
-You add conditional conformance to a protocol
-by including *requirements* in an extension declaration.
+Você pode estender um tipo genérico
+para que ele fique em conformidade condicional com um protocolo,
+de modo que as instâncias do tipo estejam em conformidade com o protocolo
+somente quando certos requisitos forem atendidos.
+Você adiciona conformidade condicional a um protocolo
+incluindo *requisitos* em uma declaração de extensão.
 
-#### Overridden Requirements Aren't Used in Some Generic Contexts
+#### Requisitos sobrescritos não são usados em alguns contextos genéricos
 
-In some generic contexts,
-types that get behavior from conditional conformance to a protocol
-don't always use the specialized implementations
-of that protocol's requirements.
-To illustrate this behavior,
-the following example defines two protocols
-and a generic type that conditionally conforms to both protocols.
+Em alguns contextos genéricos,
+tipos que recebem comportamento pela conformidade condicional a um protocolo
+nem sempre usam as implementações especializadas
+dos requisitos desse protocolo.
+Para ilustrar esse comportamento,
+o exemplo a seguir define dois protocolos
+e um tipo genérico que está em conformidade condicional com ambos.
 
 <!--
   This test needs to be compiled so that it will recognize Pair's
@@ -3165,14 +3151,14 @@ extension String: TitledLoggable {
   ```
 -->
 
-The `Pair` structure conforms to `Loggable` and `TitledLoggable`
-whenever its generic type conforms to `Loggable` or `TitledLoggable`, respectively.
-In the example below,
-`oneAndTwo` is an instance of `Pair<String>`,
-which conforms to `TitledLoggable`
-because `String` conforms to `TitledLoggable`.
-When the `log()` method is called on `oneAndTwo` directly,
-the specialized version containing the title string is used.
+A estrutura `Pair` está em conformidade com `Loggable` e `TitledLoggable`
+sempre que seu tipo genérico estiver em conformidade com `Loggable` ou `TitledLoggable`, respectivamente.
+No exemplo abaixo,
+`oneAndTwo` é uma instância de `Pair<String>`,
+que está em conformidade com `TitledLoggable`
+porque `String` está em conformidade com `TitledLoggable`.
+Quando o método `log()` é chamado diretamente em `oneAndTwo`,
+a versão especializada, que contém a string de título, é usada.
 
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
@@ -3190,13 +3176,13 @@ oneAndTwo.log()
   ```
 -->
 
-However, when `oneAndTwo` is used in a generic context
-or as an instance of the `Loggable` protocol,
-the specialized version isn't used.
-Swift picks which implementation of `log()` to call
-by consulting only the minimum requirements that `Pair` needs to conform to `Loggable`.
-For this reason,
-the default implementation provided by the `Loggable` protocol is used instead.
+No entanto, quando `oneAndTwo` é usado em um contexto genérico
+ou como instância do protocolo `Loggable`,
+a versão especializada não é usada.
+O Swift escolhe qual implementação de `log()` chamar
+considerando apenas os requisitos mínimos que `Pair` precisa cumprir para estar em conformidade com `Loggable`.
+Por esse motivo,
+a implementação padrão fornecida pelo protocolo `Loggable` é usada.
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
@@ -3218,32 +3204,32 @@ doSomething(with: oneAndTwo)
   ```
 -->
 
-When `log()` is called on the instance that's passed to `doSomething(_:)`,
-the customized title is omitted from the logged string.
+Quando `log()` é chamado na instância passada para `doSomething(_:)`,
+o título personalizado é omitido da string registrada.
 
-### Protocol Conformance Must Not Be Redundant
+### A conformidade a protocolo não pode ser redundante
 
-A concrete type can conform to a particular protocol only once.
-Swift marks redundant protocol conformances as an error.
-You're likely to encounter this kind of error
-in two kinds of situations.
-The first situation is when
-you explicitly conform to the same protocol multiple times,
-but with different requirements.
-The second situation is when
-you implicitly inherit from the same protocol multiple times.
-These situations are discussed in the sections below.
+Um tipo concreto pode estar em conformidade com um protocolo específico apenas uma vez.
+O Swift marca conformidades redundantes a protocolo como erro.
+Você provavelmente vai encontrar esse tipo de erro
+em duas situações.
+A primeira é quando
+você declara conformidade explícita ao mesmo protocolo várias vezes,
+mas com requisitos diferentes.
+A segunda é quando
+você herda implicitamente do mesmo protocolo várias vezes.
+Essas situações são discutidas nas seções abaixo.
 
-#### Resolving Explicit Redundancy
+#### Resolvendo a redundância explícita
 
-Multiple extensions on a concrete type
-can't add conformance to the same protocol,
-even if the extensions' requirements are mutually exclusive.
-This restriction is demonstrated in the example below.
-Two extension declarations attempt to add conditional conformance
-to the `Serializable` protocol,
-one for arrays with `Int` elements,
-and one for arrays with `String` elements.
+Várias extensões de um tipo concreto
+não podem adicionar conformidade ao mesmo protocolo,
+mesmo que os requisitos das extensões sejam mutuamente exclusivos.
+Essa restrição é demonstrada no exemplo abaixo.
+Duas declarações de extensão tentam adicionar conformidade condicional
+ao protocolo `Serializable`,
+uma para arrays com elementos `Int`
+e outra para arrays com elementos `String`.
 
 ```swift
 protocol Serializable {
@@ -3293,9 +3279,9 @@ extension Array: Serializable where Element == String {
   ```
 -->
 
-If you need to add conditional conformance based on multiple concrete types,
-create a new protocol that each type can conform to
-and use that protocol as the requirement when declaring conditional conformance.
+Se você precisar adicionar conformidade condicional com base em vários tipos concretos,
+crie um novo protocolo ao qual cada tipo possa estar em conformidade
+e use esse protocolo como requisito ao declarar a conformidade condicional.
 
 ```swift
 protocol SerializableInArray { }
@@ -3327,22 +3313,22 @@ extension Array: Serializable where Element: SerializableInArray {
   ```
 -->
 
-#### Resolving Implicit Redundancy
+#### Resolvendo a redundância implícita
 
-When a concrete type conditionally conforms to a protocol,
-that type implicitly conforms to any parent protocols
-with the same requirements.
+Quando um tipo concreto está em conformidade condicional com um protocolo,
+esse tipo passa a estar implicitamente em conformidade com quaisquer protocolos pais
+que tenham os mesmos requisitos.
 
-If you need a type to conditionally conform to two protocols
-that inherit from a single parent,
-explicitly declare conformance to the parent protocol.
-This avoids implicitly conforming to the parent protocol twice
-with different requirements.
+Se você precisar que um tipo esteja em conformidade condicional com dois protocolos
+que herdam de um único pai,
+declare explicitamente a conformidade com o protocolo pai.
+Isso evita que o tipo fique implicitamente em conformidade com o protocolo pai duas vezes,
+com requisitos diferentes.
 
-The following example explicitly declares
-the conditional conformance of `Array` to `Loggable`
-to avoid a conflict when declaring its conditional conformance
-to both `TitledLoggable` and the new `MarkedLoggable` protocol.
+O exemplo a seguir declara explicitamente
+a conformidade condicional de `Array` a `Loggable`
+para evitar um conflito ao declarar sua conformidade condicional
+tanto a `TitledLoggable` quanto ao novo protocolo `MarkedLoggable`.
 
 ```swift
 protocol MarkedLoggable: Loggable {
@@ -3390,10 +3376,9 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   ```
 -->
 
-Without the extension
-to explicitly declare conditional conformance to `Loggable`,
-the other `Array` extensions would implicitly create these declarations,
-resulting in an error:
+Sem a extensão que declara explicitamente a conformidade condicional a `Loggable`,
+as outras extensões de `Array` criariam implicitamente essas declarações,
+resultando em um erro:
 
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
@@ -3482,7 +3467,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
   ```
 -->
 
-> Grammar of an extension declaration:
+> Gramática de uma declaração de extensão:
 >
 > *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
 > *extension-body* → **`{`** *extension-members*_?_ **`}`**
@@ -3490,13 +3475,13 @@ extension Array: Loggable where Element: MarkedLoggable { }
 > *extension-members* → *extension-member* *extension-members*_?_ \
 > *extension-member* → *declaration* | *compiler-control-statement*
 
-## Subscript Declaration
+## Declaração de subscript
 
-A *subscript* declaration allows you to add subscripting support for objects
-of a particular type and are typically used to provide a convenient syntax
-for accessing the elements in a collection, list, or sequence.
-Subscript declarations are declared using the `subscript` keyword
-and have the following form:
+Uma declaração de *subscript* permite adicionar suporte a subscripts para objetos
+de um tipo específico, e geralmente é usada para oferecer uma sintaxe prática
+para acessar os elementos de uma coleção, lista ou sequência.
+Declarações de subscript são feitas com a palavra-chave `subscript`
+e têm a seguinte forma:
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> {
@@ -3509,60 +3494,60 @@ subscript (<#parameters#>) -> <#return type#> {
 }
 ```
 
-Subscript declarations can appear only in the context of a class, structure,
-enumeration, extension, or protocol declaration.
+Declarações de subscript só podem aparecer no contexto de uma declaração de classe, estrutura,
+enumeração, extensão ou protocolo.
 
-The *parameters* specify one or more indexes used to access elements of the corresponding type
-in a subscript expression (for example, the `i` in the expression `object[i]`).
-Although the indexes used to access the elements can be of any type,
-each parameter must include a type annotation to specify the type of each index.
-The *return type* specifies the type of the element being accessed.
+Os *parâmetros* especificam um ou mais índices usados para acessar elementos do tipo correspondente
+em uma expressão de subscript (por exemplo, o `i` na expressão `object[i]`).
+Embora os índices usados para acessar os elementos possam ser de qualquer tipo,
+cada parâmetro precisa ter uma anotação de tipo para especificar o tipo de cada índice.
+O *tipo de retorno* especifica o tipo do elemento acessado.
 
-As with computed properties,
-subscript declarations support reading and writing the value of the accessed elements.
-The getter is used to read the value,
-and the setter is used to write the value.
-The setter clause is optional,
-and when only a getter is needed, you can omit both clauses and simply
-return the requested value directly.
-That said, if you provide a setter clause, you must also provide a getter clause.
+Assim como nas propriedades computadas,
+as declarações de subscript permitem ler e escrever o valor dos elementos acessados.
+O getter é usado para ler o valor,
+e o setter é usado para escrever o valor.
+A cláusula setter é opcional,
+e, quando só é preciso um getter, você pode omitir as duas cláusulas e simplesmente
+retornar o valor pedido diretamente.
+Dito isso, se você fornecer uma cláusula setter, também precisa fornecer uma cláusula getter.
 
-The *setter name* and enclosing parentheses are optional.
-If you provide a setter name, it's used as the name of the parameter to the setter.
-If you don't provide a setter name, the default parameter name to the setter is `newValue`.
-The type of the parameter to the setter is the same as the *return type*.
+O *nome do setter* e os parênteses que o envolvem são opcionais.
+Se você fornecer um nome de setter, ele é usado como o nome do parâmetro do setter.
+Se não fornecer um nome de setter, o nome padrão do parâmetro do setter é `newValue`.
+O tipo do parâmetro do setter é o mesmo do *tipo de retorno*.
 
-You can overload a subscript declaration in the type in which it's declared,
-as long as the *parameters* or the *return type* differ from the one you're overloading.
-You can also override a subscript declaration inherited from a superclass. When you do so,
-you must mark the overridden subscript declaration with the `override` declaration modifier.
+Você pode sobrecarregar uma declaração de subscript no tipo em que ela é declarada,
+desde que os *parâmetros* ou o *tipo de retorno* sejam diferentes do que está sendo sobrecarregado.
+Você também pode sobrescrever uma declaração de subscript herdada de uma superclasse. Ao fazer isso,
+é preciso marcar a declaração de subscript sobrescrita com o modificador de declaração `override`.
 
-Subscript parameters follow the same rules as function parameters,
-with two exceptions.
-By default, the parameters used in subscripting don't have argument labels,
-unlike functions, methods, and initializers.
-However, you can provide explicit argument labels
-using the same syntax that functions, methods, and initializers use.
-In addition, subscripts can't have in-out parameters.
-A subscript parameter can have a default value,
-using the syntax described in <doc:Declarations#Special-Kinds-of-Parameters>.
+Os parâmetros de subscript seguem as mesmas regras dos parâmetros de função,
+com duas exceções.
+Por padrão, os parâmetros usados em subscripts não têm rótulos de argumento,
+diferentemente de funções, métodos e inicializadores.
+No entanto, você pode fornecer rótulos de argumento explícitos
+usando a mesma sintaxe que funções, métodos e inicializadores usam.
+Além disso, subscripts não podem ter parâmetros in-out.
+Um parâmetro de subscript pode ter um valor padrão,
+usando a sintaxe descrita em <doc:Declarations#Special-Kinds-of-Parameters>.
 
-You can also declare subscripts in the context of a protocol declaration,
-as described in <doc:Declarations#Protocol-Subscript-Declaration>.
+Você também pode declarar subscripts no contexto de uma declaração de protocolo,
+como descrito em <doc:Declarations#Protocol-Subscript-Declaration>.
 
-For more information about subscripting and to see examples of subscript declarations,
-see <doc:Subscripts>.
+Para mais informações sobre subscripts e para ver exemplos de declarações de subscript,
+veja <doc:Subscripts>.
 
-### Type Subscript Declarations
+### Declarações de subscript de tipo
 
-To declare a subscript that's exposed by the type,
-rather than by instances of the type,
-mark the subscript declaration with the `static` declaration modifier.
-Classes can mark type computed properties with the `class` declaration modifier instead
-to allow subclasses to override the superclass’s implementation.
-In a class declaration,
-the `static` keyword has the same effect as marking the declaration
-with both the `class` and `final` declaration modifiers.
+Para declarar um subscript exposto pelo tipo,
+e não pelas instâncias do tipo,
+marque a declaração de subscript com o modificador de declaração `static`.
+Classes podem marcar propriedades computadas de tipo com o modificador de declaração `class`
+para permitir que subclasses sobrescrevam a implementação da superclasse.
+Em uma declaração de classe,
+a palavra-chave `static` tem o mesmo efeito que marcar a declaração
+com os modificadores de declaração `class` e `final`.
 
 <!--
   - test: `cant-override-static-subscript-in-subclass`
@@ -3579,7 +3564,7 @@ with both the `class` and `final` declaration modifiers.
   ```
 -->
 
-> Grammar of a subscript declaration:
+> Gramática de uma declaração de subscript:
 >
 > *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
 > *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
@@ -3587,33 +3572,33 @@ with both the `class` and `final` declaration modifiers.
 > *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
 > *subscript-result* → **`->`** *attributes*_?_ *type*
 
-## Macro Declaration
+## Declaração de macro
 
-A *macro declaration* introduces a new macro.
-It begins with the `macro` keyword
-and has the following form:
+Uma *declaração de macro* introduz uma nova macro.
+Ela começa com a palavra-chave `macro`
+e tem a seguinte forma:
 
 ```swift
 macro <#name#> = <#macro implementation#>
 ```
 
-The *macro implementation* is another macro,
-and indicates the location of the code that performs this macro's expansion.
-The code that performs macro expansion is a separate Swift program,
-that uses the [SwiftSyntax][] module to interact with Swift code.
-Call the `externalMacro(module:type:)` macro from the Swift standard library,
-passing in the name of a type that contains the macro's implementation,
-and the name of the module that contains that type.
+A *implementação da macro* é outra macro
+e indica a localização do código que realiza a expansão da macro.
+O código que realiza a expansão de macro é um programa Swift separado,
+que usa o módulo [SwiftSyntax][] para interagir com código Swift.
+Chame a macro `externalMacro(module:type:)` da biblioteca padrão do Swift,
+passando o nome de um tipo que contém a implementação da macro
+e o nome do módulo que contém esse tipo.
 
 [SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
-Macros can be overloaded,
-following the same model used by functions.
-A macro declaration appears only at file scope.
+Macros podem ser sobrecarregadas,
+seguindo o mesmo modelo usado por funções.
+Uma declaração de macro aparece apenas no escopo de arquivo.
 
-For an overview of macros in Swift, see <doc:Macros>.
+Para uma visão geral das macros em Swift, veja <doc:Macros>.
 
-> Grammar of a macro declaration:
+> Gramática de uma declaração de macro:
 >
 > *macro-declaration* → *macro-head* *identifier* *generic-parameter-clause*_?_ *macro-signature* *macro-definition*_?_ *generic-where-clause* \
 > *macro-head* → *attributes*_?_ *declaration-modifiers*_?_ **`macro`** \
@@ -3621,76 +3606,76 @@ For an overview of macros in Swift, see <doc:Macros>.
 > *macro-function-signature-result* → **`->`** *type* \
 > *macro-definition* → **`=`** *expression*
 
-## Operator Declaration
 
-An *operator declaration* introduces a new infix, prefix,
-or postfix operator into your program
-and is declared using the `operator` keyword.
+## Declaração de operador
 
-You can declare operators of three different fixities:
-infix, prefix, and postfix.
-The *fixity* of an operator specifies the relative position of an operator
-to its operands.
+Uma *declaração de operador* introduz um novo operador infixo, prefixo
+ou pós-fixo no seu programa,
+e é declarada com a palavra-chave `operator`.
 
-There are three basic forms of an operator declaration,
-one for each fixity.
-The fixity of the operator is specified by marking the operator declaration with the
-`infix`, `prefix`, or `postfix` declaration modifier before the `operator` keyword.
-In each form, the name of the operator can contain only the operator characters
-defined in <doc:LexicalStructure#Operators>.
+Você pode declarar operadores de três fixidades diferentes:
+infixa, prefixa e pós-fixa.
+A *fixidade* de um operador especifica a posição relativa do operador
+em relação aos seus operandos.
 
-The following form declares a new infix operator:
+Há três formas básicas de declaração de operador,
+uma para cada fixidade.
+A fixidade do operador é especificada marcando a declaração do operador com o
+modificador de declaração `infix`, `prefix` ou `postfix` antes da palavra-chave `operator`.
+Em cada forma, o nome do operador pode conter apenas os caracteres de operador
+definidos em <doc:LexicalStructure#Operators>.
+
+A forma a seguir declara um novo operador infixo:
 
 ```swift
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-An *infix operator* is a binary operator that's written between its two operands,
-such as the familiar addition operator (`+`) in the expression `1 + 2`.
+Um *operador infixo* é um operador binário escrito entre seus dois operandos,
+como o conhecido operador de adição (`+`) na expressão `1 + 2`.
 
-Infix operators can optionally specify a precedence group.
-If you omit the precedence group for an operator,
-Swift uses the default precedence group, `DefaultPrecedence`,
-which specifies a precedence just higher than `TernaryPrecedence`.
-For more information, see <doc:Declarations#Precedence-Group-Declaration>.
+Operadores infixos podem, opcionalmente, especificar um grupo de precedência.
+Se você omitir o grupo de precedência de um operador,
+o Swift usa o grupo de precedência padrão, `DefaultPrecedence`,
+que especifica uma precedência logo acima de `TernaryPrecedence`.
+Para mais informações, veja <doc:Declarations#Precedence-Group-Declaration>.
 
-The following form declares a new prefix operator:
+A forma a seguir declara um novo operador prefixo:
 
 ```swift
 prefix operator <#operator name#>
 ```
 
-A *prefix operator* is a unary operator that's written immediately before its operand,
-such as the prefix logical NOT operator (`!`) in the expression `!a`.
+Um *operador prefixo* é um operador unário escrito imediatamente antes do seu operando,
+como o operador prefixo de negação lógica (`!`) na expressão `!a`.
 
-Prefix operators declarations don't specify a precedence level.
-Prefix operators are nonassociative.
+Declarações de operadores prefixos não especificam um nível de precedência.
+Operadores prefixos são não associativos.
 
-The following form declares a new postfix operator:
+A forma a seguir declara um novo operador pós-fixo:
 
 ```swift
 postfix operator <#operator name#>
 ```
 
-A *postfix operator* is a unary operator that's written immediately after its operand,
-such as the postfix forced-unwrap operator (`!`) in the expression `a!`.
+Um *operador pós-fixo* é um operador unário escrito imediatamente depois do seu operando,
+como o operador pós-fixo de force unwrapping (`!`) na expressão `a!`.
 
-As with prefix operators, postfix operator declarations don't specify a precedence level.
-Postfix operators are nonassociative.
+Assim como nos operadores prefixos, declarações de operadores pós-fixos não especificam um nível de precedência.
+Operadores pós-fixos são não associativos.
 
-After declaring a new operator,
-you implement it by declaring a static method that has the same name as the operator.
-The static method is a member of
-one of the types whose values the operator takes as an argument ---
-for example, an operator that multiplies a `Double` by an `Int`
-is implemented as a static method on either the `Double` or `Int` structure.
-If you're implementing a prefix or postfix operator,
-you must also mark that method declaration with the corresponding `prefix` or `postfix`
-declaration modifier.
-To see an example of how to create and implement a new operator,
-see <doc:AdvancedOperators#Custom-Operators>.
+Depois de declarar um novo operador,
+você o implementa declarando um método estático com o mesmo nome do operador.
+O método estático é um membro de
+um dos tipos cujos valores o operador recebe como argumento ---
+por exemplo, um operador que multiplica um `Double` por um `Int`
+é implementado como um método estático na estrutura `Double` ou `Int`.
+Se você estiver implementando um operador prefixo ou pós-fixo,
+também precisa marcar a declaração desse método com o modificador de declaração `prefix` ou `postfix` correspondente.
+Para ver um exemplo de como criar e implementar um novo operador,
+veja <doc:AdvancedOperators#Custom-Operators>.
 
-> Grammar of an operator declaration:
+> Gramática de uma declaração de operador:
 >
 > *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
 >
@@ -3700,14 +3685,14 @@ see <doc:AdvancedOperators#Custom-Operators>.
 >
 > *infix-operator-group* → **`:`** *precedence-group-name*
 
-## Precedence Group Declaration
+## Declaração de grupo de precedência
 
-A *precedence group declaration* introduces
-a new grouping for infix operator precedence into your program.
-The precedence of an operator specifies how tightly the operator
-binds to its operands, in the absence of grouping parentheses.
+Uma *declaração de grupo de precedência* introduz
+um novo agrupamento de precedência para operadores infixos no seu programa.
+A precedência de um operador especifica o quão firmemente o operador
+se liga aos seus operandos, na ausência de parênteses de agrupamento.
 
-A precedence group declaration has the following form:
+Uma declaração de grupo de precedência tem a seguinte forma:
 
 ```swift
 precedencegroup <#precedence group name#> {
@@ -3718,63 +3703,63 @@ precedencegroup <#precedence group name#> {
 }
 ```
 
-The *lower group names* and *higher group names* lists specify
-the new precedence group's relation to existing precedence groups.
-The `lowerThan` precedence group attribute may only be used
-to refer to precedence groups declared outside of the current module.
-When two operators compete with each other for their operands,
-such as in the expression `2 + 3 * 5`,
-the operator with the higher relative precedence
-binds more tightly to its operands.
+As listas de *nomes de grupos inferiores* e *nomes de grupos superiores* especificam
+a relação do novo grupo de precedência com os grupos de precedência existentes.
+O atributo `lowerThan` do grupo de precedência só pode ser usado
+para se referir a grupos de precedência declarados fora do módulo atual.
+Quando dois operadores competem entre si pelos seus operandos,
+como na expressão `2 + 3 * 5`,
+o operador com maior precedência relativa
+se liga mais firmemente aos seus operandos.
 
-> Note: Precedence groups related to each other
-> using *lower group names* and *higher group names*
-> must fit into a single relational hierarchy,
-> but they *don't* have to form a linear hierarchy.
-> This means it's possible to have precedence groups
-> with undefined relative precedence.
-> Operators from those precedence groups
-> can't be used next to each other without grouping parentheses.
+> Nota: Grupos de precedência relacionados entre si
+> por meio de *nomes de grupos inferiores* e *nomes de grupos superiores*
+> precisam caber em uma única hierarquia relacional,
+> mas eles *não* precisam formar uma hierarquia linear.
+> Isso significa que é possível ter grupos de precedência
+> com precedência relativa indefinida.
+> Operadores desses grupos de precedência
+> não podem ser usados lado a lado sem parênteses de agrupamento.
 
-Swift defines numerous precedence groups to go along
-with the operators provided by the Swift standard library.
-For example, the addition (`+`) and subtraction (`-`) operators
-belong to the `AdditionPrecedence` group,
-and the multiplication (`*`) and division (`/`) operators
-belong to the `MultiplicationPrecedence` group.
-For a complete list of precedence groups
-provided by the Swift standard library,
-see [Operator Declarations](https://developer.apple.com/documentation/swift/operator_declarations).
+O Swift define vários grupos de precedência para acompanhar os operadores
+fornecidos pela biblioteca padrão do Swift.
+Por exemplo, os operadores de adição (`+`) e subtração (`-`)
+pertencem ao grupo `AdditionPrecedence`,
+e os operadores de multiplicação (`*`) e divisão (`/`)
+pertencem ao grupo `MultiplicationPrecedence`.
+Para ver a lista completa dos grupos de precedência
+fornecidos pela biblioteca padrão do Swift,
+veja [Declarações de operador](https://developer.apple.com/documentation/swift/operator_declarations).
 
-The *associativity* of an operator specifies how a sequence of operators
-with the same precedence level are grouped together in the absence of grouping parentheses.
-You specify the associativity of an operator by writing
-one of the context-sensitive keywords `left`, `right`, or `none` ---
-if your omit the associativity, the default is `none`.
-Operators that are left-associative group left-to-right.
-For example,
-the subtraction operator (`-`) is left-associative,
-so the expression `4 - 5 - 6` is grouped as `(4 - 5) - 6`
-and evaluates to `-7`.
-Operators that are right-associative group right-to-left,
-and operators that are specified with an associativity of `none`
-don't associate at all.
-Nonassociative operators of the same precedence level
-can't appear adjacent to each to other.
-For example,
-the `<` operator has an associativity of `none`,
-which means `1 < 2 < 3` isn't a valid expression.
+A *associatividade* de um operador especifica como uma sequência de operadores
+com o mesmo nível de precedência é agrupada na ausência de parênteses de agrupamento.
+Você especifica a associatividade de um operador escrevendo
+uma das palavras-chave contextuais `left`, `right` ou `none` ---
+se você omitir a associatividade, o padrão é `none`.
+Operadores associativos à esquerda agrupam da esquerda para a direita.
+Por exemplo,
+o operador de subtração (`-`) é associativo à esquerda,
+então a expressão `4 - 5 - 6` é agrupada como `(4 - 5) - 6`
+e resulta em `-7`.
+Operadores associativos à direita agrupam da direita para a esquerda,
+e operadores especificados com associatividade `none`
+não se associam de forma alguma.
+Operadores não associativos de mesmo nível de precedência
+não podem aparecer lado a lado um do outro.
+Por exemplo,
+o operador `<` tem associatividade `none`,
+o que significa que `1 < 2 < 3` não é uma expressão válida.
 
-The *assignment* of a precedence group specifies the precedence of an operator
-when used in an operation that includes optional chaining.
-When set to `true`, an operator in the corresponding precedence group
-uses the same grouping rules during optional chaining
-as the assignment operators from the Swift standard library.
-Otherwise, when set to `false` or omitted,
-operators in the precedence group follows the same optional chaining rules
-as operators that don't perform assignment.
+A *atribuição* de um grupo de precedência especifica a precedência de um operador
+quando usado em uma operação que inclui optional chaining.
+Quando definida como `true`, um operador do grupo de precedência correspondente
+usa as mesmas regras de agrupamento durante o optional chaining
+que os operadores de atribuição da biblioteca padrão do Swift.
+Caso contrário, quando definida como `false` ou omitida,
+os operadores do grupo de precedência seguem as mesmas regras de optional chaining
+que os operadores que não realizam atribuição.
 
-> Grammar of a precedence group declaration:
+> Gramática de uma declaração de grupo de precedência:
 >
 > *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
 >
@@ -3795,58 +3780,58 @@ as operators that don't perform assignment.
 > *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
 > *precedence-group-name* → *identifier*
 
-## Declaration Modifiers
+## Modificadores de declaração
 
-*Declaration modifiers* are keywords or context-sensitive keywords that modify the behavior
-or meaning of a declaration. You specify a declaration modifier by writing the appropriate
-keyword or context-sensitive keyword between a declaration's attributes (if any) and the keyword
-that introduces the declaration.
+*Modificadores de declaração* são palavras-chave ou palavras-chave contextuais que modificam o comportamento
+ou o significado de uma declaração. Você especifica um modificador de declaração escrevendo a palavra-chave
+apropriada ou a palavra-chave contextual entre os atributos da declaração (se houver) e a palavra-chave
+que introduz a declaração.
 
 - term `class`:
-  Apply this modifier to a member of a class
-  to indicate that the member is a member of the class itself,
-  rather than a member of instances of the class.
-  Members of a superclass that have this modifier
-  and don't have the `final` modifier
-  can be overridden by subclasses.
+  Aplique este modificador a um membro de uma classe
+  para indicar que o membro é um membro da própria classe,
+  e não de instâncias da classe.
+  Membros de uma superclasse que têm este modificador
+  e não têm o modificador `final`
+  podem ser sobrescritos por subclasses.
 
 - term `dynamic`:
-  Apply this modifier to any member of a class that can be represented by Objective-C.
-  When you mark a member declaration with the `dynamic` modifier,
-  access to that member is always dynamically dispatched using the Objective-C runtime.
-  Access to that member is never inlined or devirtualized by the compiler.
+  Aplique este modificador a qualquer membro de uma classe que possa ser representado em Objective-C.
+  Quando você marca uma declaração de membro com o modificador `dynamic`,
+  o acesso a esse membro é sempre despachado dinamicamente usando o tempo de execução (runtime) do Objective-C.
+  O acesso a esse membro nunca é embutido (inlined) nem desvirtualizado pelo compilador.
 
-  Because declarations marked with the `dynamic` modifier are dispatched
-  using the Objective-C runtime, they must be marked with the
-  `objc` attribute.
+  Como declarações marcadas com o modificador `dynamic` são despachadas
+  usando o tempo de execução (runtime) do Objective-C, elas precisam ser marcadas com o
+  atributo `objc`.
 
 - term `final`:
-  Apply this modifier to a class or to a property, method,
-  or subscript member of a class. It's applied to a class to indicate that the class
-  can't be subclassed. It's applied to a property, method, or subscript of a class
-  to indicate that a class member can't be overridden in any subclass.
-  For an example of how to use the `final` attribute,
-  see <doc:Inheritance#Preventing-Overrides>.
+  Aplique este modificador a uma classe ou a uma propriedade, método
+  ou subscript membro de uma classe. Ele é aplicado a uma classe para indicar que a classe
+  não pode ter subclasses. Ele é aplicado a uma propriedade, método ou subscript de uma classe
+  para indicar que um membro da classe não pode ser sobrescrito em nenhuma subclasse.
+  Para um exemplo de como usar o atributo `final`,
+  veja <doc:Inheritance#Preventing-Overrides>.
 
 - term `lazy`:
-  Apply this modifier to a stored variable property of a class or structure
-  to indicate that the property's initial value is calculated and stored at most
-  once, when the property is first accessed.
-  For an example of how to use the `lazy` modifier,
-  see <doc:Properties#Lazy-Stored-Properties>.
+  Aplique este modificador a uma propriedade de variável armazenada de uma classe ou estrutura
+  para indicar que o valor inicial da propriedade é calculado e armazenado no máximo
+  uma vez, quando a propriedade é acessada pela primeira vez.
+  Para um exemplo de como usar o modificador `lazy`,
+  veja <doc:Properties#Lazy-Stored-Properties>.
 
 - term `optional`:
-  Apply this modifier to a protocol's property, method,
-  or subscript members to indicate that a conforming type isn't required
-  to implement those members.
+  Aplique este modificador aos membros de propriedade, método
+  ou subscript de um protocolo para indicar que um tipo que o adota não é obrigado
+  a implementar esses membros.
 
-  You can apply the `optional` modifier only to protocols that are marked
-  with the `objc` attribute. As a result, only class types can adopt and conform
-  to a protocol that contains optional member requirements.
-  For more information about how to use the `optional` modifier
-  and for guidance about how to access optional protocol members ---
-  for example, when you're not sure whether a conforming type implements them ---
-  see <doc:Protocols#Optional-Protocol-Requirements>.
+  Você só pode aplicar o modificador `optional` a protocolos marcados
+  com o atributo `objc`. Por isso, apenas tipos classe podem adotar e estar em conformidade
+  com um protocolo que contém requisitos optional de membros.
+  Para mais informações sobre como usar o modificador `optional`
+  e orientações sobre como acessar membros optional de protocolo ---
+  por exemplo, quando você não tem certeza se um tipo em conformidade os implementa ---
+  veja <doc:Protocols#Optional-Protocol-Requirements>.
 
 <!--
   TODO: Currently, you can't check for an optional initializer,
@@ -3857,137 +3842,137 @@ that introduces the declaration.
 -->
 
 - term `required`:
-  Apply this modifier to a designated or convenience initializer
-  of a class to indicate that every subclass must implement that initializer.
-  The subclass's implementation of that initializer
-  must also be marked with the `required` modifier.
+  Aplique este modificador a um inicializador designado ou de conveniência
+  de uma classe para indicar que toda subclasse deve implementar esse inicializador.
+  A implementação desse inicializador na subclasse
+  também deve ser marcada com o modificador `required`.
 
 - term `static`:
-  Apply this modifier to a member of a structure, class, enumeration, or protocol
-  to indicate that the member is a member of the type,
-  rather than a member of instances of that type.
-  In the scope of a class declaration,
-  writing the `static` modifier on a member declaration
-  has the same effect as writing the `class` and `final` modifiers
-  on that member declaration.
-  However, constant type properties of a class are an exception:
-  `static` has its normal, nonclass meaning there
-  because you can't write `class` or `final` on those declarations.
+  Aplique este modificador a um membro de uma estrutura, classe, enumeração ou protocolo
+  para indicar que o membro é um membro do tipo,
+  e não de instâncias desse tipo.
+  No escopo de uma declaração de classe,
+  escrever o modificador `static` em uma declaração de membro
+  tem o mesmo efeito que escrever os modificadores `class` e `final`
+  nessa declaração de membro.
+  No entanto, propriedades de tipo constantes de uma classe são uma exceção:
+  ali, `static` tem seu significado normal, de não classe,
+  porque você não pode escrever `class` ou `final` nessas declarações.
 
 - term `unowned`:
-  Apply this modifier to a stored variable, constant, or stored property
-  to indicate that the variable or property has an unowned reference
-  to the object stored as its value.
-  If you try to access the variable or property
-  after the object has been deallocated,
-  a runtime error is raised.
-  Like a weak reference,
-  the type of the property or value must be a class type;
-  unlike a weak reference,
-  the type is non-optional.
-  For an example and more information about the `unowned` modifier,
-  see <doc:AutomaticReferenceCounting#Unowned-References>.
+  Aplique este modificador a uma variável, constante ou propriedade armazenada
+  para indicar que a variável ou propriedade tem uma referência unowned
+  para o objeto armazenado como seu valor.
+  Se você tentar acessar a variável ou propriedade
+  depois que o objeto foi desalocado,
+  um erro de tempo de execução é gerado.
+  Assim como uma referência weak,
+  o tipo da propriedade ou do valor deve ser um tipo classe;
+  diferente de uma referência weak,
+  o tipo não é opcional.
+  Para um exemplo e mais informações sobre o modificador `unowned`,
+  veja <doc:AutomaticReferenceCounting#Unowned-References>.
 
 - term `unowned(safe)`:
-  An explicit spelling of `unowned`.
+  Uma forma explícita de escrever `unowned`.
 
 - term `unowned(unsafe)`:
-  Apply this modifier to a stored variable, constant, or stored property
-  to indicate that the variable or property has an unowned reference
-  to the object stored as its value.
-  If you try to access the variable or property
-  after the object has been deallocated,
-  you'll access the memory at the location where the object used to be,
-  which is a memory-unsafe operation.
-  Like a weak reference,
-  the type of the property or value must be a class type;
-  unlike a weak reference,
-  the type is non-optional.
-  For an example and more information about the `unowned` modifier,
-  see <doc:AutomaticReferenceCounting#Unowned-References>.
+  Aplique este modificador a uma variável, constante ou propriedade armazenada
+  para indicar que a variável ou propriedade tem uma referência unowned
+  para o objeto armazenado como seu valor.
+  Se você tentar acessar a variável ou propriedade
+  depois que o objeto foi desalocado,
+  você acessará a memória no local onde o objeto costumava estar,
+  o que é uma operação insegura para a memória.
+  Assim como uma referência weak,
+  o tipo da propriedade ou do valor deve ser um tipo classe;
+  diferente de uma referência weak,
+  o tipo não é opcional.
+  Para um exemplo e mais informações sobre o modificador `unowned`,
+  veja <doc:AutomaticReferenceCounting#Unowned-References>.
 
 - term `weak`:
-  Apply this modifier to a stored variable or stored variable property
-  to indicate that the variable or property has a weak reference to the
-  object stored as its value. The type of the variable or property
-  must be an optional class type.
-  If you access the variable or property
-  after the object has been deallocated,
-  its value is `nil`.
-  For an example and more information about the `weak` modifier,
-  see <doc:AutomaticReferenceCounting#Weak-References>.
+  Aplique este modificador a uma variável armazenada ou a uma propriedade de variável armazenada
+  para indicar que a variável ou propriedade tem uma referência weak para o
+  objeto armazenado como seu valor. O tipo da variável ou propriedade
+  deve ser um tipo classe optional.
+  Se você acessar a variável ou propriedade
+  depois que o objeto foi desalocado,
+  seu valor é `nil`.
+  Para um exemplo e mais informações sobre o modificador `weak`,
+  veja <doc:AutomaticReferenceCounting#Weak-References>.
 
-### Access Control Levels
+### Níveis de controle de acesso
 
-Swift provides five levels of access control: open, public, internal, file private, and private.
-You can mark a declaration with one of the access-level modifiers below
-to specify the declaration's access level.
-Access control is discussed in detail in <doc:AccessControl>.
+O Swift oferece cinco níveis de controle de acesso: open, public, internal, file private e private.
+Você pode marcar uma declaração com um dos modificadores de nível de acesso abaixo
+para especificar o nível de acesso da declaração.
+O controle de acesso é discutido em detalhes em <doc:AccessControl>.
 
 - term `open`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-  by code in the same module as the declaration.
-  Declarations marked with the `open` access-level modifier can also be accessed and subclassed
-  by code in a module that imports the module that contains that declaration.
+  Aplique este modificador a uma declaração para indicar que a declaração pode ser acessada e ter subclasses
+  por código no mesmo módulo da declaração.
+  Declarações marcadas com o modificador de nível de acesso `open` também podem ser acessadas e ter subclasses
+  por código em um módulo que importa o módulo que contém essa declaração.
 
 - term `public`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed and subclassed
-  by code in the same module as the declaration.
-  Declarations marked with the `public` access-level modifier can also be accessed (but not subclassed)
-  by code in a module that imports the module that contains that declaration.
+  Aplique este modificador a uma declaração para indicar que a declaração pode ser acessada e ter subclasses
+  por código no mesmo módulo da declaração.
+  Declarações marcadas com o modificador de nível de acesso `public` também podem ser acessadas (mas não ter subclasses)
+  por código em um módulo que importa o módulo que contém essa declaração.
 
 - term `package`:
-  Apply this modifier to a declaration
-  to indicate that the declaration can be accessed
-  only by code in the same package as the declaration.
-  A package is a unit of code distribution
-  that you define in the build system you're using.
-  When the build system compiles code,
-  it specifies the package name
-  by passing the `-package-name` flag to the Swift compiler.
-  Two modules are part of the same package
-  if the build system specifies the same package name when building them.
+  Aplique este modificador a uma declaração
+  para indicar que a declaração só pode ser acessada
+  por código no mesmo pacote da declaração.
+  Um pacote é uma unidade de distribuição de código
+  que você define no sistema de build que está usando.
+  Quando o sistema de build compila o código,
+  ele especifica o nome do pacote
+  passando a flag `-package-name` para o compilador do Swift.
+  Dois módulos fazem parte do mesmo pacote
+  se o sistema de build especificar o mesmo nome de pacote ao compilá-los.
 
 - term `internal`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code in the same module as the declaration.
-  By default,
-  most declarations are implicitly marked with the `internal` access-level modifier.
+  Aplique este modificador a uma declaração para indicar que a declaração pode ser acessada
+  apenas por código no mesmo módulo da declaração.
+  Por padrão,
+  a maioria das declarações é marcada implicitamente com o modificador de nível de acesso `internal`.
 
 - term `fileprivate`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code in the same source file as the declaration.
+  Aplique este modificador a uma declaração para indicar que a declaração pode ser acessada
+  apenas por código no mesmo arquivo de código-fonte da declaração.
 
 - term `private`:
-  Apply this modifier to a declaration to indicate the declaration can be accessed
-  only by code within the declaration's immediate enclosing scope.
+  Aplique este modificador a uma declaração para indicar que a declaração pode ser acessada
+  apenas por código dentro do escopo imediatamente envolvente da declaração.
 
-For the purpose of access control,
-extensions behave as follows:
+Para fins de controle de acesso,
+extensões se comportam da seguinte forma:
 
-- If there are multiple extensions in the same file,
-  and those extensions all extend the same type,
-  then all of those extensions have the same access-control scope.
-  The extensions and the type they extend can be in different files.
+- Se houver várias extensões no mesmo arquivo,
+  e todas essas extensões estenderem o mesmo tipo,
+  então todas elas terão o mesmo escopo de controle de acesso.
+  As extensões e o tipo que elas estendem podem estar em arquivos diferentes.
 
-- If there are extensions in the same file as the type they extend,
-  the extensions have the same access-control scope as the type they extend.
+- Se houver extensões no mesmo arquivo que o tipo que elas estendem,
+  as extensões têm o mesmo escopo de controle de acesso que o tipo estendido.
 
-- Private members declared in a type's declaration
-  can be accessed from extensions to that type.
-  Private members declared in one extension
-  can be accessed from other extensions
-  and from the extended type's declaration.
+- Membros private declarados na declaração de um tipo
+  podem ser acessados a partir de extensões desse tipo.
+  Membros private declarados em uma extensão
+  podem ser acessados a partir de outras extensões
+  e da declaração do tipo estendido.
 
-Each access-level modifier above optionally accepts a single argument,
-which consists of the `set` keyword enclosed in parentheses ---
-for example, `private(set)`.
-Use this form of an access-level modifier when you want to specify an access level
-for the setter of a variable or subscript that's less than or equal
-to the access level of the variable or subscript itself,
-as discussed in <doc:AccessControl#Getters-and-Setters>.
+Cada modificador de nível de acesso acima aceita opcionalmente um único argumento,
+que consiste na palavra-chave `set` entre parênteses ---
+por exemplo, `private(set)`.
+Use essa forma de modificador de nível de acesso quando quiser especificar um nível de acesso
+para o setter de uma variável ou subscript que seja menor ou igual
+ao nível de acesso da própria variável ou subscript,
+como discutido em <doc:AccessControl#Getters-and-Setters>.
 
-> Grammar of a declaration modifier:
+> Gramática de um modificador de declaração:
 >
 > *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
 > *declaration-modifier* → *access-level-modifier* \
@@ -4015,3 +4000,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

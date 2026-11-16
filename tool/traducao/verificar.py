@@ -27,7 +27,7 @@ from comum import CERCA, DOCC, ROOT, capitulos, ingles, titulos, traduzido
 DOC = re.compile(r'<doc:([A-Za-z]+)(#[^>]+)?>')
 URL = re.compile(r'\]\(([^)\s]+)')
 DIRETIVA = re.compile(r'^\s*@[A-Z]\w*.*$', re.M)
-ASIDE = re.compile(r'^> [A-Z][\w ]*:', re.M)
+ASIDE = re.compile(r'^> [A-Z][\w -]*:', re.M)
 EN = set('the and of to is are you your this that with for in it be can when '
          'will from have which an by on as at or'.split())
 

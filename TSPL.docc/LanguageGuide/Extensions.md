@@ -1,31 +1,31 @@
 # Extensions
 
-Add functionality to an existing type.
+Adicione funcionalidades a um tipo existente.
 
-*Extensions* add new functionality to an existing
-class, structure, enumeration, or protocol type.
-This includes the ability to extend types
-for which you don't have access to the original source code
-(known as *retroactive modeling*).
-Extensions are similar to categories in Objective-C.
-(Unlike Objective-C categories, Swift extensions don't have names.)
+Uma *extension* adiciona novas funcionalidades a um tipo existente,
+seja ele uma class, uma struct, um enum ou um protocolo.
+Isso inclui a possibilidade de estender tipos
+para os quais você não tem acesso ao código-fonte original
+(conhecido como *modelagem retroativa*).
+Extensions são parecidas com as categories do Objective-C.
+(Diferentemente das categories do Objective-C, as extensions do Swift não têm nome.)
 
-Extensions in Swift can:
+Extensions em Swift podem:
 
-- Add computed instance properties and computed type properties
-- Define instance methods and type methods
-- Provide new initializers
-- Define subscripts
-- Define and use new nested types
-- Make an existing type conform to a protocol
+- Adicionar propriedades computadas de instância e propriedades computadas de tipo
+- Definir métodos de instância e métodos de tipo
+- Fornecer novos inicializadores
+- Definir subscripts
+- Definir e usar novos tipos aninhados
+- Fazer um tipo existente adotar um protocolo
 
-In Swift,
-you can even extend a protocol to provide implementations of its requirements
-or add additional functionality that conforming types can take advantage of.
-For more details, see <doc:Protocols#Protocol-Extensions>.
+Em Swift,
+você pode até estender um protocolo para fornecer implementações dos seus requisitos
+ou adicionar funcionalidades extras que os tipos que o adotam podem aproveitar.
+Para mais detalhes, veja <doc:Protocols#Protocol-Extensions>.
 
-> Note: Extensions can add new functionality to a type,
-> but they can't override existing functionality.
+> Nota: Extensions podem adicionar novas funcionalidades a um tipo,
+> mas não podem sobrescrever funcionalidades existentes.
 
 <!--
   - test: `extensionsCannotOverrideExistingBehavior`
@@ -75,9 +75,9 @@ For more details, see <doc:Protocols#Protocol-Extensions>.
   ```
 -->
 
-## Extension Syntax
+## Sintaxe de extension
 
-Declare extensions with the `extension` keyword:
+Declare extensions com a palavra-chave `extension`:
 
 ```swift
 extension SomeType {
@@ -96,10 +96,10 @@ extension SomeType {
   ```
 -->
 
-An extension can extend an existing type to make it adopt one or more protocols.
-To add protocol conformance,
-you write the protocol names
-the same way as you write them for a class or structure:
+Uma extension pode estender um tipo existente para fazê-lo adotar um ou mais protocolos.
+Para adicionar a conformância a um protocolo,
+você escreve os nomes dos protocolos
+da mesma forma que escreveria para uma class ou struct:
 
 ```swift
 extension SomeType: SomeProtocol, AnotherProtocol {
@@ -119,23 +119,23 @@ extension SomeType: SomeProtocol, AnotherProtocol {
   ```
 -->
 
-Adding protocol conformance in this way is described in
+Adicionar a conformância a um protocolo dessa forma é descrito em
 <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
 
-An extension can be used to extend an existing generic type,
-as described in <doc:Generics#Extending-a-Generic-Type>.
-You can also extend a generic type to conditionally add functionality,
-as described in <doc:Generics#Extensions-with-a-Generic-Where-Clause>.
+Uma extension pode ser usada para estender um tipo genérico existente,
+como descrito em <doc:Generics#Extending-a-Generic-Type>.
+Você também pode estender um tipo genérico para adicionar funcionalidades de forma condicional,
+como descrito em <doc:Generics#Extensions-with-a-Generic-Where-Clause>.
 
-> Note: If you define an extension to add new functionality to an existing type,
-> the new functionality will be available on all existing instances of that type,
-> even if they were created before the extension was defined.
+> Nota: Se você definir uma extension para adicionar uma nova funcionalidade a um tipo existente,
+> a nova funcionalidade fica disponível em todas as instâncias existentes desse tipo,
+> mesmo que elas tenham sido criadas antes de a extension ser definida.
 
-## Computed Properties
+## Propriedades computadas
 
-Extensions can add computed instance properties and computed type properties to existing types.
-This example adds five computed instance properties to Swift's built-in `Double` type,
-to provide basic support for working with distance units:
+Extensions podem adicionar propriedades computadas de instância e propriedades computadas de tipo a tipos existentes.
+Este exemplo adiciona cinco propriedades computadas de instância ao tipo `Double` embutido do Swift,
+para oferecer suporte básico ao trabalho com unidades de distância:
 
 ```swift
 extension Double {
@@ -173,29 +173,29 @@ print("Three feet is \(threeFeet) meters")
   ```
 -->
 
-These computed properties express that a `Double` value
-should be considered as a certain unit of length.
-Although they're implemented as computed properties,
-the names of these properties can be appended to
-a floating-point literal value with dot syntax,
-as a way to use that literal value to perform distance conversions.
+Essas propriedades computadas expressam que um valor `Double`
+deve ser considerado como uma certa unidade de comprimento.
+Embora sejam implementadas como propriedades computadas,
+os nomes dessas propriedades podem ser anexados
+a um literal de ponto flutuante com sintaxe de ponto,
+como forma de usar esse literal para fazer conversões de distância.
 
-In this example, a `Double` value of `1.0` is considered to represent “one meter”.
-This is why the `m` computed property returns `self` ---
-the expression `1.m` is considered to calculate a `Double` value of `1.0`.
+Neste exemplo, um valor `Double` de `1.0` é considerado como representando “um metro”.
+É por isso que a propriedade computada `m` retorna `self` ---
+a expressão `1.m` é considerada como o cálculo de um valor `Double` de `1.0`.
 
-Other units require some conversion to be expressed as a value measured in meters.
-One kilometer is the same as 1,000 meters,
-so the `km` computed property multiplies the value by `1_000.00`
-to convert into a number expressed in meters.
-Similarly, there are 3.28084 feet in a meter,
-and so the `ft` computed property divides the underlying `Double` value
-by `3.28084`, to convert it from feet to meters.
+Outras unidades precisam de alguma conversão para serem expressas em metros.
+Um quilômetro equivale a 1.000 metros,
+então a propriedade computada `km` multiplica o valor por `1_000.00`
+para converter para um número expresso em metros.
+Da mesma forma, há 3,28084 pés em um metro,
+então a propriedade computada `ft` divide o valor `Double` subjacente
+por `3.28084`, para convertê-lo de pés para metros.
 
-These properties are read-only computed properties,
-and so they're expressed without the `get` keyword, for brevity.
-Their return value is of type `Double`,
-and can be used within mathematical calculations wherever a `Double` is accepted:
+Essas propriedades são somente leitura,
+por isso são escritas sem a palavra-chave `get`, para deixar o código mais curto.
+O valor de retorno delas é do tipo `Double`
+e pode ser usado em cálculos matemáticos sempre que um `Double` for aceito:
 
 ```swift
 let aMarathon = 42.km + 195.m
@@ -213,8 +213,8 @@ print("A marathon is \(aMarathon) meters long")
   ```
 -->
 
-> Note: Extensions can add new computed properties, but they can't add stored properties,
-> or add property observers to existing properties.
+> Nota: Extensions podem adicionar novas propriedades computadas, mas não podem adicionar propriedades armazenadas
+> nem adicionar observadores de propriedade a propriedades existentes.
 
 <!--
   - test: `extensionsCannotAddStoredProperties`
@@ -232,36 +232,36 @@ print("A marathon is \(aMarathon) meters long")
   TODO: change this example to something more advisable / less contentious.
 -->
 
-## Initializers
+## Inicializadores
 
-Extensions can add new initializers to existing types.
-This enables you to extend other types to accept
-your own custom types as initializer parameters,
-or to provide additional initialization options
-that were not included as part of the type's original implementation.
+Extensions podem adicionar novos inicializadores a tipos existentes.
+Isso permite estender outros tipos para aceitar
+seus próprios tipos personalizados como parâmetros de inicialização,
+ou para oferecer opções adicionais de inicialização
+que não faziam parte da implementação original do tipo.
 
-Extensions can add new convenience initializers to a class,
-but they can't add new designated initializers or deinitializers to a class.
-Designated initializers and deinitializers
-must always be provided by the original class implementation.
+Extensions podem adicionar novos inicializadores de conveniência a uma class,
+mas não podem adicionar novos inicializadores designados nem desinicializadores a uma class.
+Inicializadores designados e desinicializadores
+precisam sempre ser fornecidos pela implementação original da class.
 
-If you use an extension to add an initializer to a value type that provides
-default values for all of its stored properties
-and doesn't define any custom initializers,
-you can call the default initializer and memberwise initializer for that value type
-from within your extension's initializer.
-This wouldn't be the case if you had written the initializer
-as part of the value type's original implementation,
-as described in <doc:Initialization#Initializer-Delegation-for-Value-Types>.
+Se você usar uma extension para adicionar um inicializador a um tipo de valor que fornece
+valores padrão para todas as suas propriedades armazenadas
+e não define nenhum inicializador personalizado,
+você pode chamar o inicializador padrão e o inicializador memberwise desse tipo de valor
+de dentro do inicializador da sua extension.
+Isso não aconteceria se você tivesse escrito o inicializador
+como parte da implementação original do tipo de valor,
+como descrito em <doc:Initialization#Initializer-Delegation-for-Value-Types>.
 
-If you use an extension to add an initializer to a structure
-that was declared in another module,
-the new initializer can't access `self` until it calls
-an initializer from the defining module.
+Se você usar uma extension para adicionar um inicializador a uma struct
+declarada em outro módulo,
+o novo inicializador não pode acessar `self` até chamar
+um inicializador do módulo que a define.
 
-The example below defines a custom `Rect` structure to represent a geometric rectangle.
-The example also defines two supporting structures called `Size` and `Point`,
-both of which provide default values of `0.0` for all of their properties:
+O exemplo abaixo define uma struct personalizada `Rect` para representar um retângulo geométrico.
+O exemplo também define duas structs auxiliares chamadas `Size` e `Point`,
+ambas com valores padrão de `0.0` para todas as suas propriedades:
 
 ```swift
 struct Size {
@@ -293,10 +293,10 @@ struct Rect {
   ```
 -->
 
-Because the `Rect` structure provides default values for all of its properties,
-it receives a default initializer and a memberwise initializer automatically,
-as described in <doc:Initialization#Default-Initializers>.
-These initializers can be used to create new `Rect` instances:
+Como a struct `Rect` fornece valores padrão para todas as suas propriedades,
+ela recebe automaticamente um inicializador padrão e um inicializador memberwise,
+como descrito em <doc:Initialization#Default-Initializers>.
+Esses inicializadores podem ser usados para criar novas instâncias de `Rect`:
 
 ```swift
 let defaultRect = Rect()
@@ -314,8 +314,8 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
   ```
 -->
 
-You can extend the `Rect` structure to provide an additional initializer
-that takes a specific center point and size:
+Você pode estender a struct `Rect` para fornecer um inicializador adicional
+que recebe um ponto central e um tamanho específicos:
 
 ```swift
 extension Rect {
@@ -341,11 +341,11 @@ extension Rect {
   ```
 -->
 
-This new initializer starts by calculating an appropriate origin point based on
-the provided `center` point and `size` value.
-The initializer then calls the structure's automatic memberwise initializer
-`init(origin:size:)`, which stores the new origin and size values
-in the appropriate properties:
+Esse novo inicializador começa calculando um ponto de origem adequado com base
+no ponto `center` e no valor `size` fornecidos.
+Em seguida, ele chama o inicializador memberwise automático da struct,
+`init(origin:size:)`, que armazena os novos valores de origem e tamanho
+nas propriedades apropriadas:
 
 ```swift
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
@@ -364,14 +364,14 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
   ```
 -->
 
-> Note: If you provide a new initializer with an extension,
-> you are still responsible for making sure that each instance is fully initialized
-> once the initializer completes.
+> Nota: Se você fornecer um novo inicializador com uma extension,
+> continua sendo sua responsabilidade garantir que cada instância seja totalmente inicializada
+> quando o inicializador terminar.
 
-## Methods
+## Métodos
 
-Extensions can add new instance methods and type methods to existing types.
-The following example adds a new instance method called `repetitions` to the `Int` type:
+Extensions podem adicionar novos métodos de instância e métodos de tipo a tipos existentes.
+O exemplo a seguir adiciona um novo método de instância chamado `repetitions` ao tipo `Int`:
 
 ```swift
 extension Int {
@@ -397,12 +397,12 @@ extension Int {
   ```
 -->
 
-The `repetitions(task:)` method takes a single argument of type `() -> Void`,
-which indicates a function that has no parameters and doesn't return a value.
+O método `repetitions(task:)` recebe um único argumento do tipo `() -> Void`,
+que indica uma função sem parâmetros e que não retorna valor.
 
-After defining this extension,
-you can call the `repetitions(task:)` method on any integer
-to perform a task that many number of times:
+Depois de definir essa extension,
+você pode chamar o método `repetitions(task:)` em qualquer inteiro
+para executar uma tarefa essa quantidade de vezes:
 
 ```swift
 3.repetitions {
@@ -426,15 +426,15 @@ to perform a task that many number of times:
   ```
 -->
 
-### Mutating Instance Methods
+### Métodos de instância mutantes
 
-Instance methods added with an extension can also modify (or *mutate*) the instance itself.
-Structure and enumeration methods that modify `self` or its properties
-must mark the instance method as `mutating`,
-just like mutating methods from an original implementation.
+Métodos de instância adicionados com uma extension também podem modificar (ou *mutar*) a própria instância.
+Métodos de struct e de enum que modificam `self` ou as propriedades dele
+precisam marcar o método de instância como `mutating`,
+assim como os métodos mutantes da implementação original.
 
-The example below adds a new mutating method called `square` to Swift's `Int` type,
-which squares the original value:
+O exemplo abaixo adiciona um novo método mutante chamado `square` ao tipo `Int` do Swift,
+que eleva o valor original ao quadrado:
 
 ```swift
 extension Int {
@@ -463,17 +463,17 @@ someInt.square()
   ```
 -->
 
-## Subscripts
+## Acessando valores com subscript
 
-Extensions can add new subscripts to an existing type.
-This example adds an integer subscript to Swift's built-in `Int` type.
-This subscript `[n]` returns the decimal digit `n` places in
-from the right of the number:
+Extensions podem adicionar novos subscripts a um tipo existente.
+Este exemplo adiciona um subscript de inteiro ao tipo `Int` embutido do Swift.
+Este subscript `[n]` retorna o dígito decimal que está `n` posições
+à direita do número:
 
-- `123456789[0]` returns `9`
-- `123456789[1]` returns `8`
+- `123456789[0]` retorna `9`
+- `123456789[1]` retorna `8`
 
-…and so on:
+…e assim por diante:
 
 ```swift
 extension Int {
@@ -538,9 +538,9 @@ extension Int {
   Darwin's pow() function is only for floating point.
 -->
 
-If the `Int` value doesn't have enough digits for the requested index,
-the subscript implementation returns `0`,
-as if the number had been padded with zeros to the left:
+Se o valor `Int` não tiver dígitos suficientes para o índice pedido,
+a implementação do subscript retorna `0`,
+como se o número tivesse sido preenchido com zeros à esquerda:
 
 ```swift
 746381295[9]
@@ -570,9 +570,9 @@ as if the number had been padded with zeros to the left:
   Tracking bug is <rdar://problem/35301593>
 -->
 
-## Nested Types
+## Tipos aninhados
 
-Extensions can add new nested types to existing classes, structures, and enumerations:
+Extensions podem adicionar novos tipos aninhados a classes, structs e enums existentes:
 
 ```swift
 extension Int {
@@ -614,17 +614,17 @@ extension Int {
   ```
 -->
 
-This example adds a new nested enumeration to `Int`.
-This enumeration, called `Kind`,
-expresses the kind of number that a particular integer represents.
-Specifically, it expresses whether the number is
-negative, zero, or positive.
+Este exemplo adiciona um novo enum aninhado a `Int`.
+Esse enum, chamado `Kind`,
+expressa o tipo de número que um inteiro específico representa.
+Mais precisamente, ele expressa se o número é
+negativo, zero ou positivo.
 
-This example also adds a new computed instance property to `Int`,
-called `kind`,
-which returns the appropriate `Kind` enumeration case for that integer.
+Este exemplo também adiciona a `Int` uma nova propriedade computada de instância,
+chamada `kind`,
+que retorna o caso de enum `Kind` apropriado para aquele inteiro.
 
-The nested enumeration can now be used with any `Int` value:
+Agora o enum aninhado pode ser usado com qualquer valor `Int`:
 
 ```swift
 func printIntegerKinds(_ numbers: [Int]) {
@@ -671,16 +671,16 @@ printIntegerKinds([3, 19, -27, 0, -6, 0, 7])
   Workaround for rdar://26016325
 -->
 
-This function, `printIntegerKinds(_:)`,
-takes an input array of `Int` values and iterates over those values in turn.
-For each integer in the array,
-the function considers the `kind` computed property for that integer,
-and prints an appropriate description.
+Esta função, `printIntegerKinds(_:)`,
+recebe um array de valores `Int` como entrada e percorre esses valores em sequência.
+Para cada inteiro do array,
+a função considera a propriedade computada `kind` desse inteiro
+e imprime uma descrição apropriada.
 
-> Note: `number.kind` is already known to be of type `Int.Kind`.
-> Because of this, all of the `Int.Kind` case values
-> can be written in shorthand form inside the `switch` statement,
-> such as `.negative` rather than `Int.Kind.negative`.
+> Nota: `number.kind` já é conhecido como sendo do tipo `Int.Kind`.
+> Por isso, todos os valores de caso de `Int.Kind`
+> podem ser escritos na forma abreviada dentro da instrução `switch`,
+> como `.negative` em vez de `Int.Kind.negative`.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -691,3 +691,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

@@ -1,47 +1,47 @@
-# Enumerations
+# Enums
 
-Model custom types that define a list of possible values.
+Modele tipos personalizados que definem uma lista de valores possíveis.
 
-An *enumeration* defines a common type for a group of related values
-and enables you to work with those values in a type-safe way within your code.
+Uma *enumeração* define um tipo comum para um grupo de valores relacionados
+e permite trabalhar com esses valores de forma segura em relação aos tipos no seu código.
 
-If you are familiar with C,
-you will know that C enumerations assign related names to a set of integer values.
-Enumerations in Swift are much more flexible,
-and don't have to provide a value for each case of the enumeration.
-If a value (known as a *raw* value) is provided for each enumeration case,
-the value can be a string, a character,
-or a value of any integer or floating-point type.
+Se você conhece C,
+sabe que as enumerações em C associam nomes relacionados a um conjunto de valores inteiros.
+As enumerações em Swift são bem mais flexíveis
+e não precisam fornecer um valor para cada caso da enumeração.
+Se um valor (conhecido como *raw value*) for fornecido para cada caso da enumeração,
+esse valor pode ser uma string, um caractere,
+ou um valor de qualquer tipo inteiro ou de ponto flutuante.
 
-Alternatively, enumeration cases can specify
-associated values of *any* type to be stored along with each different case value,
-much as unions or variants do in other languages.
-You can define a common set of related cases as part of one enumeration,
-each of which has a different set of values of appropriate types associated with it.
+Como alternativa, os casos da enumeração podem especificar
+*associated values* de *qualquer* tipo, armazenados junto com cada caso,
+assim como as uniões ou variantes fazem em outras linguagens.
+Você pode definir um conjunto comum de casos relacionados como parte de uma mesma enumeração,
+e cada um deles pode ter um conjunto diferente de valores de tipos apropriados associados a ele.
 
-Enumerations in Swift are first-class types in their own right.
-They adopt many features traditionally supported only by classes,
-such as computed properties to provide additional information about
-the enumeration's current value,
-and instance methods to provide functionality related to
-the values the enumeration represents.
-Enumerations can also define initializers to provide an initial case value;
-can be extended to expand their functionality beyond their original implementation;
-and can conform to protocols to provide standard functionality.
+As enumerações em Swift são tipos de primeira classe por direito próprio.
+Elas adotam muitos recursos tradicionalmente exclusivos de classes,
+como propriedades computadas, que fornecem informações adicionais sobre
+o valor atual da enumeração,
+e métodos de instância, que oferecem funcionalidades relacionadas
+aos valores que a enumeração representa.
+Enumerações também podem definir inicializadores para fornecer um caso inicial;
+podem receber uma extension para ampliar sua funcionalidade além da implementação original;
+e podem adotar protocolos para fornecer funcionalidades padrão.
 
-For more about these capabilities, see
+Para saber mais sobre esses recursos, veja
 <doc:Properties>, <doc:Methods>, <doc:Initialization>,
-<doc:Extensions>, and <doc:Protocols>.
+<doc:Extensions> e <doc:Protocols>.
 
 <!--
   TODO: this chapter should probably mention that enums without associated values
   are hashable and equatable by default (and what that means in practice)
 -->
 
-## Enumeration Syntax
+## Sintaxe de enumeração
 
-You introduce enumerations with the `enum` keyword
-and place their entire definition within a pair of braces:
+Você introduz uma enumeração com a palavra-chave `enum`
+e coloca a definição inteira entre um par de chaves:
 
 ```swift
 enum SomeEnumeration {
@@ -59,7 +59,7 @@ enum SomeEnumeration {
   ```
 -->
 
-Here's an example for the four main points of a compass:
+Veja um exemplo com os quatro pontos principais de uma bússola:
 
 ```swift
 enum CompassPoint {
@@ -83,21 +83,21 @@ enum CompassPoint {
   ```
 -->
 
-The values defined in an enumeration
-(such as `north`, `south`, `east`, and `west`)
-are its *enumeration cases*.
-You use the `case` keyword to introduce new enumeration cases.
+Os valores definidos em uma enumeração
+(como `north`, `south`, `east` e `west`)
+são os seus *casos da enumeração*.
+Você usa a palavra-chave `case` para introduzir novos casos da enumeração.
 
-> Note: Swift enumeration cases don't have an integer value set by default,
-> unlike languages like C and Objective-C.
-> In the `CompassPoint` example above,
-> `north`, `south`, `east` and `west`
-> don't implicitly equal
-> `0`, `1`, `2` and `3`.
-> Instead, the different enumeration cases are values in their own right,
-> with an explicitly defined type of `CompassPoint`.
+> Nota: Os casos de enumeração em Swift não recebem um valor inteiro por padrão,
+> diferentemente de linguagens como C e Objective-C.
+> No exemplo de `CompassPoint` acima,
+> `north`, `south`, `east` e `west`
+> não são implicitamente iguais a
+> `0`, `1`, `2` e `3`.
+> Em vez disso, cada caso da enumeração é um valor por direito próprio,
+> com o tipo explicitamente definido como `CompassPoint`.
 
-Multiple cases can appear on a single line, separated by commas:
+Vários casos podem aparecer em uma mesma linha, separados por vírgulas:
 
 ```swift
 enum Planet {
@@ -115,12 +115,12 @@ enum Planet {
   ```
 -->
 
-Each enumeration definition defines a new type.
-Like other types in Swift, their names
-(such as `CompassPoint` and `Planet`)
-start with a capital letter.
-Give enumeration types singular rather than plural names,
-so that they read as self-evident:
+Cada definição de enumeração cria um novo tipo.
+Como outros tipos em Swift, os nomes delas
+(como `CompassPoint` e `Planet`)
+começam com letra maiúscula.
+Dê aos tipos de enumeração nomes no singular, e não no plural,
+para que eles se leiam como algo autoevidente:
 
 ```swift
 var directionToHead = CompassPoint.west
@@ -134,10 +134,10 @@ var directionToHead = CompassPoint.west
   ```
 -->
 
-The type of `directionToHead` is inferred
-when it's initialized with one of the possible values of `CompassPoint`.
-Once `directionToHead` is declared as a `CompassPoint`,
-you can set it to a different `CompassPoint` value using a shorter dot syntax:
+O tipo de `directionToHead` é inferido
+quando a variável é inicializada com um dos valores possíveis de `CompassPoint`.
+Depois que `directionToHead` é declarada como `CompassPoint`,
+você pode atribuir a ela outro valor de `CompassPoint` usando uma sintaxe de ponto mais curta:
 
 ```swift
 directionToHead = .east
@@ -151,13 +151,13 @@ directionToHead = .east
   ```
 -->
 
-The type of `directionToHead` is already known,
-and so you can drop the type when setting its value.
-This makes for highly readable code when working with explicitly typed enumeration values.
+O tipo de `directionToHead` já é conhecido,
+então você pode omitir o tipo ao atribuir o valor.
+Isso deixa o código muito legível quando você trabalha com valores de enumeração de tipo explícito.
 
-## Matching Enumeration Values with a Switch Statement
+## Comparando valores de enumeração com uma instrução switch
 
-You can match individual enumeration values with a `switch` statement:
+Você pode comparar valores individuais de enumeração com uma instrução `switch`:
 
 ```swift
 directionToHead = .south
@@ -193,25 +193,25 @@ case .west:
   ```
 -->
 
-You can read this code as:
+Você pode ler este código assim:
 
-“Consider the value of `directionToHead`.
-In the case where it equals `.north`,
-print `"Lots of planets have a north"`.
-In the case where it equals `.south`,
-print `"Watch out for penguins"`.”
+“Considere o valor de `directionToHead`.
+No caso em que ele é igual a `.north`,
+imprima `"Lots of planets have a north"`.
+No caso em que ele é igual a `.south`,
+imprima `"Watch out for penguins"`.”
 
-…and so on.
+…e assim por diante.
 
-As described in <doc:ControlFlow>,
-a `switch` statement must be exhaustive when considering an enumeration's cases.
-If the `case` for `.west` is omitted,
-this code doesn't compile,
-because it doesn't consider the complete list of `CompassPoint` cases.
-Requiring exhaustiveness ensures that enumeration cases aren't accidentally omitted.
+Como descrito em <doc:ControlFlow>,
+uma instrução `switch` precisa ser exaustiva ao considerar os casos de uma enumeração.
+Se o `case` para `.west` for omitido,
+este código não compila,
+porque não considera a lista completa de casos de `CompassPoint`.
+Exigir exaustividade garante que casos de enumeração não sejam omitidos por acidente.
 
-When it isn't appropriate to provide a `case` for every enumeration case,
-you can provide a `default` case to cover any cases that aren't addressed explicitly:
+Quando não for adequado fornecer um `case` para cada caso da enumeração,
+você pode fornecer um caso `default` para cobrir os casos que não foram tratados explicitamente:
 
 ```swift
 let somePlanet = Planet.earth
@@ -239,15 +239,15 @@ default:
   ```
 -->
 
-## Iterating over Enumeration Cases
+## Percorrendo os casos da enumeração
 
-For some enumerations,
-it's useful to have a collection of all of that enumeration's cases.
-You enable this by
-writing `: CaseIterable` after the enumeration's name.
-Swift exposes a collection of all the cases
-as an `allCases` property of the enumeration type.
-Here's an example:
+Em algumas enumerações,
+é útil ter uma coleção com todos os casos da enumeração.
+Você habilita isso
+escrevendo `: CaseIterable` depois do nome da enumeração.
+O Swift expõe uma coleção com todos os casos
+como a propriedade `allCases` do tipo da enumeração.
+Veja um exemplo:
 
 ```swift
 enum Beverage: CaseIterable {
@@ -271,14 +271,14 @@ print("\(numberOfChoices) beverages available")
   ```
 -->
 
-In the example above,
-you write `Beverage.allCases` to access a collection
-that contains all of the cases of the `Beverage` enumeration.
-You can use `allCases` like any other collection ---
-the collection's elements are instances of the enumeration type,
-so in this case they're `Beverage` values.
-The example above counts how many cases there are,
-and the example below uses a `for`-`in` loop to iterate over all the cases.
+No exemplo acima,
+você escreve `Beverage.allCases` para acessar uma coleção
+que contém todos os casos da enumeração `Beverage`.
+Você pode usar `allCases` como qualquer outra coleção:
+os elementos da coleção são instâncias do tipo da enumeração,
+então, neste caso, são valores de `Beverage`.
+O exemplo acima conta quantos casos existem,
+e o exemplo abaixo usa um laço `for`-`in` para percorrer todos os casos.
 
 ```swift
 for beverage in Beverage.allCases {
@@ -305,49 +305,49 @@ for beverage in Beverage.allCases {
   ```
 -->
 
-The syntax used in the examples above
-marks the enumeration as conforming to the
-[`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) protocol.
-For information about protocols, see <doc:Protocols>.
+A sintaxe usada nos exemplos acima
+marca a enumeração como conformando ao protocolo
+[`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable).
+Para saber mais sobre protocolos, veja <doc:Protocols>.
 
-## Associated Values
+## Associated values
 
-The examples in the previous section show how the cases of an enumeration are
-a defined (and typed) value in their own right.
-You can set a constant or variable to `Planet.earth`,
-and check for this value later.
-However, it's sometimes useful to be able to store
-values of other types alongside these case values.
-This additional information is called an *associated value*,
-and it varies each time you use that case as a value in your code.
+Os exemplos da seção anterior mostram que os casos de uma enumeração são
+um valor definido (e tipado) por direito próprio.
+Você pode atribuir a uma constante ou variável `Planet.earth`
+e verificar esse valor depois.
+No entanto, às vezes é útil armazenar
+valores de outros tipos junto com esses valores de caso.
+Essa informação adicional é chamada de *associated value*,
+e ela varia cada vez que você usa esse caso como valor no seu código.
 
-You can define Swift enumerations to store associated values of any given type,
-and the value types can be different for each case of the enumeration if needed.
-Enumerations similar to these are known as
-*discriminated unions*, *tagged unions*, or *variants*
-in other programming languages.
+Você pode definir enumerações em Swift para armazenar associated values de qualquer tipo,
+e os tipos de valor podem ser diferentes para cada caso da enumeração, se necessário.
+Enumerações como essas são conhecidas como
+*discriminated unions*, *tagged unions* ou *variants*
+em outras linguagens de programação.
 
-For example, suppose an inventory tracking system needs to
-track products by two different types of barcode.
-Some products are labeled with 1D barcodes in UPC format,
-which uses the numbers `0` to `9`.
-Each barcode has a number system digit,
-followed by five manufacturer code digits and five product code digits.
-These are followed by a check digit to verify that the code has been scanned correctly:
+Por exemplo, suponha que um sistema de controle de estoque precise
+acompanhar produtos por dois tipos diferentes de código de barras.
+Alguns produtos têm códigos de barras 1D no formato UPC,
+que usa os números de `0` a `9`.
+Cada código de barras tem um dígito de sistema numérico,
+seguido de cinco dígitos do código do fabricante e cinco dígitos do código do produto.
+Em seguida vem um dígito verificador, que confirma que o código foi lido corretamente:
 
 ![](barcode_UPC)
 
-Other products are labeled with 2D barcodes in QR code format,
-which can use any ISO 8859-1 character
-and can encode a string up to 2,953 characters long:
+Outros produtos têm códigos de barras 2D no formato de QR code,
+que podem usar qualquer caractere ISO 8859-1
+e podem codificar uma string de até 2.953 caracteres:
 
 ![](barcode_QR)
 
-It's convenient for an inventory tracking system to store UPC barcodes
-as a tuple of four integers,
-and QR code barcodes as a string of any length.
+Para um sistema de controle de estoque, é conveniente armazenar códigos UPC
+como uma tupla de quatro inteiros,
+e códigos QR como uma string de qualquer tamanho.
 
-In Swift, an enumeration to define product barcodes of either type might look like this:
+Em Swift, uma enumeração para definir códigos de barras de produtos de qualquer um dos dois tipos pode ser assim:
 
 ```swift
 enum Barcode {
@@ -367,19 +367,19 @@ enum Barcode {
   ```
 -->
 
-This can be read as:
+Você pode ler isso assim:
 
-“Define an enumeration type called `Barcode`,
-which can take either a value of `upc`
-with an associated value of type (`Int`, `Int`, `Int`, `Int`),
-or a value of `qrCode` with an associated value of type `String`.”
+“Defina um tipo de enumeração chamado `Barcode`,
+que pode receber um valor `upc`
+com um associated value do tipo (`Int`, `Int`, `Int`, `Int`),
+ou um valor `qrCode` com um associated value do tipo `String`.”
 
-This definition doesn't provide any actual `Int` or `String` values ---
-it just defines the *type* of associated values
-that `Barcode` constants and variables can store
-when they're equal to `Barcode.upc` or `Barcode.qrCode`.
+Essa definição não fornece nenhum valor real de `Int` ou `String` ---
+ela apenas define o *tipo* dos associated values
+que as constantes e variáveis de `Barcode` podem armazenar
+quando são iguais a `Barcode.upc` ou `Barcode.qrCode`.
 
-You can then create new barcodes using either type:
+Depois, você pode criar novos códigos de barras usando qualquer um dos tipos:
 
 ```swift
 var productBarcode = Barcode.upc(8, 85909, 51226, 3)
@@ -393,11 +393,11 @@ var productBarcode = Barcode.upc(8, 85909, 51226, 3)
   ```
 -->
 
-This example creates a new variable called `productBarcode`
-and assigns it a value of `Barcode.upc`
-with an associated tuple value of `(8, 85909, 51226, 3)`.
+Este exemplo cria uma nova variável chamada `productBarcode`
+e atribui a ela o valor `Barcode.upc`
+com uma tupla como associated value, `(8, 85909, 51226, 3)`.
 
-You can assign the same product a different type of barcode:
+Você pode atribuir ao mesmo produto um tipo diferente de código de barras:
 
 ```swift
 productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
@@ -411,21 +411,21 @@ productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
   ```
 -->
 
-At this point,
-the original `Barcode.upc` and its integer values are replaced by
-the new `Barcode.qrCode` and its string value.
-Constants and variables of type `Barcode` can store either a `.upc` or a `.qrCode`
-(together with their associated values),
-but they can store only one of them at any given time.
+Nesse momento,
+o `Barcode.upc` original e seus valores inteiros são substituídos pelo
+novo `Barcode.qrCode` e pelo valor string dele.
+Constantes e variáveis do tipo `Barcode` podem armazenar um `.upc` ou um `.qrCode`
+(junto com os respectivos associated values),
+mas só podem armazenar um deles por vez.
 
-You can check the different barcode types using a switch statement,
-similar to the example in
+Você pode verificar os diferentes tipos de código de barras usando uma instrução switch,
+parecido com o exemplo em
 <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
-This time, however,
-the associated values are extracted as part of the switch statement.
-You extract each associated value as a constant (with the `let` prefix)
-or a variable (with the `var` prefix)
-for use within the `switch` case's body:
+Desta vez, porém,
+os associated values são extraídos como parte da instrução switch.
+Você extrai cada associated value como uma constante (com o prefixo `let`)
+ou uma variável (com o prefixo `var`)
+para usar dentro do corpo do `case` do switch:
 
 ```swift
 switch productBarcode {
@@ -451,9 +451,9 @@ case .qrCode(let productCode):
   ```
 -->
 
-If all of the associated values for an enumeration case
-are extracted as constants, or if all are extracted as variables,
-you can place a single `let` or `var` annotation before the case name, for brevity:
+Se todos os associated values de um caso da enumeração
+forem extraídos como constantes, ou se todos forem extraídos como variáveis,
+você pode colocar uma única anotação `let` ou `var` antes do nome do caso, para deixar o código mais curto:
 
 ```swift
 switch productBarcode {
@@ -479,12 +479,12 @@ case let .qrCode(productCode):
   ```
 -->
 
-When you're matching just one case of an enumeration ---
-for example,
-to extract its associated value ---
-you can use an `if`-`case` statement
-instead of writing a full switch statement.
-Here's what it looks like:
+Quando você está comparando apenas um caso de uma enumeração ---
+por exemplo,
+para extrair o associated value dele ---
+você pode usar uma instrução `if`-`case`
+em vez de escrever um switch completo.
+Veja como fica:
 
 ```swift
 if case .qrCode(let productCode) = productBarcode {
@@ -492,25 +492,25 @@ if case .qrCode(let productCode) = productBarcode {
 }
 ```
 
-Just like in the switch statement earlier,
-the `productBarcode` variable is matched against
-the pattern `.qrCode(let productCode)` here.
-And as in the switch case,
-writing `let` extracts the associated value as a constant.
-For more information about `if`-`case` statements,
-see <doc:ControlFlow#Patterns>.
+Assim como na instrução switch anterior,
+a variável `productBarcode` é comparada com
+o padrão `.qrCode(let productCode)` aqui.
+E, como no case do switch,
+o `let` extrai o associated value como uma constante.
+Para mais informações sobre instruções `if`-`case`,
+veja <doc:ControlFlow#Patterns>.
 
-## Raw Values
+## Raw values
 
-The barcode example in <doc:Enumerations#Associated-Values>
-shows how cases of an enumeration can declare that they store
-associated values of different types.
-As an alternative to associated values,
-enumeration cases can come prepopulated with default values
-(called *raw values*),
-which are all of the same type.
+O exemplo do código de barras em <doc:Enumerations#Associated-Values>
+mostra como os casos de uma enumeração podem declarar que armazenam
+associated values de tipos diferentes.
+Como alternativa aos associated values,
+os casos de enumeração podem vir preenchidos com valores padrão
+(chamados de *raw values*),
+que são todos do mesmo tipo.
 
-Here's an example that stores raw ASCII values alongside named enumeration cases:
+Veja um exemplo que armazena valores ASCII brutos junto com casos de enumeração nomeados:
 
 ```swift
 enum ASCIIControlCharacter: Character {
@@ -532,39 +532,38 @@ enum ASCIIControlCharacter: Character {
   ```
 -->
 
-Here, the raw values for an enumeration called `ASCIIControlCharacter`
-are defined to be of type `Character`,
-and are set to some of the more common ASCII control characters.
-`Character` values are described in <doc:StringsAndCharacters>.
+Aqui, os raw values de uma enumeração chamada `ASCIIControlCharacter`
+são definidos como do tipo `Character`,
+e recebem alguns dos caracteres de controle ASCII mais comuns.
+Valores de `Character` são descritos em <doc:StringsAndCharacters>.
 
-Raw values can be
-strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its enumeration declaration.
+Raw values podem ser
+strings, caracteres ou qualquer tipo numérico inteiro ou de ponto flutuante.
+Cada raw value precisa ser único dentro da declaração da enumeração.
 
-Although you can use both raw values and associated values
-to give an enumeration an additional value,
-it's important to understand the difference between them.
-You pick the raw value for an enumeration case
-when you define that enumeration case in your code,
-such as the three ASCII codes above.
-The raw value for a particular enumeration case is always the same.
-In contrast,
-you pick associated values when you create a new constant or variable
-using one of the enumeration's cases,
-and you can pick a different value each time you do so.
+Embora você possa usar tanto raw values quanto associated values
+para dar a uma enumeração um valor adicional,
+é importante entender a diferença entre eles.
+Você escolhe o raw value de um caso da enumeração
+quando define esse caso no seu código,
+como os três códigos ASCII acima.
+O raw value de um caso específico é sempre o mesmo.
+Já os associated values você escolhe ao criar uma nova constante ou variável
+usando um dos casos da enumeração,
+e pode escolher um valor diferente cada vez que fizer isso.
 
-### Implicitly Assigned Raw Values
+### Raw values atribuídos implicitamente
 
-When you're working with enumerations that store integer or string raw values,
-you don't have to explicitly assign a raw value for each case.
-When you don't, Swift automatically assigns the values for you.
+Quando você trabalha com enumerações que armazenam raw values inteiros ou string,
+não precisa atribuir explicitamente um raw value a cada caso.
+Quando não atribui, o Swift define os valores automaticamente.
 
-For example, when integers are used for raw values,
-the implicit value for each case is one more than the previous case.
-If the first case doesn't have a value set, its value is `0`.
+Por exemplo, quando raw values são inteiros,
+o valor implícito de cada caso é um a mais que o do caso anterior.
+Se o primeiro caso não tiver um valor definido, o valor dele é `0`.
 
-The enumeration below is a refinement of the earlier `Planet` enumeration,
-with integer raw values to represent each planet's order from the sun:
+A enumeração abaixo é um refinamento da enumeração `Planet` vista antes,
+com raw values inteiros para representar a ordem de cada planeta a partir do sol:
 
 ```swift
 enum Planet: Int {
@@ -582,15 +581,15 @@ enum Planet: Int {
   ```
 -->
 
-In the example above,
-`Planet.mercury` has an explicit raw value of `1`,
-`Planet.venus` has an implicit raw value of `2`, and so on.
+No exemplo acima,
+`Planet.mercury` tem o raw value explícito `1`,
+`Planet.venus` tem o raw value implícito `2`, e assim por diante.
 
-When strings are used for raw values,
-the implicit value for each case is the text of that case's name.
+Quando strings são usadas como raw values,
+o valor implícito de cada caso é o texto do nome desse caso.
 
-The enumeration below is a refinement of the earlier `CompassPoint` enumeration,
-with string raw values to represent each direction's name:
+A enumeração abaixo é um refinamento da enumeração `CompassPoint` vista antes,
+com raw values string para representar o nome de cada direção:
 
 ```swift
 enum CompassPoint: String {
@@ -608,10 +607,10 @@ enum CompassPoint: String {
   ```
 -->
 
-In the example above,
-`CompassPoint.south` has an implicit raw value of `"south"`, and so on.
+No exemplo acima,
+`CompassPoint.south` tem o raw value implícito `"south"`, e assim por diante.
 
-You access the raw value of an enumeration case with its `rawValue` property:
+Você acessa o raw value de um caso da enumeração pela propriedade `rawValue`:
 
 ```swift
 let earthsOrder = Planet.earth.rawValue
@@ -635,15 +634,15 @@ let sunsetDirection = CompassPoint.west.rawValue
   ```
 -->
 
-### Initializing from a Raw Value
+### Inicializando a partir de um raw value
 
-If you define an enumeration with a raw-value type,
-the enumeration automatically receives an initializer
-that takes a value of the raw value's type (as a parameter called `rawValue`)
-and returns either an enumeration case or `nil`.
-You can use this initializer to try to create a new instance of the enumeration.
+Se você definir uma enumeração com um tipo de raw value,
+a enumeração recebe automaticamente um inicializador
+que aceita um valor do tipo do raw value (como um parâmetro chamado `rawValue`)
+e retorna um caso da enumeração ou `nil`.
+Você pode usar esse inicializador para tentar criar uma nova instância da enumeração.
 
-This example identifies Uranus from its raw value of `7`:
+Este exemplo identifica Urano pelo seu raw value `7`:
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
@@ -662,17 +661,17 @@ let possiblePlanet = Planet(rawValue: 7)
   ```
 -->
 
-Not all possible `Int` values will find a matching planet, however.
-Because of this, the raw value initializer always returns an *optional* enumeration case.
-In the example above, `possiblePlanet` is of type `Planet?`,
-or “optional `Planet`.”
+No entanto, nem todo valor `Int` possível vai encontrar um planeta correspondente.
+Por isso, o inicializador de raw value sempre retorna um caso de enumeração *opcional*.
+No exemplo acima, `possiblePlanet` é do tipo `Planet?`,
+ou “`Planet` opcional.”
 
-> Note: The raw value initializer is a failable initializer,
-> because not every raw value will return an enumeration case.
-> For more information, see <doc:Declarations#Failable-Initializers>.
+> Nota: O inicializador de raw value é um inicializador falhável,
+> porque nem todo raw value vai retornar um caso da enumeração.
+> Para mais informações, veja <doc:Declarations#Failable-Initializers>.
 
-If you try to find a planet with a position of `11`,
-the optional `Planet` value returned by the raw value initializer will be `nil`:
+Se você tentar encontrar um planeta na posição `11`,
+o valor `Planet` opcional retornado pelo inicializador de raw value será `nil`:
 
 ```swift
 let positionToFind = 11
@@ -708,27 +707,27 @@ if let somePlanet = Planet(rawValue: positionToFind) {
   ```
 -->
 
-This example uses optional binding to try to access a planet with a raw value of `11`.
-The statement `if let somePlanet = Planet(rawValue: 11)` creates an optional `Planet`,
-and sets `somePlanet` to the value of that optional `Planet` if it can be retrieved.
-In this case, it isn't possible to retrieve a planet with a position of `11`,
-and so the `else` branch is executed instead.
+Este exemplo usa optional binding para tentar acessar um planeta com raw value `11`.
+A instrução `if let somePlanet = Planet(rawValue: 11)` cria um `Planet` opcional
+e atribui a `somePlanet` o valor desse `Planet` opcional, se ele puder ser obtido.
+Neste caso, não é possível obter um planeta na posição `11`,
+então o ramo `else` é executado.
 
 <!--
   TODO: Switch around the order of this chapter so that all of the non-union stuff
   is together, and the union bits (aka Associated Values) come last.
 -->
 
-## Recursive Enumerations
+## Enumerações recursivas
 
-A *recursive enumeration* is an enumeration
-that has another instance of the enumeration
-as the associated value for one or more of the enumeration cases.
-You indicate that an enumeration case is recursive
-by writing `indirect` before it,
-which tells the compiler to insert the necessary layer of indirection.
+Uma *enumeração recursiva* é uma enumeração
+que tem outra instância da própria enumeração
+como associated value de um ou mais casos.
+Você indica que um caso da enumeração é recursivo
+escrevendo `indirect` antes dele,
+o que diz ao compilador para inserir a camada de indireção necessária.
 
-For example, here is an enumeration that stores simple arithmetic expressions:
+Por exemplo, veja uma enumeração que armazena expressões aritméticas simples:
 
 ```swift
 enum ArithmeticExpression {
@@ -750,8 +749,8 @@ enum ArithmeticExpression {
   ```
 -->
 
-You can also write `indirect` before the beginning of the enumeration
-to enable indirection for all of the enumeration's cases that have an associated value:
+Você também pode escrever `indirect` antes do início da enumeração
+para habilitar a indireção em todos os casos da enumeração que têm associated value:
 
 ```swift
 indirect enum ArithmeticExpression {
@@ -773,21 +772,21 @@ indirect enum ArithmeticExpression {
   ```
 -->
 
-This enumeration can store three kinds of arithmetic expressions:
-a plain number,
-the addition of two expressions,
-and the multiplication of two expressions.
-The `addition` and `multiplication` cases have associated values
-that are also arithmetic expressions ---
-these associated values make it possible to nest expressions.
-For example, the expression `(5 + 4) * 2`
-has a number on the right-hand side of the multiplication
-and another expression on the left-hand side of the multiplication.
-Because the data is nested,
-the enumeration used to store the data also needs to support nesting ---
-this means the enumeration needs to be recursive.
-The code below shows the `ArithmeticExpression` recursive enumeration
-being created for `(5 + 4) * 2`:
+Essa enumeração pode armazenar três tipos de expressões aritméticas:
+um número simples,
+a soma de duas expressões
+e a multiplicação de duas expressões.
+Os casos `addition` e `multiplication` têm associated values
+que também são expressões aritméticas ---
+esses associated values tornam possível aninhar expressões.
+Por exemplo, a expressão `(5 + 4) * 2`
+tem um número do lado direito da multiplicação
+e outra expressão do lado esquerdo.
+Como os dados são aninhados,
+a enumeração usada para armazená-los também precisa aceitar aninhamento ---
+ou seja, a enumeração precisa ser recursiva.
+O código abaixo mostra a enumeração recursiva `ArithmeticExpression`
+sendo criada para `(5 + 4) * 2`:
 
 ```swift
 let five = ArithmeticExpression.number(5)
@@ -807,9 +806,9 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
   ```
 -->
 
-A recursive function is a straightforward way
-to work with data that has a recursive structure.
-For example, here's a function that evaluates an arithmetic expression:
+Uma função recursiva é uma forma direta
+de trabalhar com dados que têm estrutura recursiva.
+Por exemplo, veja uma função que avalia uma expressão aritmética:
 
 ```swift
 func evaluate(_ expression: ArithmeticExpression) -> Int {
@@ -847,12 +846,12 @@ print(evaluate(product))
   ```
 -->
 
-This function evaluates a plain number
-by simply returning the associated value.
-It evaluates an addition or multiplication
-by evaluating the expression on the left-hand side,
-evaluating the expression on the right-hand side,
-and then adding them or multiplying them.
+Essa função avalia um número simples
+simplesmente retornando o associated value.
+Ela avalia uma soma ou multiplicação
+avaliando a expressão do lado esquerdo,
+avaliando a expressão do lado direito
+e, depois, somando ou multiplicando os dois resultados.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -863,3 +862,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

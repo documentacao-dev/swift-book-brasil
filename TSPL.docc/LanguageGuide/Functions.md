@@ -409,20 +409,20 @@ Note que os membros da tupla não precisam ser nomeados
 no momento em que a tupla é retornada pela função,
 porque os nomes já estão especificados como parte do tipo de retorno da função.
 
-#### Tipos de retorno de tupla opcionais
+#### Tipos de retorno de tupla optional
 
 Se o tipo de tupla a ser retornado por uma função
 pode não ter “valor nenhum” para a tupla inteira,
-você pode usar um tipo de retorno de tupla *opcional* para refletir o fato de que
+você pode usar um tipo de retorno de tupla *optional* para refletir o fato de que
 a tupla inteira pode ser `nil`.
-Você escreve um tipo de retorno de tupla opcional colocando um ponto de interrogação
+Você escreve um tipo de retorno de tupla optional colocando um ponto de interrogação
 depois do parêntese de fechamento do tipo da tupla,
 como `(Int, Int)?` ou `(String, Int, Bool)?`.
 
-> Nota: Um tipo de tupla opcional, como `(Int, Int)?`,
-> é diferente de uma tupla que contém tipos opcionais,
+> Nota: Um tipo de tupla optional, como `(Int, Int)?`,
+> é diferente de uma tupla que contém tipos optional,
 > como `(Int?, Int?)`.
-> Com um tipo de tupla opcional, a tupla inteira é opcional,
+> Com um tipo de tupla optional, a tupla inteira é optional,
 > e não apenas cada valor individual dentro da tupla.
 
 A função `minMax(array:)` acima retorna uma tupla contendo dois valores `Int`.
@@ -432,7 +432,7 @@ a função `minMax(array:)`, como definida acima,
 disparará um erro em tempo de execução ao tentar acessar `array[0]`.
 
 Para lidar com um array vazio de forma segura,
-escreva a função `minMax(array:)` com um tipo de retorno de tupla opcional
+escreva a função `minMax(array:)` com um tipo de retorno de tupla optional
 e retorne o valor `nil` quando o array estiver vazio:
 
 ```swift

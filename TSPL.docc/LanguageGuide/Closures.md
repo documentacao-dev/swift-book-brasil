@@ -519,12 +519,12 @@ A closure pode ser usada para criar uma representação em string de qualquer in
 
 > Nota: A chamada à subscript do dicionário `digitNames`
 > é seguida de um ponto de exclamação (`!`),
-> porque subscripts de dicionário retornam um valor opcional
+> porque subscripts de dicionário retornam um valor optional
 > para indicar que a busca pode falhar se a chave não existir.
 > No exemplo acima, é garantido que `number % 10`
 > sempre será uma chave válida para o dicionário `digitNames`,
 > por isso um ponto de exclamação é usado para forçar o unwrap do valor `String`
-> armazenado no retorno opcional da subscript.
+> armazenado no retorno optional da subscript.
 
 A string obtida do dicionário `digitNames`
 é adicionada no *início* de `output`,

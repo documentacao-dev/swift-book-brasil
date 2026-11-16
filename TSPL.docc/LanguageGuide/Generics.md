@@ -1,4 +1,4 @@
-# Genéricos
+# Generics
 
 Escreva código que funciona com vários tipos e especifique requisitos para esses tipos.
 
@@ -7,9 +7,9 @@ que podem trabalhar com qualquer tipo, sujeitos a requisitos que você define.
 Você pode escrever código que evita duplicação
 e expressa sua intenção de forma clara e abstrata.
 
-Genéricos são um dos recursos mais poderosos do Swift,
+Generics são um dos recursos mais poderosos do Swift,
 e grande parte da biblioteca padrão do Swift é construída com código genérico.
-Na verdade, você já vem usando genéricos ao longo do *Guia da linguagem*,
+Na verdade, você já usa generics ao longo do *Guia da linguagem*,
 mesmo sem perceber.
 Por exemplo, os tipos `Array` e `Dictionary` do Swift
 são ambos coleções genéricas.
@@ -19,7 +19,7 @@ ou, na verdade, um array para qualquer outro tipo que possa ser criado em Swift.
 Da mesma forma, você pode criar um dicionário para armazenar valores de qualquer tipo especificado,
 e não há limitações sobre qual pode ser esse tipo.
 
-## O problema que os genéricos resolvem
+## O problema que os generics resolvem
 
 Aqui está uma função padrão, não genérica, chamada `swapTwoInts(_:_:)`,
 que troca dois valores `Int`:
@@ -331,7 +331,7 @@ A ilustração abaixo mostra o comportamento de empilhar e desempilhar de uma pi
 
 ![](stackPushPop)
 
-1. Atualmente, há três valores na pilha.
+1. No momento, há três valores na pilha.
 2. Um quarto valor é empilhado no topo da pilha.
 3. A pilha agora tem quatro valores, com o mais recente no topo.
 4. O item do topo da pilha é desempilhado.
@@ -376,7 +376,7 @@ struct IntStack {
 -->
 
 Essa struct usa uma propriedade `Array` chamada `items` para armazenar os valores da pilha.
-`IntStack` oferece dois métodos, `push` e `pop`,
+`Stack` oferece dois métodos, `push` e `pop`,
 para empilhar e desempilhar valores da pilha.
 Esses métodos são marcados como `mutating`,
 porque precisam modificar (ou *mutar*) o array `items` da struct.
@@ -495,9 +495,9 @@ Veja como fica a pilha depois de desempilhar seu valor do topo:
 ## Estendendo um tipo genérico
 
 Ao estender um tipo genérico,
-você não fornece uma lista de parâmetros de tipo como parte da definição da extensão.
+você não fornece uma lista de parâmetros de tipo como parte da definição da extension.
 Em vez disso, a lista de parâmetros de tipo da definição *original*
-fica disponível dentro do corpo da extensão,
+fica disponível dentro do corpo da extension,
 e os nomes originais dos parâmetros de tipo são usados para se referir
 aos parâmetros de tipo da definição original.
 
@@ -525,13 +525,13 @@ extension Stack {
   ```
 -->
 
-A propriedade `topItem` retorna um valor opcional do tipo `Element`.
+A propriedade `topItem` retorna um optional do tipo `Element`.
 Se a pilha estiver vazia, `topItem` retorna `nil`;
 se a pilha não estiver vazia, `topItem` retorna o último item do array `items`.
 
-Observe que essa extensão não define uma lista de parâmetros de tipo.
+Observe que essa extension não define uma lista de parâmetros de tipo.
 Em vez disso, o nome do parâmetro de tipo que já existe no tipo `Stack`, `Element`,
-é usado dentro da extensão para indicar o tipo opcional da
+é usado dentro da extension para indicar o tipo optional da
 propriedade computada `topItem`.
 
 A propriedade computada `topItem` agora pode ser usada com qualquer instância de `Stack`
@@ -555,7 +555,7 @@ if let topItem = stackOfStrings.topItem {
   ```
 -->
 
-Extensões de um tipo genérico também podem incluir requisitos
+Extensions de um tipo genérico também podem incluir requisitos
 que as instâncias do tipo estendido precisam satisfazer
 para ganhar a nova funcionalidade,
 como discutido em <doc:Generics#Extensions-with-a-Generic-Where-Clause> abaixo.
@@ -589,7 +589,7 @@ Todos os tipos básicos do Swift (como `String`, `Int`, `Double` e `Bool`)
 são hashable por padrão.
 Para informações sobre
 como fazer seus próprios tipos personalizados estarem em conformidade com o protocolo `Hashable`,
-veja [Conforming to the Hashable Protocol](https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol).
+veja [Conformidade com o protocolo Hashable](https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol).
 
 Você pode definir suas próprias restrições de tipo ao criar tipos genéricos personalizados,
 e essas restrições fornecem boa parte do poder da programação genérica.
@@ -634,7 +634,7 @@ que exige que `U` esteja em conformidade com o protocolo `SomeProtocol`.
 Aqui está uma função não genérica chamada `findIndex(ofString:in:)`,
 que recebe um valor `String` a ser procurado
 e um array de valores `String` em que fazer a busca.
-A função `findIndex(ofString:in:)` retorna um valor `Int` opcional,
+A função `findIndex(ofString:in:)` retorna um `Int` optional,
 que será o índice da primeira string correspondente no array, se ela for encontrada,
 ou `nil` se a string não puder ser encontrada:
 
@@ -693,8 +693,8 @@ substituindo qualquer menção a strings por valores de algum tipo `T`.
 Veja como você poderia esperar que uma versão genérica de `findIndex(ofString:in:)`,
 chamada `findIndex(of:in:)`, fosse escrita.
 Observe que o tipo de retorno dessa função continua sendo `Int?`,
-pois a função retorna um número de índice opcional,
-não um valor opcional do array.
+pois a função retorna um número de índice optional,
+não um optional do array.
 Atenção, porém: essa função não compila,
 pelos motivos explicados depois do exemplo:
 
@@ -735,14 +735,14 @@ então o significado de “igual a” para essa classe ou struct
 não é algo que o Swift consegue adivinhar por você.
 Por isso, não é possível garantir que esse código vai funcionar
 para *todo* tipo possível `T`,
-e um erro apropriado é reportado quando você tenta compilar o código.
+e o compilador reporta um erro apropriado quando você tenta compilar o código.
 
 Nem tudo está perdido, porém.
 A biblioteca padrão do Swift define um protocolo chamado `Equatable`,
 que exige que qualquer tipo em conformidade implemente
 o operador de igualdade (`==`) e o operador de desigualdade (`!=`)
 para comparar quaisquer dois valores daquele tipo.
-Todos os tipos padrão do Swift suportam automaticamente o protocolo `Equatable`.
+Todos os tipos padrão do Swift adotam automaticamente o protocolo `Equatable`.
 
 <!--
   TODO: write about how to make your own types conform to Equatable
@@ -753,7 +753,7 @@ Todos os tipos padrão do Swift suportam automaticamente o protocolo `Equatable`
 -->
 
 Qualquer tipo que seja `Equatable` pode ser usado com segurança na função `findIndex(of:in:)`,
-pois é garantido que ele suporta o operador de igualdade.
+pois é garantido que ele oferece suporte ao operador de igualdade.
 Para expressar isso, você escreve uma restrição de tipo de `Equatable`
 como parte da definição do parâmetro de tipo ao definir a função:
 
@@ -1041,7 +1041,7 @@ uma propriedade `count` e um subscript com índice `Int` para recuperar seus ele
 Essas três capacidades correspondem aos requisitos do protocolo `Container`.
 Isso significa que você pode estender `Array` para estar em conformidade com o protocolo `Container`
 simplesmente declarando que `Array` adota o protocolo.
-Você faz isso com uma extensão vazia,
+Você faz isso com uma extension vazia,
 como descrito em <doc:Protocols#Declaring-Protocol-Adoption-with-an-Extension>:
 
 ```swift
@@ -1059,7 +1059,7 @@ extension Array: Container {}
 O método `append(_:)` e o subscript já existentes em `Array` permitem que o Swift infira
 o tipo apropriado a ser usado para `Item`,
 assim como para o tipo genérico `Stack` acima.
-Depois de definir essa extensão, você pode usar qualquer `Array` como `Container`.
+Depois de definir essa extension, você pode usar qualquer `Array` como `Container`.
 
 ### Adicionando restrições a um tipo associado
 
@@ -1131,9 +1131,9 @@ ele precisa estar em conformidade com o protocolo `SuffixableContainer`
 e seu tipo `Item` precisa ser o mesmo
 que o tipo `Item` do contêiner.
 A restrição sobre `Item` é uma cláusula `where` genérica,
-sobre a qual se fala em <doc:Generics#Associated-Types-with-a-Generic-Where-Clause> abaixo.
+que é discutida em <doc:Generics#Associated-Types-with-a-Generic-Where-Clause> abaixo.
 
-Aqui está uma extensão do tipo `Stack`
+Aqui está uma extension do tipo `Stack`
 visto em <doc:Generics#Generic-Types> acima
 que adiciona conformidade ao protocolo `SuffixableContainer`:
 
@@ -1189,7 +1189,7 @@ um tipo que está em conformidade com `SuffixableContainer`
 pode ter um tipo `Suffix` diferente de si mesmo ---
 ou seja, a operação de sufixo pode retornar um tipo diferente.
 Por exemplo,
-aqui está uma extensão do tipo não genérico `IntStack`
+aqui está uma extension do tipo não genérico `IntStack`
 que adiciona conformidade com `SuffixableContainer`,
 usando `Stack<Int>` como seu tipo de sufixo no lugar de `IntStack`:
 
@@ -1405,9 +1405,9 @@ com esses dois contêineres como argumentos.
 No exemplo acima, a função `allItemsMatch(_:_:)` informa corretamente que
 todos os itens dos dois contêineres coincidem.
 
-## Extensões com cláusula where genérica
+## Extensions com cláusula where genérica
 
-Você também pode usar uma cláusula `where` genérica como parte de uma extensão.
+Você também pode usar uma cláusula `where` genérica como parte de uma extension.
 O exemplo abaixo
 estende a struct genérica `Stack` dos exemplos anteriores
 para adicionar um método `isTop(_:)`.
@@ -1449,8 +1449,8 @@ mas a definição de `Stack` não exige
 que seus itens sejam `Equatable`,
 então usar o operador `==` resulta em um erro de compilação.
 Usar uma cláusula `where` genérica
-permite adicionar um novo requisito à extensão,
-de modo que a extensão adicione o método `isTop(_:)`
+permite adicionar um novo requisito à extension,
+de modo que a extension adicione o método `isTop(_:)`
 apenas quando os itens da pilha forem `Equatable`.
 
 Veja como o método `isTop(_:)` funciona na prática:
@@ -1504,7 +1504,7 @@ notEquatableStack.isTop(notEquatableValue)  // Error
   ```
 -->
 
-Você pode usar uma cláusula `where` genérica com extensões de um protocolo.
+Você pode usar uma cláusula `where` genérica com extensions de um protocolo.
 O exemplo abaixo estende o protocolo `Container` dos exemplos anteriores
 para adicionar um método `startsWith(_:)`.
 
@@ -1611,7 +1611,7 @@ Ele converte explicitamente a quantidade de `Int` para `Double`
 para conseguir fazer divisão de ponto flutuante.
 
 Você pode incluir vários requisitos em uma cláusula `where` genérica
-que faz parte de uma extensão,
+que faz parte de uma extension,
 assim como pode fazer em uma cláusula `where` genérica escrita em outro lugar.
 Separe cada requisito da lista com uma vírgula.
 
@@ -1629,7 +1629,7 @@ quando já está trabalhando no contexto de tipos genéricos.
 Por exemplo,
 você pode escrever uma cláusula `where` genérica
 em um subscript de um tipo genérico
-ou em um método de uma extensão de um tipo genérico.
+ou em um método de uma extension de um tipo genérico.
 O protocolo `Container` é genérico,
 e as cláusulas `where` do exemplo abaixo
 especificam quais restrições de tipo precisam ser satisfeitas
@@ -1687,7 +1687,7 @@ que adiciona restrições de tipo ao parâmetro de tipo genérico `Item`
 da declaração original de `Container`.
 
 Se você quiser escrever esse código sem usar cláusulas `where` contextuais,
-escreve duas extensões,
+você escreveria duas extensions,
 uma para cada cláusula `where` genérica.
 O exemplo acima e o exemplo abaixo têm o mesmo comportamento.
 
@@ -1731,13 +1731,13 @@ extension Container where Item: Equatable {
 
 Na versão deste exemplo que usa cláusulas `where` contextuais,
 a implementação de `average()` e de `endsWith(_:)`
-ficam na mesma extensão,
+ficam na mesma extension,
 pois a cláusula `where` genérica de cada método
 indica os requisitos que precisam ser satisfeitos
 para que aquele método fique disponível.
-Mover esses requisitos para as cláusulas `where` genéricas das extensões
+Mover esses requisitos para as cláusulas `where` genéricas das extensions
 torna os métodos disponíveis nas mesmas situações,
-mas exige uma extensão para cada requisito.
+mas exige uma extension para cada requisito.
 
 ## Tipos associados com cláusula where genérica
 
@@ -1946,7 +1946,7 @@ extension Container {
   ```
 -->
 
-Essa extensão do protocolo `Container`
+Essa extension do protocolo `Container`
 adiciona um subscript que recebe uma sequência de índices
 e retorna um array contendo os itens de cada índice informado.
 Esse subscript genérico tem as seguintes restrições:

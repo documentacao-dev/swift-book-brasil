@@ -7,7 +7,7 @@ Confira as mudanças recentes neste livro.
 - Atualizado para o Swift 6.4.
 - Inclusão de informações sobre protocolos com requisitos de superclasse
   na seção <doc:Protocols#Class-Only-Protocols>.
-- Inclusão de informações sobre identificadores brutos
+- Inclusão de informações sobre identificadores raw
   na seção <doc:LexicalStructure#Identifiers>.
 - Inclusão de informações sobre macros de corpo
   na seção <doc:Attributes#attached>.
@@ -260,7 +260,7 @@ Confira as mudanças recentes neste livro.
   usando o atributo `dynamicCallable`.
 - Inclusão das seções <doc:Attributes#unknown>
   e <doc:Statements#Switching-Over-Future-Enumeration-Cases>
-  com informações sobre como tratar casos de enum futuros em instruções `switch`,
+  com informações sobre como tratar casos de enum futuros em instruções switch,
   usando o atributo `unknown` de case de switch.
 - Inclusão de informações sobre o key path de identidade (`\.self`)
   na seção <doc:Expressions#Key-Path-Expression>.
@@ -333,7 +333,7 @@ Confira as mudanças recentes neste livro.
   na seção <doc:Protocols#Protocol-Composition> do capítulo <doc:Protocols>,
   e na seção <doc:Types#Protocol-Composition-Type> do capítulo <doc:Types>,
   agora que tipos de composição de protocolos podem conter um requisito de superclasse.
-- Atualização da discussão sobre extensões de protocolo
+- Atualização da discussão sobre extensions de protocolo
   em <doc:Declarations#Extension-Declaration>,
   agora que `final` não é permitido nelas.
 - Inclusão de informações sobre pré-condições e erros fatais
@@ -505,7 +505,7 @@ Confira as mudanças recentes neste livro.
   quando você passa uma propriedade como parâmetro in-out.
 - Inclusão de uma seção sobre tratamento de erros
   no capítulo <doc:GuidedTour>.
-- Atualização das figuras nas seções
+- Atualização das figuras na seção
   <doc:AutomaticReferenceCounting#Weak-References>
   para mostrar o processo de desalocação com mais clareza.
 - Remoção da discussão sobre loops `for` no estilo C,
@@ -548,7 +548,7 @@ Confira as mudanças recentes neste livro.
   e na seção <doc:Expressions#Try-Operator>.
 - Atualização da seção <doc:ErrorHandling#Representing-and-Throwing-Errors>,
   agora que todos os tipos podem estar em conformidade com o protocolo `ErrorType`.
-- Inclusão de informações sobre o novo keyword `try?`
+- Inclusão de informações sobre a nova palavra-chave `try?`
   na seção <doc:ErrorHandling#Converting-Errors-to-Optional-Values>.
 - Inclusão de informações sobre enums recursivos
   na seção <doc:Enumerations#Recursive-Enumerations>
@@ -565,13 +565,13 @@ Confira as mudanças recentes neste livro.
   do capítulo <doc:ControlFlow>,
   e na seção <doc:Statements#Guard-Statement>
   do capítulo <doc:Statements>.
-- Inclusão de informações sobre extensões de protocolo
+- Inclusão de informações sobre extensions de protocolo
   na seção <doc:Protocols#Protocol-Extensions>
   do capítulo <doc:Protocols>.
 - Inclusão de informações sobre controle de acesso para testes unitários
   na seção <doc:AccessControl#Access-Levels-for-Unit-Test-Targets>
   do capítulo <doc:AccessControl>.
-- Inclusão de informações sobre o novo padrão opcional
+- Inclusão de informações sobre o novo padrão optional
   na seção <doc:Patterns#Optional-Pattern>
   do capítulo <doc:Patterns>.
 - Atualização da seção <doc:ControlFlow#Repeat-While>
@@ -583,7 +583,7 @@ Confira as mudanças recentes neste livro.
   `print(_:separator:terminator)`
   na seção <doc:TheBasics#Printing-Constants-and-Variables>.
 - Inclusão de informações sobre o comportamento de casos de enum
-  com valores brutos do tipo `String`
+  com raw values do tipo `String`
   na seção <doc:Enumerations#Implicitly-Assigned-Raw-Values>
   do capítulo <doc:Enumerations>,
   e na seção <doc:Declarations#Enumerations-with-Cases-of-a-Raw-Value-Type>
@@ -596,7 +596,7 @@ Confira as mudanças recentes neste livro.
   e `@warn_unused_result`.
 - Atualização da seção <doc:Attributes#Type-Attributes>
   com informações sobre o atributo `@convention`.
-- Inclusão de um exemplo de uso de múltiplas cláusulas de binding opcional
+- Inclusão de um exemplo de uso de múltiplas cláusulas de optional binding
   com uma cláusula `where`
   na seção <doc:TheBasics#Optional-Binding>.
 - Inclusão de informações na seção <doc:LexicalStructure#String-Literals>
@@ -629,7 +629,7 @@ Confira as mudanças recentes neste livro.
   na seção <doc:AutomaticReferenceCounting#Weak-References>
   sobre referências weak não serem adequadas para cache.
 - Atualização de uma nota na seção <doc:Properties#Type-Properties>
-  para mencionar que propriedades de tipo armazenadas são inicializadas de forma preguiçosa.
+  para mencionar que propriedades de tipo armazenadas são inicializadas de forma lazy.
 - Atualização da seção <doc:Closures#Capturing-Values>
   para deixar claro como variáveis e constantes são capturadas em closures.
 - Atualização da seção <doc:Attributes#Declaration-Attributes>
@@ -701,7 +701,7 @@ Confira as mudanças recentes neste livro.
 - Em um inicializador, propriedades constantes agora só podem receber um valor uma vez.
   Para mais informações,
   consulte <doc:Initialization#Assigning-Constant-Properties-During-Initialization>.
-- Várias cláusulas de binding opcional agora podem aparecer em uma única instrução `if`,
+- Várias cláusulas de optional binding agora podem aparecer em uma única instrução `if`,
   como uma lista de expressões de atribuição separadas por vírgula.
   Para mais informações, consulte <doc:TheBasics#Optional-Binding>.
 - Uma <doc:Expressions#Optional-Chaining-Expression>
@@ -722,7 +722,7 @@ Confira as mudanças recentes neste livro.
   instâncias de função. A discussão em <doc:TypeCasting#Type-Casting-for-Any-and-AnyObject>
   foi atualizada para mostrar como verificar e converter para um tipo de função
   dentro de uma instrução `switch`.
-- Enums com valores brutos agora têm uma propriedade `rawValue` em vez de um método `toRaw()`,
+- Enums com raw values agora têm uma propriedade `rawValue` em vez de um método `toRaw()`,
   e um inicializador falível com um parâmetro `rawValue`
   em vez de um método `fromRaw()`.
   Para mais informações, consulte <doc:Enumerations#Raw-Values>
@@ -757,7 +757,7 @@ Confira as mudanças recentes neste livro.
   na seção <doc:Attributes#Declaration-Attributes>.
 - Os <doc:TheBasics#Optionals> deixaram de ser avaliados implicitamente como `true`
   quando têm valor e como `false` quando não têm,
-  para evitar confusão ao trabalhar com valores `Bool` opcionais.
+  para evitar confusão ao trabalhar com valores `Bool` optionals.
   Em vez disso, faça uma verificação explícita contra `nil`
   com os operadores `==` ou `!=`
   para descobrir se um optional contém um valor.

@@ -25,7 +25,7 @@ para restringi-los a corresponder apenas a valores de um determinado tipo.
 
 O segundo tipo de padrão é usado para a correspondência completa de padrões,
 em que os valores com os quais você está comparando podem não estar presentes em tempo de execução.
-Eles incluem padrões de caso de enumeração, padrões optional, padrões de expressão
+Eles incluem padrões de caso de enum, padrões optional, padrões de expressão
 e padrões de conversão de tipo. Você usa esses padrões em um rótulo case
 de uma instrução `switch`, em uma cláusula `catch` de uma instrução `do`,
 ou na condição case de uma instrução `if`, `while`,
@@ -108,7 +108,7 @@ ao nome de uma constante começam com a palavra-chave `let`;
 os que vinculam ao nome de uma variável começam com a palavra-chave `var`.
 
 Padrões de identificador dentro de um padrão de vinculação de valor
-vinculam novas variáveis ou constantes nomeadas aos seus valores correspondentes.
+vinculam novas variáveis ou constantes nomeadas aos valores correspondentes.
 Por exemplo, você pode decompor os elementos de uma tupla
 e vincular o valor de cada elemento a um padrão de identificador correspondente.
 
@@ -239,23 +239,23 @@ let (a): Int = 2 // a: Int = 2
 > *tuple-pattern-element-list* → *tuple-pattern-element* | *tuple-pattern-element* **`,`** *tuple-pattern-element-list* \
 > *tuple-pattern-element* → *pattern* | *identifier* **`:`** *pattern*
 
-## Padrão de caso de enumeração
+## Padrão de caso de enum
 
-Um *padrão de caso de enumeração* corresponde a um caso de um tipo de enumeração existente.
-Padrões de caso de enumeração aparecem em rótulos case de instruções `switch`
+Um *padrão de caso de enum* corresponde a um caso de um tipo enum existente.
+Padrões de caso de enum aparecem em rótulos case de instruções `switch`
 e nas condições case das instruções `if`, `while`, `guard` e `for`-`in`.
 
-Se o caso de enumeração que você está tentando corresponder tiver valores associados,
-o padrão de caso de enumeração correspondente deve especificar um padrão de tupla
+Se o caso de enum que você está tentando corresponder tiver valores associados,
+o padrão de caso de enum correspondente deve especificar um padrão de tupla
 que contenha um elemento para cada valor associado. Para um exemplo que usa uma instrução
-`switch` para corresponder casos de enumeração com valores associados,
+`switch` para corresponder casos de enum com valores associados,
 veja <doc:Enumerations#Associated-Values>.
 
-Um padrão de caso de enumeração também corresponde a valores
-desse caso embrulhados em um optional.
+Um padrão de caso de enum também corresponde a valores
+desse caso envolvidos em um optional.
 Essa sintaxe simplificada permite omitir um padrão optional.
-Observe que, como `Optional` é implementado como uma enumeração,
-`.none` e `.some` podem aparecer no mesmo `switch` que os casos do tipo de enumeração.
+Observe que, como `Optional` é implementado como um enum,
+`.none` e `.some` podem aparecer no mesmo `switch` que os casos do tipo enum.
 
 ```swift
 enum SomeEnum { case left, right }
@@ -289,18 +289,18 @@ case nil:
   ```
 -->
 
-> Gramática de um padrão de caso de enumeração:
+> Gramática de um padrão de caso de enum:
 >
 > *enum-case-pattern* → *type-identifier*_?_ **`.`** *enum-case-name* *tuple-pattern*_?_
 
 ## Padrão optional
 
-Um *padrão optional* corresponde a valores embrulhados em um caso `some(Wrapped)`
-de uma enumeração `Optional<Wrapped>`.
+Um *padrão optional* corresponde a valores envolvidos em um caso `some(Wrapped)`
+de um enum `Optional<Wrapped>`.
 Padrões optional são formados por um padrão de identificador seguido imediatamente
-de um ponto de interrogação, e aparecem nos mesmos lugares que os padrões de caso de enumeração.
+de um ponto de interrogação, e aparecem nos mesmos lugares que os padrões de caso de enum.
 
-Como padrões optional são açúcar sintático para padrões de caso de enumeração de `Optional`,
+Como padrões optional são açúcar sintático para padrões de caso de enum de `Optional`,
 os trechos a seguir são equivalentes:
 
 ```swift

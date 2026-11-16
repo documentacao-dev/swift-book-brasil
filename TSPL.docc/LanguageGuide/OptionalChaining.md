@@ -19,7 +19,7 @@ Você especifica o optional chaining colocando um ponto de interrogação (`?`)
 depois do valor optional sobre o qual quer acessar uma propriedade, chamar um método ou usar um subscript,
 caso o optional não seja `nil`.
 Isso é muito parecido com colocar um ponto de exclamação (`!`)
-depois de um valor optional para forçar o unwrap do seu valor.
+depois de um valor optional para forçar o unwrap do valor.
 A principal diferença é que o optional chaining falha de forma controlada quando o optional é `nil`,
 enquanto o unwrap forçado dispara um erro em tempo de execução quando o optional é `nil`.
 
@@ -33,7 +33,7 @@ ou se não deu certo por causa de um valor `nil` na cadeia
 (o valor optional retornado é `nil`).
 
 Especificamente, o resultado de uma chamada com optional chaining
-tem o mesmo tipo do valor de retorno esperado, mas embrulhado em um optional.
+tem o mesmo tipo do valor de retorno esperado, mas envolvido em um optional.
 Uma propriedade que normalmente retorna um `Int` vai retornar um `Int?`
 quando acessada por meio de optional chaining.
 
@@ -89,7 +89,7 @@ let john = Person()
 -->
 
 Se você tentar acessar a propriedade `numberOfRooms` da `residence` dessa pessoa,
-colocando um ponto de exclamação depois de `residence` para forçar o unwrap do seu valor,
+colocando um ponto de exclamação depois de `residence` para forçar o unwrap do valor,
 você dispara um erro em tempo de execução,
 porque não há valor de `residence` para fazer o unwrap:
 
@@ -543,7 +543,7 @@ if john.residence?.printNumberOfRooms() != nil {
 O mesmo vale para a tentativa de definir uma propriedade por meio de optional chaining.
 O exemplo acima, em <doc:OptionalChaining#Accessing-Properties-Through-Optional-Chaining>,
 tenta definir um valor de `address` para `john.residence`,
-mesmo com a propriedade `residence` sendo `nil`.
+mesmo que a propriedade `residence` seja `nil`.
 Qualquer tentativa de definir uma propriedade por meio de optional chaining retorna um valor do tipo `Void?`,
 o que permite comparar com `nil` para saber se a propriedade foi definida com sucesso:
 
@@ -671,7 +671,7 @@ if let firstRoomName = john.residence?[0].name {
 Se um subscript retorna um valor de tipo optional ---
 como o subscript por chave do tipo `Dictionary` do Swift ---
 coloque um ponto de interrogação *depois* do fechamento do colchete do subscript
-para encadear na seu valor de retorno optional:
+para encadear no seu valor de retorno optional:
 
 ```swift
 var testScores = ["Dave": [86, 82, 84], "Bev": [79, 94, 81]]

@@ -1,4 +1,4 @@
-# Tipos de Coleção
+# Tipos de coleção
 
 Organize dados usando arrays, conjuntos e dicionários.
 

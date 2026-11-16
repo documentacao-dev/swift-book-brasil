@@ -8,7 +8,7 @@ Esse recurso permite ocultar os detalhes de implementação do seu código
 e definir uma interface preferida pela qual esse código pode ser acessado e usado.
 
 Você pode atribuir níveis de acesso específicos a tipos individuais
-(classes, estruturas e enumerações),
+(classes, structs e enums),
 assim como a propriedades, métodos, inicializadores e subscripts pertencentes a esses tipos.
 Protocolos podem ser restritos a um determinado contexto,
 assim como constantes, variáveis e funções globais.
@@ -29,13 +29,13 @@ O modelo de controle de acesso do Swift se baseia no conceito de
 módulos, arquivos-fonte e pacotes.
 
 Um *módulo* é uma única unidade de distribuição de código:
-um framework ou aplicativo que é compilado e distribuído como uma unidade única
+um framework ou app que é compilado e distribuído como uma unidade única
 e que pode ser importado por outro módulo com a palavra-chave `import` do Swift.
 
 Cada target de build (como um bundle de app ou um framework) no Xcode
 é tratado como um módulo separado no Swift.
 Se você agrupar aspectos do código do seu app como um framework independente
-(talvez para encapsular e reutilizar esse código em vários aplicativos),
+(talvez para encapsular e reutilizar esse código em vários apps),
 então tudo o que você definir dentro desse framework fará parte de um módulo separado
 quando for importado e usado dentro de um app,
 ou quando for usado dentro de outro framework.
@@ -111,7 +111,7 @@ Por exemplo:
 
 - Uma variável public não pode ser definida com tipo internal, file-private ou private,
   porque o tipo pode não estar disponível em todos os lugares onde a variável public é usada.
-- Uma função não pode ter nível de acesso mais alto que os tipos dos seus parâmetros e do seu retorno,
+- Uma função não pode ter nível de acesso mais alto que os tipos dos parâmetros e o tipo de retorno,
   porque a função poderia ser usada em situações em que
   seus tipos constituintes não estão disponíveis para o código ao redor.
 
@@ -134,7 +134,7 @@ o código do app normalmente é autocontido dentro do app
 e não precisa ser disponibilizado fora do módulo do app.
 O nível de acesso padrão internal já atende a esse requisito.
 Portanto, você não precisa especificar um nível de acesso personalizado.
-Você pode, porém, querer marcar algumas partes do código como file-private ou private
+Talvez valha marcar algumas partes do código como file-private ou private
 para ocultar seus detalhes de implementação de outros códigos dentro do módulo do app.
 
 ### Níveis de acesso para frameworks
@@ -265,7 +265,7 @@ private class SomePrivateClass {                 // explicitly private class
   ```
 -->
 
-### Tipos tupla
+### Tipos de tupla
 
 O nível de acesso de um tipo tupla é
 o mais restritivo entre todos os tipos usados nessa tupla.
@@ -341,8 +341,8 @@ o nível de acesso desse tipo tupla composto será private.
   ```
 -->
 
-> Nota: Tipos tupla não têm uma definição independente como
-> classes, estruturas, enumerações e funções têm.
+> Nota: Tipos de tupla não têm uma definição independente como
+> classes, structs, enums e funções têm.
 > O nível de acesso de um tipo tupla é determinado automaticamente
 > pelos tipos que compõem a tupla,
 > e não pode ser especificado explicitamente.
@@ -414,15 +414,15 @@ nem usar o padrão internal,
 porque usuários public ou internal da função podem não ter o acesso adequado
 à classe private usada no tipo de retorno da função.
 
-### Tipos enumeração
+### Tipos de enum
 
-Cada caso de uma enumeração recebe automaticamente o mesmo nível de acesso
-da enumeração a que pertence.
-Você não pode especificar um nível de acesso diferente para casos individuais de enumeração.
+Cada caso de um enum recebe automaticamente o mesmo nível de acesso
+do enum a que pertence.
+Você não pode especificar um nível de acesso diferente para casos individuais de enum.
 
 No exemplo abaixo,
-a enumeração `CompassPoint` tem o nível de acesso explícito public.
-Os casos da enumeração `north`, `south`, `east` e `west`
+o enum `CompassPoint` tem o nível de acesso explícito public.
+Os casos do enum `north`, `south`, `east` e `west`
 portanto também têm nível de acesso public:
 
 ```swift
@@ -469,13 +469,13 @@ public enum CompassPoint {
   ```
 -->
 
-#### Valores brutos e valores associados
+#### Raw values e associated values
 
-Os tipos usados em quaisquer valores brutos ou valores associados em uma definição de enumeração
-devem ter um nível de acesso pelo menos tão alto quanto o nível de acesso da enumeração.
+Os tipos usados em quaisquer raw values ou associated values em uma definição de enum
+devem ter um nível de acesso pelo menos tão alto quanto o nível de acesso do enum.
 Por exemplo,
-você não pode usar um tipo private como tipo de valor bruto de
-uma enumeração com nível de acesso internal.
+você não pode usar um tipo private como tipo do raw value de
+um enum com nível de acesso internal.
 
 ### Tipos aninhados
 
@@ -621,15 +621,16 @@ precisa declará-lo explicitamente como public.
   !!                                    ^~~~~~~~~~~~~
   ```
 -->
+
 ## Criando subclasses
 
-Você pode criar subclasse de qualquer classe
+Você pode criar uma subclasse de qualquer classe
 que possa ser acessada no contexto de acesso atual
 e que esteja definida no mesmo módulo da subclasse.
-Você também pode criar subclasse de qualquer classe `open`
+Você também pode criar uma subclasse de qualquer classe open
 definida em outro módulo.
 Uma subclasse não pode ter um nível de acesso mais alto que o da sua superclasse ---
-por exemplo, você não pode escrever uma subclasse `public` de uma superclasse `internal`.
+por exemplo, você não pode escrever uma subclasse public de uma superclasse internal.
 
 Além disso,
 para classes definidas no mesmo módulo,
@@ -637,10 +638,10 @@ você pode sobrescrever qualquer membro de classe
 (método, propriedade, inicializador ou subscript)
 que esteja visível em determinado contexto de acesso.
 Para classes definidas em outro módulo,
-você pode sobrescrever qualquer membro de classe `open`.
+você pode sobrescrever qualquer membro de classe open.
 
 Um override pode tornar um membro de classe herdado mais acessível do que a versão da superclasse.
-No exemplo abaixo, a classe `A` é uma classe `public` com um método `someMethod()` de acesso `fileprivate`.
+No exemplo abaixo, a classe `A` é uma classe public com um método `someMethod()` file-private.
 A classe `B` é subclasse de `A`, com nível de acesso reduzido para “internal”.
 Mesmo assim, a classe `B` fornece um override de `someMethod()`
 com nível de acesso “internal”, que é *mais alto* que
@@ -674,8 +675,8 @@ internal class B: A {
 um membro da superclasse que tenha permissões de acesso mais restritas que o membro da subclasse,
 desde que a chamada ao membro da superclasse aconteça dentro
 de um nível de acesso permitido
-(ou seja, dentro do mesmo arquivo-fonte da superclasse, no caso de uma chamada a um membro `fileprivate`,
-ou dentro do mesmo módulo da superclasse, no caso de uma chamada a um membro `internal`):
+(ou seja, dentro do mesmo arquivo-fonte da superclasse, no caso de uma chamada a um membro file-private,
+ou dentro do mesmo módulo da superclasse, no caso de uma chamada a um membro internal):
 
 ```swift
 public class A {
@@ -711,11 +712,11 @@ Como a superclasse `A` e a subclasse `B` são definidas no mesmo arquivo-fonte,
 
 ## Constantes, variáveis, propriedades e subscripts
 
-Uma constante, variável ou propriedade não pode ser mais pública que o seu tipo.
-Não é válido escrever, por exemplo, uma propriedade `public` com um tipo `private`.
-Da mesma forma, um subscript não pode ser mais público que o seu tipo de índice ou o seu tipo de retorno.
+Uma constante, variável ou propriedade não pode ser mais pública que o tipo dela.
+Não é válido escrever, por exemplo, uma propriedade public com um tipo private.
+Da mesma forma, um subscript não pode ser mais público que seu tipo de índice ou seu tipo de retorno.
 
-Se uma constante, variável, propriedade ou subscript usar um tipo `private`,
+Se uma constante, variável, propriedade ou subscript usar um tipo private,
 a constante, variável, propriedade ou subscript também precisa ser marcada como `private`:
 
 ```swift
@@ -890,11 +891,11 @@ ao mesmo tempo que oferece acesso prático a um aspecto dessa funcionalidade.
 Observe que você pode atribuir um nível de acesso explícito tanto
 para um getter quanto para um setter, se necessário.
 O exemplo abaixo mostra uma versão da struct `TrackedString`
-em que a struct é definida com nível de acesso explícito `public`.
+em que a struct é definida com nível de acesso explícito public.
 Os membros da struct (incluindo a propriedade `numberOfEdits`)
 têm, portanto, nível de acesso `internal` por padrão.
-Você pode fazer o getter da propriedade `numberOfEdits` ser `public`,
-e o setter dela ser `private`,
+Você pode fazer o getter da propriedade `numberOfEdits` ser public,
+e o setter ser private,
 combinando os modificadores de nível de acesso `public` e `private(set)`:
 
 ```swift
@@ -984,12 +985,12 @@ public struct TrackedString {
 
 Inicializadores personalizados podem receber um nível de acesso menor ou igual
 ao do tipo que eles inicializam.
-A única exceção são os inicializadores `required`
+A única exceção são os inicializadores required
 (como definidos em <doc:Initialization#Required-Initializers>).
-Um inicializador `required` deve ter o mesmo nível de acesso da classe a que pertence.
+Um inicializador required deve ter o mesmo nível de acesso da classe a que pertence.
 
 Assim como ocorre com parâmetros de funções e métodos,
-os tipos dos parâmetros de um inicializador não podem ser mais `private` que
+os tipos dos parâmetros de um inicializador não podem ser mais private que
 o nível de acesso do próprio inicializador.
 
 ### Inicializadores padrão
@@ -1003,24 +1004,25 @@ e não forneça pelo menos um inicializador próprio.
 Um inicializador padrão tem o mesmo nível de acesso do tipo que ele inicializa,
 a menos que esse tipo seja definido como `public`.
 Para um tipo definido como `public`,
-o inicializador padrão é considerado `internal`.
-Se você quiser que um tipo `public` possa ser inicializado com um inicializador sem argumentos
+o inicializador padrão é considerado internal.
+Se você quiser que um tipo public possa ser inicializado com um inicializador sem argumentos
 quando usado em outro módulo,
-você precisa fornecer explicitamente um inicializador `public` sem argumentos
+você precisa fornecer explicitamente um inicializador public sem argumentos
 como parte da definição do tipo.
 
 ### Inicializadores memberwise padrão para structs
 
-O inicializador memberwise padrão de uma struct é considerado `private`
-se alguma das propriedades armazenadas da struct for `private`.
-Do mesmo modo, se alguma das propriedades armazenadas da struct for `fileprivate`,
-o inicializador é `fileprivate`.
-Caso contrário, o inicializador tem nível de acesso `internal`.
+O inicializador memberwise padrão de uma struct é considerado private
+se alguma das propriedades armazenadas da struct for private.
+Do mesmo modo, se alguma das propriedades armazenadas da struct for file-private,
+o inicializador é file-private.
+Caso contrário, o inicializador tem nível de acesso internal.
 
 Assim como no caso do inicializador padrão acima,
-se você quiser que uma struct `public` possa ser inicializada com um inicializador memberwise
+se você quiser que uma struct public possa ser inicializada com um inicializador memberwise
 quando usada em outro módulo,
-você precisa fornecer explicitamente um inicializador memberwise `public` como parte da definição do tipo.
+você precisa fornecer explicitamente um inicializador memberwise public como parte da definição do tipo.
+
 ## Protocolos
 
 Se você quiser atribuir um nível de acesso explícito a um tipo de protocolo,
@@ -1031,7 +1033,7 @@ de um certo contexto de acesso.
 O nível de acesso de cada requisito dentro da definição de um protocolo
 é definido automaticamente como o mesmo nível de acesso do protocolo.
 Você não pode definir um requisito de protocolo com um nível de acesso
-diferente do protocolo que ele compõe.
+diferente do protocolo ao qual ele pertence.
 Isso garante que todos os requisitos do protocolo fiquem visíveis
 em qualquer tipo que adote o protocolo.
 
@@ -1255,7 +1257,7 @@ que os membros de tipo declarados no tipo original que está sendo estendido.
 Se você estender um tipo public ou internal, quaisquer novos membros de tipo que você adicionar
 têm nível de acesso padrão internal.
 Se você estender um tipo file-private, quaisquer novos membros de tipo que você adicionar
-têm nível de acesso padrão file private.
+têm nível de acesso padrão file-private.
 Se você estender um tipo private, quaisquer novos membros de tipo que você adicionar
 têm nível de acesso padrão private.
 
@@ -1362,7 +1364,7 @@ Por isso, você pode:
 
 Esse comportamento significa que você pode usar extensions da mesma forma
 para organizar seu código,
-tenha ou não seus tipos entidades private.
+independentemente de seus tipos terem ou não entidades private.
 Por exemplo, dado o seguinte protocolo simples:
 
 ```swift
@@ -1418,11 +1420,11 @@ extension SomeStruct: SomeProtocol {
 
 O nível de acesso de um tipo genérico ou de uma função genérica é
 o mínimo entre o nível de acesso do próprio tipo ou função
-e o nível de acesso de quaisquer restrições de tipo sobre os seus parâmetros de tipo.
+e o nível de acesso de quaisquer restrições de tipo sobre os parâmetros de tipo dele.
 
 ## Aliases de tipo
 
-Quaisquer aliases de tipo que você definir são tratados como tipos distintos
+Os aliases de tipo que você define contam como tipos distintos
 para fins de controle de acesso.
 Um alias de tipo pode ter nível de acesso menor ou igual ao nível de acesso
 do tipo para o qual ele aponta.

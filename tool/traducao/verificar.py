@@ -6,7 +6,7 @@ Para cada TSPL.docc/**/*.md que termina com `<!-- ia-translate: true -->`:
 - blocos de código idênticos e na mesma ordem;
 - links <doc:Capitulo#Ancora> idênticos ao inglês, âncora inclusa (a troca
   para a âncora traduzida só acontece numa cópia, no build: ancorar_links.py);
-- URLs de links e diretivas do DocC (@Metadata, @Options...) idênticas;
+- URLs de links, diretivas do DocC (@Metadata, @Options...) e comentários HTML idênticos;
 - mesmo número de títulos e de notas (`> Nota:`...);
 - pouca prosa sobrando em inglês.
 
@@ -22,7 +22,7 @@ import tempfile
 from pathlib import Path
 
 from ancorar_links import reescrever
-from comum import CERCA, DOCC, ROOT, capitulos, ingles, titulos, traduzido
+from comum import MARCADOR, CERCA, DOCC, ROOT, capitulos, ingles, titulos, traduzido
 
 DOC = re.compile(r'<doc:([A-Za-z]+)(#[^>]+)?>')
 URL = re.compile(r'\]\(([^)\s]+)')
@@ -51,6 +51,12 @@ def conferir(p):
         erros.append('links <doc:...> diferentes do inglês (âncora inclusa: fica a do original)')
     if URL.findall(se) != URL.findall(sp):
         erros.append('URLs de links diferentes do inglês')
+    coment = re.compile(r'<!--.*?-->', re.S)
+    a = coment.findall(se)
+    b = [c for c in coment.findall(sp) if c != MARCADOR]
+    if a != b:
+        erros.append(f'comentários HTML diferentes do inglês ({len(a)} no inglês, {len(b)} na tradução): '
+                     'conteúdo escondido no original não pode aparecer, nem o contrário')
     if DIRETIVA.findall(se) != DIRETIVA.findall(sp):
         erros.append('diretivas do DocC (@...) diferentes do inglês')
     if len(titulos(en)) != len(titulos(pt)):

@@ -93,7 +93,7 @@ Mesmo nesse caso simples,
 como o código precisa ser escrito como uma série de completion handlers,
 você acaba escrevendo closures aninhadas.
 Nesse estilo,
-códigos mais complexos com muita aninhação rapidamente se tornam difíceis de manejar.
+código mais complexo, com aninhamento profundo, rapidamente se torna difícil de manter.
 
 ## Definindo e chamando funções assíncronas
 
@@ -158,7 +158,7 @@ Isso é parecido com escrever `try` ao chamar uma função que lança erros,
 para marcar a possível mudança no fluxo do programa caso ocorra um erro.
 Dentro de um método assíncrono,
 o fluxo de execução só pode ser suspenso
-*apenas* quando você chama outro método assíncrono ---
+*quando* você chama outro método assíncrono ---
 a suspensão nunca é implícita ou preemptiva ---
 o que significa que todo possível ponto de suspensão é marcado com `await`.
 Marcar todos os possíveis pontos de suspensão no seu código
@@ -213,7 +213,7 @@ veja uma das ordens de execução possíveis:
 
 2. Enquanto a execução deste código está suspensa,
    algum outro código concorrente do mesmo programa roda.
-   Por exemplo, talvez uma tarefa de longa duração em segundo plano
+   Por exemplo, talvez uma task de longa duração em segundo plano
    continue atualizando uma lista de novas galerias de fotos.
    Esse código também roda até o próximo ponto de suspensão, marcado com `await`,
    ou até terminar.
@@ -310,7 +310,7 @@ No entanto, existe uma diferença muito importante.
 Você pode envolver código que lança erros em um bloco `do`-`catch` para tratar os erros,
 ou usar `Result` para armazenar o erro e deixar que outro código o trate.
 Essas abordagens permitem chamar funções que lançam erros
-a partir de código não lançador.
+a partir de código que não lança erros.
 Por exemplo:
 
 ```swift
@@ -408,6 +408,7 @@ ao adotar o protocolo [`AsyncSequence`].
   There's nothing in the stdlib except for the AsyncFooSequence types.
   Maybe one of the other conforming types from an Apple framework --
   how about FileHandle.AsyncBytes (myFilehandle.bytes.lines) from Foundation?
+
   https://developer.apple.com/documentation/swift/asyncsequence
   https://developer.apple.com/documentation/foundation/filehandle
 
@@ -596,7 +597,7 @@ então as fotos dessa galeria podem ser mostradas em qualquer ordem.
 
 > Nota:
 > Se o código para baixar uma foto puder lançar um erro,
-> você deve chamar `withThrowingTaskGroup(of:returning:body:)` no lugar.
+> você chamaria `withThrowingTaskGroup(of:returning:body:)` no lugar.
 
 No trecho de código acima,
 cada foto é baixada e depois exibida,
@@ -719,7 +720,7 @@ O código acima faz várias mudanças em relação à versão anterior:
 - No final,
   o task group ignora os valores `nil` ao coletar os resultados.
   Tratar o cancelamento retornando `nil`
-  permite que o task group devolva um resultado parcial ---
+  permite que o task group retorne um resultado parcial ---
   as fotos que já tinham sido baixadas no momento do cancelamento ---
   em vez de descartar o trabalho já concluído.
 
@@ -879,10 +880,9 @@ porque isso pode criar uma race condition.
   - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
   This is a sort of cooperative multitasking for long-running work.
--->
 
-Você pode inserir explicitamente um ponto de suspensão
-chamando o método [`Task.yield()`][].
+You can explicitly insert a suspension point
+by calling the [`Task.yield()`][] method.
 
 [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/yield()
 
@@ -896,15 +896,16 @@ func generateSlideshow(forGallery gallery: String) async {
 }
 ```
 
-Supondo que o código que renderiza o vídeo seja síncrono,
-ele não contém nenhum ponto de suspensão.
-O trabalho de renderizar vídeo também pode levar muito tempo.
-No entanto,
-você pode chamar `Task.yield()` periodicamente
-para adicionar pontos de suspensão explícitos.
-Estruturar código de longa duração dessa forma
-permite que o Swift equilibre o progresso desta task
-com o progresso do trabalho de outras tasks do seu programa.
+Assuming the code that renders video is synchronous,
+it doesn't contain any suspension points.
+The work to render video could also take a long time.
+However,
+you can periodically call `Task.yield()`
+to explicitly add suspension points.
+Structuring long-running code this way
+lets Swift balance between making progress on this task,
+and letting other tasks in your program make progress on their work.
+-->
 
 ### Concorrência não estruturada
 
@@ -914,7 +915,7 @@ o Swift também oferece suporte a concorrência não estruturada.
 Diferente das tasks que fazem parte de um task group,
 uma *task não estruturada* não tem uma task pai.
 Você tem total liberdade para gerenciar tasks não estruturadas
-da forma que o seu programa precisar,
+do jeito que o programa precisar,
 mas também é totalmente responsável pela corretude delas.
 
 Para criar uma task não estruturada
@@ -930,6 +931,7 @@ A nova task, por padrão, roda sem nenhum isolamento de actor
 e não herda a prioridade nem o estado local da task atual.
 As duas operações retornam uma task com a qual você pode interagir ---
 por exemplo, para esperar pelo resultado dela ou cancelá-la.
+<!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -988,7 +990,7 @@ Existem três formas principais de isolar dados:
 
 Um actor é um objeto que protege o acesso a dados mutáveis,
 forçando o código a se revezar no acesso a esses dados.
-O actor mais importante na maioria dos programas é o *main actor*.
+O actor mais importante em muitos programas é o *main actor*.
 Em um app,
 o main actor protege todos os dados usados para mostrar a interface.
 O main actor alterna o acesso entre a renderização da interface,
@@ -1110,7 +1112,7 @@ Como `photoNames` afeta a interface,
 o código que a altera precisa rodar no main actor
 para serializar esse acesso.
 
-Quando você está construindo sobre um framework,
+Ao construir sobre um framework,
 os protocolos e classes base desse framework
 normalmente já são marcados com `@MainActor`,
 então você não costuma escrever `@MainActor` nos seus próprios tipos nesse caso.
@@ -1275,11 +1277,11 @@ o logger de temperatura está em um estado temporário inconsistente.
 Impedir que várias tasks interajam com a mesma instância ao mesmo tempo
 evita problemas como a seguinte sequência de eventos:
 
-1. O seu código chama o método `update(with:)`.
+1. Seu código chama o método `update(with:)`.
    Ele atualiza primeiro o array `measurements`.
-2. Antes que o seu código consiga atualizar `max`,
+2. Antes que seu código consiga atualizar `max`,
    outro código lê o valor máximo e o array de temperaturas.
-3. O seu código termina a atualização alterando `max`.
+3. Seu código termina a atualização alterando `max`.
 
 Nesse caso, o código que roda em outro lugar leria informações incorretas,
 porque o acesso dele ao actor foi intercalado
@@ -1341,9 +1343,9 @@ extension TemperatureLogger {
 ```
 
 O código acima converte o array de medições, uma por vez.
-Enquanto a operação de conversão está em andamento,
+Enquanto a operação de mapeamento está em andamento,
 algumas temperaturas estão em Fahrenheit e outras em Celsius.
-No entanto, como nenhum dos códigos contém `await`,
+No entanto, como nenhum trecho do código contém `await`,
 não há pontos de suspensão possíveis nesse método.
 O estado que esse método modifica pertence ao actor,
 que o protege contra código que o leia ou modifique,
@@ -1381,8 +1383,8 @@ como propriedades de instância desse actor.
 No entanto, como `MainActor` é um singleton ---
 existe somente uma instância desse tipo ---
 o tipo sozinho basta para identificar o actor,
-permitindo marcar o isolamento no main actor usando apenas um atributo.
-Essa abordagem dá mais flexibilidade para organizar o seu código
+permitindo marcar o isolamento ao main actor usando apenas um atributo.
+Essa abordagem dá mais flexibilidade para organizar seu código
 da forma que funciona melhor para você.
 
 [`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
@@ -1463,8 +1465,8 @@ Por exemplo, ele pode ser passado como argumento ao chamar um método de actor
 ou ser retornado como resultado de uma task.
 Os exemplos anteriores neste capítulo não discutiram sendability
 porque usam tipos por valor simples,
-que são sempre seguros para compartilhar
-pelos dados passados entre domínios de concorrência.
+que são sempre seguros para compartilhar,
+para os dados passados entre domínios de concorrência.
 Em contraste,
 alguns tipos não são seguros para passar entre domínios de concorrência.
 Por exemplo, uma classe que contém propriedades mutáveis
@@ -1479,13 +1481,13 @@ mas tem requisitos semânticos que o Swift verifica.
 Em geral, há três formas de um tipo ser sendable:
 
 - O tipo é um tipo por valor,
-  e o seu estado mutável é formado por outros dados sendable ---
+  e seu estado mutável é formado por outros dados sendable ---
   por exemplo, uma struct com propriedades armazenadas que são sendable
-  ou um enum com valores associados que são sendable.
+  ou um enum com associated values que são sendable.
 - O tipo não tem nenhum estado mutável,
-  e o seu estado imutável é formado por outros dados sendable ---
+  e seu estado imutável é formado por outros dados sendable ---
   por exemplo, uma struct ou classe que tem apenas propriedades somente leitura.
-- O tipo tem código que garante a segurança do seu estado mutável,
+- O tipo tem código que garante a segurança do estado mutável,
   como uma classe marcada com `@MainActor`
   ou uma classe que serializa o acesso às suas propriedades
   em uma thread ou fila específica.
@@ -1505,7 +1507,7 @@ veja a referência do protocolo [`Sendable`](https://developer.apple.com/documen
 
 Alguns tipos são sempre sendable,
 como structs que têm apenas propriedades sendable
-e enums que têm apenas valores associados sendable.
+e enums que têm apenas associated values sendable.
 Por exemplo:
 
 ```swift

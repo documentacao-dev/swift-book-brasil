@@ -24,7 +24,7 @@ e definir exatamente qual deve ser o comportamento de cada um para cada tipo que
 Você não está limitado aos operadores predefinidos.
 A Swift permite definir seus próprios operadores infixos, prefixos, pós-fixos e de atribuição,
 com valores personalizados de precedência e associatividade.
-Esses operadores podem ser usados e adotados no seu código como qualquer um dos operadores predefinidos,
+Esses operadores podem ser usados e adotados no código como qualquer um dos operadores predefinidos,
 e você pode até estender tipos existentes para que eles aceitem os operadores personalizados que você definir.
 
 ## Operadores bit a bit
@@ -124,7 +124,7 @@ se os bits valerem `1` em *um ou outro* dos números de entrada:
 No exemplo abaixo,
 os valores de `someBits` e `moreBits` têm bits diferentes definidos como `1`.
 O operador OR bit a bit os combina e produz o número `11111110`,
-que equivale ao decimal `254`:
+que equivale ao decimal sem sinal `254`:
 
 ```swift
 let someBits: UInt8 = 0b10110010
@@ -277,7 +277,7 @@ let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
 -->
 
 Este exemplo usa uma constante `UInt32` chamada `pink` para armazenar
-um valor de cor de Cascading Style Sheets (CSS) referente ao rosa.
+um valor de cor de Cascading Style Sheets para a cor rosa.
 O valor de cor CSS `#CC6699` é escrito como
 `0xCC6699` na representação hexadecimal de números da Swift.
 Essa cor é então decomposta em suas
@@ -453,7 +453,7 @@ A variável `unsignedOverflow` é inicializada com o valor máximo que um `UInt8
 (`255`, ou `11111111` em binário).
 Em seguida, ela é incrementada em `1` com o operador de adição com overflow (`&+`).
 Isso empurra sua representação binária um pouco além do tamanho que um `UInt8` consegue armazenar,
-fazendo com que ela transborde para além dos seus limites,
+fazendo com que ela sofra overflow além dos seus limites,
 como mostra o diagrama abaixo.
 O valor que permanece dentro dos limites do `UInt8`
 após a adição com overflow é `00000000`, ou zero.
@@ -577,7 +577,7 @@ poderia esperar que a expressão fosse calculada assim:
 - `5` resto `4` é igual a `1`
 - `1` vezes `5` é igual a `5`
 
-No entanto, a resposta correta é `17`, não `5`.
+No entanto, a resposta real é `17`, não `5`.
 Operadores de maior precedência são avaliados antes dos de menor precedência.
 Na Swift, assim como no C,
 o operador de resto (`%`) e o operador de multiplicação (`*`)
@@ -995,7 +995,7 @@ O exemplo acima define um novo operador prefixo chamado `+++`.
 Esse operador não tem um significado existente na Swift,
 por isso recebe seu próprio significado personalizado abaixo, no contexto específico de
 trabalhar com instâncias de `Vector2D`. Para fins deste exemplo,
-`+++` é tratado como um novo operador de “dobro prefixo”.
+`+++` é tratado como um novo operador prefixo de “duplicação”.
 Ele dobra os valores de `x` e `y` de uma instância de `Vector2D`,
 somando o vetor a si mesmo com o operador de atribuição por adição definido anteriormente.
 Para implementar o operador `+++`,
@@ -1242,7 +1242,7 @@ print(manualDrawing.draw())
 
 Esse código funciona, mas é um pouco desajeitado.
 Os parênteses aninhados depois de `AllCaps` são difíceis de ler.
-A lógica de alternativa para usar "World" quando `name` é `nil`
+A lógica de valor padrão para usar "World" quando `name` é `nil`
 precisa ser feita inline com o operador `??`,
 o que seria difícil com algo mais complexo.
 Se você precisasse incluir instruções switch ou laços `for`
@@ -1291,8 +1291,8 @@ struct DrawingBuilder {
 
 A struct `DrawingBuilder` define três métodos
 que implementam partes da sintaxe de result builder.
-Os métodos `buildBlock(_:)` permitem escrever uma série de linhas em um bloco de código.
-Eles combinam os componentes desse bloco em uma `Line`.
+O método `buildBlock(_:)` permite escrever uma série de linhas em um bloco de código.
+Ele combina os componentes desse bloco em uma `Line`.
 Os métodos `buildEither(first:)` e `buildEither(second:)`
 permitem usar `if`-`else`.
 

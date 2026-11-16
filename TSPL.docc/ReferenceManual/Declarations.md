@@ -2,15 +2,15 @@
 
 Introduza tipos, operadores, variáveis e outros nomes e construções.
 
-Uma *declaração* introduz um novo nome ou construção no seu programa.
+Uma *declaração* introduz um novo nome ou construção no programa.
 Por exemplo, você usa declarações para introduzir funções e métodos,
 para introduzir variáveis e constantes,
-e para definir tipos enumeração, estrutura, classe e protocolo.
+e para definir tipos enum, struct, classe e protocolo.
 Você também pode usar uma declaração para estender o comportamento
-de um tipo nomeado existente e para importar para o seu programa símbolos declarados em outro lugar.
+de um tipo nomeado existente e para importar para o programa símbolos declarados em outro lugar.
 
 Em Swift, a maioria das declarações também são definições, no sentido de que são implementadas
-ou inicializadas no mesmo momento em que são declaradas. Dito isso, como protocolos não
+ou inicializadas no mesmo momento em que são declaradas. Mesmo assim, como protocolos não
 implementam seus membros, a maioria dos membros de protocolos são apenas declarações. Por conveniência
 e porque essa distinção não é tão importante em Swift,
 o termo *declaração* abrange tanto declarações quanto definições.
@@ -133,7 +133,7 @@ import <#module#>.<#submodule#>
 
 ## Declaração de constante
 
-Uma *declaração de constante* introduz um valor nomeado constante no seu programa.
+Uma *declaração de constante* introduz um valor nomeado constante no programa.
 Declarações de constantes são feitas com a palavra-chave `let` e têm a seguinte forma:
 
 ```swift
@@ -143,7 +143,7 @@ let <#constant name#>: <#type#> = <#expression#>
 Uma declaração de constante define uma vinculação imutável entre o *nome da constante*
 e o valor da *expressão* de inicialização;
 depois que o valor de uma constante é definido, ele não pode mais ser alterado.
-Dito isso, se uma constante for inicializada com uma instância de classe,
+Mesmo assim, se uma constante for inicializada com uma instância de classe,
 o objeto em si pode mudar,
 mas a vinculação entre o nome da constante e o objeto ao qual ela se refere não pode.
 
@@ -173,7 +173,7 @@ DI reduces to the halting problem,
 as shown by Rice's theorem.
 -->
 
-Quando uma declaração de constante ocorre no contexto de uma declaração de classe ou estrutura,
+Quando uma declaração de constante ocorre no contexto de uma declaração de classe ou struct,
 ela é considerada uma *propriedade constante*.
 Declarações de constantes não são propriedades computadas e, por isso, não têm getters
 ou setters.
@@ -223,7 +223,7 @@ como descrito em <doc:Types#Type-Inference>.
 
 Para declarar uma propriedade de tipo constante,
 marque a declaração com o modificador de declaração `static`.
-Uma propriedade de tipo constante de uma classe é sempre implicitamente `final`;
+Uma propriedade de tipo constante de uma classe é sempre implicitamente final;
 você não pode marcá-la com o modificador de declaração `class` ou `final`
 para permitir ou proibir a sobrescrita por subclasses.
 Propriedades de tipo são discutidas em <doc:Properties#Type-Properties>.
@@ -257,7 +257,7 @@ veja <doc:TheBasics#Constants-and-Variables> e <doc:Properties#Stored-Properties
 
 ## Declaração de variável
 
-Uma *declaração de variável* introduz um valor nomeado mutável no seu programa
+Uma *declaração de variável* introduz um valor nomeado mutável no programa
 e é feita com a palavra-chave `var`.
 
 Declarações de variáveis têm várias formas, que declaram diferentes tipos
@@ -282,15 +282,15 @@ var <#variable name#>: <#type#> = <#expression#>
 ```
 
 Você define essa forma de declaração de variável no escopo global, no escopo local
-de uma função ou no contexto de uma declaração de classe ou estrutura.
+de uma função ou no contexto de uma declaração de classe ou struct.
 Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
 de uma função, ela é chamada de *variável armazenada*.
-Quando é declarada no contexto de uma declaração de classe ou estrutura,
+Quando é declarada no contexto de uma declaração de classe ou struct,
 ela é chamada de *propriedade de variável armazenada*.
 
 A *expressão* de inicialização não pode estar presente em uma declaração de protocolo,
 mas em todos os outros contextos, a *expressão* de inicialização é opcional.
-Dito isso, se nenhuma *expressão* de inicialização estiver presente,
+Ainda assim, se nenhuma *expressão* de inicialização estiver presente,
 a declaração de variável precisa incluir uma anotação de tipo explícita (`:` *type*).
 
 Assim como nas declarações de constantes,
@@ -320,11 +320,11 @@ var <#variable name#>: <#type#> {
 ```
 
 Você define essa forma de declaração de variável no escopo global, no escopo local
-de uma função ou no contexto de uma declaração de classe, estrutura, enumeração ou extensão.
+de uma função ou no contexto de uma declaração de classe, struct, enum ou extension.
 Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
 de uma função, ela é chamada de *variável computada*.
 Quando é declarada no contexto de uma declaração de classe,
-estrutura ou extensão, ela é chamada de *propriedade computada*.
+struct ou extension, ela é chamada de *propriedade computada*.
 
 O getter é usado para ler o valor,
 e o setter é usado para escrever o valor.
@@ -362,17 +362,17 @@ var <#variable name#>: <#type#> = <#expression#> {
 ```
 
 Você define essa forma de declaração de variável no escopo global, no escopo local
-de uma função ou no contexto de uma declaração de classe ou estrutura.
+de uma função ou no contexto de uma declaração de classe ou struct.
 Quando uma declaração de variável desta forma é feita no escopo global ou no escopo local
 de uma função, os observadores são chamados de *observadores de variáveis armazenadas*.
-Quando é declarada no contexto de uma declaração de classe ou estrutura,
+Quando é declarada no contexto de uma declaração de classe ou struct,
 os observadores são chamados de *observadores de propriedade*.
 
 Você pode adicionar observadores de propriedade a qualquer propriedade armazenada. Você também pode adicionar
 observadores de propriedade a qualquer propriedade herdada (armazenada ou computada) ao sobrescrever
 a propriedade dentro de uma subclasse, como descrito em <doc:Inheritance#Overriding-Property-Observers>.
 
-A *expressão* de inicialização é opcional no contexto de uma declaração de classe ou estrutura,
+A *expressão* de inicialização é opcional no contexto de uma declaração de classe ou struct,
 mas obrigatória nos demais casos. A anotação de *tipo* é opcional
 quando o tipo pode ser inferido a partir da *expressão* de inicialização.
 Essa expressão é avaliada na primeira vez que você lê o valor da propriedade.
@@ -410,7 +410,7 @@ ser definido. O novo valor é passado ao observador `willSet` como uma constante
 por isso ele não pode ser alterado na implementação da cláusula `willSet`.
 O observador `didSet` é chamado imediatamente depois que o novo valor é definido. Diferentemente
 do observador `willSet`, o valor antigo da variável ou propriedade
-é passado ao observador `didSet`, caso você ainda precise acessá-lo. Dito isso,
+é passado ao observador `didSet`, caso você ainda precise acessá-lo. Mesmo assim,
 se você atribuir um valor a uma variável ou propriedade dentro da própria cláusula `didSet`,
 esse novo valor substituirá o que acabou de ser definido e foi passado ao
 observador `willSet`.
@@ -534,7 +534,7 @@ veja <doc:Properties#Property-Observers>.
 
 Para declarar uma propriedade variável de tipo,
 marque a declaração com o modificador de declaração `static`.
-Classes podem marcar propriedades computadas de tipo com o modificador de declaração `class`
+Classes podem, em vez disso, marcar propriedades computadas de tipo com o modificador de declaração `class`
 para permitir que subclasses sobrescrevam a implementação da superclasse.
 Propriedades de tipo são discutidas em <doc:Properties#Type-Properties>.
 
@@ -574,7 +574,7 @@ Propriedades de tipo são discutidas em <doc:Properties#Type-Properties>.
 
 ## Declaração de alias de tipo
 
-Uma *declaração de alias de tipo* introduz um alias nomeado para um tipo existente no seu programa.
+Uma *declaração de alias de tipo* introduz um alias nomeado para um tipo existente no programa.
 Declarações de alias de tipo são feitas com a palavra-chave `typealias` e têm a seguinte forma:
 
 ```swift
@@ -582,7 +582,7 @@ typealias <#name#> = <#existing type#>
 ```
 
 Depois que um alias de tipo é declarado, o *nome* do alias pode ser usado
-no lugar do *tipo existente* em qualquer parte do seu programa.
+no lugar do *tipo existente* em qualquer parte do programa.
 O *tipo existente* pode ser um tipo nomeado ou um tipo composto.
 Aliases de tipo não criam novos tipos;
 eles apenas permitem que um nome se refira a um tipo existente.
@@ -718,8 +718,8 @@ Veja também <doc:Declarations#Protocol-Associated-Type-Declaration>.
 
 ## Declaração de função
 
-Uma *declaração de função* introduz uma função ou método no seu programa.
-Uma função declarada no contexto de uma classe, estrutura, enumeração ou protocolo
+Uma *declaração de função* introduz uma função ou método no programa.
+Uma função declarada no contexto de uma classe, struct, enum ou protocolo
 é chamada de *método*.
 Declarações de função são feitas com a palavra-chave `func` e têm a seguinte forma:
 
@@ -747,11 +747,11 @@ em <doc:Declarations#In-Out-Parameters>, mais abaixo.
 
 Uma declaração de função cujas *instruções*
 incluem apenas uma única expressão
-é entendida como retornando o valor dessa expressão.
-Essa sintaxe de retorno implícito é considerada
+retorna implicitamente o valor dessa expressão.
+Essa sintaxe de retorno implícito só vale
 somente quando o tipo da expressão e o tipo de retorno da função
 não são `Void`
-e não são uma enumeração como `Never` que não tem nenhum caso.
+e não são um enum como `Never` que não tem nenhum caso.
 
 <!--
   As of Swift 5.3,
@@ -769,11 +769,11 @@ como tipo de retorno da função.
 A definição de uma função pode aparecer dentro de outra declaração de função.
 Esse tipo de função é conhecido como *função aninhada*.
 
-Uma função aninhada é não escapante se capturar
+Uma função aninhada é nonescaping se capturar
 um valor que é garantido nunca escapar,
 como um parâmetro in-out,
-ou se for passada como argumento de função não escapante.
-Caso contrário, a função aninhada é uma função escapante.
+ou se for passada como argumento de função nonescaping.
+Caso contrário, a função aninhada é uma função escaping.
 
 Para uma discussão sobre funções aninhadas,
 veja <doc:Functions#Nested-Functions>.
@@ -959,7 +959,7 @@ veja <doc:MemorySafety>.
 -->
 
 Um closure ou uma função aninhada
-que captura um parâmetro in-out deve ser não escapante.
+que captura um parâmetro in-out deve ser nonescaping.
 Se você precisar capturar um parâmetro in-out
 sem modificá-lo,
 use uma lista de captura para capturar explicitamente o parâmetro de forma imutável.
@@ -1116,7 +1116,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 
 Por outro lado,
 o modificador de parâmetro `consuming` indica
-que a função assume a posse do valor,
+que a função toma a posse do valor,
 assumindo a responsabilidade de armazená-lo ou destruí-lo
 antes de a função retornar.
 
@@ -1287,7 +1287,7 @@ f(7)      // Invalid, missing argument label
 
 ### Tipos especiais de métodos
 
-Métodos de uma enumeração ou de uma estrutura
+Métodos de um enum ou de uma struct
 que modificam `self` devem ser marcados com o modificador de declaração `mutating`.
 
 Métodos que sobrescrevem um método da superclasse
@@ -1298,7 +1298,7 @@ que não sobrescreve um método da superclasse.
 
 Métodos associados a um tipo,
 e não a uma instância do tipo,
-devem ser marcados com o modificador de declaração `static` em enumerações e estruturas,
+devem ser marcados com o modificador de declaração `static` em enums e structs,
 ou com `static` ou `class` em classes.
 Um método de tipo de classe marcado com o modificador de declaração `class`
 pode ser sobrescrito pela implementação de uma subclasse;
@@ -1347,7 +1347,7 @@ instâncias do tipo podem ser usadas na sintaxe de chamada de função.
 A chamada de função é entendida como uma chamada
 a um dos métodos com nome especial nessa instância.
 
-Uma classe, estrutura ou tipo enumeração
+Uma classe, struct ou tipo enum
 pode oferecer suporte à sintaxe de chamada de função
 definindo um método `dynamicallyCall(withArguments:)`
 ou um método `dynamicallyCall(withKeywordArguments:)`,
@@ -1408,7 +1408,7 @@ callable.callAsFunction(4, scale: 2)
 
 Os métodos call-as-function
 e os métodos do atributo `dynamicCallable`
-fazem trocas diferentes entre
+adotam compromissos diferentes entre
 quanta informação você codifica no sistema de tipos
 e quanto comportamento dinâmico é possível em tempo de execução.
 Ao declarar um método call-as-function,
@@ -1472,7 +1472,7 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 }
 ```
 
-Chamadas a uma função ou método que lança erros devem ser envolvidas em uma expressão `try` ou `try!`
+Chamadas a uma função ou método que lança erros devem estar dentro de uma expressão `try` ou `try!`
 (isto é, no escopo de um operador `try` ou `try!`).
 
 O tipo de uma função inclui se ela pode lançar um erro
@@ -1485,12 +1485,12 @@ Para exemplos de trabalho com erros que têm tipo explícito,
 veja <doc:ErrorHandling#Specifying-the-Error-Type>.
 
 Você não pode sobrecarregar uma função apenas com base em se ela pode lançar um erro.
-Dito isso,
+Mesmo assim,
 você pode sobrecarregar uma função com base em se um *parâmetro* da função pode lançar um erro.
 
 Um método que lança erros não pode sobrescrever um método que não lança erros,
 e um método que lança erros não pode satisfazer um requisito de protocolo para um método que não lança erros.
-Dito isso, um método que não lança erros pode sobrescrever um método que lança erros,
+Mesmo assim, um método que não lança erros pode sobrescrever um método que lança erros,
 e um método que não lança erros pode satisfazer um requisito de protocolo para um método que lança erros.
 
 ### Funções e métodos com rethrows
@@ -1590,7 +1590,7 @@ func someFunction(callback: () throws -> Void) rethrows {
 
 Um método que lança erros não pode sobrescrever um método com rethrows,
 e um método que lança erros não pode satisfazer um requisito de protocolo para um método com rethrows.
-Dito isso, um método com rethrows pode sobrescrever um método que lança erros,
+Mesmo assim, um método com rethrows pode sobrescrever um método que lança erros,
 e um método com rethrows pode satisfazer um requisito de protocolo para um método que lança erros.
 
 Uma alternativa a rethrows é lançar um tipo de erro específico em código genérico.
@@ -1629,7 +1629,7 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 ```
 
 Chamadas a uma função ou método assíncrono
-devem ser envolvidas em uma expressão `await`,
+devem estar dentro de uma expressão `await`,
 isto é, precisam estar no escopo de um operador `await`.
 
 A palavra-chave `async` faz parte do tipo da função,
@@ -1648,7 +1648,7 @@ e em um contexto síncrono, a função síncrona é usada.
 
 Um método assíncrono não pode sobrescrever um método síncrono,
 e um método assíncrono não pode satisfazer um requisito de protocolo para um método síncrono.
-Dito isso, um método síncrono pode sobrescrever um método assíncrono,
+Mesmo assim, um método síncrono pode sobrescrever um método assíncrono,
 e um método síncrono pode satisfazer um requisito de protocolo para um método assíncrono.
 
 <!--
@@ -1669,13 +1669,13 @@ e um método síncrono pode satisfazer um requisito de protocolo para um método
 
 O Swift define um tipo [`Never`][],
 que indica que uma função ou método não retorna para quem o chamou.
-Funções e métodos com tipo de retorno `Never` são chamados de *não retornantes*.
-Funções e métodos não retornantes ou causam um erro irrecuperável
+Funções e métodos com tipo de retorno `Never` são chamados de *funções que nunca retornam*.
+Funções e métodos que nunca retornam ou causam um erro irrecuperável
 ou iniciam uma sequência de trabalho que continua indefinidamente.
 Isso significa que
 o código que, de outra forma, rodaria logo após a chamada nunca é executado.
 Funções que lançam erros e funções com rethrows podem transferir o controle do programa
-para um bloco `catch` apropriado, mesmo quando são não retornantes.
+para um bloco `catch` apropriado, mesmo quando nunca retornam.
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
@@ -1718,41 +1718,41 @@ mas o novo método deve preservar o tipo de retorno e o comportamento não retor
   which is a definition and declaration corner case.
   Let's just deal with this difference in prose.
 -->
-## Declaração de enumeração
+## Declaração de enum
 
-Uma *declaração de enumeração* introduz um tipo enumeração com nome no seu programa.
+Uma *declaração de enum* introduz um tipo enum com nome no programa.
 
-As declarações de enumeração têm duas formas básicas e são declaradas com a palavra-chave `enum`.
-O corpo de uma enumeração declarada em qualquer uma dessas formas contém
-zero ou mais valores --- chamados *casos de enumeração* ---
+As declarações de enum têm duas formas básicas e são declaradas com a palavra-chave `enum`.
+O corpo de um enum declarada em qualquer uma dessas formas contém
+zero ou mais valores --- chamados *casos de enum* ---
 e qualquer quantidade de declarações,
 incluindo propriedades computadas,
 métodos de instância, métodos de tipo, inicializadores, aliases de tipo,
-e até outras declarações de enumeração, estrutura, classe e actor.
-Declarações de enumeração não podem conter declarações de desinicializador ou de protocolo.
+e até outras declarações de enum, struct, classe e actor.
+Declarações de enum não podem conter declarações de desinicializador ou de protocolo.
 
-Tipos enumeração podem adotar qualquer número de protocolos, mas não podem herdar de classes,
-estruturas ou de outras enumerações.
+Tipos enum podem adotar qualquer número de protocolos, mas não podem herdar de classes,
+structs ou de outros enums.
 
-Diferentemente de classes e estruturas,
-tipos enumeração não têm um inicializador padrão fornecido implicitamente;
+Diferentemente de classes e structs,
+tipos enum não têm um inicializador padrão fornecido implicitamente;
 todos os inicializadores precisam ser declarados explicitamente. Inicializadores podem delegar
-para outros inicializadores da enumeração, mas o processo de inicialização só é concluído
-depois que um inicializador atribui um dos casos da enumeração a `self`.
+para outros inicializadores do enum, mas o processo de inicialização só é concluído
+depois que um inicializador atribui um dos casos do enum a `self`.
 
-Assim como estruturas, mas diferentemente de classes, enumerações são tipos de valor;
-instâncias de uma enumeração são copiadas quando atribuídas a
+Assim como structs, mas diferentemente de classes, enums são tipos de valor;
+instâncias de um enum são copiadas quando atribuídas a
 variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
 Para informações sobre tipos de valor,
 veja <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 
-Você pode estender o comportamento de um tipo enumeração com uma declaração de extensão,
+Você pode estender o comportamento de um tipo enum com uma declaração de extension,
 como discutido em <doc:Declarations#Extension-Declaration>.
 
-### Enumerações com casos de qualquer tipo
+### Enums com casos de qualquer tipo
 
-A forma a seguir declara um tipo enumeração que contém
-casos de enumeração de qualquer tipo:
+A forma a seguir declara um tipo enum que contém
+casos de enum de qualquer tipo:
 
 ```swift
 enum <#enumeration name#>: <#adopted protocols#> {
@@ -1761,19 +1761,19 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-Enumerações declaradas nessa forma às vezes são chamadas de *uniões discriminadas*
+Enums declaradas nessa forma às vezes são chamadas de *uniões discriminadas*
 em outras linguagens de programação.
 
 Nessa forma, cada bloco de casos consiste na palavra-chave `case`
-seguida de um ou mais casos de enumeração, separados por vírgulas.
+seguida de um ou mais casos de enum, separados por vírgulas.
 O nome de cada caso precisa ser único.
 Cada caso também pode especificar que armazena valores de um determinado tipo.
-Esses tipos são especificados na tupla de *tipos de valores associados*,
+Esses tipos são especificados na tupla de *tipos de associated values*,
 logo após o nome do caso.
 
-Casos de enumeração que armazenam valores associados podem ser usados como funções
-que criam instâncias da enumeração com os valores associados especificados.
-Assim como funções, você pode obter uma referência a um caso de enumeração
+Casos de enum que armazenam associated values podem ser usados como funções
+que criam instâncias do enum com os associated values especificados.
+Assim como funções, você pode obter uma referência a um caso de enum
 e aplicá-la depois no seu código.
 
 ```swift
@@ -1811,22 +1811,22 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
   and assert() would require Number to conform to Equatable.
 -->
 
-Para mais informações e para ver exemplos de casos com tipos de valores associados,
+Para mais informações e para ver exemplos de casos com tipos de associated values,
 veja <doc:Enumerations#Associated-Values>.
 
-#### Enumerações com indireção
+#### Enums com indireção
 
-Enumerações podem ter uma estrutura recursiva,
-ou seja, podem ter casos com valores associados
-que são instâncias do próprio tipo enumeração.
-No entanto, instâncias de tipos enumeração têm semântica de valor,
+Enums podem ter uma estrutura recursiva,
+ou seja, podem ter casos com associated values
+que são instâncias do próprio tipo enum.
+No entanto, instâncias de tipos enum têm semântica de valor,
 o que significa que têm um layout fixo na memória.
 Para dar suporte à recursão,
 o compilador precisa inserir uma camada de indireção.
 
-Para habilitar a indireção para um caso específico de enumeração,
+Para habilitar a indireção para um caso específico de enum,
 marque-o com o modificador de declaração `indirect`.
-Um caso indireto precisa ter um valor associado.
+Um caso indireto precisa ter um associated value.
 
 <!--
   TODO The word "enable" is kind of a weasel word.
@@ -1856,15 +1856,15 @@ enum Tree<T> {
   ```
 -->
 
-Para habilitar a indireção para todos os casos de uma enumeração
-que têm um valor associado,
-marque a enumeração inteira com o modificador `indirect` ---
-isso é prático quando a enumeração contém muitos casos
+Para habilitar a indireção para todos os casos de um enum
+que têm um associated value,
+marque o enum inteira com o modificador `indirect` ---
+isso é prático quando o enum contém muitos casos
 que precisariam, cada um, ser marcado com o modificador `indirect`.
 
-Uma enumeração marcada com o modificador `indirect` pode conter uma mistura de casos
-que têm valores associados e casos que não têm.
-Dito isso, ela não pode conter casos que também estejam marcados com o modificador `indirect`.
+Um enum marcada com o modificador `indirect` pode conter uma mistura de casos
+que têm associated values e casos que não têm.
+Mesmo assim, ela não pode conter casos que também estejam marcados com o modificador `indirect`.
 
 <!--
   It really should be an associated value **that includes the enum type**
@@ -1895,10 +1895,10 @@ Dito isso, ela não pode conter casos que também estejam marcados com o modific
   -> indirect enum E3 { case x }
 -->
 
-### Enumerações com casos de um tipo de raw value
+### Enums com casos de um tipo de raw value
 
-A forma a seguir declara um tipo enumeração que contém
-casos de enumeração do mesmo tipo básico:
+A forma a seguir declara um tipo enum que contém
+casos de enum do mesmo tipo básico:
 
 ```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
@@ -1908,7 +1908,7 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 ```
 
 Nessa forma, cada bloco de casos consiste na palavra-chave `case`,
-seguida de um ou mais casos de enumeração, separados por vírgulas.
+seguida de um ou mais casos de enum, separados por vírgulas.
 Diferentemente dos casos da primeira forma, cada caso tem um valor subjacente,
 chamado *raw value*, do mesmo tipo básico.
 O tipo desses valores é especificado no *tipo de raw value* e precisa representar
@@ -1979,29 +1979,29 @@ No exemplo acima, o raw value de `GamePlayMode.cooperative` é `"cooperative"`,
 o raw value de `GamePlayMode.individual` é `"individual"`,
 e o raw value de `GamePlayMode.competitive` é `"competitive"`.
 
-Enumerações que têm casos de um tipo de raw value implicitamente estão em conformidade com
+Enums que têm casos de um tipo de raw value implicitamente estão em conformidade com
 o protocolo `RawRepresentable`, definido na biblioteca padrão do Swift.
 Como resultado, elas têm uma propriedade `rawValue`
 e um inicializador falível com a assinatura `init?(rawValue: RawValue)`.
-Você pode usar a propriedade `rawValue` para acessar o raw value de um caso de enumeração,
+Você pode usar a propriedade `rawValue` para acessar o raw value de um caso de enum,
 como em `ExampleEnum.b.rawValue`.
 Você também pode usar um raw value para encontrar o caso correspondente, se houver,
-chamando o inicializador falível da enumeração,
-como em `ExampleEnum(rawValue: 5)`, que retorna um caso opcional.
+chamando o inicializador falível do enum,
+como em `ExampleEnum(rawValue: 5)`, que retorna um caso optional.
 Para mais informações e para ver exemplos de casos com tipos de raw value,
 veja <doc:Enumerations#Raw-Values>.
 
-### Acessando casos de enumeração
+### Como acessar casos de enum
 
-Para referenciar um caso de um tipo enumeração, use a sintaxe de ponto (`.`),
-como em `EnumerationType.enumerationCase`. Quando o tipo enumeração puder ser inferido
+Para referenciar um caso de um tipo enum, use a sintaxe de ponto (`.`),
+como em `EnumerationType.enumerationCase`. Quando o tipo enum puder ser inferido
 pelo contexto, você pode omiti-lo (o ponto continua obrigatório),
 como descrito em <doc:Enumerations#Enumeration-Syntax>
 e <doc:Expressions#Implicit-Member-Expression>.
 
-Para verificar os valores de casos de enumeração, use uma instrução `switch`,
+Para verificar os valores de casos de enum, use uma instrução `switch`,
 como mostrado em <doc:Enumerations#Matching-Enumeration-Values-with-a-Switch-Statement>.
-O tipo enumeração é comparado com os padrões de caso de enumeração
+O tipo enum é comparado com os padrões de caso de enum
 nos blocos `case` da instrução `switch`,
 como descrito em <doc:Patterns#Enumeration-Case-Pattern>.
 
@@ -2028,7 +2028,7 @@ como descrito em <doc:Patterns#Enumeration-Case-Pattern>.
   We removed it from our grammar, below.
 -->
 
-> Gramática de uma declaração de enumeração:
+> Gramática de uma declaração de enum:
 >
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
 > *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
@@ -2065,10 +2065,10 @@ como descrito em <doc:Patterns#Enumeration-Case-Pattern>.
   and they behave differently.
 -->
 
-## Declaração de estrutura
+## Declaração de struct
 
-Uma *declaração de estrutura* introduz um tipo estrutura com nome no seu programa.
-Declarações de estrutura são feitas com a palavra-chave `struct` e têm a seguinte forma:
+Uma *declaração de struct* introduz um tipo struct com nome no programa.
+Declarações de struct são feitas com a palavra-chave `struct` e têm a seguinte forma:
 
 ```swift
 struct <#structure name#>: <#adopted protocols#> {
@@ -2076,45 +2076,45 @@ struct <#structure name#>: <#adopted protocols#> {
 }
 ```
 
-O corpo de uma estrutura contém zero ou mais *declarações*.
+O corpo de uma struct contém zero ou mais *declarações*.
 Essas *declarações* podem incluir propriedades armazenadas e computadas,
 propriedades de tipo, métodos de instância, métodos de tipo, inicializadores, subscripts,
-aliases de tipo, e até outras declarações de estrutura, classe, actor e enumeração.
-Declarações de estrutura não podem conter declarações de desinicializador ou de protocolo.
-Para uma discussão e vários exemplos de estruturas
+aliases de tipo, e até outras declarações de struct, classe, actor e enum.
+Declarações de struct não podem conter declarações de desinicializador ou de protocolo.
+Para uma discussão e vários exemplos de structs
 que incluem vários tipos de declarações,
 veja <doc:ClassesAndStructures>.
 
-Tipos estrutura podem adotar qualquer número de protocolos,
-mas não podem herdar de classes, enumerações ou de outras estruturas.
+Tipos struct podem adotar qualquer número de protocolos,
+mas não podem herdar de classes, enums ou de outras structs.
 
-Há três maneiras de criar uma instância de uma estrutura declarada anteriormente:
+Há três maneiras de criar uma instância de uma struct declarada anteriormente:
 
-- Chamar um dos inicializadores declarados dentro da estrutura,
+- Chamar um dos inicializadores declarados dentro da struct,
   como descrito em <doc:Initialization#Initializers>.
 - Se nenhum inicializador for declarado,
-  chamar o inicializador memberwise da estrutura,
+  chamar o inicializador memberwise da struct,
   como descrito em <doc:Initialization#Memberwise-Initializers-for-Structure-Types>.
 - Se nenhum inicializador for declarado,
-  e todas as propriedades da declaração de estrutura receberam valores iniciais,
-  chamar o inicializador padrão da estrutura,
+  e todas as propriedades da declaração de struct receberam valores iniciais,
+  chamar o inicializador padrão da struct,
   como descrito em <doc:Initialization#Default-Initializers>.
 
-O processo de inicialização das propriedades declaradas de uma estrutura
+O processo de inicialização das propriedades declaradas de uma struct
 é descrito em <doc:Initialization>.
 
-Propriedades de uma instância de estrutura podem ser acessadas usando a sintaxe de ponto (`.`),
+Propriedades de uma instância de struct podem ser acessadas usando a sintaxe de ponto (`.`),
 como descrito em <doc:ClassesAndStructures#Accessing-Properties>.
 
-Estruturas são tipos de valor; instâncias de uma estrutura são copiadas quando atribuídas a
+Structs são tipos de valor; instâncias de uma struct são copiadas quando atribuídas a
 variáveis ou constantes, ou quando passadas como argumentos em uma chamada de função.
 Para informações sobre tipos de valor,
 veja <doc:ClassesAndStructures#Structures-and-Enumerations-Are-Value-Types>.
 
-Você pode estender o comportamento de um tipo estrutura com uma declaração de extensão,
+Você pode estender o comportamento de um tipo struct com uma declaração de extension,
 como discutido em <doc:Declarations#Extension-Declaration>.
 
-> Gramática de uma declaração de estrutura:
+> Gramática de uma declaração de struct:
 >
 > *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
 > *struct-name* → *identifier* \
@@ -2125,7 +2125,7 @@ como discutido em <doc:Declarations#Extension-Declaration>.
 
 ## Declaração de classe
 
-Uma *declaração de classe* introduz um tipo classe com nome no seu programa.
+Uma *declaração de classe* introduz um tipo classe com nome no programa.
 Declarações de classe são feitas com a palavra-chave `class` e têm a seguinte forma:
 
 ```swift
@@ -2138,7 +2138,7 @@ O corpo de uma classe contém zero ou mais *declarações*.
 Essas *declarações* podem incluir propriedades armazenadas e computadas,
 métodos de instância, métodos de tipo, inicializadores,
 um único desinicializador, subscripts, aliases de tipo,
-e até outras declarações de classe, estrutura, actor e enumeração.
+e até outras declarações de classe, struct, actor e enum.
 Declarações de classe não podem conter declarações de protocolo.
 Para uma discussão e vários exemplos de classes
 que incluem vários tipos de declarações,
@@ -2157,9 +2157,9 @@ incluindo a cláusula de parâmetros genéricos.
 Como discutido em <doc:Declarations#Initializer-Declaration>,
 classes podem ter inicializadores designados e de conveniência.
 O inicializador designado de uma classe precisa inicializar todas as propriedades declaradas da classe,
-e precisa fazê-lo antes de chamar qualquer inicializador designado da sua superclasse.
+e precisa fazê-lo antes de chamar qualquer inicializador designado da superclasse.
 
-Uma classe pode sobrescrever propriedades, métodos, subscripts e inicializadores da sua superclasse.
+Uma classe pode sobrescrever propriedades, métodos, subscripts e inicializadores da superclasse.
 Propriedades, métodos, subscripts e inicializadores designados sobrescritos
 precisam ser marcados com o modificador de declaração `override`.
 
@@ -2200,7 +2200,7 @@ quando atribuídas a variáveis ou constantes, ou quando passadas como argumento
 Para informações sobre tipos de referência,
 veja <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-Você pode estender o comportamento de um tipo classe com uma declaração de extensão,
+Você pode estender o comportamento de um tipo classe com uma declaração de extension,
 como discutido em <doc:Declarations#Extension-Declaration>.
 
 > Gramática de uma declaração de classe:
@@ -2215,7 +2215,7 @@ como discutido em <doc:Declarations#Extension-Declaration>.
 
 ## Declaração de actor
 
-Uma *declaração de actor* introduz um tipo actor com nome no seu programa.
+Uma *declaração de actor* introduz um tipo actor com nome no programa.
 Declarações de actor são feitas com a palavra-chave `actor` e têm a seguinte forma:
 
 ```swift
@@ -2228,13 +2228,13 @@ O corpo de um actor contém zero ou mais *declarações*.
 Essas *declarações* podem incluir propriedades armazenadas e computadas,
 métodos de instância, métodos de tipo, inicializadores,
 um único desinicializador, subscripts, aliases de tipo,
-e até outras declarações de classe, estrutura e enumeração.
+e até outras declarações de classe, struct e enum.
 Para uma discussão e vários exemplos de actors
 que incluem vários tipos de declarações,
 veja <doc:Concurrency#Actors>.
 
 Tipos actor podem adotar qualquer número de protocolos,
-mas não podem herdar de classes, enumerações, estruturas ou de outros actors.
+mas não podem herdar de classes, enums, structs ou de outros actors.
 No entanto, um actor marcado com o atributo `@objc` implicitamente está em conformidade
 com o protocolo `NSObjectProtocol` e é exposto ao tempo de execução (runtime)
 do Objective-C como um subtipo de `NSObject`.
@@ -2262,7 +2262,7 @@ Actors também podem ter membros não isolados, cujas declarações são marcada
 com a palavra-chave `nonisolated`.
 Um membro não isolado é executado como código fora do actor:
 ele não pode interagir com nenhum estado isolado do actor,
-e quem o usa não o marca com `await`.
+e quem o chama não o marca com `await`.
 
 Membros de um actor só podem ser marcados com o atributo `@objc`
 se forem não isolados ou assíncronos.
@@ -2278,7 +2278,7 @@ quando atribuídas a variáveis ou constantes, ou quando passadas como argumento
 Para informações sobre tipos de referência,
 veja <doc:ClassesAndStructures#Classes-Are-Reference-Types>.
 
-Você pode estender o comportamento de um tipo actor com uma declaração de extensão,
+Você pode estender o comportamento de um tipo actor com uma declaração de extension,
 como discutido em <doc:Declarations#Extension-Declaration>.
 
 <!--
@@ -2299,7 +2299,7 @@ como discutido em <doc:Declarations#Extension-Declaration>.
 > *actor-member* → *declaration* | *compiler-control-statement*
 ## Declaração de protocolo
 
-Uma *declaração de protocolo* introduz um tipo protocolo nomeado no seu programa.
+Uma *declaração de protocolo* introduz um tipo protocolo nomeado no programa.
 Declarações de protocolo são feitas com a palavra-chave `protocol` e têm a seguinte forma:
 
 ```swift
@@ -2314,12 +2314,12 @@ ou aninhadas dentro de um tipo não genérico ou de uma função não genérica.
 O corpo de um protocolo contém zero ou mais *declarações de membros do protocolo*,
 que descrevem os requisitos de conformidade que qualquer tipo que adote o protocolo precisa cumprir.
 Em particular, um protocolo pode declarar que os tipos em conformidade devem
-implementar certas propriedades, métodos, inicializadores e subscritos.
+implementar certas propriedades, métodos, inicializadores e subscripts.
 Protocolos também podem declarar tipos especiais de alias,
 chamados *tipos associados*, que podem especificar relações
 entre as várias declarações do protocolo.
 Declarações de protocolo não podem conter
-declarações de classe, estrutura, enumeração ou de outros protocolos.
+declarações de classe, struct, enum ou de outros protocolos.
 As *declarações de membros do protocolo* são discutidas em detalhes abaixo.
 
 Tipos protocolo podem herdar de qualquer número de outros protocolos.
@@ -2335,13 +2335,13 @@ veja <doc:Protocols#Protocol-Inheritance>.
 > e <doc:Protocols#Protocol-Composition>.
 
 Você pode adicionar conformidade com um protocolo a um tipo já declarado
-adotando o protocolo em uma declaração de extensão desse tipo.
-Na extensão, você precisa implementar todos os requisitos do protocolo adotado.
-Se o tipo já implementa todos os requisitos, você pode deixar o corpo da declaração de extensão vazio.
+adotando o protocolo em uma declaração de extension desse tipo.
+Na extension, você precisa implementar todos os requisitos do protocolo adotado.
+Se o tipo já implementa todos os requisitos, você pode deixar o corpo da declaração de extension vazio.
 
 Por padrão, tipos que estão em conformidade com um protocolo precisam implementar todas as
-propriedades, métodos e subscritos declarados no protocolo.
-Dito isso, você pode marcar essas declarações de membros do protocolo com o modificador de declaração `optional`
+propriedades, métodos e subscripts declarados no protocolo.
+Mesmo assim, você pode marcar essas declarações de membros do protocolo com o modificador de declaração `optional`
 para especificar que a implementação delas pelo tipo em conformidade é opcional.
 O modificador `optional` só pode ser aplicado
 a membros marcados com o atributo `objc`, e somente a membros de protocolos marcados
@@ -2360,16 +2360,16 @@ veja <doc:Protocols#Optional-Protocol-Requirements>.
   properly for optional initializer requirements.
 -->
 
-Os casos de uma enumeração podem satisfazer
+Os casos de um enum podem satisfazer
 requisitos de protocolo para membros de tipo.
 Especificamente,
-um caso de enumeração sem valores associados
+um caso de enum sem associated values
 satisfaz um requisito de protocolo para
 uma variável de tipo somente leitura do tipo `Self`,
-e um caso de enumeração com valores associados
+e um caso de enum com associated values
 satisfaz um requisito de protocolo para uma função que retorna `Self`
 cujos parâmetros e rótulos de argumento
-correspondem aos valores associados do caso.
+correspondem aos associated values do caso.
 Por exemplo:
 
 ```swift
@@ -2449,13 +2449,13 @@ protocol SomeRefinedProtocol: SomeBaseClass {
 -->
 
 Protocolos são tipos nomeados e, por isso, podem aparecer nos mesmos lugares
-do seu código que outros tipos nomeados, como descrito em <doc:Protocols#Protocols-as-Types>.
+do código que outros tipos nomeados, como descrito em <doc:Protocols#Protocols-as-Types>.
 Porém,
 você não pode criar uma instância de um protocolo,
 porque protocolos não fornecem as implementações dos requisitos
 que especificam.
 
-Você pode usar protocolos para declarar quais métodos um delegado de uma classe ou estrutura
+Você pode usar protocolos para declarar quais métodos um delegado de uma classe ou struct
 deve implementar, como descrito em <doc:Protocols#Delegation>.
 
 > Gramática de uma declaração de protocolo:
@@ -2488,12 +2488,12 @@ var <#property name#>: <#type#> { get set }
 Assim como outras declarações de membros do protocolo, essas declarações de propriedade
 declaram apenas os requisitos de getter e setter para os tipos
 que estão em conformidade com o protocolo. Por isso, você não implementa o getter ou o setter
-diretamente no protocolo em que ela é declarada.
+diretamente no protocolo em que a propriedade é declarada.
 
 Os requisitos de getter e setter podem ser satisfeitos por um tipo em conformidade de várias maneiras.
 Se uma declaração de propriedade incluir as palavras-chave `get` e `set`,
 um tipo em conformidade pode implementá-la com uma propriedade armazenada de variável ou
-com uma propriedade computada que seja legível e gravável (isto é, que implemente tanto um getter quanto um setter). Dito isso,
+com uma propriedade computada que seja legível e gravável (isto é, que implemente tanto um getter quanto um setter). Porém,
 essa declaração de propriedade não pode ser implementada como uma propriedade constante
 ou como uma propriedade computada somente leitura. Se a declaração de propriedade incluir
 apenas a palavra-chave `get`, ela pode ser implementada com qualquer tipo de propriedade.
@@ -2502,13 +2502,13 @@ veja <doc:Protocols#Property-Requirements>.
 
 Para declarar um requisito de propriedade de tipo em uma declaração de protocolo,
 marque a declaração da propriedade com a palavra-chave `static`.
-Estruturas e enumerações que estão em conformidade com o protocolo
+Structs e enums que estão em conformidade com o protocolo
 declaram a propriedade com a palavra-chave `static`,
 e classes que estão em conformidade com o protocolo
 declaram a propriedade com a palavra-chave `static` ou `class`.
-Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+Extensions que adicionam conformidade com um protocolo a uma struct, enum ou classe
 usam a mesma palavra-chave que o tipo que elas estendem usa.
-Extensões que fornecem uma implementação padrão para um requisito de propriedade de tipo
+Extensions que fornecem uma implementação padrão para um requisito de propriedade de tipo
 usam a palavra-chave `static`.
 
 <!--
@@ -2563,13 +2563,13 @@ veja <doc:Protocols#Method-Requirements>.
 
 Para declarar um requisito de método de classe ou estático em uma declaração de protocolo,
 marque a declaração do método com o modificador de declaração `static`.
-Estruturas e enumerações que estão em conformidade com o protocolo
+Structs e enums que estão em conformidade com o protocolo
 declaram o método com a palavra-chave `static`,
 e classes que estão em conformidade com o protocolo
 declaram o método com a palavra-chave `static` ou `class`.
-Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+Extensions que adicionam conformidade com um protocolo a uma struct, enum ou classe
 usam a mesma palavra-chave que o tipo que elas estendem usa.
-Extensões que fornecem uma implementação padrão para um requisito de método de tipo
+Extensions que fornecem uma implementação padrão para um requisito de método de tipo
 usam a palavra-chave `static`.
 
 Veja também <doc:Declarations#Function-Declaration>.
@@ -2605,38 +2605,38 @@ Veja também <doc:Declarations#Initializer-Declaration>.
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
 > *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
-### Declaração de subscrito de protocolo
+### Declaração de subscript de protocolo
 
-Protocolos declaram que os tipos em conformidade devem implementar um subscrito
-incluindo uma declaração de subscrito de protocolo no corpo da declaração do protocolo.
-Declarações de subscrito de protocolo têm uma forma especial de declaração de subscrito:
+Protocolos declaram que os tipos em conformidade devem implementar um subscript
+incluindo uma declaração de subscript de protocolo no corpo da declaração do protocolo.
+Declarações de subscript de protocolo têm uma forma especial de declaração de subscript:
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-Declarações de subscrito declaram apenas os requisitos mínimos de implementação de getter e setter
+Declarações de subscript declaram apenas os requisitos mínimos de implementação de getter e setter
 para os tipos que estão em conformidade com o protocolo.
-Se a declaração de subscrito incluir as palavras-chave `get` e `set`,
+Se a declaração de subscript incluir as palavras-chave `get` e `set`,
 um tipo em conformidade precisa implementar tanto a cláusula getter quanto a cláusula setter.
-Se a declaração de subscrito incluir apenas a palavra-chave `get`,
+Se a declaração de subscript incluir apenas a palavra-chave `get`,
 um tipo em conformidade precisa implementar *pelo menos* uma cláusula getter
 e pode, opcionalmente, implementar uma cláusula setter.
 
-Para declarar um requisito de subscrito estático em uma declaração de protocolo,
-marque a declaração do subscrito com o modificador de declaração `static`.
-Estruturas e enumerações que estão em conformidade com o protocolo
-declaram o subscrito com a palavra-chave `static`,
+Para declarar um requisito de subscript estático em uma declaração de protocolo,
+marque a declaração do subscript com o modificador de declaração `static`.
+Structs e enums que estão em conformidade com o protocolo
+declaram o subscript com a palavra-chave `static`,
 e classes que estão em conformidade com o protocolo
-declaram o subscrito com a palavra-chave `static` ou `class`.
-Extensões que adicionam conformidade com um protocolo a uma estrutura, enumeração ou classe
+declaram o subscript com a palavra-chave `static` ou `class`.
+Extensions que adicionam conformidade com um protocolo a uma struct, enum ou classe
 usam a mesma palavra-chave que o tipo que elas estendem usa.
-Extensões que fornecem uma implementação padrão para um requisito de subscrito estático
+Extensions que fornecem uma implementação padrão para um requisito de subscript estático
 usam a palavra-chave `static`.
 
 Veja também <doc:Declarations#Subscript-Declaration>.
 
-> Gramática de uma declaração de subscrito de protocolo:
+> Gramática de uma declaração de subscript de protocolo:
 >
 > *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
@@ -2773,17 +2773,17 @@ Veja também <doc:Declarations#Type-Alias-Declaration>.
 ## Declaração de inicializador
 
 Uma *declaração de inicializador* introduz um inicializador para uma classe,
-estrutura ou enumeração no seu programa.
+struct ou enum no programa.
 Declarações de inicializador são feitas com a palavra-chave `init` e têm
 duas formas básicas.
 
-Tipos estrutura, enumeração e classe podem ter qualquer número de inicializadores,
+Tipos struct, enum e classe podem ter qualquer número de inicializadores,
 mas as regras e o comportamento associado dos inicializadores de classe são diferentes.
-Diferentemente de estruturas e enumerações, classes têm dois tipos de inicializadores:
+Diferentemente de structs e enums, classes têm dois tipos de inicializadores:
 inicializadores designados e inicializadores de conveniência,
 como descrito em <doc:Initialization>.
 
-A forma a seguir declara inicializadores para estruturas, enumerações
+A forma a seguir declara inicializadores para structs, enums
 e inicializadores designados de classes:
 
 ```swift
@@ -2796,14 +2796,14 @@ Um inicializador designado de uma classe inicializa
 todas as propriedades da classe diretamente. Ele não pode chamar outros inicializadores
 da mesma classe e, se a classe tiver uma superclasse, precisa chamar um dos
 inicializadores designados da superclasse.
-Se a classe herdar quaisquer propriedades da sua superclasse, um dos
+Se a classe herdar quaisquer propriedades da superclasse, um dos
 inicializadores designados da superclasse precisa ser chamado antes que qualquer uma dessas
 propriedades possa ser definida ou modificada na classe atual.
 
 Inicializadores designados podem ser declarados somente no contexto de uma declaração de classe
-e, por isso, não podem ser adicionados a uma classe usando uma declaração de extensão.
+e, por isso, não podem ser adicionados a uma classe usando uma declaração de extension.
 
-Inicializadores em estruturas e enumerações podem chamar outros inicializadores declarados
+Inicializadores em structs e enums podem chamar outros inicializadores declarados
 para delegar parte ou todo o processo de inicialização.
 
 Para declarar inicializadores de conveniência para uma classe,
@@ -2817,7 +2817,7 @@ convenience init(<#parameters#>) {
 
 Inicializadores de conveniência podem delegar o processo de inicialização para outro
 inicializador de conveniência ou para um dos inicializadores designados da classe.
-Dito isso, os processos de inicialização precisam terminar com uma chamada a um
+Mesmo assim, os processos de inicialização precisam terminar com uma chamada a um
 inicializador designado que, no fim, inicializa as propriedades da classe.
 Inicializadores de conveniência não podem chamar inicializadores da superclasse.
 
@@ -2828,13 +2828,13 @@ também precisa ser marcada com o modificador de declaração `required`.
 
 Por padrão, inicializadores declarados em uma superclasse
 não são herdados por subclasses.
-Dito isso, se uma subclasse inicializar todas as suas propriedades armazenadas com valores padrão
+Mesmo assim, se uma subclasse inicializar todas as suas propriedades armazenadas com valores padrão
 e não definir nenhum inicializador próprio,
 ela herda todos os inicializadores da superclasse.
 Se a subclasse sobrescrever todos os inicializadores designados da superclasse,
 ela herda os inicializadores de conveniência da superclasse.
 
-Assim como métodos, propriedades e subscritos,
+Assim como métodos, propriedades e subscripts,
 você precisa marcar inicializadores designados sobrescritos com o modificador de declaração `override`.
 
 > Nota: Se você marcar um inicializador com o modificador de declaração `required`,
@@ -2853,15 +2853,15 @@ veja <doc:Initialization>.
 
 ### Inicializadores falíveis
 
-Um *inicializador falível* é um tipo de inicializador que produz uma instância opcional
-ou uma instância opcional implicitamente desembrulhada do tipo sobre o qual o inicializador é declarado.
+Um *inicializador falível* é um tipo de inicializador que produz uma instância optional
+ou uma instância de implicitly unwrapped optional do tipo sobre o qual o inicializador é declarado.
 Como resultado, um inicializador falível pode retornar `nil` para indicar que a inicialização falhou.
 
-Para declarar um inicializador falível que produz uma instância opcional,
+Para declarar um inicializador falível que produz uma instância optional,
 acrescente um ponto de interrogação à palavra-chave `init` na declaração do inicializador (`init?`).
-Para declarar um inicializador falível que produz uma instância opcional implicitamente desembrulhada,
+Para declarar um inicializador falível que produz uma instância de implicitly unwrapped optional,
 acrescente um ponto de exclamação no lugar (`init!`). O exemplo abaixo mostra um inicializador falível `init?`
-que produz uma instância opcional de uma estrutura.
+que produz uma instância optional de uma struct.
 
 ```swift
 struct SomeStruct {
@@ -2896,7 +2896,7 @@ struct SomeStruct {
 -->
 
 Você chama um inicializador falível `init?` da mesma forma que chama um inicializador não falível,
-exceto que precisa lidar com a opcionalidade do resultado.
+exceto que precisa lidar com o fato de o resultado ser um optional.
 
 ```swift
 if let actualInstance = SomeStruct(input: "Hello") {
@@ -2926,7 +2926,7 @@ Um inicializador falível pode delegar para qualquer tipo de inicializador.
 Um inicializador não falível pode delegar para outro inicializador não falível
 ou para um inicializador falível `init!`.
 Um inicializador não falível pode delegar para um inicializador falível `init?`
-desembrulhando à força o resultado do inicializador da superclasse ---
+usando force unwrapping no resultado do inicializador da superclasse ---
 por exemplo, escrevendo `super.init()!`.
 
 A falha de inicialização se propaga pela delegação de inicializadores.
@@ -2935,7 +2935,7 @@ se um inicializador falível delegar para um inicializador que falha e retorna `
 então o inicializador que delegou também falha e retorna `nil` implicitamente.
 Se um inicializador não falível delegar para um inicializador falível `init!` que falha e retorna `nil`,
 então um erro de tempo de execução é gerado
-(como se você tivesse usado o operador `!` para desembrulhar um opcional que tem valor `nil`).
+(como se você tivesse usado o operador `!` para fazer unwrap de um optional que tem valor `nil`).
 
 Um inicializador designado falível pode ser sobrescrito em uma subclasse
 por qualquer tipo de inicializador designado.
@@ -2968,10 +2968,10 @@ deinit {
 Um desinicializador é chamado automaticamente quando não há mais referências
 a um objeto de classe, logo antes de o objeto de classe ser desalocado.
 Um desinicializador só pode ser declarado no corpo de uma declaração de classe ---
-mas não em uma extensão de classe ---
+mas não em uma extension de classe ---
 e cada classe pode ter no máximo um.
 
-Uma subclasse herda o desinicializador da sua superclasse,
+Uma subclasse herda o desinicializador da superclasse,
 que é chamado implicitamente logo antes de o objeto da subclasse ser desalocado.
 O objeto da subclasse só é desalocado depois que todos os desinicializadores na sua cadeia de herança
 terminarem de executar.
@@ -2984,11 +2984,11 @@ veja <doc:Deinitialization>.
 > Gramática de uma declaração de desinicializador:
 >
 > *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
-## Declaração de extensão
+## Declaração de extension
 
-Uma *declaração de extensão* permite estender o comportamento
+Uma *declaração de extension* permite estender o comportamento
 de tipos existentes.
-Declarações de extensão são feitas com a palavra-chave `extension`
+Declarações de extension são feitas com a palavra-chave `extension`
 e têm a seguinte forma:
 
 ```swift
@@ -2997,22 +2997,22 @@ extension <#type name#> where <#requirements#> {
 }
 ```
 
-O corpo de uma declaração de extensão contém zero ou mais *declarações*.
+O corpo de uma declaração de extension contém zero ou mais *declarações*.
 Essas *declarações* podem incluir propriedades computadas, propriedades computadas de tipo,
 métodos de instância, métodos de tipo, inicializadores, declarações de subscript,
-e até declarações de classe, estrutura e enumeração.
-Declarações de extensão não podem conter declarações de desinicializador ou de protocolo,
-propriedades armazenadas, observadores de propriedade nem outras declarações de extensão.
-Declarações em uma extensão de protocolo não podem ser marcadas com `final`.
-Para uma discussão e vários exemplos de extensões que incluem diferentes tipos de declarações,
+e até declarações de classe, struct e enum.
+Declarações de extension não podem conter declarações de desinicializador ou de protocolo,
+propriedades armazenadas, observadores de propriedade nem outras declarações de extension.
+Declarações em uma extension de protocolo não podem ser marcadas com `final`.
+Para uma discussão e vários exemplos de extensions que incluem diferentes tipos de declarações,
 veja <doc:Extensions>.
 
-Se o *nome do tipo* for um tipo classe, estrutura ou enumeração,
-a extensão estende esse tipo.
+Se o *nome do tipo* for um tipo classe, struct ou enum,
+a extension estende esse tipo.
 Se o *nome do tipo* for um tipo protocolo,
-a extensão estende todos os tipos que estão em conformidade com esse protocolo.
+a extension estende todos os tipos que estão em conformidade com esse protocolo.
 
-Declarações de extensão que estendem um tipo genérico
+Declarações de extension que estendem um tipo genérico
 ou um protocolo com tipos associados
 podem incluir *requisitos*.
 Se uma instância do tipo estendido
@@ -3020,16 +3020,16 @@ ou de um tipo que está em conformidade com o protocolo estendido
 satisfizer os *requisitos*,
 a instância ganha o comportamento especificado na declaração.
 
-Declarações de extensão podem conter declarações de inicializador. Dito isso,
+Declarações de extension podem conter declarações de inicializador. Ainda assim,
 se o tipo que você está estendendo for definido em outro módulo,
 uma declaração de inicializador deve delegar a um inicializador já definido nesse módulo
 para garantir que os membros desse tipo sejam inicializados corretamente.
 
 Propriedades, métodos e inicializadores de um tipo existente
-não podem ser sobrescritos em uma extensão desse tipo.
+não podem ser sobrescritos em uma extension desse tipo.
 
-Declarações de extensão podem adicionar conformidade a protocolo a um
-tipo classe, estrutura ou enumeração existente, especificando os *protocolos adotados*:
+Declarações de extension podem adicionar conformidade com protocolo a um
+tipo classe, struct ou enum existente, especificando os *protocolos adotados*:
 
 ```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
@@ -3037,7 +3037,7 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 }
 ```
 
-Declarações de extensão não podem adicionar herança de classe a uma classe existente,
+Declarações de extension não podem adicionar herança de classe a uma classe existente,
 por isso você pode especificar apenas uma lista de protocolos depois do *nome do tipo* e dos dois-pontos.
 
 ### Conformidade condicional
@@ -3047,7 +3047,7 @@ para que ele fique em conformidade condicional com um protocolo,
 de modo que as instâncias do tipo estejam em conformidade com o protocolo
 somente quando certos requisitos forem atendidos.
 Você adiciona conformidade condicional a um protocolo
-incluindo *requisitos* em uma declaração de extensão.
+incluindo *requisitos* em uma declaração de extension.
 
 #### Requisitos sobrescritos não são usados em alguns contextos genéricos
 
@@ -3151,7 +3151,7 @@ extension String: TitledLoggable {
   ```
 -->
 
-A estrutura `Pair` está em conformidade com `Loggable` e `TitledLoggable`
+A struct `Pair` está em conformidade com `Loggable` e `TitledLoggable`
 sempre que seu tipo genérico estiver em conformidade com `Loggable` ou `TitledLoggable`, respectivamente.
 No exemplo abaixo,
 `oneAndTwo` é uma instância de `Pair<String>`,
@@ -3207,7 +3207,7 @@ doSomething(with: oneAndTwo)
 Quando `log()` é chamado na instância passada para `doSomething(_:)`,
 o título personalizado é omitido da string registrada.
 
-### A conformidade a protocolo não pode ser redundante
+### A conformidade com protocolo não pode ser redundante
 
 Um tipo concreto pode estar em conformidade com um protocolo específico apenas uma vez.
 O Swift marca conformidades redundantes a protocolo como erro.
@@ -3222,11 +3222,11 @@ Essas situações são discutidas nas seções abaixo.
 
 #### Resolvendo a redundância explícita
 
-Várias extensões de um tipo concreto
+Várias extensions de um tipo concreto
 não podem adicionar conformidade ao mesmo protocolo,
-mesmo que os requisitos das extensões sejam mutuamente exclusivos.
+mesmo que os requisitos das extensions sejam mutuamente exclusivos.
 Essa restrição é demonstrada no exemplo abaixo.
-Duas declarações de extensão tentam adicionar conformidade condicional
+Duas declarações de extension tentam adicionar conformidade condicional
 ao protocolo `Serializable`,
 uma para arrays com elementos `Int`
 e outra para arrays com elementos `String`.
@@ -3376,8 +3376,8 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   ```
 -->
 
-Sem a extensão que declara explicitamente a conformidade condicional a `Loggable`,
-as outras extensões de `Array` criariam implicitamente essas declarações,
+Sem a extension que declara explicitamente a conformidade condicional a `Loggable`,
+as outras extensions de `Array` criariam implicitamente essas declarações,
 resultando em um erro:
 
 ```swift
@@ -3467,7 +3467,7 @@ extension Array: Loggable where Element: MarkedLoggable { }
   ```
 -->
 
-> Gramática de uma declaração de extensão:
+> Gramática de uma declaração de extension:
 >
 > *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
 > *extension-body* → **`{`** *extension-members*_?_ **`}`**
@@ -3494,8 +3494,8 @@ subscript (<#parameters#>) -> <#return type#> {
 }
 ```
 
-Declarações de subscript só podem aparecer no contexto de uma declaração de classe, estrutura,
-enumeração, extensão ou protocolo.
+Declarações de subscript só podem aparecer no contexto de uma declaração de classe, struct,
+enum, extension ou protocolo.
 
 Os *parâmetros* especificam um ou mais índices usados para acessar elementos do tipo correspondente
 em uma expressão de subscript (por exemplo, o `i` na expressão `object[i]`).
@@ -3510,7 +3510,7 @@ e o setter é usado para escrever o valor.
 A cláusula setter é opcional,
 e, quando só é preciso um getter, você pode omitir as duas cláusulas e simplesmente
 retornar o valor pedido diretamente.
-Dito isso, se você fornecer uma cláusula setter, também precisa fornecer uma cláusula getter.
+Ainda assim, se você fornecer uma cláusula setter, também precisa fornecer uma cláusula getter.
 
 O *nome do setter* e os parênteses que o envolvem são opcionais.
 Se você fornecer um nome de setter, ele é usado como o nome do parâmetro do setter.
@@ -3543,7 +3543,7 @@ veja <doc:Subscripts>.
 Para declarar um subscript exposto pelo tipo,
 e não pelas instâncias do tipo,
 marque a declaração de subscript com o modificador de declaração `static`.
-Classes podem marcar propriedades computadas de tipo com o modificador de declaração `class`
+Classes podem, em vez disso, marcar propriedades computadas de tipo com o modificador de declaração `class`
 para permitir que subclasses sobrescrevam a implementação da superclasse.
 Em uma declaração de classe,
 a palavra-chave `static` tem o mesmo efeito que marcar a declaração
@@ -3610,13 +3610,13 @@ Para uma visão geral das macros em Swift, veja <doc:Macros>.
 ## Declaração de operador
 
 Uma *declaração de operador* introduz um novo operador infixo, prefixo
-ou pós-fixo no seu programa,
+ou pós-fixo no programa,
 e é declarada com a palavra-chave `operator`.
 
 Você pode declarar operadores de três fixidades diferentes:
 infixa, prefixa e pós-fixa.
 A *fixidade* de um operador especifica a posição relativa do operador
-em relação aos seus operandos.
+em relação aos operandos.
 
 Há três formas básicas de declaração de operador,
 uma para cada fixidade.
@@ -3669,7 +3669,7 @@ você o implementa declarando um método estático com o mesmo nome do operador.
 O método estático é um membro de
 um dos tipos cujos valores o operador recebe como argumento ---
 por exemplo, um operador que multiplica um `Double` por um `Int`
-é implementado como um método estático na estrutura `Double` ou `Int`.
+é implementado como um método estático na struct `Double` ou `Int`.
 Se você estiver implementando um operador prefixo ou pós-fixo,
 também precisa marcar a declaração desse método com o modificador de declaração `prefix` ou `postfix` correspondente.
 Para ver um exemplo de como criar e implementar um novo operador,
@@ -3688,9 +3688,9 @@ veja <doc:AdvancedOperators#Custom-Operators>.
 ## Declaração de grupo de precedência
 
 Uma *declaração de grupo de precedência* introduz
-um novo agrupamento de precedência para operadores infixos no seu programa.
+um novo agrupamento de precedência para operadores infixos no programa.
 A precedência de um operador especifica o quão firmemente o operador
-se liga aos seus operandos, na ausência de parênteses de agrupamento.
+se liga aos operandos, na ausência de parênteses de agrupamento.
 
 Uma declaração de grupo de precedência tem a seguinte forma:
 
@@ -3707,10 +3707,10 @@ As listas de *nomes de grupos inferiores* e *nomes de grupos superiores* especif
 a relação do novo grupo de precedência com os grupos de precedência existentes.
 O atributo `lowerThan` do grupo de precedência só pode ser usado
 para se referir a grupos de precedência declarados fora do módulo atual.
-Quando dois operadores competem entre si pelos seus operandos,
+Quando dois operadores competem entre si pelos operandos,
 como na expressão `2 + 3 * 5`,
 o operador com maior precedência relativa
-se liga mais firmemente aos seus operandos.
+se liga mais firmemente aos operandos.
 
 > Nota: Grupos de precedência relacionados entre si
 > por meio de *nomes de grupos inferiores* e *nomes de grupos superiores*
@@ -3814,7 +3814,7 @@ que introduz a declaração.
   veja <doc:Inheritance#Preventing-Overrides>.
 
 - term `lazy`:
-  Aplique este modificador a uma propriedade de variável armazenada de uma classe ou estrutura
+  Aplique este modificador a uma propriedade de variável armazenada de uma classe ou struct
   para indicar que o valor inicial da propriedade é calculado e armazenado no máximo
   uma vez, quando a propriedade é acessada pela primeira vez.
   Para um exemplo de como usar o modificador `lazy`,
@@ -3848,7 +3848,7 @@ que introduz a declaração.
   também deve ser marcada com o modificador `required`.
 
 - term `static`:
-  Aplique este modificador a um membro de uma estrutura, classe, enumeração ou protocolo
+  Aplique este modificador a um membro de uma struct, classe, enum ou protocolo
   para indicar que o membro é um membro do tipo,
   e não de instâncias desse tipo.
   No escopo de uma declaração de classe,
@@ -3869,7 +3869,7 @@ que introduz a declaração.
   Assim como uma referência weak,
   o tipo da propriedade ou do valor deve ser um tipo classe;
   diferente de uma referência weak,
-  o tipo não é opcional.
+  o tipo não é optional.
   Para um exemplo e mais informações sobre o modificador `unowned`,
   veja <doc:AutomaticReferenceCounting#Unowned-References>.
 
@@ -3887,7 +3887,7 @@ que introduz a declaração.
   Assim como uma referência weak,
   o tipo da propriedade ou do valor deve ser um tipo classe;
   diferente de uma referência weak,
-  o tipo não é opcional.
+  o tipo não é optional.
   Para um exemplo e mais informações sobre o modificador `unowned`,
   veja <doc:AutomaticReferenceCounting#Unowned-References>.
 
@@ -3948,20 +3948,20 @@ O controle de acesso é discutido em detalhes em <doc:AccessControl>.
   apenas por código dentro do escopo imediatamente envolvente da declaração.
 
 Para fins de controle de acesso,
-extensões se comportam da seguinte forma:
+extensions se comportam da seguinte forma:
 
-- Se houver várias extensões no mesmo arquivo,
-  e todas essas extensões estenderem o mesmo tipo,
+- Se houver várias extensions no mesmo arquivo,
+  e todas essas extensions estenderem o mesmo tipo,
   então todas elas terão o mesmo escopo de controle de acesso.
-  As extensões e o tipo que elas estendem podem estar em arquivos diferentes.
+  As extensions e o tipo que elas estendem podem estar em arquivos diferentes.
 
-- Se houver extensões no mesmo arquivo que o tipo que elas estendem,
-  as extensões têm o mesmo escopo de controle de acesso que o tipo estendido.
+- Se houver extensions no mesmo arquivo que o tipo que elas estendem,
+  as extensions têm o mesmo escopo de controle de acesso que o tipo estendido.
 
 - Membros private declarados na declaração de um tipo
-  podem ser acessados a partir de extensões desse tipo.
-  Membros private declarados em uma extensão
-  podem ser acessados a partir de outras extensões
+  podem ser acessados a partir de extensions desse tipo.
+  Membros private declarados em uma extension
+  podem ser acessados a partir de outras extensions
   e da declaração do tipo estendido.
 
 Cada modificador de nível de acesso acima aceita opcionalmente um único argumento,

@@ -311,11 +311,11 @@ Por isso, você precisa incluir pelo menos uma instrução
 depois do dois-pontos (`:`) de cada rótulo de caso. Use uma única instrução `break`
 se não pretende executar nenhum código no corpo de um caso correspondido.
 
-Os valores das expressões em que seu código pode desviar são muito flexíveis. Por exemplo,
+Os valores de expressões sobre os quais seu código pode se desviar são muito flexíveis. Por exemplo,
 além dos valores de tipos escalares, como inteiros e caracteres,
 seu código pode desviar com base nos valores de qualquer tipo, incluindo números de ponto flutuante, strings,
 tuplas, instâncias de classes personalizadas e optionals.
-O valor da *expressão de controle* pode até ser comparado com o valor de um caso de uma enumeração
+O valor da *expressão de controle* pode até ser comparado com o valor de um caso de um enum
 e verificado quanto à inclusão em um intervalo especificado de valores.
 Para exemplos de como usar esses vários tipos de valores em instruções `switch`,
 veja <doc:ControlFlow#Switch> em <doc:ControlFlow>.
@@ -411,37 +411,37 @@ Quando isso simplesmente não é viável
 (por exemplo, quando o tipo da expressão de controle é `Int`),
 você pode incluir um caso default para atender a esse requisito.
 
-#### Alternando sobre casos futuros de enumeração
+#### Usando switch com casos futuros de enum
 
-Uma *enumeração não congelada* é um tipo especial de enumeração
+Um *enum não congelado* é um tipo especial de enum
 que pode ganhar novos casos no futuro, mesmo depois de você compilar e distribuir um app.
-Alternar sobre uma enumeração não congelada exige atenção extra.
-Quando os autores de uma biblioteca marcam uma enumeração como não congelada,
+Usar switch com um enum não congelado exige atenção extra.
+Quando os autores de uma biblioteca marcam um enum como não congelado,
 eles se reservam o direito de adicionar novos casos,
-e qualquer código que interaja com essa enumeração
+e qualquer código que interaja com esse enum
 *precisa* conseguir tratar esses casos futuros sem ser recompilado.
 Código compilado no modo de evolução de biblioteca,
 código da biblioteca padrão do Swift,
 overlays Swift para frameworks da Apple,
-e código C e Objective-C podem declarar enumerações não congeladas.
-Para informações sobre enumerações congeladas e não congeladas,
+e código C e Objective-C podem declarar enums não congelados.
+Para informações sobre enums congelados e não congelados,
 veja <doc:Attributes#frozen>.
 
-Ao alternar sobre um valor de enumeração não congelada,
+Ao usar switch com um valor de enum não congelado,
 você sempre precisa incluir um caso default,
-mesmo que todos os casos da enumeração já tenham um caso switch correspondente.
+mesmo que todos os casos do enum já tenham um caso switch correspondente.
 Você pode aplicar o atributo `@unknown` ao caso default,
-o que indica que o caso default deve corresponder somente a casos de enumeração
+o que indica que o caso default deve corresponder somente a casos de enum
 adicionados no futuro.
 O Swift emite um aviso
 se o caso default corresponder
-a qualquer caso de enumeração conhecido em tempo de compilação.
+a qualquer caso de enum conhecido em tempo de compilação.
 Esse aviso futuro informa que o autor da biblioteca
-adicionou um novo caso à enumeração
+adicionou um novo caso ao enum
 que não tem um caso switch correspondente.
 
-O exemplo a seguir alterna sobre os três casos existentes da
-enumeração da biblioteca padrão do Swift
+O exemplo a seguir usa switch com os três casos existentes do
+enum da biblioteca padrão do Swift
 [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation).
 Se você adicionar casos no futuro,
 o compilador gera um aviso para indicar
@@ -702,7 +702,7 @@ antes de ser retornado para a função ou o método que a chamou.
 -->
 
 Quando uma instrução `return` não é seguida de uma expressão,
-ela só pode ser usada para retornar de uma função ou método que não define tipo de retorno
+ela só pode ser usada para retornar de uma função ou método que não retorna um valor
 (ou seja, quando o tipo de retorno da função ou do método é `Void` ou `()`).
 
 > Gramática de uma instrução return:
@@ -892,7 +892,7 @@ o bloco `do` só pode lançar erros do *tipo* especificado.
 O *tipo* deve ser
 um tipo concreto que esteja em conformidade com o protocolo `Error`,
 um tipo opaco que esteja em conformidade com o protocolo `Error`,
-ou o tipo de protocolo encaixotado `any Error`.
+ou o tipo de protocolo boxed `any Error`.
 Se a instrução `do` não especificar o tipo de erro que lança,
 o Swift infere o tipo de erro da seguinte forma:
 
@@ -996,7 +996,7 @@ Por isso, as *instruções* são compiladas e executadas somente se a *condiçã
 for avaliada como `true` em tempo de compilação.
 
 A *condição de compilação* pode incluir os literais booleanos `true` e `false`,
-um identificador usado com o flag de linha de comando `-D`, ou qualquer uma das condições de plataforma
+um identificador usado com a opção de linha de comando `-D`, ou qualquer uma das condições de plataforma
 listadas na tabela abaixo.
 
 | Condição de plataforma | Argumentos válidos |
@@ -1034,8 +1034,8 @@ consiste em um número principal, um número secundário opcional, um número de
 com um ponto (`.`) separando cada parte do número de versão.
 Não pode haver espaço em branco entre o operador de comparação e o número de versão.
 A versão de `compiler()` é a versão do compilador,
-independentemente da versão da linguagem passada como configuração ao compilador.
-A versão de `swift()` é a versão da linguagem que está sendo compilada.
+independentemente da versão da linguagem passada ao compilador pela configuração de versão do Swift.
+A versão de `swift()` é a versão da linguagem em compilação.
 Por exemplo, se você compilar seu código usando o compilador do Swift 5 no modo Swift 4.2,
 a versão do compilador é 5 e a versão da linguagem é 4.2.
 Com essas configurações,
@@ -1217,7 +1217,7 @@ têm a seguinte forma:
 > Essa exceção garante que um compilador mais antigo não tente analisar
 > a sintaxe introduzida em uma versão mais nova do Swift.
 
-Para informações sobre como você pode envolver
+Para saber como envolver
 expressões de membro explícitas em blocos de compilação condicional,
 veja <doc:Expressions#Explicit-Member-Expression>.
 
@@ -1332,7 +1332,7 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 ```
 
 Você usa uma condição de disponibilidade para executar um bloco de código,
-dependendo de as APIs que você quer usar estarem disponíveis em tempo de execução.
+conforme as APIs que você quer usar estejam ou não disponíveis em tempo de execução.
 O compilador usa as informações da condição de disponibilidade
 ao verificar se as APIs naquele bloco de código estão disponíveis.
 
@@ -1341,7 +1341,7 @@ Use `iOS`, `macOS`, `watchOS`, `tvOS` e `visionOS` para os nomes de plataforma,
 e inclua os números de versão correspondentes.
 O argumento `*` é obrigatório e especifica que, em qualquer outra plataforma,
 o corpo do bloco de código protegido pela condição de disponibilidade
-é executado na versão mínima de implantação especificada pelo seu target.
+é executado na versão mínima de implantação especificada pelo target.
 
 Diferente das condições booleanas, você não pode combinar condições de disponibilidade
 usando operadores lógicos como `&&` e `||`.

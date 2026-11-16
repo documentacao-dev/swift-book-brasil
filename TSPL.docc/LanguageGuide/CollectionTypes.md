@@ -527,7 +527,7 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#For-In-Loops>.
 
 ## Conjuntos
 
@@ -784,7 +784,7 @@ for genre in favoriteGenres {
   ```
 -->
 
-Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#For-In-Loops>.
 
 O tipo `Set` do Swift não tem uma ordem definida.
 Para percorrer os valores de um conjunto em uma ordem específica, use o método `sorted()`, que retorna os elementos do conjunto como um array ordenado usando o operador `<`.
@@ -1267,7 +1267,7 @@ for (airportCode, airportName) in airports {
   ```
 -->
 
-Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#For-In-Loops>.
 
 Você também pode obter uma coleção iterável com as chaves ou os valores de um dicionário, acessando suas propriedades `keys` e `values`:
 

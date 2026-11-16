@@ -501,7 +501,7 @@ for character in "Dog!🐶" {
   ```
 -->
 
-O laço `for`-`in` é descrito em <doc:ControlFlow#Laços-for-in>.
+O laço `for`-`in` é descrito em <doc:ControlFlow#For-In-Loops>.
 
 Como alternativa, você pode criar uma constante ou variável `Character` independente
 a partir de um literal de string de um único caractere, fornecendo uma anotação de tipo `Character`:
@@ -1262,7 +1262,7 @@ igualdade de string e de caractere, igualdade de prefixo e igualdade de sufixo.
 
 A igualdade de string e de caractere é verificada com o operador “igual a” (`==`)
 e o operador “diferente de” (`!=`),
-como descrito em <doc:BasicOperators#Operadores-de-comparação>:
+como descrito em <doc:BasicOperators#Comparison-Operators>:
 
 ```swift
 let quotation = "We're a lot alike, you and I."
@@ -1553,7 +1553,7 @@ print("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
 > Nota: Os métodos `hasPrefix(_:)` e `hasSuffix(_:)`
 > fazem uma comparação de equivalência canônica, caractere por caractere, entre
 > os clusters de grafemas estendidos de cada string,
-> como descrito em <doc:StringsAndCharacters#Igualdade-de-string-e-de-caractere>.
+> como descrito em <doc:StringsAndCharacters#String-and-Character-Equality>.
 
 ## Representações Unicode de strings
 
@@ -1568,7 +1568,7 @@ e a forma UTF-32 (que codifica uma string em unidades de código de 32 bits).
 O Swift oferece várias maneiras diferentes de acessar representações Unicode de strings.
 Você pode percorrer a string com uma instrução `for`-`in`
 para acessar seus valores `Character` individuais como clusters de grafemas estendidos Unicode.
-Esse processo é descrito em <doc:StringsAndCharacters#Trabalhando-com-caracteres>.
+Esse processo é descrito em <doc:StringsAndCharacters#Working-with-Characters>.
 
 Como alternativa, acesse um valor `String`
 em uma das três outras representações compatíveis com Unicode:

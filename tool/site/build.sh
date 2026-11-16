@@ -2,6 +2,9 @@
 # Build do site swift.documentacao.dev com o Swift-DocC, saída em site/.
 #
 # - gera o resumo da gramática (bin/generate-grammar), como o publish-book oficial;
+# - trabalha numa cópia do TSPL.docc: ali os links <doc:X#Secao> passam a apontar
+#   para as âncoras dos títulos traduzidos (ancorar_links.py); o repositório
+#   guarda os links iguais aos do original;
 # - troca o header/footer do swift.org (scripts externos) pelos nossos:
 #   aviso de página ainda em inglês + atribuição e licença;
 # - redireciona / para a raiz do livro.
@@ -13,10 +16,13 @@ DOCC=(docc)
 command -v docc >/dev/null || DOCC=(xcrun docc)
 
 resumo="TSPL.docc/ReferenceManual/SummaryOfTheGrammar.md"
-limpar() { rm -f TSPL.docc/header.html TSPL.docc/footer.html.bak "$resumo"; [ -f footer.orig ] && mv footer.orig TSPL.docc/footer.html; true; }
+tmp=$(mktemp -d)
+limpar() { rm -rf "$tmp" "$resumo"; }
 trap limpar EXIT
 
 bin/generate-grammar
+cp -R TSPL.docc "$tmp/TSPL.docc"
+python3 tool/traducao/ancorar_links.py "$tmp/TSPL.docc"
 
 em_ingles=$(python3 - <<'PY'
 import json, sys
@@ -26,15 +32,14 @@ print(json.dumps({p.stem.lower(): str(p.relative_to(ROOT)) for p in capitulos()
                   if not traduzido(p.read_text()) and p.stem != 'SummaryOfTheGrammar'}))
 PY
 )
-python3 -c "import sys; t=open('tool/site/header.html').read().replace('__EM_INGLES__', sys.argv[1]); open('TSPL.docc/header.html','w').write(t)" "$em_ingles"
-mv TSPL.docc/footer.html footer.orig
-cp tool/site/footer.html TSPL.docc/footer.html
+python3 -c "import sys; t=open('tool/site/header.html').read().replace('__EM_INGLES__', sys.argv[1]); open(sys.argv[2],'w').write(t)" "$em_ingles" "$tmp/TSPL.docc/header.html"
+cp tool/site/footer.html "$tmp/TSPL.docc/footer.html"
 
 rm -rf site
 "${DOCC[@]}" convert \
     --experimental-enable-custom-templates \
     --transform-for-static-hosting \
     --output-path site \
-    TSPL.docc
+    "$tmp/TSPL.docc"
 find site -name "*.html" -exec sed -i.bak 's/<html lang="en-US"/<html lang="pt-BR"/' {} + && find site -name "*.bak" -delete
 echo "site/ pronto ($(find site -type f | wc -l | tr -d ' ') arquivos)"

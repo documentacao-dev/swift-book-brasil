@@ -146,7 +146,7 @@ to enable the function to return a single tuple containing multiple values.
 You can also name the elements of a tuple type and use those names to refer to
 the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
-these features, see <doc:Functions#Funções-com-vários-valores-de-retorno>.
+these features, see <doc:Functions#Functions-with-Multiple-Return-Values>.
 
 When an element of a tuple type has a name,
 that name is part of the type.
@@ -213,11 +213,11 @@ a variadic parameter consists of a base type name followed immediately by three 
 as in `Int...`. A variadic parameter is treated as an array that contains elements
 of the base type name. For instance, the variadic parameter `Int...` is treated
 as `[Int]`. For an example that uses a variadic parameter,
-see <doc:Functions#Parâmetros-variádicos>.
+see <doc:Functions#Variadic-Parameters>.
 
 To specify an in-out parameter, prefix the parameter type with the `inout` keyword.
 You can't mark a variadic parameter or a return type with the `inout` keyword.
-In-out parameters are discussed in <doc:Functions#Parâmetros-in-out>.
+In-out parameters are discussed in <doc:Functions#In-Out-Parameters>.
 
 If a function type has only one parameter
 and that parameter's type is a tuple type,
@@ -643,7 +643,7 @@ The key type of a dictionary must conform to the Swift standard library `Hashabl
 -->
 
 For a detailed discussion of the Swift standard library `Dictionary` type,
-see <doc:CollectionTypes#Dicionários>.
+see <doc:CollectionTypes#Dictionaries>.
 
 > Grammar of a dictionary type:
 >
@@ -780,7 +780,7 @@ If the value is `nil`,
 no operation is performed and therefore no runtime error is produced.
 
 For more information about implicitly unwrapped optional types,
-see <doc:TheBasics#Optionals-com-unwrap-implícito>.
+see <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
 > Grammar of an implicitly unwrapped optional type:
 >

@@ -498,7 +498,7 @@ the pattern `.qrCode(let productCode)` here.
 And as in the switch case,
 writing `let` extracts the associated value as a constant.
 For more information about `if`-`case` statements,
-see <doc:ControlFlow#Padrões>.
+see <doc:ControlFlow#Patterns>.
 
 ## Raw Values
 

@@ -51,7 +51,7 @@ as an in-out argument to a function call expression.
 ```
 
 For more information about in-out parameters and to see an example,
-see <doc:Functions#Parâmetros-in-out>.
+see <doc:Functions#In-Out-Parameters>.
 
 In-out expressions are also used
 when providing a non-pointer argument
@@ -391,7 +391,7 @@ and returns its value.
 The unused expression isn't evaluated.
 
 For an example that uses the ternary conditional operator,
-see <doc:BasicOperators#Operador-condicional-ternário>.
+see <doc:BasicOperators#Ternary-Conditional-Operator>.
 
 > Grammar of a conditional operator:
 >
@@ -1002,7 +1002,7 @@ if it's called immediately
 or passed as a nonescaping function argument.
 Otherwise, the closure expression is escaping.
 
-For more information about escaping closures, see <doc:Closures#Escaping-closures>.
+For more information about escaping closures, see <doc:Closures#Escaping-Closures>.
 
 #### Capture Lists
 
@@ -1223,7 +1223,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 -->
 
 For more information and examples of closure expressions,
-see <doc:Closures#Expressões-de-closure>.
+see <doc:Closures#Closure-Expressions>.
 For more information and examples of capture lists,
 see <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closures>.
 

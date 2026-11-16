@@ -28,5 +28,5 @@ def titulos(texto):
     return [m.group(2) for m in TITULO.finditer(CERCA.sub('', texto))]
 
 
-def capitulos():
-    return sorted(DOCC.rglob('*.md'))
+def capitulos(raiz=None):
+    return sorted(Path(raiz or DOCC).rglob('*.md'))

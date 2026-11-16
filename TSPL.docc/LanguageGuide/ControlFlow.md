@@ -190,7 +190,7 @@ Pense em desenhar as marcas de cada minuto em um mostrador de relógio.
 Você quer desenhar `60` marcas, começando pelo minuto `0`.
 Use o operador de intervalo semiaberto (`..<`) para incluir o limite inferior,
 mas não o superior.
-Para saber mais sobre intervalos, veja <doc:BasicOperators#Operadores-de-intervalo>.
+Para saber mais sobre intervalos, veja <doc:BasicOperators#Range-Operators>.
 
 ```swift
 let minutes = 60
@@ -820,7 +820,7 @@ No código acima, um ramo da expressão `if` tem um valor de string
 e o outro ramo tem o valor `nil`.
 O valor `nil` poderia ser usado como valor de qualquer tipo opcional,
 então você precisa escrever explicitamente que `freezeWarning` é uma string opcional,
-como descrito em <doc:TheBasics#Anotações-de-tipo>.
+como descrito em <doc:TheBasics#Type-Annotations>.
 
 Uma forma alternativa de fornecer essa informação de tipo
 é indicar um tipo explícito para `nil`,
@@ -979,7 +979,7 @@ e evita executar mais de um caso do `switch` por engano.
 > Nota: Embora `break` não seja obrigatório no Swift,
 > você pode usar uma instrução `break` para corresponder e ignorar um caso específico
 > ou para sair de um caso correspondido antes que esse caso termine sua execução.
-> Para detalhes, veja <doc:ControlFlow#Break-em-uma-instrução-switch>.
+> Para detalhes, veja <doc:ControlFlow#Break-in-a-Switch-Statement>.
 
 O corpo de cada caso *deve* conter pelo menos uma instrução executável.
 Não é válido escrever o código a seguir, porque o primeiro caso está vazio:
@@ -1054,7 +1054,7 @@ default:
 -->
 
 Para facilitar a leitura, um caso composto também pode ser escrito em várias linhas.
-Para mais informações sobre casos compostos, veja <doc:ControlFlow#Casos-compostos>.
+Para mais informações sobre casos compostos, veja <doc:ControlFlow#Compound-Cases>.
 
 > Nota: Para passar explicitamente ao caso seguinte no fim de um caso específico do `switch`,
 > use a palavra-chave `fallthrough`,

@@ -55,23 +55,23 @@ indica o papel da macro:
   no mesmo escopo da declaração
   à qual a macro está anexada.
   Por exemplo,
-  aplicar uma macro de par a um método de uma estrutura
-  pode definir métodos e propriedades adicionais nessa estrutura.
+  aplicar uma macro de par a um método de uma struct
+  pode definir métodos e propriedades adicionais nessa struct.
 
 - term Macros de membro:
   Escreva `member` como primeiro argumento desse atributo.
   O tipo que implementa a macro conforma com o protocolo `MemberMacro`.
   Essas macros produzem declarações novas
-  que são membros do tipo ou da extensão
+  que são membros do tipo ou da extension
   à qual a macro está anexada.
   Por exemplo,
-  aplicar uma macro de membro a uma declaração de estrutura
-  pode definir métodos e propriedades adicionais nessa estrutura.
+  aplicar uma macro de membro a uma declaração de struct
+  pode definir métodos e propriedades adicionais nessa struct.
 
 - term Atributo de membro:
   Escreva `memberAttribute` como primeiro argumento desse atributo.
   O tipo que implementa a macro conforma com o protocolo `MemberAttributeMacro`.
-  Essas macros adicionam atributos aos membros do tipo ou da extensão
+  Essas macros adicionam atributos aos membros do tipo ou da extension
   à qual a macro está anexada.
 
 - term Macros de acessor:
@@ -80,7 +80,7 @@ indica o papel da macro:
   Essas macros adicionam acessores à propriedade armazenada à qual estão anexadas,
   transformando-a em uma propriedade computada.
 
-- term Macros de extensão:
+- term Macros de extension:
   Escreva `extension` como primeiro argumento desse atributo.
   O tipo que implementa a macro conforma com o protocolo `ExtensionMacro`.
   Essas macros podem adicionar conformidade a protocolos,
@@ -91,11 +91,11 @@ indica o papel da macro:
   A lista de conformidades contém nomes de protocolos,
   aliases de tipo que se referem a itens da lista de conformidades,
   ou composições de protocolos de itens da lista de conformidades.
-  Uma macro de extensão em um tipo aninhado
-  se expande para uma extensão no nível superior desse arquivo.
-  Você não pode escrever uma macro de extensão
-  em uma extensão, em um alias de tipo ou em um tipo aninhado dentro de uma função,
-  nem usar uma macro de extensão para adicionar uma extensão que tenha uma macro de par.
+  Uma macro de extension em um tipo aninhado
+  se expande para uma extension no nível superior desse arquivo.
+  Você não pode escrever uma macro de extension
+  em uma extension, em um alias de tipo ou em um tipo aninhado dentro de uma função,
+  nem usar uma macro de extension para adicionar uma extension que tenha uma macro de par.
 
 - term Macros de corpo:
   Escreva `body` como primeiro argumento desse atributo.
@@ -113,8 +113,8 @@ O papel de macro de acessor exige um argumento `names:` se a
 macro gerar um observador de propriedade `willSet` ou `didSet`. Uma
 macro de acessor que gera observadores de propriedade não pode adicionar
 outros acessores, porque observadores só se aplicam a propriedades armazenadas.
-O papel de macro de extensão também exige um argumento `names:`
-se a macro adicionar declarações dentro da extensão.
+O papel de macro de extension também exige um argumento `names:`
+se a macro adicionar declarações dentro da extension.
 Quando a declaração de uma macro inclui o argumento `names:`,
 a implementação da macro deve gerar
 apenas símbolos com nomes que correspondam a essa lista.
@@ -203,7 +203,7 @@ incluindo marcos importantes.
   O *número de versão* é formado por um a três inteiros positivos,
   separados por pontos.
 - O argumento `deprecated` indica a primeira versão
-  da plataforma ou da linguagem especificada em que a declaração ficou obsoleta.
+  da plataforma ou da linguagem especificada em que a declaração foi marcada como obsoleta (deprecated).
   Ele tem a seguinte forma:
 
   ```swift
@@ -211,12 +211,12 @@ incluindo marcos importantes.
   ```
   O *número de versão*, que é opcional, é formado por um a três inteiros positivos,
   separados por pontos.
-  Omitir o número de versão indica que a declaração está obsoleta no momento,
-  sem informar quando a obsolescência aconteceu.
+  Omitir o número de versão indica que a declaração foi marcada como obsoleta (deprecated) no momento,
+  sem informar quando isso aconteceu.
   Se você omitir o número de versão, omita também os dois-pontos (`:`).
 - O argumento `obsoleted` indica a primeira versão
-  da plataforma ou da linguagem especificada em que a declaração se tornou obsoleta.
-  Quando uma declaração se torna obsoleta,
+  da plataforma ou da linguagem especificada em que a declaração deixou de existir (obsoleted).
+  Quando uma declaração deixa de existir (obsoleted),
   ela é removida da plataforma ou da linguagem especificada e não pode mais ser usada.
   Ele tem a seguinte forma:
 
@@ -519,15 +519,15 @@ que atendem aos critérios a seguir podem receber back deployment:
 
 Aplique este atributo a qualquer declaração que possa ser representada em C,
 como funções globais
-e enumerações não genéricas (restritas a tipos de valor bruto inteiros).
+e enums não genéricos (restritos a tipos de raw value inteiros).
 O atributo `c` informa ao compilador
 que a declaração está disponível para uso em código C.
 
-Aplicar o atributo `c` a uma enumeração
-expõe cada caso da enumeração ao código C
-como a concatenação do nome da enumeração com o nome do caso.
+Aplicar o atributo `c` a um enum
+expõe cada caso do enum ao código C
+como a concatenação do nome do enum com o nome do caso.
 A primeira letra do nome do caso fica em maiúscula.
-Por exemplo, um caso chamado `venus` em uma enumeração `Planet` do Swift
+Por exemplo, um caso chamado `venus` em um enum `Planet` do Swift
 é exposto ao código C como um caso chamado `PlanetVenus`.
 
 O atributo `c` aceita opcionalmente um único argumento de atributo,
@@ -544,7 +544,7 @@ quando a função ou o método, que retorna um valor,
 
 ### dynamicCallable
 
-Aplique este atributo a uma classe, estrutura, enumeração ou protocolo
+Aplique este atributo a uma classe, struct, enum ou protocolo
 para tratar instâncias do tipo como funções que podem ser chamadas.
 O tipo precisa implementar um método `dynamicallyCall(withArguments:)`,
 um método `dynamicallyCall(withKeywordArguments:)`,
@@ -715,7 +715,7 @@ repeatLabels(a: "four") // Error
 
 ### dynamicMemberLookup
 
-Aplique este atributo a uma classe, estrutura, enumeração ou protocolo
+Aplique este atributo a uma classe, struct, enum ou protocolo
 para permitir que os membros sejam buscados pelo nome em tempo de execução.
 O tipo precisa implementar um subscript `subscript(dynamicMember:)`.
 
@@ -794,7 +794,7 @@ print(dynamic == equivalent)
 
 A busca dinâmica de membros por key path
 pode ser usada para implementar um tipo wrapper
-de um jeito que oferece suporte à verificação de tipos em tempo de compilação.
+de um jeito que permite a verificação de tipos em tempo de compilação.
 Por exemplo:
 
 ```swift
@@ -882,14 +882,14 @@ https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L10
 
 ### frozen
 
-Aplique este atributo a uma declaração de estrutura ou de enumeração
+Aplique este atributo a uma declaração de struct ou de enum
 para restringir os tipos de alteração que você pode fazer no tipo.
 Esse atributo só é permitido ao compilar no modo de evolução de biblioteca.
 Versões futuras da biblioteca não podem alterar a declaração
 adicionando, removendo ou reordenando
-os casos de uma enumeração
-ou as propriedades de instância armazenadas de uma estrutura.
-Essas alterações são permitidas em tipos não congelados (nonfrozen),
+os casos de um enum
+ou as propriedades de instância armazenadas de uma struct.
+Essas alterações são permitidas em tipos não congelados,
 mas quebram a compatibilidade de ABI para tipos congelados.
 
 <!--
@@ -915,24 +915,24 @@ mas quebram a compatibilidade de ABI para tipos congelados.
 -->
 
 No modo de evolução de biblioteca,
-o código que interage com membros de estruturas e enumerações não congeladas
+o código que interage com membros de structs e enums não congelados
 é compilado de um jeito que permite que ele continue funcionando sem recompilação,
 mesmo que uma versão futura da biblioteca
 adicione, remova ou reordene alguns membros desse tipo.
 O compilador torna isso possível com técnicas como
 buscar informações em tempo de execução
 e adicionar uma camada de indireção.
-Marcar uma estrutura ou uma enumeração como congelada
+Marcar uma struct ou um enum como congelado
 abre mão dessa flexibilidade para ganhar desempenho:
 versões futuras da biblioteca podem fazer apenas alterações limitadas no tipo,
 mas o compilador pode fazer otimizações adicionais
 no código que interage com os membros do tipo.
 
 Tipos congelados,
-os tipos das propriedades armazenadas de estruturas congeladas
-e os valores associados aos casos de enumerações congeladas
+os tipos das propriedades armazenadas de structs congeladas
+e os associated values aos casos de enums congelados
 precisam ser públicos ou estar marcados com o atributo `usableFromInline`.
-As propriedades de uma estrutura congelada não podem ter observadores de propriedade,
+As propriedades de uma struct congelada não podem ter observadores de propriedade,
 e as expressões que fornecem o valor inicial das propriedades de instância armazenadas
 precisam seguir as mesmas restrições das funções inlinable,
 como discutido em <doc:Attributes#inlinable>.
@@ -975,10 +975,10 @@ conforme descrito em [Xcode Help](https://help.apple.com/xcode/mac/current/#/dev
   See <rdar://problem/51929017> TSPL: Give guidance to library authors about @available @frozen and friends
 -->
 
-Uma instrução `switch` sobre uma enumeração congelada não exige um caso `default`,
+Uma instrução switch sobre um enum congelado não exige um caso `default`,
 como discutido em <doc:Statements#Switching-Over-Future-Enumeration-Cases>.
 Incluir um caso `default` ou `@unknown default`
-ao fazer `switch` sobre uma enumeração congelada
+ao fazer `switch` sobre um enum congelado
 gera um aviso, porque esse código nunca é executado.
 
 <!--
@@ -1050,12 +1050,12 @@ Aplicar este atributo também implica o atributo `objc`.
 
 ### globalActor
 
-Aplique este atributo a um actor, estrutura, enumeração ou classe `final`.
+Aplique este atributo a um actor, struct, enum ou classe `final`.
 O tipo precisa definir uma propriedade estática chamada `shared`,
 que fornece uma instância compartilhada de um actor.
 
 Um global actor generaliza o conceito de isolamento de actor
-para estados espalhados por vários lugares do código ---
+para estado espalhado por vários lugares do código ---
 como vários tipos, arquivos e módulos ---
 e torna possível acessar com segurança variáveis globais a partir de código concorrente.
 O actor que o global actor fornece
@@ -1067,7 +1067,7 @@ como código que precisa executar sempre na mesma thread.
 Global actors implicitamente conformam com o protocolo [`GlobalActor`][].
 O main actor é um global actor fornecido pela biblioteca padrão,
 como discutido em <doc:Concurrency#The-Main-Actor>.
-A maioria dos códigos pode usar o main actor em vez de definir um novo global actor.
+A maior parte do código pode usar o main actor em vez de definir um novo global actor.
 
 [`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
@@ -1089,14 +1089,14 @@ sem alterar o arquivo de cabeçalho.
 
 Para declarações definidas em um cabeçalho Objective-C,
 aplique os atributos `objc` e `implementation`
-a uma extensão em Swift que fornece as implementações.
+a uma extension em Swift que fornece as implementações.
 Outros códigos em Swift tratam essas implementações
 como se tivessem sido implementadas em Objective-C e importadas para o Swift.
-A classe que a extensão estende precisa ser importada de Objective-C,
+A classe que a extension estende precisa ser importada de Objective-C,
 não pode ser uma classe raiz
-e não pode usar genéricos leves (lightweight generics).
-A extensão não pode incluir nenhuma conformidade com protocolos.
-Todas as declarações dessa extensão
+e não pode usar lightweight generics.
+A extension não pode incluir nenhuma conformidade com protocolos.
+Todas as declarações dessa extension
 são implicitamente marcadas com o atributo `objc`.
 Por exemplo,
 o cabeçalho Objective-C a seguir declara uma classe com um método:
@@ -1120,7 +1120,7 @@ extension MyClass {
 }
 ```
 
-Um membro da extensão que corresponde a uma declaração no arquivo de cabeçalho
+Um membro da extension que corresponde a uma declaração no arquivo de cabeçalho
 é chamado de *implementação de membro*.
 Para ser considerado correspondente,
 uma implementação de membro precisa atender aos requisitos a seguir:
@@ -1130,7 +1130,7 @@ uma implementação de membro precisa atender aos requisitos a seguir:
   e o atributo `NS_SWIFT_NAME(custom(_:name:))` em Objective-C.
 - Seu tipo corresponde ao tipo da declaração que ela implementa.
   Tipos marcados como `_Nonnull` em Objective-C podem ser implementados em Swift
-  tanto como não opcionais quanto como opcionais implicitamente desembrulhados.
+  tanto como não optionals quanto como implicitly unwrapped optionals.
 - Seu tratamento de erros (`throws`) corresponde ao da declaração que ela implementa.
 - Sua concorrência (`async`) corresponde à da declaração que ela implementa.
   Para um método Objective-C que recebe um completion handler como argumento,
@@ -1145,7 +1145,7 @@ uma implementação de membro precisa atender aos requisitos a seguir:
   que seja incompatível com o membro que ela implementa,
   como o atributo `nonobjc`, o modificador `class` ou a mutabilidade,
 
-Toda implementação de membro na extensão
+Toda implementação de membro na extension
 precisa corresponder a um membro declarado no cabeçalho Objective-C,
 e todo membro declarado nessa categoria Objective-C
 precisa ter uma implementação correspondente em Swift.
@@ -1170,7 +1170,7 @@ https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Objec
 -->
 
 Além das implementações de membros,
-você pode escrever as declarações a seguir na extensão,
+você pode escrever as declarações a seguir na extension,
 mas elas não podem corresponder a uma declaração no cabeçalho Objective-C:
 
 - Sobrescritas de membros da superclasse.
@@ -1191,11 +1191,11 @@ mas elas não podem corresponder a uma declaração no cabeçalho Objective-C:
   e elas são implicitamente marcadas com o atributo `nonobjc`.
   Para inicializadores, você aplica o atributo `nonobjc`.
 
-A extensão pode incluir declarações de propriedades armazenadas e de inicializadores,
+A extension pode incluir declarações de propriedades armazenadas e de inicializadores,
 o que é uma exceção à regra de que
-você não pode declarar propriedades armazenadas ou inicializadores em extensões.
+você não pode declarar propriedades armazenadas ou inicializadores em extensions.
 
-Para especificar uma categoria Objective-C para os membros de uma extensão,
+Para especificar uma categoria Objective-C para os membros de uma extension,
 escreva o nome dela como argumento do atributo `objc`.
 O nome precisa corresponder a uma categoria declarada no arquivo de cabeçalho Objective-C.
 Por exemplo, se o cabeçalho contiver o seguinte:
@@ -1311,7 +1311,7 @@ mesmo que não possam ser marcadas com este atributo.
 
 ### main
 
-Aplique este atributo a uma declaração de estrutura, classe ou enumeração
+Aplique este atributo a uma declaração de struct, classe ou enum
 para indicar que ela contém o ponto de entrada de nível superior do fluxo do programa.
 O tipo precisa fornecer uma função de tipo `main`
 que não recebe argumentos e retorna `Void`.
@@ -1414,9 +1414,9 @@ O atributo `nonobjc` informa ao compilador
 que a declaração deve ficar indisponível em código Objective-C,
 mesmo que seja possível representá-la em Objective-C.
 
-Aplicar este atributo a uma extensão
+Aplicar este atributo a uma extension
 tem o mesmo efeito que aplicá-lo a cada membro
-dessa extensão que não esteja marcado explicitamente com o atributo `objc`.
+dessa extension que não esteja marcado explicitamente com o atributo `objc`.
 
 Você usa o atributo `nonobjc` para resolver a circularidade
 de métodos com ponte (bridging) em uma classe marcada com o atributo `objc`,
@@ -1492,16 +1492,16 @@ Aplicar este atributo também implica o atributo `objc`.
 
 Aplique este atributo a qualquer declaração que possa ser representada em Objective-C ---
 por exemplo, funções globais, classes não aninhadas, protocolos,
-enumerações não genéricas (restritas a tipos de valor bruto inteiros),
+enums não genéricos (restritos a tipos de raw value inteiros),
 propriedades e métodos (incluindo getters e setters) de classes,
-protocolos e membros opcionais de um protocolo,
+protocolos e membros optional de um protocolo,
 inicializadores e subscripts.
 O atributo `objc` informa ao compilador
 que a declaração está disponível para uso em código Objective-C.
 
-Aplicar este atributo a uma extensão
+Aplicar este atributo a uma extension
 tem o mesmo efeito que aplicá-lo a cada membro
-dessa extensão que não esteja marcado explicitamente com o atributo `nonobjc`.
+dessa extension que não esteja marcado explicitamente com o atributo `nonobjc`.
 
 O compilador adiciona implicitamente o atributo `objc`
 às subclasses de qualquer classe definida em Objective-C.
@@ -1523,11 +1523,11 @@ O atributo `objc` também é adicionado implicitamente nos casos a seguir:
   `IBDesignable`, `IBInspectable`,
   `NSManaged` ou `GKInspectable`.
 
-Se você aplicar o atributo `objc` a uma enumeração,
-cada caso da enumeração é exposto ao código Objective-C
-como a concatenação do nome da enumeração com o nome do caso.
+Se você aplicar o atributo `objc` a um enum,
+cada caso do enum é exposto ao código Objective-C
+como a concatenação do nome do enum com o nome do caso.
 A primeira letra do nome do caso fica em maiúscula.
-Por exemplo, um caso chamado `venus` em uma enumeração `Planet` do Swift
+Por exemplo, um caso chamado `venus` em um enum `Planet` do Swift
 é exposto ao código Objective-C como um caso chamado `PlanetVenus`.
 
 O atributo `objc` aceita opcionalmente um único argumento de atributo,
@@ -1535,12 +1535,12 @@ que consiste em um identificador.
 O identificador especifica o nome que será exposto ao Objective-C
 para a entidade à qual o atributo `objc` se aplica.
 Você pode usar esse argumento para dar nome a
-funções globais, classes, enumerações, casos de enumeração, protocolos,
+funções globais, classes, enums, casos de enum, protocolos,
 métodos, getters, setters e inicializadores.
-Você também pode usar esse argumento em uma extensão,
-para especificar a categoria Objective-C dos membros da extensão.
+Você também pode usar esse argumento em uma extension,
+para especificar a categoria Objective-C dos membros da extension.
 Se você especificar o nome em Objective-C
-de uma classe, protocolo ou enumeração,
+de uma classe, protocolo ou enum,
 inclua um prefixo de três letras no nome,
 como descrito em [Convenções](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1)
 em [Programming with Objective-C](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210).
@@ -1597,12 +1597,12 @@ Para mais informações, veja
 Aplique este atributo a uma declaração de classe
 para aplicar implicitamente o atributo `objc`
 a todos os membros da classe compatíveis com Objective-C,
-às suas extensões, às suas subclasses e a todas as extensões das suas subclasses.
+às suas extensions, às suas subclasses e a todas as extensions das suas subclasses.
 
 A maior parte do código deve usar o atributo `objc`,
 para expor apenas as declarações que são necessárias.
 Se você precisar expor muitas declarações,
-pode agrupá-las em uma extensão que tenha o atributo `objc`.
+pode agrupá-las em uma extension que tenha o atributo `objc`.
 O atributo `objcMembers` é uma conveniência para
 bibliotecas que usam muito
 os recursos de introspecção do runtime do Objective-C.
@@ -1624,8 +1624,8 @@ Você pode aplicar este atributo
 aos seguintes tipos de declaração:
 
 - Declarações `import`
-- Estruturas, classes e actors
-- Enumerações e casos de enumeração
+- Structs, classes e actors
+- Enums e casos de enum
 - Protocolos
 - Variáveis e constantes
 - Subscripts
@@ -1642,7 +1642,7 @@ podem ser usados em um contexto que exige tipos sendable.
 
 Em outras declarações,
 este atributo reduz o rigor da verificação de concorrência
-para o código que usa o símbolo sendo declarado.
+para o código que usa o símbolo que está sendo declarado.
 Quando você usa esse símbolo em um escopo com verificação mínima de concorrência,
 restrições relacionadas à concorrência especificadas por esse símbolo,
 como requisitos `Sendable` ou global actors,
@@ -1656,7 +1656,7 @@ para ajudar na migração do código para a verificação estrita de concorrênc
    para os módulos que ainda não ativaram a verificação estrita.
 1. Depois de migrar um módulo para a verificação estrita,
    remova o atributo `preconcurrency`.
-   O compilador avisa você sobre
+   O compilador emite um aviso sobre
    qualquer lugar em que o atributo `preconcurrency` em um import
    não tenha mais efeito e deva ser removido.
 
@@ -1672,11 +1672,11 @@ como se estivessem marcadas com o atributo `preconcurrency`.
 
 ### propertyWrapper
 
-Aplique este atributo a uma declaração de classe, estrutura ou enumeração
+Aplique este atributo a uma declaração de classe, struct ou enum
 para usar esse tipo como property wrapper.
 Quando você aplica este atributo a um tipo,
 cria um atributo personalizado com o mesmo nome do tipo.
-Aplique esse novo atributo a uma propriedade de classe, estrutura ou enumeração
+Aplique esse novo atributo a uma propriedade de classe, struct ou enum
 para envolver o acesso à propriedade por meio de uma instância do tipo wrapper;
 aplique o atributo a uma declaração de variável armazenada local
 para envolver o acesso à variável do mesmo jeito.
@@ -1733,7 +1733,7 @@ O *valor encapsulado* da propriedade
 Na maioria dos casos, `wrappedValue` é um valor computado,
 mas pode ser um valor armazenado.
 O wrapper define e gerencia
-qualquer armazenamento subjacente necessário para o seu valor encapsulado.
+qualquer armazenamento subjacente necessário para o valor encapsulado.
 O compilador sintetiza o armazenamento para a instância do tipo wrapper
 adicionando um sublinhado (`_`) antes do nome da propriedade encapsulada ---
 por exemplo, o wrapper de `someProperty` é armazenado como `_someProperty`.
@@ -1915,12 +1915,12 @@ se refere ao seu valor projetado.
 
 ### resultBuilder
 
-Aplique este atributo a uma classe, estrutura ou enumeração
+Aplique este atributo a uma classe, struct ou enum
 para usar esse tipo como result builder.
 Um *result builder* é um tipo
 que constrói uma estrutura de dados aninhada passo a passo.
 Você usa result builders para implementar uma linguagem específica de domínio (DSL)
-para criar estruturas de dados aninhadas de forma natural e declarativa.
+para criar structs de dados aninhadas de forma natural e declarativa.
 Para um exemplo de como usar o atributo `resultBuilder`,
 veja <doc:AdvancedOperators#Result-Builders>.
 
@@ -1945,15 +1945,15 @@ para o tipo da entrada do result builder,
 `Component` é um marcador para o tipo de um resultado parcial,
 e `FinalResult` é um marcador
 para o tipo do resultado que o result builder produz.
-Você substitui esses tipos pelos tipos reais que o seu result builder usa.
+Você substitui esses tipos pelos tipos reais que seu result builder usa.
 Se os seus métodos de construção de resultado
 não especificarem um tipo para `Expression` ou `FinalResult`,
-eles assumem o mesmo tipo de `Component`.
+eles usam, por padrão, o mesmo tipo de `Component`.
 
 Os métodos de construção de blocos são os seguintes:
 
 - term `static func buildBlock(_ components: Component...) -> Component`:
-  Combina uma matriz de resultados parciais em um único resultado parcial.
+  Combina um array de resultados parciais em um único resultado parcial.
 
 - term `static func buildPartialBlock(first: Component) -> Component`:
   Constrói um componente de resultado parcial a partir do primeiro componente.
@@ -2000,7 +2000,7 @@ Os métodos adicionais de construção de resultado são os seguintes:
   e a instruções `if` que incluem uma cláusula `else`.
 
 - term `static func buildArray(_ components: [Component]) -> Component`:
-  Constrói um resultado parcial a partir de uma matriz de resultados parciais.
+  Constrói um resultado parcial a partir de um array de resultados parciais.
   Implemente este método para oferecer suporte a laços `for`.
 
 - term `static func buildExpression(_ expression: Expression) -> Component`:
@@ -2022,7 +2022,7 @@ Os métodos adicionais de construção de resultado são os seguintes:
   que faz uma verificação de disponibilidade.
 
 Por exemplo, o código abaixo define um result builder simples
-que constrói uma matriz de inteiros.
+que constrói um array de inteiros.
 Este código define `Component` e `Expression` como aliases de tipo,
 para facilitar a correspondência dos exemplos abaixo com a lista de métodos acima.
 
@@ -2195,13 +2195,13 @@ em código que chama os métodos estáticos do tipo result builder:
   porque é um dos tipos no tipo genérico `DrawEither`.
   Isso pode fazer seu programa travar se `FutureText`
   não estiver disponível em tempo de execução,
-  mesmo no caso em que esse tipo explicitamente não está sendo usado.
+  mesmo que esse tipo não seja usado explicitamente.
 
   Para resolver esse problema,
   implemente um método `buildLimitedAvailability(_:)`
   para apagar as informações de tipo, retornando um tipo que está sempre disponível.
   Por exemplo, o código abaixo constrói um valor `AnyDrawable`
-  a partir da sua verificação de disponibilidade.
+  a partir da verificação de disponibilidade.
 
   ```swift
   struct AnyDrawable: Drawable {
@@ -2463,8 +2463,8 @@ em código que chama os métodos estáticos do tipo result builder:
 - Um laço `for` se torna uma variável temporária, um laço `for`
   e uma chamada ao método `buildArray(_:)`.
   O novo laço `for` percorre a sequência
-  e adiciona cada resultado parcial a essa matriz.
-  A matriz temporária é passada como argumento na chamada a `buildArray(_:)`.
+  e adiciona cada resultado parcial a esse array.
+  O array temporário é passado como argumento na chamada a `buildArray(_:)`.
   Por exemplo, as declarações a seguir são equivalentes:
 
   ```swift
@@ -2614,7 +2614,7 @@ em código que chama os métodos estáticos do tipo result builder:
 
 Embora o comportamento das transformações seja descrito em termos de variáveis temporárias,
 usar um result builder não cria, de fato, nenhuma declaração nova
-que seja visível para o resto do seu código.
+que seja visível para o resto do código.
 
 Você não pode usar
 instruções `break`, `continue`, `defer`, `guard` ou `return`,
@@ -2680,7 +2680,7 @@ o que pode afetar a compatibilidade de código-fonte.
 
 Aplique este atributo a uma declaração de classe
 para exigir que todas as propriedades armazenadas dentro da classe
-forneçam valores padrão como parte das suas definições.
+forneçam valores padrão como parte de suas definições.
 Este atributo é inferido para qualquer classe
 que herde de `NSManagedObject`.
 
@@ -2708,7 +2708,7 @@ que herde de `NSManagedObject`.
 ### testable
 
 Aplique este atributo a uma declaração `import`
-para importar esse módulo com alterações no seu controle de acesso
+para importar esse módulo com alterações em seu controle de acesso
 que simplificam os testes do código do módulo.
 Entidades do módulo importado
 que estão marcadas com o modificador de nível de acesso `internal`
@@ -2736,7 +2736,7 @@ Se você não usar este atributo,
 forneça um arquivo `main.swift` com código no nível superior
 que chame a função [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/uiapplicationmain(_:_:_:_:)-1yub7).
 Por exemplo,
-se o seu app usar uma subclasse personalizada de `UIApplication`
+se seu app usar uma subclasse personalizada de `UIApplication`
 como classe principal,
 chame a função `UIApplicationMain(_:_:_:_:)`
 em vez de usar este atributo.
@@ -2751,7 +2751,7 @@ Aplique este atributo a um tipo de protocolo
 como parte da lista de protocolos adotados por uma declaração de tipo
 para desligar a aplicação dos requisitos desse protocolo.
 
-O único protocolo suportado é [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
+O único protocolo aceito é [`Sendable`](https://developer.apple.com/documentation/swift/sendable).
 
 ### usableFromInline
 
@@ -2760,11 +2760,11 @@ inicializador ou desinicializador
 para permitir que esse símbolo seja usado em código inlinable
 definido no mesmo módulo da declaração.
 A declaração precisa ter o modificador de nível de acesso `internal`.
-Uma estrutura ou classe marcada com `usableFromInline`
+Uma struct ou classe marcada com `usableFromInline`
 só pode usar tipos que sejam públicos ou `usableFromInline` em suas propriedades.
-Uma enumeração marcada com `usableFromInline`
+Um enum marcado com `usableFromInline`
 só pode usar tipos que sejam públicos ou `usableFromInline`
-para os valores brutos e os valores associados dos seus casos.
+para os raw values e os associated values dos seus casos.
 
 Assim como o modificador de nível de acesso `public`,
 este atributo
@@ -2812,7 +2812,7 @@ quanto um método
 para sequências com elementos comparáveis.
 O método da sequência é declarado com o atributo `warn_unqualified_access`
 para ajudar a reduzir a confusão
-ao tentar usar um ou outro dentro de uma extensão de `Sequence`.
+ao tentar usar um ou outro dentro de uma extension de `Sequence`.
 
 ### Atributos de declaração usados pelo Interface Builder
 
@@ -2821,7 +2821,7 @@ usados pelo Interface Builder para sincronizar com o Xcode.
 O Swift fornece os seguintes atributos do Interface Builder:
 `IBAction`, `IBSegueAction`, `IBOutlet`,
 `IBDesignable` e `IBInspectable`.
-Esses atributos são conceitualmente iguais aos seus
+Esses atributos são conceitualmente iguais aos
 equivalentes em Objective-C.
 
 <!--
@@ -2920,7 +2920,7 @@ Você pode aplicar atributos de caso de switch apenas a casos de switch.
 
 Aplique este atributo a um caso de switch
 para indicar que não se espera que ele seja correspondido
-por nenhum caso da enumeração conhecida
+por nenhum caso conhecido do enum
 no momento em que o código é compilado.
 Para um exemplo de como usar o atributo `unknown`,
 veja <doc:Statements#Switching-Over-Future-Enumeration-Cases>.

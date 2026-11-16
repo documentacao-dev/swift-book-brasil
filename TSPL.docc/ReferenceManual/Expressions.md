@@ -74,7 +74,7 @@ try <#expression#>
 
 O valor de uma expressão `try` é o valor da *expressão*.
 
-Uma *expressão try opcional* consiste no operador `try?`
+Uma *expressão optional-try* consiste no operador `try?`
 seguido de uma expressão que pode lançar um erro.
 Ela tem a seguinte forma:
 
@@ -83,9 +83,9 @@ try? <#expression#>
 ```
 
 Se a *expressão* não lançar um erro,
-o valor da expressão try opcional
+o valor da expressão optional-try
 é um optional que contém o valor da *expressão*.
-Caso contrário, o valor da expressão try opcional é `nil`.
+Caso contrário, o valor da expressão optional-try é `nil`.
 
 Uma *expressão try forçada* consiste no operador `try!`
 seguido de uma expressão que pode lançar um erro.
@@ -97,7 +97,7 @@ try! <#expression#>
 
 O valor de uma expressão try forçada é o valor da *expressão*.
 Se a *expressão* lançar um erro,
-um erro de tempo de execução é gerado.
+ocorre um erro de tempo de execução.
 
 Quando a expressão do lado esquerdo de um operador infixo
 é marcada com `try`, `try?` ou `try!`,
@@ -374,7 +374,7 @@ O operador de atribuição não retorna nenhum valor.
 
 ### Operador condicional ternário
 
-O *operador condicional ternário* avalia para um de dois valores dados,
+O *operador condicional ternário* resulta em um de dois valores dados,
 com base no valor de uma condição.
 Ele tem a seguinte forma:
 
@@ -494,29 +494,29 @@ da biblioteca padrão do Swift, como `String`,
 como o tipo correspondente do Foundation, como `NSString`,
 sem precisar criar uma nova instância.
 Para mais informações sobre bridging,
-veja [Trabalhando com tipos do Foundation](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
+veja [Trabalhar com tipos do Foundation](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types).
 
 O operador `as?` realiza uma conversão condicional
 da *expressão* para o *tipo* especificado.
 O operador `as?` retorna um optional do *tipo* especificado.
 Em tempo de execução, se a conversão tiver sucesso,
-o valor da *expressão* é embrulhado em um optional e retornado;
+o valor da *expressão* é colocado dentro de um optional e retornado;
 caso contrário, o valor retornado é `nil`.
 Se a conversão para o *tipo* especificado
 for garantidamente falha ou garantidamente bem-sucedida,
-um erro de compilação é gerado.
+o compilador gera um erro.
 
 O operador `as!` realiza uma conversão forçada
 da *expressão* para o *tipo* especificado.
 O operador `as!` retorna um valor do *tipo* especificado, não um tipo optional.
-Se a conversão falhar, um erro de tempo de execução é gerado.
+Se a conversão falhar, ocorre um erro de tempo de execução.
 O comportamento de `x as! T` é o mesmo de `(x as? T)!`.
 
 Para mais informações sobre conversão de tipos
 e para ver exemplos que usam os operadores de conversão,
 veja <doc:TypeCasting>.
 
-> Gramática de um operador type-casting:
+> Gramática de um operador de conversão de tipo:
 >
 > *type-casting-operator* → **`is`** *type* \
 > *type-casting-operator* → **`as`** *type* \
@@ -632,8 +632,8 @@ Ele tem a seguinte forma:
 
 A última expressão do dicionário pode ser seguida de uma vírgula opcional.
 O valor de um literal de dicionário tem o tipo `[Key: Value]`,
-em que `Key` é o tipo das suas expressões de chave
-e `Value` é o tipo das suas expressões de valor.
+em que `Key` é o tipo das expressões de chave
+e `Value` é o tipo das expressões de valor.
 Se houver expressões de vários tipos,
 `Key` e `Value` são o supertipo comum mais próximo de seus respectivos valores.
 Um literal de dicionário vazio é escrito como dois-pontos dentro de um par de colchetes (`[:]`),
@@ -703,8 +703,8 @@ Em um inicializador, em um subscript ou em um método de instância,
 Em um método de tipo,
 `self` se refere ao tipo atual em que ocorre.
 
-A expressão `self` é usada para especificar o escopo ao acessar membros,
-fornecendo desambiguação quando há outra variável com o mesmo nome no escopo,
+A expressão `self` serve para especificar o escopo ao acessar membros e
+desfazer a ambiguidade quando há outra variável com o mesmo nome no escopo,
 como um parâmetro de função.
 Por exemplo:
 
@@ -772,7 +772,7 @@ struct Point {
 
 ### Expressão superclass
 
-Uma *expressão superclass* permite que uma classe interaja com a sua superclasse.
+Uma *expressão superclass* permite que uma classe interaja com a superclasse.
 Ela tem uma das seguintes formas:
 
 ```swift
@@ -799,7 +799,7 @@ para aproveitar a implementação da superclasse.
 
 ### Expressão condicional
 
-Uma *expressão condicional* avalia para um de vários valores dados,
+Uma *expressão condicional* resulta em um de vários valores dados,
 com base no valor de uma condição.
 Ela tem uma das seguintes formas:
 
@@ -839,9 +839,9 @@ o que garante que a expressão sempre produz um valor,
 independentemente da condição.
 Isso significa que cada ramo `if` precisa de um ramo `else` correspondente.
 
-Cada ramo contém uma única expressão,
-que é usada como valor da expressão condicional
-quando a condição desse ramo é verdadeira,
+Cada ramo contém uma única expressão
+(usada como valor da expressão condicional
+quando a condição desse ramo é verdadeira),
 uma instrução `throw`
 ou uma chamada a uma função que nunca retorna.
 
@@ -864,7 +864,7 @@ expressões condicionais só podem aparecer
 como valor inicial de uma variável ou constante.
 Esse comportamento significa que, quando você escreve `if` ou `switch` em um result builder,
 fora de uma declaração de variável ou constante,
-esse código é entendido como uma instrução de ramificação,
+o compilador interpreta esse código como uma instrução de ramificação,
 e um dos métodos do result builder transforma esse código.
 
 Não coloque uma expressão condicional dentro de uma expressão `try`,
@@ -911,27 +911,27 @@ marca explicitamente o closure como capaz de lançar erros ou como assíncrono.
 
 Se o corpo de um closure incluir uma instrução `throw` ou uma expressão `try`
 que não esteja aninhada dentro de uma instrução `do` com tratamento de erros exaustivo,
-o closure é entendido como lançador de erros.
-Se um closure lançador lançar erros de um único tipo,
-ele é entendido como lançador desse tipo de erro;
-caso contrário, é entendido como lançador de `any Error`.
+o compilador trata o closure como capaz de lançar erros.
+Se esse closure lançar erros de um único tipo,
+o compilador o trata como lançador desse tipo de erro;
+caso contrário, o trata como lançador de `any Error`.
 Da mesma forma, se o corpo incluir uma expressão `await`,
-ele é entendido como assíncrono.
+o compilador o trata como assíncrono.
 
 Há várias formas especiais que permitem escrever closures de forma mais concisa:
 
 <!-- Apple Books screenshot ends here. -->
 
-- Um closure pode omitir os tipos dos seus parâmetros, o tipo de retorno ou ambos.
+- Um closure pode omitir os tipos dos parâmetros, o tipo de retorno ou ambos.
   Se você omitir os nomes dos parâmetros e os dois tipos,
   omita a palavra-chave `in` antes das instruções.
   Se os tipos omitidos não puderem ser inferidos,
-  um erro de compilação é gerado.
-- Um closure pode omitir os nomes dos seus parâmetros.
+  o compilador gera um erro.
+- Um closure pode omitir os nomes dos parâmetros.
   Os parâmetros são então nomeados implicitamente
   com `$` seguido da posição deles:
   `$0`, `$1`, `$2` e assim por diante.
-- Um closure formado por uma única expressão é entendido como retornando o valor dessa expressão.
+- Um closure formado por uma única expressão retorna o valor dessa expressão.
   O conteúdo dessa expressão também é considerado
   ao realizar a inferência de tipo da expressão que a envolve.
 
@@ -992,7 +992,7 @@ Para mais informações sobre closures escaping, veja <doc:Closures#Escaping-Clo
 
 Por padrão, uma expressão de closure captura
 constantes e variáveis do escopo que a envolve
-com referências fortes a esses valores.
+com strong references a esses valores.
 Você pode usar uma *lista de captura* para controlar explicitamente
 como os valores são capturados em um closure.
 
@@ -1146,7 +1146,7 @@ closure()
 
 Se o tipo do valor da expressão for uma classe,
 você pode marcar a expressão em uma lista de captura com `weak` ou `unowned`
-para capturar uma referência fraca ou não proprietária ao valor da expressão.
+para capturar uma weak reference ou unowned reference ao valor da expressão.
 
 ```swift
 myFunction { print(self.title) }                    // implicit strong capture
@@ -1179,7 +1179,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 Você também pode vincular uma expressão arbitrária
 a um valor nomeado em uma lista de captura.
 A expressão é avaliada quando o closure é criado,
-e o valor é capturado com a força especificada.
+e o valor é capturado com o tipo de referência especificado (strong, weak ou unowned).
 Por exemplo:
 
 ```swift
@@ -1251,8 +1251,8 @@ veja <doc:AutomaticReferenceCounting#Resolving-Strong-Reference-Cycles-for-Closu
 ### Expressão de membro implícito
 
 Uma *expressão de membro implícito* é uma forma abreviada de acessar um membro de um tipo,
-como um caso de enumeração ou um método de tipo,
-em um contexto em que a inferência de tipo consegue determinar o tipo implícito.
+como um caso de enum ou um método de tipo,
+em um contexto em que a inferência de tipos consegue determinar o tipo implícito.
 Ela tem a seguinte forma:
 
 ```swift
@@ -1277,7 +1277,7 @@ x = .anotherValue
 -->
 
 Se o tipo inferido for um optional,
-você também pode usar um membro do tipo não opcional
+você também pode usar um membro do tipo não optional
 em uma expressão de membro implícito.
 
 ```swift
@@ -1299,12 +1299,12 @@ Isso se chama *expressão de membro implícito encadeada*.
 Embora seja comum que todas as expressões pós-fixas encadeadas
 tenham o mesmo tipo,
 o único requisito é que a expressão de membro implícito encadeada inteira
-seja conversível para o tipo implícito pelo contexto.
+seja conversível para o tipo que o contexto implica.
 Especificamente,
 se o tipo implícito for um optional,
-você pode usar um valor do tipo não opcional;
+você pode usar um valor do tipo não optional;
 e se o tipo implícito for um tipo classe,
-você pode usar um valor de uma das suas subclasses.
+você pode usar um valor de uma de suas subclasses.
 Por exemplo:
 
 ```swift
@@ -1344,7 +1344,7 @@ let z: SomeClass = .sharedSubclass
 -->
 
 No código acima,
-o tipo de `x` corresponde exatamente ao tipo implícito pelo contexto,
+o tipo de `x` corresponde exatamente ao tipo que o contexto implica,
 o tipo de `y` é conversível de `SomeClass` para `SomeClass?`,
 e o tipo de `z` é conversível de `SomeSubclass` para `SomeClass`.
 
@@ -1577,7 +1577,7 @@ e colocando-os nos seus lugares correspondentes na AST.
 
 Para uma visão geral das macros em Swift, veja <doc:Macros>.
 
-> Gramática de uma expressão macro-expansion:
+> Gramática de uma expressão de expansão de macro:
 >
 > *macro-expansion-expression* → **`#`** *identifier* *generic-argument-clause*_?_ *function-call-argument-clause*_?_ *trailing-closures*_?_
 
@@ -1646,7 +1646,7 @@ let value = s[keyPath: pathToProperty]
 -->
 
 O *nome do tipo* pode ser omitido
-em contextos em que a inferência de tipo consegue determinar o tipo implícito.
+em contextos em que a inferência de tipos consegue determinar o tipo implícito.
 O código a seguir usa `\.someProperty`
 em vez de `\SomeClass.someProperty`:
 
@@ -1838,7 +1838,7 @@ print(fn(greetings))
 
 O *caminho* pode usar optional chaining e force unwrapping.
 Este código usa optional chaining em um key path
-para acessar uma propriedade de uma string opcional:
+para acessar uma propriedade de uma string optional:
 
 ```swift
 let firstGreeting: String? = greetings.first
@@ -2006,7 +2006,7 @@ Para informações sobre key-value coding e key-value observing,
 veja [Guia de programação de Key-Value Coding](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)
 e [Guia de programação de Key-Value Observing](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i).
 
-> Gramática de uma expressão key-path:
+> Gramática de uma expressão de key path:
 >
 > *key-path-expression* → **`\`** *type*_?_ **`.`** *key-path-components* \
 > *key-path-components* → *key-path-component* | *key-path-component* **`.`** *key-path-components* \
@@ -2108,7 +2108,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 
 Como um seletor é criado em tempo de compilação, não em tempo de execução,
 o compilador consegue verificar se um método ou uma propriedade existe
-e se eles estão expostos ao runtime do Objective-C.
+e se estão expostos ao runtime do Objective-C.
 
 > Nota: Embora o *nome do método* e o *nome da propriedade* sejam expressões,
 > elas nunca são avaliadas.
@@ -2226,14 +2226,14 @@ e [Guia de programação de Key-Value Observing](https://developer.apple.com/lib
 
 > Nota: Embora o *nome da propriedade* seja uma expressão, ela nunca é avaliada.
 
-> Gramática de uma expressão key-path string:
+> Gramática de uma expressão de string de key path:
 >
 > *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
 
 ## Expressões pós-fixas
 
 *Expressões pós-fixas* são formadas
-aplicando um operador pós-fixo ou outra sintaxe pós-fixa a uma expressão.
+pela aplicação de um operador pós-fixo ou de outra sintaxe pós-fixa a uma expressão.
 Sintaticamente, toda expressão primária também é uma expressão pós-fixa.
 
 Para informações sobre o comportamento desses operadores,
@@ -2284,10 +2284,10 @@ O último argumento entre parênteses pode ser seguido de uma vírgula opcional.
 
 Uma expressão de chamada de função pode incluir trailing closures,
 na forma de expressões de closure imediatamente após o parêntese de fechamento.
-Os trailing closures são entendidos como argumentos da função,
+Os trailing closures funcionam como argumentos da função,
 adicionados depois do último argumento entre parênteses.
 O primeiro closure não tem rótulo;
-qualquer closure adicional é precedido pelo rótulo do seu argumento.
+qualquer closure adicional é precedido pelo rótulo do argumento.
 O exemplo abaixo mostra as versões equivalentes de chamadas de função
 que usam e que não usam a sintaxe de trailing closure:
 
@@ -2438,10 +2438,10 @@ o closure é embrulhado em `Optional` automaticamente.
 -->
 
 Para facilitar a migração de código de versões do Swift anteriores à 5.3,
-que fazia essa correspondência da direita para a esquerda,
+que faziam essa correspondência da direita para a esquerda,
 o compilador verifica as duas ordens, da esquerda para a direita e da direita para a esquerda.
 Se as direções de varredura produzirem resultados diferentes,
-a ordem antiga, da direita para a esquerda, é usada
+o compilador usa a ordem antiga, da direita para a esquerda,
 e o compilador gera um aviso.
 Uma versão futura do Swift sempre usará a ordem da esquerda para a direita.
 
@@ -2499,7 +2499,7 @@ Uma versão futura do Swift vai imprimir “110 -”.
   because the regex heuristics gets the close quote wrong.
 -->
 
-Uma classe, uma estrutura ou um tipo enumeração
+Uma classe, uma struct ou um tipo enum
 pode habilitar açúcar sintático para a sintaxe de chamada de função
 ao declarar um de vários métodos,
 como descrito em <doc:Declarations#Methods-with-Special-Names>.
@@ -2550,13 +2550,13 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 Um ponteiro criado por essas conversões implícitas
 é válido apenas durante a chamada de função.
 Para evitar comportamento indefinido,
-garanta que seu código nunca persista o ponteiro depois que a chamada de função terminar.
+garanta que o código nunca guarde o ponteiro depois que a chamada de função terminar.
 
 > Nota: Ao converter implicitamente um array para um ponteiro não seguro,
 > o Swift garante que o armazenamento do array seja contíguo,
 > convertendo ou copiando o array quando necessário.
 > Por exemplo, você pode usar essa sintaxe com um array que teve ponte com `Array`
-> a partir de uma subclasse de `NSArray` que não faz nenhum contrato de API sobre o seu armazenamento.
+> a partir de uma subclasse de `NSArray` que não dá nenhuma garantia de API sobre o armazenamento.
 > Se você precisar garantir que o armazenamento do array já seja contíguo,
 > para que a conversão implícita nunca precise fazer esse trabalho,
 > use `ContiguousArray` em vez de `Array`.
@@ -2734,7 +2734,7 @@ e o identificador do membro dele.
 ```
 
 Os membros de um tipo nomeado são definidos
-como parte da declaração ou da extensão do tipo.
+como parte da declaração ou da extension do tipo.
 Por exemplo:
 
 ```swift
@@ -2784,7 +2784,7 @@ incluem membros que são buscados em tempo de execução,
 como descrito em <doc:Attributes>.
 
 Para distinguir métodos ou inicializadores
-cujos nomes diferem apenas pelos nomes dos seus argumentos,
+cujos nomes diferem apenas pelos nomes dos argumentos,
 inclua os nomes dos argumentos entre parênteses,
 com cada nome de argumento seguido de dois-pontos (`:`).
 Escreva um sublinhado (`_`) para um argumento sem nome.
@@ -2921,7 +2921,7 @@ Ele também pode conter
 outro bloco de compilação condicional,
 ou uma combinação dessas expressões e blocos.
 
-Você pode usar essa sintaxe em qualquer lugar em que pode escrever
+Você pode usar essa sintaxe em qualquer lugar em que você possa escrever
 uma expressão de membro explícito,
 e não apenas em código de nível superior.
 
@@ -3004,10 +3004,10 @@ Ela tem as seguintes formas:
 <#type#>.self
 ```
 
-A primeira forma avalia para o valor da *expressão*.
-Por exemplo, `x.self` avalia para `x`.
+A primeira forma resulta no valor da *expressão*.
+Por exemplo, `x.self` resulta em `x`.
 
-A segunda forma avalia para o valor do *tipo*.
+A segunda forma resulta no valor do *tipo*.
 Use essa forma para acessar um tipo como valor.
 Por exemplo, como `SomeClass.self` avalia para o próprio tipo `SomeClass`,
 você pode passá-lo a uma função ou método que aceita um argumento de nível de tipo.
@@ -3080,8 +3080,8 @@ Ela tem a seguinte forma:
 ```
 
 Se o valor da *expressão* não for `nil`,
-o valor optional é desembrulhado e retornado com o tipo não opcional correspondente.
-Caso contrário, um erro de tempo de execução é gerado.
+o valor optional é desembrulhado e retornado com o tipo não optional correspondente.
+Caso contrário, ocorre um erro de tempo de execução.
 
 O valor desembrulhado de uma expressão de valor forçado pode ser modificado,
 seja mutando o próprio valor,
@@ -3121,7 +3121,7 @@ someDictionary["a"]![0] = 100
 ### Expressão de optional chaining
 
 Uma *expressão de optional chaining* oferece uma sintaxe simplificada
-para usar valores opcionais em expressões pós-fixas.
+para usar valores optional em expressões pós-fixas.
 Ela tem a seguinte forma:
 
 ```swift

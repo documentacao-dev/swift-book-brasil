@@ -3,7 +3,7 @@
 Defina os valores iniciais das propriedades armazenadas de um tipo e execute a configuração feita uma única vez.
 
 *Inicialização* é o processo de preparar uma instância
-de uma classe, estrutura ou enumeração para uso.
+de uma classe, struct ou enum para uso.
 Esse processo envolve atribuir um valor inicial a cada propriedade armazenada dessa instância
 e executar qualquer outra configuração ou inicialização necessária
 antes que a nova instância esteja pronta para uso.
@@ -21,9 +21,9 @@ Para mais informações sobre desinicializadores, consulte <doc:Deinitialization
 
 ## Definindo valores iniciais para propriedades armazenadas
 
-Classes e estruturas *devem* definir todas as suas propriedades armazenadas
+Classes e structs *devem* definir todas as suas propriedades armazenadas
 com um valor inicial adequado até o momento em que
-uma instância dessa classe ou estrutura é criada.
+uma instância dessa classe ou struct é criada.
 Propriedades armazenadas não podem ficar em estado indeterminado.
 
 Você pode definir um valor inicial para uma propriedade armazenada dentro de um inicializador,
@@ -59,9 +59,9 @@ init() {
   ```
 -->
 
-O exemplo a seguir define uma nova estrutura chamada `Fahrenheit`
+O exemplo a seguir define uma nova struct chamada `Fahrenheit`
 para armazenar temperaturas expressas na escala Fahrenheit.
-A estrutura `Fahrenheit` tem uma propriedade armazenada,
+A struct `Fahrenheit` tem uma propriedade armazenada,
 `temperature`, do tipo `Double`:
 
 ```swift
@@ -92,7 +92,7 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
   ```
 -->
 
-A estrutura define um único inicializador, `init`, sem parâmetros,
+A struct define um único inicializador, `init`, sem parâmetros,
 que inicializa a temperatura armazenada com o valor `32.0`
 (o ponto de congelamento da água em graus Fahrenheit).
 
@@ -114,7 +114,7 @@ no momento em que ela é definida.
 > O valor padrão também facilita aproveitar os inicializadores padrão
 > e a herança de inicializadores, conforme descrito mais adiante neste capítulo.
 
-Você pode escrever a estrutura `Fahrenheit` de cima de um jeito mais simples,
+Você pode escrever a struct `Fahrenheit` de cima de um jeito mais simples,
 fornecendo um valor padrão para a propriedade `temperature`
 no ponto em que a propriedade é declarada:
 
@@ -148,11 +148,11 @@ para definir os tipos e nomes dos valores que personalizam o processo de inicial
 Os parâmetros de inicialização têm as mesmas capacidades e a mesma sintaxe
 que os parâmetros de funções e métodos.
 
-O exemplo a seguir define uma estrutura chamada `Celsius`,
+O exemplo a seguir define uma struct chamada `Celsius`,
 que armazena temperaturas expressas em graus Celsius.
-A estrutura `Celsius` implementa dois inicializadores personalizados chamados
+A struct `Celsius` implementa dois inicializadores personalizados chamados
 `init(fromFahrenheit:)` e `init(fromKelvin:)`,
-que inicializam uma nova instância da estrutura
+que inicializam uma nova instância da struct
 com um valor de outra escala de temperatura:
 
 ```swift
@@ -220,7 +220,7 @@ têm um papel especialmente importante para identificar qual inicializador deve 
 Por esse motivo, o Swift fornece um rótulo de argumento automático
 para *cada* parâmetro de um inicializador caso você não forneça um.
 
-O exemplo a seguir define uma estrutura chamada `Color`,
+O exemplo a seguir define uma struct chamada `Color`,
 com três propriedades constantes chamadas `red`, `green` e `blue`.
 Essas propriedades armazenam um valor entre `0.0` e `1.0`
 para indicar a quantidade de vermelho, verde e azul na cor.
@@ -367,8 +367,8 @@ para que ele possa ser chamado fornecendo um valor `Double` sem nome.
 
 ### Tipos optional de propriedade
 
-Se o seu tipo personalizado tem uma propriedade armazenada que logicamente pode ter “nenhum valor”,
-talvez porque ela não possa ter o valor definido durante a inicialização,
+Se seu tipo personalizado tem uma propriedade armazenada que logicamente pode ter “nenhum valor”,
+talvez porque o valor dela não possa ser definido durante a inicialização,
 ou porque pode ficar com “nenhum valor” em algum momento posterior,
 declare a propriedade com um tipo *optional*.
 Propriedades de tipo optional são inicializadas automaticamente com o valor `nil`,
@@ -526,7 +526,7 @@ beetsQuestion.response = "I also like beets. (But not with cheese.)"
 ## Inicializadores padrão
 
 O Swift fornece um *inicializador padrão*
-para qualquer estrutura ou classe
+para qualquer struct ou classe
 que forneça valores padrão para todas as suas propriedades
 e não forneça pelo menos um inicializador por conta própria.
 O inicializador padrão simplesmente cria uma nova instância
@@ -584,12 +584,12 @@ para criar uma nova instância da classe com a sintaxe de inicializador,
 escrita como `ShoppingListItem()`,
 e atribui essa nova instância a uma variável chamada `item`.
 
-### Inicializadores memberwise para estruturas
+### Inicializadores memberwise para structs
 
-Tipos de estrutura recebem automaticamente um *inicializador memberwise*
+Tipos de struct recebem automaticamente um *inicializador memberwise*
 se não definirem nenhum inicializador personalizado próprio.
 Diferentemente de um inicializador padrão,
-a estrutura recebe um inicializador memberwise
+a struct recebe um inicializador memberwise
 mesmo que tenha propriedades armazenadas sem valores padrão.
 
 <!--
@@ -605,16 +605,16 @@ mesmo que tenha propriedades armazenadas sem valores padrão.
 -->
 
 O inicializador memberwise é uma forma abreviada
-de inicializar as propriedades-membro de novas instâncias de estrutura.
+de inicializar as propriedades-membro de novas instâncias de struct.
 Os valores iniciais das propriedades da nova instância
 podem ser passados ao inicializador memberwise pelo nome.
 
-O exemplo a seguir define uma estrutura chamada `Size`
+O exemplo a seguir define uma struct chamada `Size`
 com duas propriedades chamadas `width` e `height`.
 Ambas as propriedades são inferidas como do tipo `Double`
 ao receberem o valor padrão `0.0`.
 
-A estrutura `Size` recebe automaticamente um inicializador memberwise `init(width:height:)`,
+A struct `Size` recebe automaticamente um inicializador memberwise `init(width:height:)`,
 que você pode usar para inicializar uma nova instância de `Size`:
 
 ```swift
@@ -639,7 +639,7 @@ Ao chamar um inicializador memberwise,
 você pode omitir valores de quaisquer propriedades
 que tenham valores padrão.
 No exemplo acima,
-a estrutura `Size` tem um valor padrão
+a struct `Size` tem um valor padrão
 tanto para a propriedade `height` quanto para a `width`.
 Você pode omitir uma das propriedades ou as duas,
 e o inicializador usa o valor padrão para tudo o que você omitir.
@@ -678,7 +678,7 @@ evita duplicar código entre vários inicializadores.
 As regras de como a delegação de inicializadores funciona,
 e de quais formas de delegação são permitidas,
 são diferentes para tipos de valor e tipos classe.
-Tipos de valor (estruturas e enumerações) não oferecem suporte a herança,
+Tipos de valor (structs e enums) não oferecem suporte a herança,
 por isso o processo de delegação de inicializadores deles é relativamente simples,
 porque eles só podem delegar para outro inicializador que eles mesmos fornecem.
 Já as classes podem herdar de outras classes,
@@ -694,20 +694,20 @@ Você só pode chamar `self.init` dentro de um inicializador.
 
 Observe que, se você definir um inicializador personalizado para um tipo de valor,
 você não terá mais acesso ao inicializador padrão
-(ou ao inicializador memberwise, se for uma estrutura) desse tipo.
+(ou ao inicializador memberwise, se for uma struct) desse tipo.
 Essa restrição evita uma situação em que uma configuração essencial adicional
 fornecida em um inicializador mais complexo
 seja contornada por acidente por alguém que use um dos inicializadores automáticos.
 
 > Nota: Se você quiser que seu tipo de valor personalizado possa ser inicializado com
 > o inicializador padrão e o inicializador memberwise,
-> e também com os seus próprios inicializadores personalizados,
-> escreva esses inicializadores personalizados em uma extensão
+> e também com seus próprios inicializadores personalizados,
+> escreva esses inicializadores personalizados em uma extension
 > em vez de na implementação original do tipo de valor.
 > Para mais informações, consulte <doc:Extensions>.
 
-O exemplo a seguir define uma estrutura `Rect` personalizada para representar um retângulo geométrico.
-O exemplo exige duas estruturas auxiliares chamadas `Size` e `Point`,
+O exemplo a seguir define uma struct `Rect` personalizada para representar um retângulo geométrico.
+O exemplo exige duas structs auxiliares chamadas `Size` e `Point`,
 ambas fornecendo valores padrão de `0.0` para todas as suas propriedades:
 
 ```swift
@@ -732,12 +732,12 @@ struct Point {
   ```
 -->
 
-Você pode inicializar a estrutura `Rect` abaixo de uma de três maneiras:
+Você pode inicializar a struct `Rect` abaixo de uma de três maneiras:
 usando os valores padrão zerados das propriedades `origin` e `size`,
 fornecendo um ponto de origem e um tamanho específicos,
 ou fornecendo um ponto central e um tamanho específicos.
 Essas opções de inicialização são representadas por
-três inicializadores personalizados que fazem parte da definição da estrutura `Rect`:
+três inicializadores personalizados que fazem parte da definição da struct `Rect`:
 
 ```swift
 struct Rect {
@@ -778,7 +778,7 @@ struct Rect {
 -->
 
 O primeiro inicializador de `Rect`, `init()`,
-é funcionalmente igual ao inicializador padrão que a estrutura teria recebido
+é funcionalmente igual ao inicializador padrão que a struct teria recebido
 se não tivesse os próprios inicializadores personalizados.
 Esse inicializador tem um corpo vazio,
 representado por um par de chaves vazio `{}`.
@@ -804,7 +804,7 @@ let basicRect = Rect()
 -->
 
 O segundo inicializador de `Rect`, `init(origin:size:)`,
-é funcionalmente igual ao inicializador memberwise que a estrutura teria recebido
+é funcionalmente igual ao inicializador memberwise que a struct teria recebido
 se não tivesse os próprios inicializadores personalizados.
 Esse inicializador simplesmente atribui os valores dos argumentos `origin` e `size`
 às respectivas propriedades armazenadas:
@@ -1613,7 +1613,7 @@ de <doc:Initialization#Two-Phase-Initialization> acima.
 
 `RecipeIngredient` também define um inicializador de conveniência, `init(name: String)`,
 usado para criar uma instância de `RecipeIngredient` apenas com o nome.
-Esse inicializador de conveniência assume uma quantidade de `1`
+Esse inicializador de conveniência considera a quantidade igual a `1`
 para qualquer instância de `RecipeIngredient` criada sem uma quantidade explícita.
 A definição desse inicializador de conveniência torna
 as instâncias de `RecipeIngredient` mais rápidas e convenientes de criar,
@@ -1778,7 +1778,7 @@ mostra que os estados padrão deles foram definidos conforme o esperado.
 
 ## Inicializadores falíveis
 
-Às vezes é útil definir uma classe, estrutura ou enumeração
+Às vezes é útil definir uma classe, struct ou enum
 cuja inicialização possa falhar.
 Essa falha pode ser causada por valores inválidos nos parâmetros de inicialização,
 pela ausência de um recurso externo obrigatório,
@@ -1786,7 +1786,7 @@ ou por alguma outra condição que impeça a inicialização de ter sucesso.
 
 Para lidar com condições de inicialização que podem falhar,
 defina um ou mais inicializadores falíveis como parte
-da definição de uma classe, estrutura ou enumeração.
+da definição de uma classe, struct ou enum.
 Você escreve um inicializador falível
 colocando um ponto de interrogação depois da palavra-chave `init` (`init?`).
 
@@ -1867,9 +1867,9 @@ if valueChanged == nil {
   ```
 -->
 
-O exemplo a seguir define uma estrutura chamada `Animal`,
+O exemplo a seguir define uma struct chamada `Animal`,
 com uma propriedade `String` constante chamada `species`.
-A estrutura `Animal` também define um inicializador falível
+A struct `Animal` também define um inicializador falível
 com um único parâmetro chamado `species`.
 Esse inicializador verifica se o valor de `species` passado a ele é uma string vazia.
 Se uma string vazia for encontrada, a falha da inicialização é disparada.
@@ -1957,20 +1957,20 @@ if anonymousCreature == nil {
 > não é o mesmo que verificar `nil` para indicar a ausência de um valor `String` *optional*.
 > No exemplo acima, uma string vazia (`""`) é um `String` válido e não optional.
 > No entanto, não é apropriado que um animal
-> tenha uma string vazia como valor da sua propriedade `species`.
+> tenha uma string vazia como valor da propriedade `species`.
 > Para modelar essa restrição,
 > o inicializador falível dispara uma falha de inicialização se uma string vazia for encontrada.
 
-### Inicializadores falíveis para enumerações
+### Inicializadores falíveis para enums
 
-Você pode usar um inicializador falível para selecionar um caso de enumeração adequado
+Você pode usar um inicializador falível para selecionar um caso de enum adequado
 com base em um ou mais parâmetros.
 O inicializador pode então falhar se os parâmetros fornecidos
-não corresponderem a nenhum caso de enumeração adequado.
+não corresponderem a nenhum caso de enum adequado.
 
-O exemplo a seguir define uma enumeração chamada `TemperatureUnit`,
+O exemplo a seguir define um enum chamado `TemperatureUnit`,
 com três estados possíveis (`kelvin`, `celsius` e `fahrenheit`).
-Um inicializador falível é usado para encontrar um caso de enumeração adequado
+Um inicializador falível é usado para encontrar um caso de enum adequado
 para um valor `Character` que representa um símbolo de temperatura:
 
 ```swift
@@ -2014,7 +2014,7 @@ enum TemperatureUnit {
 -->
 
 Você pode usar esse inicializador falível para escolher
-um caso de enumeração adequado entre os três estados possíveis
+um caso de enum adequado entre os três estados possíveis
 e fazer a inicialização falhar se o parâmetro não corresponder a nenhum desses
 estados:
 
@@ -2050,12 +2050,12 @@ if unknownUnit == nil {
   ```
 -->
 
-### Inicializadores falíveis para enumerações com raw value
+### Inicializadores falíveis para enums com raw value
 
 Enumerações com raw value recebem automaticamente um inicializador falível,
 `init?(rawValue:)`,
 que recebe um parâmetro chamado `rawValue` do tipo de raw value apropriado
-e seleciona um caso de enumeração correspondente, se encontrar um,
+e seleciona um caso de enum correspondente, se encontrar um,
 ou dispara uma falha de inicialização se nenhum valor correspondente existir.
 
 Você pode reescrever o exemplo `TemperatureUnit` acima
@@ -2104,8 +2104,8 @@ if unknownUnit == nil {
 
 ### Propagação da falha de inicialização
 
-Um inicializador falível de uma classe, estrutura ou enumeração
-pode delegar para o lado, para outro inicializador falível da mesma classe, estrutura ou enumeração.
+Um inicializador falível de uma classe, struct ou enum
+pode delegar para o lado, para outro inicializador falível da mesma classe, struct ou enum.
 Da mesma forma, um inicializador falível de subclasse pode delegar para cima, para um inicializador falível da superclasse.
 
 Em qualquer um dos casos, se você delegar para outro inicializador que faça a inicialização falhar,
@@ -2164,7 +2164,7 @@ e nenhum código de inicialização adicional é executado.
 
 > Nota: Um inicializador falível também pode delegar para um inicializador não falível.
 > Use essa abordagem se precisar adicionar um possível estado de falha
-> a um processo de inicialização existente que, de outra forma, não falha.
+> a um processo de inicialização existente que, fora isso, não falha.
 
 O exemplo a seguir define uma subclasse de `Product` chamada `CartItem`.
 A classe `CartItem` modela um item em um carrinho de compras online.
@@ -2414,7 +2414,7 @@ class AutomaticallyNamedDocument: Document {
 A classe `AutomaticallyNamedDocument` sobrescreve o inicializador falível `init?(name:)`
 da superclasse com um inicializador não falível `init(name:)`.
 Como `AutomaticallyNamedDocument` lida com o caso da string vazia
-de uma forma diferente da sua superclasse,
+de uma forma diferente da superclasse,
 seu inicializador não precisa falhar,
 e por isso fornece uma versão não falível do inicializador.
 
@@ -2423,7 +2423,7 @@ para chamar um inicializador falível da superclasse
 como parte da implementação de um inicializador não falível de uma subclasse.
 Por exemplo, a subclasse `UntitledDocument` abaixo sempre se chama `"[Untitled]"`,
 e usa o inicializador falível `init(name:)`
-da sua superclasse durante a inicialização.
+da superclasse durante a inicialização.
 
 ```swift
 class UntitledDocument: Document {
@@ -2458,7 +2458,7 @@ Normalmente você define um inicializador falível
 que cria uma instância optional do tipo apropriado
 colocando um ponto de interrogação depois da palavra-chave `init` (`init?`).
 Como alternativa, você pode definir um inicializador falível que cria
-uma instância de optional com desembrulhamento implícito do tipo apropriado.
+uma instância de optional implicitamente unwrapped do tipo apropriado.
 Para isso, coloque um ponto de exclamação depois da palavra-chave `init` (`init!`)
 em vez de um ponto de interrogação.
 
@@ -2855,19 +2855,19 @@ e não o valor de retorno da closure.
 > Nota: Se você usar uma closure para inicializar uma propriedade,
 > lembre-se de que o restante da instância ainda não foi inicializado
 > no momento em que a closure é executada.
-> Isso significa que você não pode acessar nenhum outro valor de propriedade dentro da sua closure,
+> Isso significa que você não pode acessar nenhum outro valor de propriedade dentro da closure,
 > mesmo que essas propriedades tenham valores padrão.
 > Você também não pode usar a propriedade `self` implícita,
 > nem chamar nenhum dos métodos da instância.
 
-O exemplo a seguir define uma estrutura chamada `Chessboard`,
+O exemplo a seguir define uma struct chamada `Chessboard`,
 que modela um tabuleiro para o jogo de xadrez.
 O xadrez é jogado em um tabuleiro de 8 x 8,
 com casas pretas e brancas alternadas.
 
 ![](chessBoard)
 
-Para representar esse tabuleiro, a estrutura `Chessboard` tem uma única propriedade chamada `boardColors`,
+Para representar esse tabuleiro, a struct `Chessboard` tem uma única propriedade chamada `boardColors`,
 que é um array de 64 valores `Bool`.
 Um valor `true` no array representa uma casa preta
 e um valor `false` representa uma casa branca.

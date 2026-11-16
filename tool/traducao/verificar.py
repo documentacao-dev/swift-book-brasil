@@ -66,7 +66,8 @@ def conferir(p):
         if a in ('> Note:', '> Experiment:', '> Important:', '> Tip:', '> Warning:', '> Deprecated:'):
             avisos.append(f'nota com rótulo em inglês: {a}')
     inline = lambda t: {m.group(2).strip() for m in re.finditer(r'(`+)(.+?)\1', t, re.S)}
-    for c in sorted(inline(sp) - inline(se))[:5]:
+    sem_coment = lambda t: re.sub(r'<!--.*?-->', '', t, flags=re.S)
+    for c in sorted(inline(sem_coment(sp)) - inline(sem_coment(se)))[:5]:
         avisos.append(f'código inline que não existe no inglês (traduzido?): `{c}`')
     prosa = re.sub(r'`[^`]*`|<[^>]+>|\]\([^)]*\)|<!--.*?-->', ' ', sp, flags=re.S).lower()
     palavras = re.findall(r'[a-zà-ú]+', prosa)

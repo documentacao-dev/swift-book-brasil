@@ -1,28 +1,28 @@
-# Statements
+# Instruções
 
-Group expressions and control the flow of execution.
+Agrupe expressões e controle o fluxo de execução.
 
-In Swift, there are three kinds of statements: simple statements, compiler control statements,
-and control flow statements.
-Simple statements are the most common and consist of either an expression or a declaration.
-Compiler control statements allow the program to change aspects of the compiler's behavior
-and include a conditional compilation block and a line control statement.
+Em Swift, há três tipos de instruções: instruções simples, instruções de controle do compilador
+e instruções de controle de fluxo.
+Instruções simples são as mais comuns e consistem em uma expressão ou uma declaração.
+Instruções de controle do compilador permitem que o programa altere aspectos do comportamento do compilador
+e incluem um bloco de compilação condicional e uma instrução de controle de linha.
 
-Control flow statements are used to control the flow of execution in a program.
-There are several types of control flow statements in Swift, including
-loop statements, branch statements, and control transfer statements.
-Loop statements allow a block of code to be executed repeatedly,
-branch statements allow a certain block of code to be executed
-only when certain conditions are met,
-and control transfer statements provide a way to alter the order in which code is executed.
-In addition, Swift provides a `do` statement to introduce scope,
-and catch and handle errors,
-and a `defer` statement for running cleanup actions just before the current scope exits.
+Instruções de controle de fluxo são usadas para controlar o fluxo de execução em um programa.
+Há vários tipos de instruções de controle de fluxo em Swift, incluindo
+instruções de loop, instruções de desvio e instruções de transferência de controle.
+Instruções de loop permitem que um bloco de código seja executado repetidamente,
+instruções de desvio permitem que determinado bloco de código seja executado
+somente quando certas condições são atendidas,
+e instruções de transferência de controle oferecem uma forma de alterar a ordem em que o código é executado.
+Além disso, Swift oferece uma instrução `do` para introduzir um escopo
+e capturar e tratar erros,
+e uma instrução `defer` para executar ações de limpeza logo antes de o escopo atual terminar.
 
-A semicolon (`;`) can optionally appear after any statement
-and is used to separate multiple statements if they appear on the same line.
+Um ponto e vírgula (`;`) pode aparecer opcionalmente depois de qualquer instrução
+e é usado para separar várias instruções que aparecem na mesma linha.
 
-> Grammar of a statement:
+> Gramática de uma instrução:
 >
 > *statement* → *expression* **`;`**_?_ \
 > *statement* → *declaration* **`;`**_?_ \
@@ -46,33 +46,33 @@ and is used to separate multiple statements if they appear on the same line.
   of readability.
 -->
 
-## Loop Statements
+## Instruções de loop
 
-Loop statements allow a block of code to be executed repeatedly,
-depending on the conditions specified in the loop.
-Swift has three loop statements:
-a `for`-`in` statement,
-a `while` statement,
-and a `repeat`-`while` statement.
+Instruções de loop permitem que um bloco de código seja executado repetidamente,
+dependendo das condições especificadas no loop.
+Swift tem três instruções de loop:
+uma instrução `for`-`in`,
+uma instrução `while`
+e uma instrução `repeat`-`while`.
 
-Control flow in a loop statement can be changed by a `break` statement
-and a `continue` statement and is discussed in <doc:Statements#Break-Statement> and
-<doc:Statements#Continue-Statement> below.
+O fluxo de controle em uma instrução de loop pode ser alterado por uma instrução `break`
+e por uma instrução `continue`, discutidas em <doc:Statements#Break-Statement> e
+<doc:Statements#Continue-Statement> abaixo.
 
-> Grammar of a loop statement:
+> Gramática de uma instrução de loop:
 >
 > *loop-statement* → *for-in-statement* \
 > *loop-statement* → *while-statement* \
 > *loop-statement* → *repeat-while-statement*
 
-### For-In Statement
+### Instrução for-in
 
-A `for`-`in` statement allows a block of code to be executed
-once for each item in a collection (or any type)
-that conforms to the
-[`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
+Uma instrução `for`-`in` permite que um bloco de código seja executado
+uma vez para cada item de uma coleção (ou de qualquer tipo)
+que esteja em conformidade com o protocolo
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence).
 
-A `for`-`in` statement has the following form:
+Uma instrução `for`-`in` tem a seguinte forma:
 
 ```swift
 for <#item#> in <#collection#> {
@@ -80,29 +80,29 @@ for <#item#> in <#collection#> {
 }
 ```
 
-The `makeIterator()` method is called on the *collection* expression
-to obtain a value of an iterator type --- that is,
-a type that conforms to the
-[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) protocol.
-The program begins executing a loop
-by calling the `next()` method on the iterator.
-If the value returned isn't `nil`,
-it's assigned to the *item* pattern,
-the program executes the *statements*,
-and then continues execution at the beginning of the loop.
-Otherwise, the program doesn't perform assignment or execute the *statements*,
-and it's finished executing the `for`-`in` statement.
+O método `makeIterator()` é chamado sobre a expressão de *coleção*
+para obter um valor de um tipo iterador, ou seja,
+um tipo que está em conformidade com o protocolo
+[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol).
+O programa começa a executar o loop
+chamando o método `next()` no iterador.
+Se o valor retornado não for `nil`,
+ele é atribuído ao padrão *item*,
+o programa executa as *instruções*
+e então continua a execução no início do loop.
+Caso contrário, o programa não faz a atribuição nem executa as *instruções*,
+e termina a execução da instrução `for`-`in`.
 
-> Grammar of a for-in statement:
+> Gramática de uma instrução for-in:
 >
 > *for-in-statement* → **`for`** **`case`**_?_ *pattern* **`in`** *expression* *where-clause*_?_ *code-block*
 
-### While Statement
+### Instrução while
 
-A `while` statement allows a block of code to be executed repeatedly,
-as long as a condition remains true.
+Uma instrução `while` permite que um bloco de código seja executado repetidamente
+enquanto uma condição continuar verdadeira.
 
-A `while` statement has the following form:
+Uma instrução `while` tem a seguinte forma:
 
 ```swift
 while <#condition#> {
@@ -110,23 +110,23 @@ while <#condition#> {
 }
 ```
 
-A `while` statement is executed as follows:
+Uma instrução `while` é executada da seguinte forma:
 
-1. The *condition* is evaluated.
+1. A *condição* é avaliada.
 
-   If `true`, execution continues to step 2.
-   If `false`, the program is finished executing the `while` statement.
-2. The program executes the *statements*, and execution returns to step 1.
+   Se `true`, a execução continua no passo 2.
+   Se `false`, o programa termina a execução da instrução `while`.
+2. O programa executa as *instruções*, e a execução volta ao passo 1.
 
-Because the value of the *condition* is evaluated before the *statements* are executed,
-the *statements* in a `while` statement can be executed zero or more times.
+Como o valor da *condição* é avaliado antes de as *instruções* serem executadas,
+as *instruções* de uma instrução `while` podem ser executadas zero ou mais vezes.
 
-The value of the *condition*
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+O valor da *condição*
+deve ser do tipo `Bool` ou de um tipo com ponte para `Bool`.
+A condição também pode ser uma declaração de optional binding,
+como discutido em <doc:TheBasics#Optional-Binding>.
 
-> Grammar of a while statement:
+> Gramática de uma instrução while:
 >
 > *while-statement* → **`while`** *condition-list* *code-block*
 >
@@ -136,12 +136,12 @@ as discussed in <doc:TheBasics#Optional-Binding>.
 > *case-condition* → **`case`** *pattern* *initializer* \
 > *optional-binding-condition* → **`let`** *pattern* *initializer*_?_ | **`var`** *pattern* *initializer*_?_
 
-### Repeat-While Statement
+### Instrução repeat-while
 
-A `repeat`-`while` statement allows a block of code to be executed one or more times,
-as long as a condition remains true.
+Uma instrução `repeat`-`while` permite que um bloco de código seja executado uma ou mais vezes
+enquanto uma condição continuar verdadeira.
 
-A `repeat`-`while` statement has the following form:
+Uma instrução `repeat`-`while` tem a seguinte forma:
 
 ```swift
 repeat {
@@ -149,53 +149,53 @@ repeat {
 } while <#condition#>
 ```
 
-A `repeat`-`while` statement is executed as follows:
+Uma instrução `repeat`-`while` é executada da seguinte forma:
 
-1. The program executes the *statements*,
-   and execution continues to step 2.
-2. The *condition* is evaluated.
+1. O programa executa as *instruções*,
+   e a execução continua no passo 2.
+2. A *condição* é avaliada.
 
-   If `true`, execution returns to step 1.
-   If `false`, the program is finished executing the `repeat`-`while` statement.
+   Se `true`, a execução volta ao passo 1.
+   Se `false`, o programa termina a execução da instrução `repeat`-`while`.
 
-Because the value of the *condition* is evaluated after the *statements* are executed,
-the *statements* in a `repeat`-`while` statement are executed at least once.
+Como o valor da *condição* é avaliado depois de as *instruções* serem executadas,
+as *instruções* de uma instrução `repeat`-`while` são executadas pelo menos uma vez.
 
-The value of the *condition*
-must be of type `Bool` or a type bridged to `Bool`.
+O valor da *condição*
+deve ser do tipo `Bool` ou de um tipo com ponte para `Bool`.
 
-> Grammar of a repeat-while statement:
+> Gramática de uma instrução repeat-while:
 >
 > *repeat-while-statement* → **`repeat`** *code-block* **`while`** *expression*
 
-## Branch Statements
+## Instruções de desvio
 
-Branch statements allow the program to execute certain parts of code
-depending on the value of one or more conditions.
-The values of the conditions specified in a branch statement
-control how the program branches and, therefore, what block of code is executed.
-Swift has three branch statements:
-an `if` statement, a `guard` statement, and a `switch` statement.
+Instruções de desvio permitem que o programa execute determinadas partes do código
+dependendo do valor de uma ou mais condições.
+Os valores das condições especificadas em uma instrução de desvio
+controlam como o programa se desvia e, portanto, qual bloco de código é executado.
+Swift tem três instruções de desvio:
+uma instrução `if`, uma instrução `guard` e uma instrução `switch`.
 
-Control flow in an `if` statement or a `switch` statement can be changed by a `break` statement
-and is discussed in <doc:Statements#Break-Statement> below.
+O fluxo de controle em uma instrução `if` ou em uma instrução `switch` pode ser alterado por uma instrução `break`
+e é discutido em <doc:Statements#Break-Statement> abaixo.
 
-> Grammar of a branch statement:
+> Gramática de uma instrução de desvio:
 >
 > *branch-statement* → *if-statement* \
 > *branch-statement* → *guard-statement* \
 > *branch-statement* → *switch-statement*
 
-### If Statement
+### Instrução if
 
-An `if` statement is used for executing code
-based on the evaluation of one or more conditions.
+Uma instrução `if` é usada para executar código
+com base na avaliação de uma ou mais condições.
 
-There are two basic forms of an `if` statement.
-In each form, the opening and closing braces are required.
+Há duas formas básicas de instrução `if`.
+Em ambas, as chaves de abertura e de fechamento são obrigatórias.
 
-The first form allows code to be executed only when a condition is true
-and has the following form:
+A primeira forma permite que o código seja executado somente quando uma condição é verdadeira
+e tem a seguinte forma:
 
 ```swift
 if <#condition#> {
@@ -203,11 +203,11 @@ if <#condition#> {
 }
 ```
 
-The second form of an `if` statement provides an additional *else clause*
-(introduced by the `else` keyword)
-and is used for executing one part of code when the condition is true
-and another part of code when the same condition is false.
-When a single else clause is present, an `if` statement has the following form:
+A segunda forma da instrução `if` oferece uma cláusula *else* adicional
+(introduzida pela palavra-chave `else`)
+e é usada para executar uma parte do código quando a condição é verdadeira
+e outra parte quando a mesma condição é falsa.
+Quando há uma única cláusula else, a instrução `if` tem a seguinte forma:
 
 ```swift
 if <#condition#> {
@@ -217,9 +217,9 @@ if <#condition#> {
 }
 ```
 
-The else clause of an `if` statement can contain another `if` statement
-to test more than one condition.
-An `if` statement chained together in this way has the following form:
+A cláusula else de uma instrução `if` pode conter outra instrução `if`
+para testar mais de uma condição.
+Uma instrução `if` encadeada dessa forma tem a seguinte forma:
 
 ```swift
 if <#condition 1#> {
@@ -231,22 +231,22 @@ if <#condition 1#> {
 }
 ```
 
-The value of any condition in an `if` statement
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+O valor de qualquer condição em uma instrução `if`
+deve ser do tipo `Bool` ou de um tipo com ponte para `Bool`.
+A condição também pode ser uma declaração de optional binding,
+como discutido em <doc:TheBasics#Optional-Binding>.
 
-> Grammar of an if statement:
+> Gramática de uma instrução if:
 >
 > *if-statement* → **`if`** *condition-list* *code-block* *else-clause*_?_ \
 > *else-clause* → **`else`** *code-block* | **`else`** *if-statement*
 
-### Guard Statement
+### Instrução guard
 
-A `guard` statement is used to transfer program control out of a scope
-if one or more conditions aren't met.
+Uma instrução `guard` é usada para transferir o controle do programa para fora de um escopo
+quando uma ou mais condições não são atendidas.
 
-A `guard` statement has the following form:
+Uma instrução `guard` tem a seguinte forma:
 
 ```swift
 guard <#condition#> else {
@@ -254,39 +254,39 @@ guard <#condition#> else {
 }
 ```
 
-The value of any condition in a `guard` statement
-must be of type `Bool` or a type bridged to `Bool`.
-The condition can also be an optional binding declaration,
-as discussed in <doc:TheBasics#Optional-Binding>.
+O valor de qualquer condição em uma instrução `guard`
+deve ser do tipo `Bool` ou de um tipo com ponte para `Bool`.
+A condição também pode ser uma declaração de optional binding,
+como discutido em <doc:TheBasics#Optional-Binding>.
 
-Any constants or variables assigned a value
-from an optional binding declaration in a `guard` statement condition
-can be used for the rest of the guard statement's enclosing scope.
+Quaisquer constantes ou variáveis que recebam um valor
+de uma declaração de optional binding na condição de uma instrução `guard`
+podem ser usadas pelo restante do escopo que contém a instrução guard.
 
-The `else` clause of a `guard` statement is required,
-and must either call a function with the `Never` return type
-or transfer program control outside the guard statement's enclosing scope
-using one of the following statements:
+A cláusula `else` de uma instrução `guard` é obrigatória
+e deve chamar uma função com tipo de retorno `Never`
+ou transferir o controle do programa para fora do escopo que contém a instrução guard
+usando uma das seguintes instruções:
 
 - `return`
 - `break`
 - `continue`
 - `throw`
 
-Control transfer statements are discussed in <doc:Statements#Control-Transfer-Statements> below.
-For more information on functions with the `Never` return type,
-see <doc:Declarations#Functions-that-Never-Return>.
+As instruções de transferência de controle são discutidas em <doc:Statements#Control-Transfer-Statements> abaixo.
+Para mais informações sobre funções com tipo de retorno `Never`,
+veja <doc:Declarations#Functions-that-Never-Return>.
 
-> Grammar of a guard statement:
+> Gramática de uma instrução guard:
 >
 > *guard-statement* → **`guard`** *condition-list* **`else`** *code-block*
 
-### Switch Statement
+### Instrução switch
 
-A `switch` statement allows certain blocks of code to be executed
-depending on the value of a control expression.
+Uma instrução `switch` permite que determinados blocos de código sejam executados
+dependendo do valor de uma expressão de controle.
 
-A `switch` statement has the following form:
+Uma instrução `switch` tem a seguinte forma:
 
 ```swift
 switch <#control expression#> {
@@ -302,33 +302,33 @@ default:
 }
 ```
 
-The *control expression* of the `switch` statement is evaluated
-and then compared with the patterns specified in each case.
-If a match is found,
-the program executes the *statements* listed within the scope of that case.
-The scope of each case can't be empty.
-As a result, you must include at least one statement
-following the colon (`:`) of each case label. Use a single `break` statement
-if you don't intend to execute any code in the body of a matched case.
+A *expressão de controle* da instrução `switch` é avaliada
+e depois comparada com os padrões especificados em cada caso.
+Se uma correspondência for encontrada,
+o programa executa as *instruções* listadas dentro do escopo desse caso.
+O escopo de cada caso não pode estar vazio.
+Por isso, você precisa incluir pelo menos uma instrução
+depois do dois-pontos (`:`) de cada rótulo de caso. Use uma única instrução `break`
+se não pretende executar nenhum código no corpo de um caso correspondido.
 
-The values of expressions your code can branch on are very flexible. For example,
-in addition to the values of scalar types, such as integers and characters,
-your code can branch on the values of any type, including floating-point numbers, strings,
-tuples, instances of custom classes, and optionals.
-The value of the *control expression* can even be matched to the value of a case in an enumeration
-and checked for inclusion in a specified range of values.
-For examples of how to use these various types of values in `switch` statements,
-see <doc:ControlFlow#Switch> in <doc:ControlFlow>.
+Os valores das expressões em que seu código pode desviar são muito flexíveis. Por exemplo,
+além dos valores de tipos escalares, como inteiros e caracteres,
+seu código pode desviar com base nos valores de qualquer tipo, incluindo números de ponto flutuante, strings,
+tuplas, instâncias de classes personalizadas e optionals.
+O valor da *expressão de controle* pode até ser comparado com o valor de um caso de uma enumeração
+e verificado quanto à inclusão em um intervalo especificado de valores.
+Para exemplos de como usar esses vários tipos de valores em instruções `switch`,
+veja <doc:ControlFlow#Switch> em <doc:ControlFlow>.
 
-A `switch` case can optionally contain a `where` clause after each pattern.
-A *where clause* is introduced by the `where` keyword followed by an expression,
-and is used to provide an additional condition
-before a pattern in a case is considered matched to the *control expression*.
-If a `where` clause is present, the *statements* within the relevant case
-are executed only if the value of the *control expression*
-matches one of the patterns of the case and the expression of the `where` clause evaluates to `true`.
-For example, a *control expression* matches the case in the example below
-only if it's a tuple that contains two elements of the same value, such as `(1, 1)`.
+Um caso de `switch` pode, opcionalmente, conter uma cláusula `where` depois de cada padrão.
+Uma *cláusula where* é introduzida pela palavra-chave `where`, seguida de uma expressão,
+e é usada para fornecer uma condição adicional
+antes de um padrão de um caso ser considerado correspondente à *expressão de controle*.
+Se houver uma cláusula `where`, as *instruções* do caso relevante
+são executadas somente se o valor da *expressão de controle*
+corresponder a um dos padrões do caso e a expressão da cláusula `where` for avaliada como `true`.
+Por exemplo, uma *expressão de controle* corresponde ao caso do exemplo abaixo
+somente se for uma tupla com dois elementos de mesmo valor, como `(1, 1)`.
 
 ```swift
 case let (x, y) where x == y:
@@ -346,33 +346,33 @@ case let (x, y) where x == y:
   ```
 -->
 
-As the above example shows, patterns in a case can also bind constants
-using the `let` keyword (they can also bind variables using the `var` keyword).
-These constants (or variables) can then be referenced in a corresponding `where` clause
-and throughout the rest of the code within the scope of the case.
-If the case contains multiple patterns that match the control expression,
-all of the patterns must contain the same constant or variable bindings,
-and each bound variable or constant must have the same type
-in all of the case's patterns.
+Como o exemplo acima mostra, padrões em um caso também podem vincular constantes
+usando a palavra-chave `let` (também podem vincular variáveis usando a palavra-chave `var`).
+Essas constantes (ou variáveis) podem então ser referenciadas em uma cláusula `where` correspondente
+e em todo o restante do código dentro do escopo do caso.
+Se o caso contiver vários padrões que correspondem à expressão de controle,
+todos os padrões devem conter as mesmas vinculações de constantes ou variáveis,
+e cada constante ou variável vinculada deve ter o mesmo tipo
+em todos os padrões do caso.
 
 <!--
   The discussion above about multi-pattern cases
   matches discussion of multi-pattern catch under Do Statement.
 -->
 
-A `switch` statement can also include a default case, introduced by the `default` keyword.
-The code within a default case is executed only if no other cases match the control expression.
-A `switch` statement can include only one default case,
-which must appear at the end of the `switch` statement.
+Uma instrução `switch` também pode incluir um caso default, introduzido pela palavra-chave `default`.
+O código dentro de um caso default é executado somente se nenhum outro caso corresponder à expressão de controle.
+Uma instrução `switch` pode incluir apenas um caso default,
+que deve aparecer no fim da instrução `switch`.
 
-Although the actual execution order of pattern-matching operations,
-and in particular the evaluation order of patterns in cases, is unspecified,
-pattern matching in a `switch` statement behaves
-as if the evaluation is performed in source order --- that is,
-the order in which they appear in source code.
-As a result, if multiple cases contain patterns that evaluate to the same value,
-and thus can match the value of the control expression,
-the program executes only the code within the first matching case in source order.
+Embora a ordem real de execução das operações de correspondência de padrões,
+e em particular a ordem de avaliação dos padrões nos casos, não seja especificada,
+a correspondência de padrões em uma instrução `switch` se comporta
+como se a avaliação fosse feita na ordem do código-fonte, ou seja,
+na ordem em que aparecem no código-fonte.
+Por isso, se vários casos contiverem padrões que resultam no mesmo valor
+e, assim, puderem corresponder ao valor da expressão de controle,
+o programa executa somente o código do primeiro caso correspondente na ordem do código-fonte.
 
 <!--
   - test: `switch-case-with-multiple-patterns`
@@ -402,52 +402,51 @@ the program executes only the code within the first matching case in source orde
   ```
 -->
 
-#### Switch Statements Must Be Exhaustive
+#### Instruções switch devem ser exaustivas
 
-In Swift,
-every possible value of the control expression’s type
-must match the value of at least one pattern of a case.
-When this simply isn’t feasible
-(for example, when the control expression’s type is `Int`),
-you can include a default case to satisfy the requirement.
+Em Swift,
+todo valor possível do tipo da expressão de controle
+deve corresponder ao valor de pelo menos um padrão de um caso.
+Quando isso simplesmente não é viável
+(por exemplo, quando o tipo da expressão de controle é `Int`),
+você pode incluir um caso default para atender a esse requisito.
 
-#### Switching Over Future Enumeration Cases
+#### Alternando sobre casos futuros de enumeração
 
-A *nonfrozen enumeration* is a special kind of enumeration
-that may gain new enumeration cases in the future ---
-even after you compile and ship an app.
-Switching over a nonfrozen enumeration requires extra consideration.
-When a library's authors mark an enumeration as nonfrozen,
-they reserve the right to add new enumeration cases,
-and any code that interacts with that enumeration
-*must* be able to handle those future cases without being recompiled.
-Code that's compiled in library evolution mode,
-code in the Swift standard library,
-Swift overlays for Apple frameworks,
-and C and Objective-C code can declare nonfrozen enumerations.
-For information about frozen and nonfrozen enumerations,
-see <doc:Attributes#frozen>.
+Uma *enumeração não congelada* é um tipo especial de enumeração
+que pode ganhar novos casos no futuro, mesmo depois de você compilar e distribuir um app.
+Alternar sobre uma enumeração não congelada exige atenção extra.
+Quando os autores de uma biblioteca marcam uma enumeração como não congelada,
+eles se reservam o direito de adicionar novos casos,
+e qualquer código que interaja com essa enumeração
+*precisa* conseguir tratar esses casos futuros sem ser recompilado.
+Código compilado no modo de evolução de biblioteca,
+código da biblioteca padrão do Swift,
+overlays Swift para frameworks da Apple,
+e código C e Objective-C podem declarar enumerações não congeladas.
+Para informações sobre enumerações congeladas e não congeladas,
+veja <doc:Attributes#frozen>.
 
-When switching over a nonfrozen enumeration value,
-you always need to include a default case,
-even if every case of the enumeration already has a corresponding switch case.
-You can apply the `@unknown` attribute to the default case,
-which indicates that the default case should match only enumeration cases
-that are added in the future.
-Swift produces a warning
-if the default case matches
-any enumeration case that's known at compile time.
-This future warning informs you that the library author
-added a new case to the enumeration
-that doesn't have a corresponding switch case.
+Ao alternar sobre um valor de enumeração não congelada,
+você sempre precisa incluir um caso default,
+mesmo que todos os casos da enumeração já tenham um caso switch correspondente.
+Você pode aplicar o atributo `@unknown` ao caso default,
+o que indica que o caso default deve corresponder somente a casos de enumeração
+adicionados no futuro.
+O Swift emite um aviso
+se o caso default corresponder
+a qualquer caso de enumeração conhecido em tempo de compilação.
+Esse aviso futuro informa que o autor da biblioteca
+adicionou um novo caso à enumeração
+que não tem um caso switch correspondente.
 
-The following example switches over all three existing cases of
-the Swift standard library's [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation)
-enumeration.
-If you add additional cases in the future,
-the compiler generates a warning to indicate
-that you need to update the switch statement
-to take the new cases into account.
+O exemplo a seguir alterna sobre os três casos existentes da
+enumeração da biblioteca padrão do Swift
+[`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation).
+Se você adicionar casos no futuro,
+o compilador gera um aviso para indicar
+que você precisa atualizar a instrução switch
+para levar os novos casos em consideração.
 
 ```swift
 let representation: Mirror.AncestorRepresentation = .generated
@@ -483,19 +482,19 @@ case .suppressed:
   ```
 -->
 
-#### Execution Does Not Fall Through Cases Implicitly
+#### A execução não passa de um caso para o outro implicitamente
 
-After the code within a matched case has finished executing,
-the program exits from the `switch` statement.
-Program execution doesn't continue or "fall through" to the next case or default case.
-That said, if you want execution to continue from one case to the next,
-explicitly include a `fallthrough` statement,
-which simply consists of the `fallthrough` keyword,
-in the case from which you want execution to continue.
-For more information about the `fallthrough` statement,
-see <doc:Statements#Fallthrough-Statement> below.
+Depois que o código de um caso correspondido termina de ser executado,
+o programa sai da instrução `switch`.
+A execução do programa não continua nem "passa" para o próximo caso ou para o caso default.
+Dito isso, se você quiser que a execução continue de um caso para o seguinte,
+inclua explicitamente uma instrução `fallthrough`,
+que consiste simplesmente na palavra-chave `fallthrough`,
+no caso a partir do qual você quer que a execução continue.
+Para mais informações sobre a instrução `fallthrough`,
+veja <doc:Statements#Fallthrough-Statement> abaixo.
 
-> Grammar of a switch statement:
+> Gramática de uma instrução switch:
 >
 > *switch-statement* → **`switch`** *expression* **`{`** *switch-cases*_?_ **`}`** \
 > *switch-cases* → *switch-case* *switch-cases*_?_ \
@@ -522,22 +521,22 @@ see <doc:Statements#Fallthrough-Statement> below.
   although as of Swift 4.2 only a single attribute (@unknown) is allowed.
 -->
 
-## Labeled Statement
+## Instrução rotulada
 
-You can prefix a loop statement, an `if` statement, a `switch` statement,
-or a `do` statement with a *statement label*,
-which consists of the name of the label followed immediately by a colon (:).
-Use statement labels with `break` and `continue` statements to be explicit
-about how you want to change control flow in a loop statement or a `switch` statement,
-as discussed in <doc:Statements#Break-Statement> and
-<doc:Statements#Continue-Statement> below.
+Você pode prefixar uma instrução de loop, uma instrução `if`, uma instrução `switch`
+ou uma instrução `do` com um *rótulo de instrução*,
+que consiste no nome do rótulo seguido imediatamente de dois-pontos (:).
+Use rótulos de instrução com instruções `break` e `continue` para deixar explícito
+como você quer alterar o fluxo de controle em uma instrução de loop ou em uma instrução `switch`,
+como discutido em <doc:Statements#Break-Statement> e
+<doc:Statements#Continue-Statement> abaixo.
 
-The scope of a labeled statement is the entire statement following the statement label.
-You can nest labeled statements, but the name of each statement label must be unique.
+O escopo de uma instrução rotulada é toda a instrução que segue o rótulo.
+Você pode aninhar instruções rotuladas, mas o nome de cada rótulo de instrução deve ser único.
 
-For more information and to see examples
-of how to use statement labels,
-see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
+Para mais informações e para ver exemplos
+de como usar rótulos de instrução,
+veja <doc:ControlFlow#Labeled-Statements> em <doc:ControlFlow>.
 
 <!--
   - test: `backtick-identifier-is-legal-label`
@@ -555,7 +554,7 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
   ```
 -->
 
-> Grammar of a labeled statement:
+> Gramática de uma instrução rotulada:
 >
 > *labeled-statement* → *statement-label* *loop-statement* \
 > *labeled-statement* → *statement-label* *if-statement* \
@@ -565,14 +564,14 @@ see <doc:ControlFlow#Labeled-Statements> in <doc:ControlFlow>.
 > *statement-label* → *label-name* **`:`** \
 > *label-name* → *identifier*
 
-## Control Transfer Statements
+## Instruções de transferência de controle
 
-Control transfer statements can change the order in which code in your program is executed
-by unconditionally transferring program control from one piece of code to another.
-Swift has five control transfer statements: a `break` statement, a `continue` statement,
-a `fallthrough` statement, a `return` statement, and a `throw` statement.
+Instruções de transferência de controle podem alterar a ordem em que o código do programa é executado,
+transferindo incondicionalmente o controle do programa de um trecho de código para outro.
+Swift tem cinco instruções de transferência de controle: uma instrução `break`, uma instrução `continue`,
+uma instrução `fallthrough`, uma instrução `return` e uma instrução `throw`.
 
-> Grammar of a control transfer statement:
+> Gramática de uma instrução de transferência de controle:
 >
 > *control-transfer-statement* → *break-statement* \
 > *control-transfer-statement* → *continue-statement* \
@@ -580,174 +579,174 @@ a `fallthrough` statement, a `return` statement, and a `throw` statement.
 > *control-transfer-statement* → *return-statement* \
 > *control-transfer-statement* → *throw-statement*
 
-### Break Statement
+### Instrução break
 
-A `break` statement ends program execution of a loop,
-an `if` statement, or a `switch` statement.
-A `break` statement can consist of only the `break` keyword,
-or it can consist of the `break` keyword followed by the name of a statement label,
-as shown below.
+Uma instrução `break` encerra a execução de um loop,
+de uma instrução `if` ou de uma instrução `switch`.
+Uma instrução `break` pode consistir apenas na palavra-chave `break`,
+ou pode consistir na palavra-chave `break` seguida do nome de um rótulo de instrução,
+como mostrado abaixo.
 
 ```swift
 break
 break <#label name#>
 ```
 
-When a `break` statement is followed by the name of a statement label,
-it ends program execution of the loop,
-`if` statement, or `switch` statement named by that label.
+Quando uma instrução `break` é seguida do nome de um rótulo de instrução,
+ela encerra a execução do loop,
+da instrução `if` ou da instrução `switch` identificada por esse rótulo.
 
-When a `break` statement isn't followed by the name of a statement label,
-it ends program execution of the `switch` statement or the innermost enclosing loop
-statement in which it occurs.
-You can't use an unlabeled `break` statement to break out of an `if` statement.
+Quando uma instrução `break` não é seguida do nome de um rótulo de instrução,
+ela encerra a execução da instrução `switch` ou do loop mais interno
+no qual ela ocorre.
+Você não pode usar uma instrução `break` sem rótulo para sair de uma instrução `if`.
 
-In both cases, program control is then transferred to the first line
-of code following the enclosing loop or `switch` statement, if any.
+Nos dois casos, o controle do programa é então transferido para a primeira linha
+de código depois do loop ou da instrução `switch` que a contém, se houver.
 
-For examples of how to use a `break` statement,
-see <doc:ControlFlow#Break> and <doc:ControlFlow#Labeled-Statements>
-in <doc:ControlFlow>.
+Para exemplos de como usar uma instrução `break`,
+veja <doc:ControlFlow#Break> e <doc:ControlFlow#Labeled-Statements>
+em <doc:ControlFlow>.
 
-> Grammar of a break statement:
+> Gramática de uma instrução break:
 >
 > *break-statement* → **`break`** *label-name*_?_
 
-### Continue Statement
+### Instrução continue
 
-A `continue` statement ends program execution of the current iteration of a loop
-statement but doesn't stop execution of the loop statement.
-A `continue` statement can consist of only the `continue` keyword,
-or it can consist of the `continue` keyword followed by the name of a statement label,
-as shown below.
+Uma instrução `continue` encerra a execução da iteração atual de uma instrução de loop,
+mas não interrompe a execução da instrução de loop.
+Uma instrução `continue` pode consistir apenas na palavra-chave `continue`,
+ou pode consistir na palavra-chave `continue` seguida do nome de um rótulo de instrução,
+como mostrado abaixo.
 
 ```swift
 continue
 continue <#label name#>
 ```
 
-When a `continue` statement is followed by the name of a statement label,
-it ends program execution of the current iteration
-of the loop statement named by that label.
+Quando uma instrução `continue` é seguida do nome de um rótulo de instrução,
+ela encerra a execução da iteração atual
+da instrução de loop identificada por esse rótulo.
 
-When a `continue` statement isn't followed by the name of a statement label,
-it ends program execution of the current iteration
-of the innermost enclosing loop statement in which it occurs.
+Quando uma instrução `continue` não é seguida do nome de um rótulo de instrução,
+ela encerra a execução da iteração atual
+do loop mais interno no qual ela ocorre.
 
-In both cases, program control is then transferred to the condition
-of the enclosing loop statement.
+Nos dois casos, o controle do programa é então transferido para a condição
+da instrução de loop que a contém.
 
-In a `for` statement,
-the increment expression is still evaluated after the `continue` statement is executed,
-because the increment expression is evaluated after the execution of the loop's body.
+Em uma instrução `for`,
+a expressão de incremento ainda é avaliada depois que a instrução `continue` é executada,
+porque a expressão de incremento é avaliada depois da execução do corpo do loop.
 
-For examples of how to use a `continue` statement,
-see <doc:ControlFlow#Continue> and <doc:ControlFlow#Labeled-Statements>
-in <doc:ControlFlow>.
+Para exemplos de como usar uma instrução `continue`,
+veja <doc:ControlFlow#Continue> e <doc:ControlFlow#Labeled-Statements>
+em <doc:ControlFlow>.
 
-> Grammar of a continue statement:
+> Gramática de uma instrução continue:
 >
 > *continue-statement* → **`continue`** *label-name*_?_
 
-### Fallthrough Statement
+### Instrução fallthrough
 
-A `fallthrough` statement consists of the `fallthrough` keyword
-and occurs only in a case block of a `switch` statement.
-A `fallthrough` statement causes program execution to continue
-from one case in a `switch` statement to the next case.
-Program execution continues to the next case
-even if the patterns of the case label don't match
-the value of the `switch` statement's control expression.
+Uma instrução `fallthrough` consiste na palavra-chave `fallthrough`
+e ocorre somente em um bloco de caso de uma instrução `switch`.
+Uma instrução `fallthrough` faz a execução do programa continuar
+de um caso de uma instrução `switch` para o próximo caso.
+A execução continua para o próximo caso
+mesmo que os padrões do rótulo de caso não correspondam
+ao valor da expressão de controle da instrução `switch`.
 
-A `fallthrough` statement can appear anywhere inside a `switch` statement,
-not just as the last statement of a case block,
-but it can't be used in the final case block.
-It also can't transfer control into a case block
-whose pattern contains value binding patterns.
+Uma instrução `fallthrough` pode aparecer em qualquer lugar dentro de uma instrução `switch`,
+não apenas como última instrução de um bloco de caso,
+mas não pode ser usada no último bloco de caso.
+Ela também não pode transferir o controle para um bloco de caso
+cujo padrão contenha padrões de vinculação de valor.
 
-For an example of how to use a `fallthrough` statement in a `switch` statement,
-see <doc:ControlFlow#Control-Transfer-Statements>
-in <doc:ControlFlow>.
+Para um exemplo de como usar uma instrução `fallthrough` em uma instrução `switch`,
+veja <doc:ControlFlow#Control-Transfer-Statements>
+em <doc:ControlFlow>.
 
-> Grammar of a fallthrough statement:
+> Gramática de uma instrução fallthrough:
 >
 > *fallthrough-statement* → **`fallthrough`**
 
-### Return Statement
+### Instrução return
 
-A `return` statement occurs in the body of a function or method definition
-and causes program execution to return to the calling function or method.
-Program execution continues at the point immediately following the function or method call.
+Uma instrução `return` ocorre no corpo de uma definição de função ou método
+e faz a execução do programa retornar para a função ou o método que a chamou.
+A execução do programa continua no ponto imediatamente seguinte à chamada da função ou do método.
 
-A `return` statement can consist of only the `return` keyword,
-or it can consist of the `return` keyword followed by an expression, as shown below.
+Uma instrução `return` pode consistir apenas na palavra-chave `return`,
+ou pode consistir na palavra-chave `return` seguida de uma expressão, como mostrado abaixo.
 
 ```swift
 return
 return <#expression#>
 ```
 
-When a `return` statement is followed by an expression,
-the value of the expression is returned to the calling function or method.
-If the value of the expression doesn't match the value of the return type
-declared in the function or method declaration,
-the expression's value is converted to the return type
-before it's returned to the calling function or method.
+Quando uma instrução `return` é seguida de uma expressão,
+o valor da expressão é retornado para a função ou o método que a chamou.
+Se o valor da expressão não corresponder ao valor do tipo de retorno
+declarado na declaração da função ou do método,
+o valor da expressão é convertido para o tipo de retorno
+antes de ser retornado para a função ou o método que a chamou.
 
-> Note: As described in <doc:Declarations#Failable-Initializers>, a special form of the `return` statement (`return nil`)
-> can be used in a failable initializer to indicate initialization failure.
+> Nota: Como descrito em <doc:Declarations#Failable-Initializers>, uma forma especial da instrução `return` (`return nil`)
+> pode ser usada em um inicializador falível para indicar falha na inicialização.
 
 <!--
   TODO: Discuss how the conversion takes place and what is allowed to be converted
   in the (yet to be written) chapter on subtyping and type conversions.
 -->
 
-When a `return` statement isn't followed by an expression,
-it can be used only to return from a function or method that doesn't return a value
-(that is, when the return type of the function or method is `Void` or `()`).
+Quando uma instrução `return` não é seguida de uma expressão,
+ela só pode ser usada para retornar de uma função ou método que não define tipo de retorno
+(ou seja, quando o tipo de retorno da função ou do método é `Void` ou `()`).
 
-> Grammar of a return statement:
+> Gramática de uma instrução return:
 >
 > *return-statement* → **`return`** *expression*_?_
 
-### Throw Statement
+### Instrução throw
 
-A `throw` statement occurs in the body of a throwing function or method,
-or in the body of a closure expression whose type is marked with the `throws` keyword.
+Uma instrução `throw` ocorre no corpo de uma função ou método que lança erros,
+ou no corpo de uma expressão de closure cujo tipo está marcado com a palavra-chave `throws`.
 
-A `throw` statement causes a program to end execution of the current scope
-and begin error propagation to its enclosing scope.
-The error that's thrown continues to propagate until it's handled by a `catch` clause
-of a `do` statement.
+Uma instrução `throw` faz o programa encerrar a execução do escopo atual
+e começar a propagação do erro para o escopo que o contém.
+O erro lançado continua se propagando até ser tratado por uma cláusula `catch`
+de uma instrução `do`.
 
-A `throw` statement consists of the `throw` keyword
-followed by an expression, as shown below.
+Uma instrução `throw` consiste na palavra-chave `throw`
+seguida de uma expressão, como mostrado abaixo.
 
 ```swift
 throw <#expression#>
 ```
 
-The value of the *expression* must have a type that conforms to
-the `Error` protocol.
-If the `do` statement or function that contains the `throw` statement
-declares the type of errors it throws,
-the value of the *expression* must be an instance of that type.
+O valor da *expressão* deve ter um tipo que esteja em conformidade com
+o protocolo `Error`.
+Se a instrução `do` ou a função que contém a instrução `throw`
+declarar o tipo de erros que lança,
+o valor da *expressão* deve ser uma instância desse tipo.
 
-For an example of how to use a `throw` statement,
-see <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
-in <doc:ErrorHandling>.
+Para um exemplo de como usar uma instrução `throw`,
+veja <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>
+em <doc:ErrorHandling>.
 
-> Grammar of a throw statement:
+> Gramática de uma instrução throw:
 >
 > *throw-statement* → **`throw`** *expression*
 
-## Defer Statement
+## Instrução defer
 
-A `defer` statement is used for executing code
-just before transferring program control outside of the scope
-that the `defer` statement appears in.
+Uma instrução `defer` é usada para executar código
+logo antes de transferir o controle do programa para fora do escopo
+no qual a instrução `defer` aparece.
 
-A `defer` statement has the following form:
+Uma instrução `defer` tem a seguinte forma:
 
 ```swift
 defer {
@@ -755,14 +754,14 @@ defer {
 }
 ```
 
-The statements within the `defer` statement are executed
-no matter how program control is transferred.
-This means that a `defer` statement can be used, for example,
-to perform manual resource management such as closing file descriptors,
-and to perform actions that need to happen even if an error is thrown.
+As instruções dentro da instrução `defer` são executadas
+independentemente de como o controle do programa é transferido.
+Isso significa que uma instrução `defer` pode ser usada, por exemplo,
+para fazer gerenciamento manual de recursos, como fechar descritores de arquivo,
+e para executar ações que precisam acontecer mesmo quando um erro é lançado.
 
-The *statements* in the `defer` statement
-are executed at the end of the scope that encloses the `defer` statement.
+As *instruções* da instrução `defer`
+são executadas no fim do escopo que contém a instrução `defer`.
 
 ```swift
 func f(x: Int) {
@@ -802,17 +801,17 @@ f(x: 5)
   ```
 -->
 
-In the code above,
-the `defer` in the `if` statement
-executes before the `defer` declared in the function `f`
-because the scope of the `if` statement ends
-before the scope of the function.
+No código acima,
+o `defer` dentro da instrução `if`
+é executado antes do `defer` declarado na função `f`,
+porque o escopo da instrução `if` termina
+antes do escopo da função.
 
-If multiple `defer` statements appear in the same scope,
-the order they appear is the reverse of the order they're executed.
-Executing the last `defer` statement in a given scope first
-means that statements inside that last `defer` statement
-can refer to resources that will be cleaned up by other `defer` statements.
+Se várias instruções `defer` aparecerem no mesmo escopo,
+a ordem em que aparecem é o inverso da ordem em que são executadas.
+Executar primeiro a última instrução `defer` de um escopo
+significa que as instruções dentro dessa última instrução `defer`
+podem se referir a recursos que serão limpos por outras instruções `defer`.
 
 ```swift
 func f() {
@@ -840,26 +839,25 @@ f()
   ```
 -->
 
-The statements in the `defer` statement can't
-transfer program control outside of the `defer` statement.
+As instruções dentro da instrução `defer` não podem
+transferir o controle do programa para fora da instrução `defer`.
 
-> Grammar of a defer statement:
+> Gramática de uma instrução defer:
 >
 > *defer-statement* → **`defer`** *code-block*
 
-## Do Statement
+## Instrução do
 
-The `do` statement is used to introduce a new scope
-and can optionally contain one or more `catch` clauses,
-which contain patterns that match against defined error conditions.
-Variables and constants declared in the scope of a `do` statement
-can be accessed only within that scope.
+A instrução `do` é usada para introduzir um novo escopo
+e pode, opcionalmente, conter uma ou mais cláusulas `catch`,
+que contêm padrões que correspondem a condições de erro definidas.
+Variáveis e constantes declaradas no escopo de uma instrução `do`
+só podem ser acessadas dentro desse escopo.
 
-A `do` statement in Swift is similar to
-curly braces (`{}`) in C used to delimit a code block,
-and doesn't incur a performance cost at runtime.
+Uma instrução `do` em Swift é semelhante às chaves (`{}`) do C usadas para delimitar um bloco de código,
+e não tem custo de desempenho em tempo de execução.
 
-A `do` statement has the following form:
+Uma instrução `do` tem a seguinte forma:
 
 ```swift
 do {
@@ -876,8 +874,8 @@ do {
 }
 ```
 
-A `do` statement can optionally specify the type of error it throws,
-which has the following form:
+Uma instrução `do` pode, opcionalmente, especificar o tipo de erro que lança,
+o que tem a seguinte forma:
 
 ```swift
 do throws(<#type#>) {
@@ -889,73 +887,73 @@ do throws(<#type#>) {
 }
 ```
 
-If the `do` statement includes a `throws` clause,
-the `do` block can throw errors of only the specified *type*.
-The *type* must be
-a concrete type that conforms to the `Error` protocol,
-an opaque type that conforms to the `Error` protocol,
-or the boxed protocol type `any Error`.
-If the `do` statement doesn't specify the type of error it throws,
-Swift infers the error type as follows:
+Se a instrução `do` incluir uma cláusula `throws`,
+o bloco `do` só pode lançar erros do *tipo* especificado.
+O *tipo* deve ser
+um tipo concreto que esteja em conformidade com o protocolo `Error`,
+um tipo opaco que esteja em conformidade com o protocolo `Error`,
+ou o tipo de protocolo encaixotado `any Error`.
+Se a instrução `do` não especificar o tipo de erro que lança,
+o Swift infere o tipo de erro da seguinte forma:
 
-- If every `throws` statement and `try` expression in the `do` code block
-  is nested inside of an exhaustive error-handling mechanism,
-  then Swift infers that the `do` statement is nonthrowing.
+- Se toda instrução `throw` e toda expressão `try` no bloco de código `do`
+  estiver aninhada dentro de um mecanismo exaustivo de tratamento de erros,
+  então o Swift infere que a instrução `do` não lança erros.
 
-- If the `do` code block contains code that throws
-  errors of only a single type
-  outside of exhaustive error handling,
-  other than throwing `Never`,
-  then Swift infers that the `do` statement throws that concrete error type.
+- Se o bloco de código `do` contiver código que lança
+  erros de apenas um único tipo
+  fora de um tratamento de erros exaustivo,
+  diferente de lançar `Never`,
+  então o Swift infere que a instrução `do` lança esse tipo concreto de erro.
 
-- If the `do` code block contains code that throws
-  errors of more than a single type
-  outside of exhaustive error handling,
-  then Swift infers that the `do` statement throws `any Error`.
+- Se o bloco de código `do` contiver código que lança
+  erros de mais de um tipo
+  fora de um tratamento de erros exaustivo,
+  então o Swift infere que a instrução `do` lança `any Error`.
 
-For more information about working with errors that have explicit types,
-see <doc:ErrorHandling#Specifying-the-Error-Type>.
+Para mais informações sobre como trabalhar com erros que têm tipos explícitos,
+veja <doc:ErrorHandling#Specifying-the-Error-Type>.
 
-If any statement in the `do` code block throws an error,
-program control is transferred
-to the first `catch` clause whose pattern matches the error.
-If none of the clauses match,
-the error propagates to the surrounding scope.
-If an error is unhandled at the top level,
-program execution stops with a runtime error.
+Se qualquer instrução no bloco de código `do` lançar um erro,
+o controle do programa é transferido
+para a primeira cláusula `catch` cujo padrão corresponda ao erro.
+Se nenhuma das cláusulas corresponder,
+o erro se propaga para o escopo que o contém.
+Se um erro não tratado chegar ao nível superior,
+a execução do programa para com um erro em tempo de execução.
 
-Like a `switch` statement,
-the compiler attempts to infer whether `catch` clauses are exhaustive.
-If such a determination can be made, the error is considered handled.
-Otherwise, the error can propagate out of the containing scope,
-which means
-the error must be handled by an enclosing `catch` clause
-or the containing function must be declared with `throws`.
+Assim como uma instrução `switch`,
+o compilador tenta inferir se as cláusulas `catch` são exaustivas.
+Se for possível determinar isso, o erro é considerado tratado.
+Caso contrário, o erro pode se propagar para fora do escopo que o contém,
+o que significa que
+o erro precisa ser tratado por uma cláusula `catch` que o envolva
+ou a função que o contém precisa ser declarada com `throws`.
 
-A `catch` clause that has multiple patterns
-matches the error if any of its patterns match the error.
-If a `catch` clause contains multiple patterns,
-all of the patterns must contain the same constant or variable bindings,
-and each bound variable or constant must have the same type
-in all of the `catch` clause's patterns.
+Uma cláusula `catch` que tem vários padrões
+corresponde ao erro se qualquer um dos seus padrões corresponder ao erro.
+Se uma cláusula `catch` contiver vários padrões,
+todos os padrões devem conter as mesmas vinculações de constantes ou variáveis,
+e cada constante ou variável vinculada deve ter o mesmo tipo
+em todos os padrões da cláusula `catch`.
 
 <!--
   The discussion above of multi-pattern catch
   matches the discussion of multi-pattern case under Switch Statement.
 -->
 
-To ensure that an error is handled,
-use a `catch` clause with a pattern that matches all errors,
-such as a wildcard pattern (`_`).
-If a `catch` clause doesn't specify a pattern,
-the `catch` clause matches and binds any error to a local constant named `error`.
-For more information about the patterns you can use in a `catch` clause,
-see <doc:Patterns>.
+Para garantir que um erro seja tratado,
+use uma cláusula `catch` com um padrão que corresponda a todos os erros,
+como o padrão curinga (`_`).
+Se uma cláusula `catch` não especificar um padrão,
+ela corresponde a qualquer erro e o vincula a uma constante local chamada `error`.
+Para mais informações sobre os padrões que você pode usar em uma cláusula `catch`,
+veja <doc:Patterns>.
 
-To see an example of how to use a `do` statement with several `catch` clauses,
-see <doc:ErrorHandling#Handling-Errors>.
+Para ver um exemplo de como usar uma instrução `do` com várias cláusulas `catch`,
+veja <doc:ErrorHandling#Handling-Errors>.
 
-> Grammar of a do statement:
+> Gramática de uma instrução do:
 >
 > *do-statement* → **`do`** *throws-clause*_?_ *code-block* *catch-clauses*_?_ \
 > *catch-clauses* → *catch-clause* *catch-clauses*_?_ \
@@ -963,28 +961,28 @@ see <doc:ErrorHandling#Handling-Errors>.
 > *catch-pattern-list* → *catch-pattern* | *catch-pattern* **`,`** *catch-pattern-list* \
 > *catch-pattern* → *pattern* *where-clause*_?_
 
-## Compiler Control Statements
+## Instruções de controle do compilador
 
-Compiler control statements allow the program to change aspects of the compiler's behavior.
-Swift has three compiler control statements:
-a conditional compilation block
-a line control statement,
-and a compile-time diagnostic statement.
+Instruções de controle do compilador permitem que o programa altere aspectos do comportamento do compilador.
+Swift tem três instruções de controle do compilador:
+um bloco de compilação condicional,
+uma instrução de controle de linha
+e uma instrução de diagnóstico em tempo de compilação.
 
-> Grammar of a compiler control statement:
+> Gramática de uma instrução de controle do compilador:
 >
 > *compiler-control-statement* → *conditional-compilation-block* \
 > *compiler-control-statement* → *line-control-statement* \
 > *compiler-control-statement* → *diagnostic-statement*
 
-### Conditional Compilation Block
+### Bloco de compilação condicional
 
-A conditional compilation block allows code to be conditionally compiled
-depending on the value of one or more compilation conditions.
+Um bloco de compilação condicional permite que o código seja compilado condicionalmente
+dependendo do valor de uma ou mais condições de compilação.
 
-Every conditional compilation block begins with the `#if` compilation directive
-and ends with the `#endif` compilation directive.
-A simple conditional compilation block has the following form:
+Todo bloco de compilação condicional começa com a diretiva de compilação `#if`
+e termina com a diretiva de compilação `#endif`.
+Um bloco de compilação condicional simples tem a seguinte forma:
 
 ```swift
 #if <#compilation condition#>
@@ -992,23 +990,22 @@ A simple conditional compilation block has the following form:
 #endif
 ```
 
-Unlike the condition of an `if` statement,
-the *compilation condition* is evaluated at compile time.
-As a result,
-the *statements* are compiled and executed only if the *compilation condition*
-evaluates to `true` at compile time.
+Diferente da condição de uma instrução `if`,
+a *condição de compilação* é avaliada em tempo de compilação.
+Por isso, as *instruções* são compiladas e executadas somente se a *condição de compilação*
+for avaliada como `true` em tempo de compilação.
 
-The *compilation condition* can include the `true` and `false` Boolean literals,
-an identifier used with the `-D` command line flag, or any of the platform
-conditions listed in the table below.
+A *condição de compilação* pode incluir os literais booleanos `true` e `false`,
+um identificador usado com o flag de linha de comando `-D`, ou qualquer uma das condições de plataforma
+listadas na tabela abaixo.
 
-| Platform condition | Valid arguments |
+| Condição de plataforma | Argumentos válidos |
 | ------------------ | --------------- |
 | `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
 | `arch()` | `arm`, `arm64`, `i386`, `wasm32`, `x86_64`, |
-| `swift()` | `>=` or `<` followed by a version number |
-| `compiler()` | `>=` or `<` followed by a version number |
-| `canImport()` | A module name |
+| `swift()` | `>=` ou `<` seguido de um número de versão |
+| `compiler()` | `>=` ou `<` seguido de um número de versão |
+| `canImport()` | Um nome de módulo |
 | `targetEnvironment()` | `simulator`, `macCatalyst` |
 
 <!--
@@ -1032,17 +1029,17 @@ conditions listed in the table below.
   so it's omitted from the table above.
 -->
 
-The version number for the `swift()` and `compiler()` platform conditions
-consists of a major number, optional minor number, optional patch number, and so on,
-with a dot (`.`) separating each part of the version number.
-There must not be whitespace between the comparison operator and the version number.
-The version for `compiler()` is the compiler version,
-regardless of the Swift version setting passed to the compiler.
-The version for `swift()` is the language version currently being compiled.
-For example, if you compile your code using the Swift 5 compiler in Swift 4.2 mode,
-the compiler version is 5 and the language version is 4.2.
-With those settings,
-the following code prints all three messages:
+O número de versão das condições de plataforma `swift()` e `compiler()`
+consiste em um número principal, um número secundário opcional, um número de correção opcional e assim por diante,
+com um ponto (`.`) separando cada parte do número de versão.
+Não pode haver espaço em branco entre o operador de comparação e o número de versão.
+A versão de `compiler()` é a versão do compilador,
+independentemente da versão da linguagem passada como configuração ao compilador.
+A versão de `swift()` é a versão da linguagem que está sendo compilada.
+Por exemplo, se você compilar seu código usando o compilador do Swift 5 no modo Swift 4.2,
+a versão do compilador é 5 e a versão da linguagem é 4.2.
+Com essas configurações,
+o código a seguir imprime as três mensagens:
 
 ```swift
 #if compiler(>=5)
@@ -1081,13 +1078,13 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
   since it's not actually running in Swift 4.2 mode.
 -->
 
-The argument for the `canImport()` platform condition
-is the name of a module that may not be present on all platforms.
-The module can include periods (`.`) in its name.
-This condition tests whether it's possible to import the module,
-but doesn't actually import it.
-If the module is present, the platform condition returns `true`;
-otherwise, it returns `false`.
+O argumento da condição de plataforma `canImport()`
+é o nome de um módulo que pode não estar presente em todas as plataformas.
+O módulo pode incluir pontos (`.`) no nome.
+Essa condição verifica se é possível importar o módulo,
+mas não o importa de fato.
+Se o módulo estiver presente, a condição de plataforma retorna `true`;
+caso contrário, retorna `false`.
 
 <!--
   - test: `canImport_A, canImport`
@@ -1127,13 +1124,13 @@ otherwise, it returns `false`.
   ```
 -->
 
-The `targetEnvironment()` platform condition
-returns `true` when code is being compiled for the specified environment;
-otherwise, it returns `false`.
+A condição de plataforma `targetEnvironment()`
+retorna `true` quando o código está sendo compilado para o ambiente especificado;
+caso contrário, retorna `false`.
 
-> Note: The `arch(arm)` platform condition doesn't return `true` for ARM 64 devices.
-> The `arch(i386)` platform condition returns `true`
-> when code is compiled for the 32–bit iOS simulator.
+> Nota: A condição de plataforma `arch(arm)` não retorna `true` para dispositivos ARM de 64 bits.
+> A condição de plataforma `arch(i386)` retorna `true`
+> quando o código é compilado para o simulador do iOS de 32 bits.
 
 <!--
   - test: `pound-if-swift-version`
@@ -1189,18 +1186,17 @@ otherwise, it returns `false`.
   ```
 -->
 
-You can combine and negate compilation conditions using the logical operators
-`&&`, `||`, and `!`
-and use parentheses for grouping.
-These operators have the same associativity and precedence as the
-logical operators that are used to combine ordinary Boolean expressions.
+Você pode combinar e negar condições de compilação usando os operadores lógicos
+`&&`, `||` e `!`, e usar parênteses para agrupar.
+Esses operadores têm a mesma associatividade e precedência dos
+operadores lógicos usados para combinar expressões booleanas comuns.
 
-Similar to an `if` statement,
-you can add multiple conditional branches to test for different compilation conditions.
-You can add any number of additional branches using `#elseif` clauses.
-You can also add a final additional branch using an `#else` clause.
-Conditional compilation blocks that contain multiple branches
-have the following form:
+Assim como em uma instrução `if`,
+você pode adicionar vários ramos condicionais para testar condições de compilação diferentes.
+Você pode adicionar quantos ramos extras quiser usando cláusulas `#elseif`.
+Você também pode adicionar um último ramo usando uma cláusula `#else`.
+Blocos de compilação condicional com vários ramos
+têm a seguinte forma:
 
 ```swift
 #if <#compilation condition 1#>
@@ -1212,21 +1208,20 @@ have the following form:
 #endif
 ```
 
-> Note: Each statement in the body of a conditional compilation block is parsed
-> even if it's not compiled.
-> However, there's an exception
-> if the compilation condition includes a `swift()` or `compiler()` platform condition:
-> The statements are parsed
-> only if the language or compiler version matches
-> what is specified in the platform condition.
-> This exception ensures that an older compiler doesn't attempt to parse
-> syntax introduced in a newer version of Swift.
+> Nota: Cada instrução no corpo de um bloco de compilação condicional é analisada
+> mesmo que não seja compilada.
+> Há uma exceção se a condição de compilação incluir uma condição de plataforma `swift()` ou `compiler()`:
+> as instruções são analisadas
+> somente se a versão da linguagem ou do compilador corresponder
+> ao que está especificado na condição de plataforma.
+> Essa exceção garante que um compilador mais antigo não tente analisar
+> a sintaxe introduzida em uma versão mais nova do Swift.
 
-For information about how you can wrap
-explicit member expressions in conditional compilation blocks,
-see <doc:Expressions#Explicit-Member-Expression>.
+Para informações sobre como você pode envolver
+expressões de membro explícitas em blocos de compilação condicional,
+veja <doc:Expressions#Explicit-Member-Expression>.
 
-> Grammar of a conditional compilation block:
+> Gramática de um bloco de compilação condicional:
 >
 > *conditional-compilation-block* → *if-directive-clause* *elseif-directive-clauses*_?_ *else-directive-clause*_?_ *endif-directive*
 >
@@ -1274,59 +1269,59 @@ see <doc:Expressions#Explicit-Member-Expression>.
       #endif
 -->
 
-### Line Control Statement
+### Instrução de controle de linha
 
-A line control statement is used to specify a line number and filename
-that can be different from the line number and filename of the source code being compiled.
-Use a line control statement to change the source code location
-used by Swift for diagnostic and debugging purposes.
+Uma instrução de controle de linha é usada para especificar um número de linha e um nome de arquivo
+que podem ser diferentes do número de linha e do nome de arquivo do código-fonte que está sendo compilado.
+Use uma instrução de controle de linha para alterar a localização do código-fonte
+usada pelo Swift em diagnósticos e para depuração.
 
-A line control statement has the following forms:
+Uma instrução de controle de linha tem as seguintes formas:
 
 ```swift
 #sourceLocation(file: <#file path#>, line: <#line number#>)
 #sourceLocation()
 ```
 
-The first form of a line control statement changes the values
-of the `#line`, `#file`, `#fileID`, and `#filePath`
-literal expressions, beginning with the line of code following the line control statement.
-The *line number* changes the value of `#line`,
-and is any integer literal greater than zero.
-The *file path* changes the value of `#file`, `#fileID`, and `#filePath`,
-and is a string literal.
-The specified string becomes the value of `#filePath`,
-and the last path component of the string is used by the value of `#fileID`.
-For information about `#file`, `#fileID`, and `#filePath`,
-see <doc:Expressions#Literal-Expression>.
+A primeira forma de instrução de controle de linha altera os valores
+das expressões literais `#line`, `#file`, `#fileID` e `#filePath`,
+começando na linha de código que segue a instrução de controle de linha.
+O *número de linha* altera o valor de `#line`
+e é qualquer literal inteiro maior que zero.
+O *caminho do arquivo* altera o valor de `#file`, `#fileID` e `#filePath`,
+e é um literal de string.
+A string especificada se torna o valor de `#filePath`,
+e o último componente do caminho da string é usado pelo valor de `#fileID`.
+Para informações sobre `#file`, `#fileID` e `#filePath`,
+veja <doc:Expressions#Literal-Expression>.
 
-The second form of a line control statement, `#sourceLocation()`,
-resets the source code location back to the default line numbering and file path.
+A segunda forma de instrução de controle de linha, `#sourceLocation()`,
+restaura a localização do código-fonte para a numeração de linhas e o caminho de arquivo padrão.
 
-> Grammar of a line control statement:
+> Gramática de uma instrução de controle de linha:
 >
 > *line-control-statement* → **`#sourceLocation`** **`(`** **`file:`** *file-path* **`,`** **`line:`** *line-number* **`)`** \
 > *line-control-statement* → **`#sourceLocation`** **`(`** **`)`** \
-> *line-number* → A decimal integer greater than zero \
+> *line-number* → Um inteiro decimal maior que zero \
 > *file-path* → *static-string-literal*
 
-### Compile-Time Diagnostic Statement
+### Instrução de diagnóstico em tempo de compilação
 
-Prior to Swift 5.9,
-the `#warning` and `#error` statements emit a diagnostic during compilation.
-This behavior is now provided by
-the [`warning(_:)`][] and [`error(_:)`][] macros in the Swift standard library.
+Antes do Swift 5.9,
+as instruções `#warning` e `#error` emitiam um diagnóstico durante a compilação.
+Esse comportamento agora é oferecido pelas macros
+[`warning(_:)`][] e [`error(_:)`][] da biblioteca padrão do Swift.
 
 [`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
 [`error(_:)`]: https://developer.apple.com/documentation/swift/error(_:)
 
-## Availability Condition
+## Condição de disponibilidade
 
-An *availability condition* is used as a condition of an `if`, `while`,
-and `guard` statement to query the availability of APIs at runtime,
-based on specified platforms arguments.
+Uma *condição de disponibilidade* é usada como condição de uma instrução `if`, `while`
+e `guard` para consultar a disponibilidade de APIs em tempo de execução,
+com base nos argumentos de plataforma especificados.
 
-An availability condition has the following form:
+Uma condição de disponibilidade tem a seguinte forma:
 
 ```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
@@ -1336,22 +1331,22 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 }
 ```
 
-You use an availability condition to execute a block of code,
-depending on whether the APIs you want to use are available at runtime.
-The compiler uses the information from the availability condition
-when it verifies that the APIs in that block of code are available.
+Você usa uma condição de disponibilidade para executar um bloco de código,
+dependendo de as APIs que você quer usar estarem disponíveis em tempo de execução.
+O compilador usa as informações da condição de disponibilidade
+ao verificar se as APIs naquele bloco de código estão disponíveis.
 
-The availability condition takes a comma-separated list of platform names and versions.
-Use `iOS`, `macOS`, `watchOS`, `tvOS` and `visionOS` for the platform names,
-and include the corresponding version numbers.
-The `*` argument is required and specifies that, on any other platform,
-the body of the code block guarded by the availability condition
-executes on the minimum deployment target specified by your target.
+A condição de disponibilidade recebe uma lista de nomes de plataforma e versões separada por vírgulas.
+Use `iOS`, `macOS`, `watchOS`, `tvOS` e `visionOS` para os nomes de plataforma,
+e inclua os números de versão correspondentes.
+O argumento `*` é obrigatório e especifica que, em qualquer outra plataforma,
+o corpo do bloco de código protegido pela condição de disponibilidade
+é executado na versão mínima de implantação especificada pelo seu target.
 
-Unlike Boolean conditions, you can't combine availability conditions using
-logical operators like `&&` and `||`.
-Instead of using `!` to negate an availability condition,
-use an unavailability condition, which has the following form:
+Diferente das condições booleanas, você não pode combinar condições de disponibilidade
+usando operadores lógicos como `&&` e `||`.
+Em vez de usar `!` para negar uma condição de disponibilidade,
+use uma condição de indisponibilidade, que tem a seguinte forma:
 
 ```swift
 if #unavailable(<#platform name#> <#version#>, <#...#>) {
@@ -1361,12 +1356,12 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
 }
 ```
 
-The `#unavailable` form is syntactic sugar that negates the condition.
-In an unavailability condition,
-the `*` argument is implicit and must not be included.
-It has the same meaning as the `*` argument in an availability condition.
+A forma `#unavailable` é um açúcar sintático que nega a condição.
+Em uma condição de indisponibilidade, o argumento `*` é implícito
+e não deve ser incluído.
+Ele tem o mesmo significado que o argumento `*` em uma condição de disponibilidade.
 
-> Grammar of an availability condition:
+> Gramática de uma condição de disponibilidade:
 >
 > *availability-condition* → **`#available`** **`(`** *availability-arguments* **`)`** \
 > *availability-condition* → **`#unavailable`** **`(`** *availability-arguments* **`)`** \
@@ -1452,3 +1447,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

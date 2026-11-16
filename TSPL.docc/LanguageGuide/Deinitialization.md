@@ -63,7 +63,7 @@ A classe `Bank` gerencia uma moeda fictícia,
 que nunca pode ter mais de 10.000 moedas em circulação.
 Só pode existir um `Bank` no jogo,
 por isso o `Bank` é implementado como uma classe com propriedades e métodos de tipo
-para armazenar e gerenciar o seu estado atual:
+para armazenar e gerenciar seu estado atual:
 
 ```swift
 class Bank {
@@ -158,7 +158,7 @@ que retira certo número de moedas do banco
 e as adiciona à bolsa do jogador.
 A classe `Player` também implementa um desinicializador,
 que é chamado logo antes de uma instância de `Player` ser desalocada.
-Aqui, o desinicializador simplesmente devolve todas as moedas do jogador ao banco:
+Aqui, o desinicializador simplesmente retorna todas as moedas do jogador ao banco:
 
 ```swift
 var playerOne: Player? = Player(coins: 100)
@@ -181,8 +181,8 @@ print("There are now \(Bank.coinsInBank) coins left in the bank")
 -->
 
 Uma nova instância de `Player` é criada, pedindo 100 moedas, se estiverem disponíveis.
-Essa instância de `Player` é guardada em uma variável opcional de `Player` chamada `playerOne`.
-Aqui usamos uma variável opcional porque jogadores podem sair do jogo a qualquer momento.
+Essa instância de `Player` é guardada em uma variável `Player` optional chamada `playerOne`.
+Aqui usamos uma variável optional porque jogadores podem sair do jogo a qualquer momento.
 O optional permite saber se há um jogador no jogo no momento.
 
 Como `playerOne` é um optional, ele recebe um ponto de exclamação (`!`)
@@ -234,7 +234,7 @@ print("The bank now has \(Bank.coinsInBank) coins")
 -->
 
 O jogador agora saiu do jogo.
-Isso é indicado ao definir a variável opcional `playerOne` como `nil`,
+Isso é indicado ao definir a variável optional `playerOne` como `nil`,
 o que significa “nenhuma instância de `Player`”.
 Nesse momento, a referência da variável `playerOne` à instância de `Player` é desfeita.
 Nenhuma outra propriedade ou variável ainda se refere à instância de `Player`,

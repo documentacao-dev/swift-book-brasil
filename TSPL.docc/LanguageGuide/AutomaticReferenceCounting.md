@@ -49,7 +49,7 @@ enquanto existir pelo menos uma referência ativa a ela.
 Para que isso seja possível,
 sempre que você atribui uma instância de classe a uma propriedade, constante ou variável,
 essa propriedade, constante ou variável faz uma *strong reference* à instância.
-A referência é chamada de “strong” porque mantém uma posse firme sobre a instância,
+A referência é chamada de “strong” porque mantém um vínculo firme com a instância,
 e não permite que ela seja desalocada enquanto essa strong reference existir.
 
 ## ARC em ação
@@ -266,7 +266,7 @@ e uma propriedade `tenant` optional, que começa como `nil`.
 A propriedade `tenant` é optional porque um apartamento nem sempre tem um inquilino.
 
 As duas classes também definem um desinicializador,
-que imprime o fato de que uma instância da classe está sendo desinicializada.
+que imprime uma mensagem informando que uma instância da classe está sendo desinicializada.
 Isso permite verificar se as instâncias de `Person` e `Apartment`
 estão sendo desalocadas como esperado.
 
@@ -361,7 +361,7 @@ unit4A = nil
 Observe que nenhum dos desinicializadores foi chamado
 quando você definiu essas duas variáveis como `nil`.
 O ciclo de strong reference impede que as instâncias de `Person` e `Apartment`
-sejam desalocadas nunca, o que causa um vazamento de memória no seu app.
+nunca sejam desalocadas, o que causa um vazamento de memória no seu app.
 
 Veja como ficam as strong references depois que você define
 as variáveis `john` e `unit4A` como `nil`:
@@ -377,15 +377,15 @@ O Swift oferece duas formas de resolver ciclos de strong reference
 quando você trabalha com propriedades de tipo classe:
 referências weak e referências unowned.
 
-Referências weak e unowned permitem que uma instância em um ciclo de referência
-se refira à outra instância *sem* manter uma posse forte sobre ela.
+Referências weak e unowned permitem que uma instância em um ciclo de strong reference
+se refira à outra instância *sem* manter um vínculo forte com ela.
 As instâncias podem então se referir uma à outra
 sem criar um ciclo de strong reference.
 
 Use uma referência weak quando a outra instância tiver um tempo de vida mais curto,
 ou seja, quando a outra instância puder ser desalocada primeiro.
 No exemplo de `Apartment` acima,
-é apropriado que um apartamento possa ficar sem inquilino em algum momento da sua vida,
+é apropriado que um apartamento possa ficar sem inquilino em algum momento do seu tempo de vida,
 então uma referência weak é uma forma adequada de quebrar o ciclo nesse caso.
 Já uma referência unowned é indicada quando a outra instância
 tem o mesmo tempo de vida ou um tempo de vida maior.
@@ -772,7 +772,7 @@ imprimem suas mensagens de “deinitialized” depois que a variável `john` é 
   Try expanding the example above so each customer has an array of credit cards.
 -->
 
-### Referências unowned opcionais
+### Referências unowned optional
 
 Você pode marcar uma referência optional a uma classe como unowned.
 No modelo de posse do ARC, uma referência unowned optional e uma referência weak
@@ -781,7 +781,7 @@ A diferença é que, ao usar uma referência unowned optional,
 você é responsável por garantir que ela sempre se refira a um objeto válido
 ou seja definida como `nil`.
 
-Aqui está um exemplo que controla os cursos oferecidos
+Aqui está um exemplo que acompanha os cursos oferecidos
 por um departamento de uma escola:
 
 ```swift
@@ -955,7 +955,7 @@ com uma propriedade optional com unwrap implícito na outra classe.
 
 Isso permite que as duas propriedades sejam acessadas diretamente
 (sem fazer unwrap do optional) depois que a inicialização termina,
-ao mesmo tempo em que evita um ciclo de referência.
+ao mesmo tempo em que evita um ciclo de strong reference.
 Esta seção mostra como configurar esse relacionamento.
 
 O exemplo a seguir define duas classes, `Country` e `City`,
@@ -1023,7 +1023,7 @@ como uma propriedade optional com unwrap implícito,
 indicada pelo ponto de exclamação no fim da anotação de tipo (`City!`).
 Isso significa que a propriedade `capitalCity` tem valor padrão `nil`,
 como qualquer outro optional,
-mas pode ser acessada sem a necessidade de fazer unwrap do seu valor,
+mas pode ser acessada sem a necessidade de fazer unwrap do valor,
 como descrito em <doc:TheBasics#Implicitly-Unwrapped-Optionals>.
 
 Como `capitalCity` tem valor padrão `nil`,
@@ -1083,7 +1083,7 @@ são *tipos de referência*.
 Quando você atribui uma closure a uma propriedade,
 está atribuindo uma *referência* a essa closure.
 Na essência, é o mesmo problema de antes:
-duas strong references mantendo uma à outra viva.
+duas strong references que mantêm uma à outra vivas.
 No entanto, em vez de duas instâncias de classe,
 desta vez são uma instância de classe e uma closure que se mantêm vivas mutuamente.
 
@@ -1249,7 +1249,7 @@ Veja como fica o ciclo:
 
 ![](closureReferenceCycle01)
 
-A propriedade `asHTML` da instância tem uma strong reference para a sua closure.
+A propriedade `asHTML` da instância tem uma strong reference para a closure.
 No entanto, como a closure se refere a `self` no seu corpo
 (para acessar `self.name` e `self.text`),
 a closure *captura* `self`,
@@ -1262,7 +1262,7 @@ consulte <doc:Closures#Capturing-Values>.)
 > ela captura apenas uma strong reference para a instância de `HTMLElement`.
 
 Se você definir a variável `paragraph` como `nil`
-e quebrar a sua strong reference para a instância de `HTMLElement`,
+e quebrar a strong reference para a instância de `HTMLElement`,
 o ciclo de strong reference impede a desalocação
 tanto da instância de `HTMLElement` quanto da sua closure:
 
@@ -1286,7 +1286,7 @@ o que mostra que a instância de `HTMLElement` não é desalocada.
 Você resolve um ciclo de strong reference entre uma closure e uma instância de classe
 definindo uma *lista de captura* como parte da definição da closure.
 Uma lista de captura define as regras a serem usadas ao capturar
-uma ou mais referências de tipo referência dentro do corpo da closure.
+uma ou mais referências a tipos de referência dentro do corpo da closure.
 Assim como nos ciclos de strong reference entre duas instâncias de classe,
 você declara cada referência capturada como uma referência weak ou unowned,
 em vez de uma strong reference.

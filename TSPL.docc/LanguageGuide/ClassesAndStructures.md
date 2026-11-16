@@ -3,7 +3,7 @@
 Modele tipos personalizados que encapsulam dados.
 
 *Structs* e *classes* são construções flexíveis e de uso geral,
-que se tornam os blocos de construção do código do seu programa.
+que se tornam os blocos de construção do código do programa.
 Você define propriedades e métodos para adicionar funcionalidades às suas structs e classes
 usando a mesma sintaxe que usa para definir constantes, variáveis e funções.
 
@@ -51,7 +51,7 @@ e <doc:AutomaticReferenceCounting>.
 As capacidades adicionais das classes
 têm como custo uma complexidade maior.
 Como orientação geral,
-prefira structs, porque elas são mais fáceis de raciocinar,
+prefira structs, porque são mais fáceis de entender,
 e use classes quando forem apropriadas ou necessárias.
 Na prática, isso significa que a maioria dos tipos personalizados que você definir
 será de structs e enums.
@@ -137,7 +137,7 @@ para descrever uma resolução de exibição baseada em pixels.
 Essa struct tem duas propriedades armazenadas chamadas `width` e `height`.
 Propriedades armazenadas são constantes ou variáveis que ficam empacotadas
 como parte da struct ou da classe.
-As duas propriedades são inferidas como sendo do tipo `Int`
+O Swift infere que as duas propriedades são do tipo `Int`
 porque são inicializadas com o valor inteiro `0`.
 
 O exemplo acima também define uma nova classe chamada `VideoMode`,
@@ -149,7 +149,7 @@ Para as outras três propriedades,
 novas instâncias de `VideoMode` serão inicializadas com
 uma configuração `interlaced` de `false` (que significa “vídeo não entrelaçado”),
 uma taxa de quadros de reprodução de `0.0`
-e um valor `String` opcional chamado `name`.
+e um valor `String` optional chamado `name`.
 A propriedade `name` recebe automaticamente o valor padrão `nil`,
 ou “nenhum valor de `name`”, porque é de um tipo optional.
 
@@ -211,7 +211,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 Neste exemplo,
 `someResolution.width` se refere à propriedade `width` de `someResolution`
-e retorna o seu valor inicial padrão, `0`.
+e retorna seu valor inicial padrão, `0`.
 
 Você pode acessar subpropriedades,
 como a propriedade `width` dentro da propriedade `resolution` de uma `VideoMode`:
@@ -304,7 +304,7 @@ são tipos por valor e, nos bastidores, são implementados como structs.
 Todas as structs e enums no Swift são tipos por valor.
 Isso significa que qualquer instância de struct ou de enum que você criar ---
 e quaisquer tipos por valor que elas tenham como propriedades ---
-é sempre copiada quando é passada pelo seu código.
+é sempre copiada quando é passada pelo código.
 
 > Nota: As coleções definidas pela biblioteca padrão do Swift,
 > como arrays, dicionários e strings,
@@ -314,7 +314,7 @@ e quaisquer tipos por valor que elas tenham como propriedades ---
 > entre a instância original e as cópias.
 > Se uma das cópias da coleção for modificada,
 > os elementos são copiados logo antes da modificação.
-> O comportamento que você vê no seu código
+> O comportamento que você vê no código
 > é sempre o mesmo que aconteceria se a cópia tivesse sido feita imediatamente.
 
 Considere este exemplo, que usa a struct `Resolution` do exemplo anterior:
@@ -534,14 +534,14 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
   ```
 -->
 
-Este exemplo também mostra como tipos por referência podem ser mais difíceis de raciocinar.
+Este exemplo também mostra como tipos por referência podem ser mais difíceis de entender.
 Se `tenEighty` e `alsoTenEighty` ficassem distantes uma da outra no código do programa,
 poderia ser difícil encontrar todas as formas como o modo de vídeo é alterado.
 Onde quer que você use `tenEighty`,
 também precisa pensar no código que usa `alsoTenEighty`, e vice-versa.
-Já os tipos por valor são mais fáceis de raciocinar,
+Já os tipos por valor são mais fáceis de entender,
 porque todo o código que interage com o mesmo valor
-fica próximo nos seus arquivos de código-fonte.
+fica próximo nos arquivos de código-fonte.
 
 Observe que `tenEighty` e `alsoTenEighty` são declaradas como *constantes*,
 e não como variáveis.

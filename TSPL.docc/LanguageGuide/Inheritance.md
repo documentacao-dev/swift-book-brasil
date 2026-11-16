@@ -1,6 +1,6 @@
 # Herança
 
-Subclasse para adicionar ou sobrescrever funcionalidades.
+Criar uma subclasse para adicionar ou sobrescrever funcionalidades.
 
 Uma classe pode *herdar* métodos, propriedades e outras características
 de outra classe.
@@ -14,7 +14,7 @@ Classes em Swift podem chamar e acessar
 métodos, propriedades e subscripts pertencentes à sua superclasse
 e podem fornecer suas próprias versões sobrescritas desses métodos, propriedades e subscripts
 para refinar ou modificar seu comportamento.
-O Swift ajuda a garantir que suas sobrescritas estão corretas
+O Swift ajuda a garantir que suas sobrescritas estejam corretas
 verificando se a definição sobrescrita tem uma definição correspondente na superclasse.
 
 Classes também podem adicionar observadores de propriedade a propriedades herdadas
@@ -253,7 +253,7 @@ print("Tandem: \(tandem.description)")
 
 Uma subclasse pode fornecer sua própria implementação personalizada de
 um método de instância, método de tipo, propriedade de instância, propriedade de tipo ou subscript
-que ela herdaria de outra forma de uma superclasse.
+que, de outro modo, herdaria de uma superclasse.
 Isso é chamado de *sobrescrita*.
 
 Para sobrescrever uma característica que seria herdada,
@@ -502,13 +502,13 @@ print("AutomaticCar: \(automatic.description)")
 Você pode impedir que um método, propriedade ou subscript seja sobrescrito
 marcando-o como *final*.
 Para fazer isso, escreva o modificador `final` antes
-do método, propriedade ou palavra-chave introdutora do subscript
+da palavra-chave introdutora do método, da propriedade ou do subscript
 (como `final var`, `final func`, `final class func` e `final subscript`).
 
 Qualquer tentativa de sobrescrever um método, propriedade ou subscript final em uma subclasse
 é reportada como erro de compilação.
-Métodos, propriedades ou subscripts que você adiciona a uma classe em uma extensão
-também podem ser marcados como final na definição da extensão.
+Métodos, propriedades ou subscripts que você adiciona a uma classe em uma extension
+também podem ser marcados como final na definição da extension.
 Para mais informações, veja <doc:Extensions>.
 
 <!--

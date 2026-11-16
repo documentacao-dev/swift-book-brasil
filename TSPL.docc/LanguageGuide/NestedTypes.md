@@ -2,12 +2,12 @@
 
 Defina tipos dentro do escopo de outro tipo.
 
-Enumerações costumam ser criadas para dar suporte à funcionalidade de uma classe ou struct específica.
-Da mesma forma, pode ser conveniente definir estruturas utilitárias
+Enums costumam ser criados para dar suporte à funcionalidade de uma classe ou struct específica.
+Da mesma forma, pode ser conveniente definir structs utilitárias
 usadas apenas no contexto de um tipo mais complexo,
 além de protocolos normalmente usados em conjunto com um tipo específico.
 Para isso, o Swift permite definir *tipos aninhados*,
-em que você aninha tipos de apoio, como enumerações, structs e protocolos,
+em que você aninha tipos de apoio, como enums, structs e protocolos,
 dentro da definição do tipo que eles apoiam.
 
 Para aninhar um tipo dentro de outro,
@@ -18,12 +18,12 @@ Os tipos podem ser aninhados em quantos níveis forem necessários.
 
 O exemplo abaixo define uma struct chamada `BlackjackCard`,
 que modela uma carta de baralho usada no jogo de Blackjack.
-A struct `BlackjackCard` contém dois tipos de enumeração aninhados,
+A struct `BlackjackCard` contém dois enums aninhados,
 chamados `Suit` e `Rank`.
 
 No Blackjack, o Ás tem valor um ou onze.
 Essa característica é representada por uma struct chamada `Values`,
-que é aninhada dentro da enumeração `Rank`:
+que é aninhada dentro do enum `Rank`:
 
 ```swift
 struct BlackjackCard {
@@ -107,14 +107,14 @@ struct BlackjackCard {
   ```
 -->
 
-A enumeração `Suit` descreve os quatro naipes comuns de cartas,
-junto com um valor bruto do tipo `Character` que representa o símbolo de cada um.
+O enum `Suit` descreve os quatro naipes comuns de cartas,
+junto com um raw value do tipo `Character` que representa o símbolo de cada um.
 
-A enumeração `Rank` descreve as treze possíveis graduações de cartas,
-junto com um valor bruto do tipo `Int` que representa o valor de face.
-(Esse valor bruto `Int` não é usado para as cartas Valete, Dama, Rei e Ás.)
+O enum `Rank` descreve as treze possíveis graduações de cartas,
+junto com um raw value do tipo `Int` que representa o valor de face.
+(Esse raw value `Int` não é usado para as cartas Valete, Dama, Rei e Ás.)
 
-Como mencionado acima, a enumeração `Rank` define
+Como mencionado acima, o enum `Rank` define
 uma struct aninhada própria, chamada `Values`.
 Essa struct encapsula o fato de que a maioria das cartas tem um valor,
 mas o Ás tem dois.
@@ -128,7 +128,7 @@ que retorna uma instância da struct `Values`.
 Essa propriedade computada considera a graduação da carta
 e inicializa uma nova instância de `Values` com os valores adequados para essa graduação.
 Ela usa valores especiais para `jack`, `queen`, `king` e `ace`.
-Para as cartas numéricas, usa o valor bruto `Int` da graduação.
+Para as cartas numéricas, usa o raw value `Int` da graduação.
 
 A própria struct `BlackjackCard` tem duas propriedades: `rank` e `suit`.
 Ela também define uma propriedade computada chamada `description`,
@@ -161,12 +161,12 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 
 Mesmo que `Rank` e `Suit` estejam aninhados dentro de `BlackjackCard`,
 o tipo deles pode ser inferido pelo contexto,
-então a inicialização dessa instância consegue se referir aos casos da enumeração
+então a inicialização dessa instância consegue se referir aos casos do enum
 apenas pelos nomes dos casos (`.ace` e `.spades`).
 No exemplo acima, a propriedade `description` informa corretamente
 que o Ás de Espadas tem valor `1` ou `11`.
 
-## Referindo-se a tipos aninhados
+## Como se referir a tipos aninhados
 
 Para usar um tipo aninhado fora do contexto em que ele é definido,
 coloque antes do nome dele o nome do tipo em que ele está aninhado:

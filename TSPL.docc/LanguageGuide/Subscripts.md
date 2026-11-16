@@ -2,7 +2,7 @@
 
 Acesse os elementos de uma coleção.
 
-Classes, structs e enumerações podem definir *subscripts*,
+Classes, structs e enums podem definir *subscripts*,
 que são atalhos para acessar os elementos membros de uma coleção, lista ou sequência.
 Você usa subscripts para ler e gravar valores por índice, sem precisar
 de métodos separados para leitura e escrita.
@@ -10,11 +10,11 @@ Por exemplo, você acessa os elementos de uma instância de `Array` como `someAr
 e os elementos de uma instância de `Dictionary` como `someDictionary[key]`.
 
 Você pode definir vários subscripts para um mesmo tipo,
-e o subscript adequado é escolhido
+e a sobrecarga de subscript adequada é escolhida
 com base no tipo do valor de índice que você passa para ele.
 Subscripts não se limitam a uma única dimensão,
 e você pode definir subscripts com vários parâmetros de entrada
-para atender às necessidades do seu tipo personalizado.
+para atender às necessidades do tipo personalizado.
 
 <!--
   TODO: this chapter should provide an example of subscripting an enumeration,
@@ -123,7 +123,7 @@ print("six times three is \(threeTimesTable[6])")
 
 Neste exemplo, uma nova instância de `TimesTable` é criada
 para representar a tabela do três.
-Isso é indicado ao passar o valor `3` para o `initializer` da struct,
+Isso é feito passando o valor `3` para o `initializer` da struct,
 como valor a ser usado no parâmetro `multiplier` da instância.
 
 Você pode consultar a instância `threeTimesTable` chamando o subscript dela,
@@ -141,7 +141,7 @@ O significado exato de “subscript” depende do contexto em que ele é usado.
 Subscripts costumam ser usados como atalho para acessar
 os elementos membros de uma coleção, lista ou sequência.
 Você é livre para implementar subscripts da forma que for mais adequada
-à funcionalidade da sua classe ou struct.
+à funcionalidade da classe ou struct.
 
 Por exemplo, o tipo `Dictionary` do Swift implementa um subscript
 para gravar e ler os valores armazenados em uma instância de `Dictionary`.
@@ -164,7 +164,7 @@ numberOfLegs["bird"] = 2
 -->
 
 O exemplo acima define uma variável chamada `numberOfLegs`
-e a inicializa com um dictionary literal que contém três pares chave-valor.
+e a inicializa com um literal de dicionário que contém três pares chave-valor.
 O tipo do dicionário `numberOfLegs` é inferido como `[String: Int]`.
 Depois de criar o dicionário,
 o exemplo usa uma atribuição por subscript para adicionar
@@ -173,7 +173,7 @@ a chave `String` `"bird"` e o valor `Int` `2` ao dicionário.
 Para mais informações sobre o subscript de `Dictionary`,
 veja <doc:CollectionTypes#Accessing-and-Modifying-a-Dictionary>.
 
-> Nota: O tipo `Dictionary` do Swift implementa seu subscript de chave-valor
+> Nota: O tipo `Dictionary` do Swift implementa o subscript de chave-valor
 > como um subscript que recebe e retorna um tipo *optional*.
 > Para o dicionário `numberOfLegs` acima,
 > o subscript de chave-valor recebe e retorna um valor do tipo `Int?`,
@@ -219,7 +219,7 @@ Essa definição de vários subscripts é conhecida como *sobrecarga de subscrip
 
 Embora seja mais comum um subscript receber um único parâmetro,
 você também pode definir um subscript com vários parâmetros
-se isso fizer sentido para o seu tipo.
+se isso fizer sentido para o tipo.
 O exemplo a seguir define uma struct `Matrix`,
 que representa uma matriz bidimensional de valores `Double`.
 O subscript da struct `Matrix` recebe dois parâmetros inteiros:

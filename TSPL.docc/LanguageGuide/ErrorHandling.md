@@ -8,7 +8,7 @@ O Swift tem suporte de primeira classe para lançar, capturar, propagar e manipu
 Algumas operações não têm garantia de sempre terminar a execução ou de produzir uma saída útil.
 Os optionals representam a ausência de um valor, mas, quando uma operação falha,
 costuma ser útil entender o que causou a falha,
-para que o seu código possa reagir de acordo.
+para que seu código possa reagir de acordo.
 
 Como exemplo, considere a tarefa de ler e processar dados de um arquivo em disco.
 Essa tarefa pode falhar de várias maneiras, incluindo
@@ -28,8 +28,8 @@ e comunique ao usuário os erros que não consegue resolver.
 No Swift, erros são representados por valores de tipos que estão em conformidade com o protocolo `Error`.
 Esse protocolo vazio indica que um tipo pode ser usado para tratamento de erros.
 
-Enumerações do Swift são especialmente adequadas para modelar um grupo de condições de erro relacionadas,
-com valores associados que permitem comunicar informações adicionais sobre a natureza do erro.
+Enums do Swift são especialmente adequados para modelar um grupo de condições de erro relacionadas,
+com associated values que permitem comunicar informações adicionais sobre a natureza do erro.
 Por exemplo, veja como você poderia representar as condições de erro de operar uma máquina de venda dentro de um jogo:
 
 ```swift
@@ -379,7 +379,7 @@ veja <doc:Patterns>.
   the errors in an given enum without a general catch/default.
 -->
 
-Por exemplo, o código a seguir corresponde aos três casos da enumeração `VendingMachineError`.
+Por exemplo, o código a seguir corresponde aos três casos do enum `VendingMachineError`.
 
 ```swift
 var vendingMachine = VendingMachine()
@@ -433,10 +433,10 @@ As cláusulas `catch` não precisam tratar todos os erros possíveis que o códi
 Se nenhuma das cláusulas `catch` tratar o erro, ele se propaga para o escopo ao redor.
 No entanto, o erro propagado precisa ser tratado por *algum* escopo ao redor.
 Em uma função que não lança, uma instrução `do`-`catch` que a envolve precisa tratar o erro.
-Em uma função que lança, precisa tratar o erro uma instrução `do`-`catch` que a envolve ou quem a chamou.
+Em uma função que lança, o erro precisa ser tratado por uma instrução `do`-`catch` que a envolva ou por quem a chamou.
 Se o erro chegar ao escopo de nível superior sem ser tratado, você terá um erro de tempo de execução.
 
-Por exemplo, o exemplo acima pode ser escrito de modo que qualquer erro que não seja um `VendingMachineError`
+Por exemplo, o código acima pode ser escrito de modo que qualquer erro que não seja um `VendingMachineError`
 seja capturado pela função que a chamou:
 
 ```swift
@@ -477,7 +477,7 @@ do {
   ```
 -->
 
-Na função `nourish(with:)`, se `vend(itemNamed:)` lançar um erro que seja um dos casos da enumeração `VendingMachineError`,
+Na função `nourish(with:)`, se `vend(itemNamed:)` lançar um erro que seja um dos casos do enum `VendingMachineError`,
 `nourish(with:)` trata o erro imprimindo uma mensagem.
 Caso contrário, `nourish(with:)` propaga o erro para o ponto em que foi chamada.
 Então, o erro é capturado pela cláusula `catch` geral.
@@ -635,7 +635,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ## Especificando o tipo de erro
 
 Todos os exemplos acima usam o tipo mais comum de tratamento de erros,
-em que os erros que o seu código lança podem ser valores de qualquer tipo que esteja em conformidade com o protocolo `Error`.
+em que os erros que seu código lança podem ser valores de qualquer tipo que esteja em conformidade com o protocolo `Error`.
 Essa abordagem reflete a realidade de que você não sabe antecipadamente todos os erros que podem acontecer
 enquanto o código roda, especialmente ao propagar erros lançados em outro lugar.
 Ela também reflete o fato de que os erros mudam com o tempo.
@@ -763,7 +763,7 @@ Neste código, escrever `do throws(StatisticsError)` indica que a instrução `d
 lança valores de `StatisticsError` como erros.
 Como em outras instruções `do`-`catch`, a cláusula `catch` pode tratar todos os erros possíveis
 ou propagar os erros não tratados para algum escopo ao redor tratar.
-Este código trata todos os erros, usando uma instrução `switch` com um caso para cada valor da enumeração.
+Este código trata todos os erros, usando uma instrução `switch` com um caso para cada valor do enum.
 Como outras cláusulas `catch` sem padrão, esta corresponde a qualquer erro
 e vincula o erro a uma constante local chamada `error`.
 Como a instrução `do`-`catch` lança valores de `StatisticsError`,
@@ -811,7 +811,7 @@ As instruções adiadas não podem conter código que transfira o controle para 
 como uma instrução `break` ou `return`, nem lançar um erro.
 As ações adiadas são executadas na ordem inversa da que foram escritas no código-fonte.
 Ou seja, o código da primeira instrução `defer` é executado por último,
-o da segunda é executado penúltimo, e assim por diante.
+o da segunda instrução `defer` é executado em penúltimo lugar, e assim por diante.
 A última instrução `defer` na ordem do código-fonte é executada primeiro.
 
 ```swift

@@ -1,25 +1,20 @@
-# Collection Types
+# Tipos de Coleção
 
-Organize data using arrays, sets, and dictionaries.
+Organize dados usando arrays, conjuntos e dicionários.
 
-Swift provides three primary *collection types*,
-known as arrays, sets, and dictionaries,
-for storing collections of values.
-Arrays are ordered collections of values.
-Sets are unordered collections of unique values.
-Dictionaries are unordered collections of key-value associations.
+Swift oferece três *tipos de coleção* principais, conhecidos como arrays, conjuntos e dicionários, para armazenar coleções de valores.
+Arrays são coleções ordenadas de valores.
+Conjuntos são coleções não ordenadas de valores únicos.
+Dicionários são coleções não ordenadas de associações entre chave e valor.
 
 ![](CollectionTypes_intro)
 
-Arrays, sets, and dictionaries in Swift are always clear about
-the types of values and keys that they can store.
-This means that you can't insert a value of the wrong type
-into a collection by mistake.
-It also means you can be confident about the type of values
-you will retrieve from a collection.
+Arrays, conjuntos e dicionários em Swift sempre deixam claro o tipo dos valores e das chaves que podem armazenar.
+Isso significa que você não consegue inserir, por engano, um valor do tipo errado em uma coleção.
+Também significa que você pode ter certeza do tipo dos valores que vai recuperar de uma coleção.
 
-> Note: Swift's array, set, and dictionary types are implemented as *generic collections*.
-> For more about generic types and collections, see <doc:Generics>.
+> Nota: Os tipos array, Set e Dictionary do Swift são implementados como *coleções genéricas*.
+> Para saber mais sobre tipos e coleções genéricos, consulte <doc:Generics>.
 
 <!--
   TODO: should I mention the Collection protocol, to which both of these conform?
@@ -33,49 +28,34 @@ you will retrieve from a collection.
   TODO: discuss collection equality
 -->
 
-## Mutability of Collections
+## Mutabilidade das Coleções
 
-If you create an array, a set, or a dictionary, and assign it to a variable,
-the collection that's created will be *mutable*.
-This means that you can change (or *mutate*) the collection after it's created
-by adding, removing, or changing items in the collection.
-If you assign an array, a set, or a dictionary to a constant,
-that collection is *immutable*,
-and its size and contents can't be changed.
+Se você criar um array, um conjunto ou um dicionário e atribuí-lo a uma variável, a coleção criada será *mutável*.
+Isso significa que você pode alterar (ou *mutar*) a coleção depois de criada, adicionando, removendo ou trocando itens na coleção.
+Se você atribuir um array, um conjunto ou um dicionário a uma constante, essa coleção será *imutável*, e seu tamanho e conteúdo não poderão ser alterados.
 
-> Note: It's good practice to create immutable collections
-> in all cases where the collection doesn't need to change.
-> Doing so makes it easier for you to reason about your code
-> and enables the Swift compiler to optimize the performance of
-> the collections you create.
+> Nota: É uma boa prática criar coleções imutáveis em todos os casos em que a coleção não precisa mudar.
+> Fazer isso facilita o raciocínio sobre o seu código e permite que o compilador do Swift otimize o desempenho das coleções que você cria.
 
 ## Arrays
 
-An *array* stores values of the same type in an ordered list.
-The same value can appear in an array multiple times at different positions.
+Um *array* armazena valores do mesmo tipo em uma lista ordenada.
+O mesmo valor pode aparecer em um array várias vezes, em posições diferentes.
 
-> Note: Swift's `Array` type is bridged to Foundation's `NSArray` class.
+> Nota: O tipo `Array` do Swift tem ponte com a classe `NSArray` do Foundation.
 >
-> For more information about using `Array` with Foundation and Cocoa,
-> see [Bridging Between Array and NSArray](https://developer.apple.com/documentation/swift/array#Bridging-Between-Array-and-NSArray).
+> Para mais informações sobre como usar `Array` com Foundation e Cocoa, consulte [Ponte entre Array e NSArray](https://developer.apple.com/documentation/swift/array#Bridging-Between-Array-and-NSArray).
 
-### Array Type Shorthand Syntax
+### Sintaxe Abreviada do Tipo Array
 
-The type of a Swift array is written in full as `Array<Element>`,
-where `Element` is the type of values the array is allowed to store.
-You can also write the type of an array in shorthand form as `[Element]`.
-Although the two forms are functionally identical,
-the shorthand form is preferred
-and is used throughout this guide when referring to the type of an array.
+O tipo de um array do Swift é escrito por extenso como `Array<Element>`, em que `Element` é o tipo de valores que o array pode armazenar.
+Você também pode escrever o tipo de um array em forma abreviada, como `[Element]`.
+Embora as duas formas sejam funcionalmente idênticas, a forma abreviada é preferida e é usada ao longo deste guia ao se referir ao tipo de um array.
 
-### Creating an Empty Array
+### Criando um Array Vazio
 
-You can create an empty array in Swift using two approaches.
-If the context already provides type information,
-such as a function argument or an already typed variable or constant,
-you can use an empty array literal,
-which is written as `[]`
-(an empty pair of square brackets):
+Você pode criar um array vazio no Swift usando duas abordagens.
+Se o contexto já fornecer informação de tipo, como um argumento de função ou uma variável ou constante já tipada, você pode usar um literal de array vazio, que é escrito como `[]` (um par vazio de colchetes):
 
 ```swift
 var someInts: [Int] = []
@@ -93,11 +73,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-Alternatively, you can create an empty array of a certain type
-using explicit initializer syntax,
-by writing the element type in square brackets
-followed by parentheses ---
-for example, `[Int]()` in the following:
+Alternativamente, você pode criar um array vazio de determinado tipo usando a sintaxe explícita de inicializador, escrevendo o tipo do elemento entre colchetes seguido de parênteses, por exemplo, `[Int]()` no exemplo a seguir:
 
 ```swift
 var someInts = [Int]()
@@ -105,12 +81,10 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 // Prints "someInts is of type [Int] with 0 items."
 ```
 
-Both approaches produce the same result.
-However,
-an empty array literal is shorter and usually easier to read.
+Ambas as abordagens produzem o mesmo resultado.
+No entanto, um literal de array vazio é mais curto e geralmente mais fácil de ler.
 
-In both cases, you can use the empty array literal (`[]`) to
-reassign an empty array to an existing variable:
+Nos dois casos, você pode usar o literal de array vazio (`[]`) para atribuir novamente um array vazio a uma variável existente:
 
 ```swift
 someInts.append(3)
@@ -131,14 +105,10 @@ someInts = []
   ```
 -->
 
-### Creating an Array with a Default Value
+### Criando um Array com um Valor Padrão
 
-Swift's `Array` type also provides
-an initializer for creating an array of a certain size
-with all of its values set to the same default value.
-You pass this initializer
-a default value of the appropriate type (called `repeating`):
-and the number of times that value is repeated in the new array (called `count`):
+O tipo `Array` do Swift também oferece um inicializador para criar um array de determinado tamanho com todos os seus valores definidos como o mesmo valor padrão.
+Você passa a esse inicializador um valor padrão do tipo apropriado (o rótulo `repeating`) e o número de vezes que esse valor se repete no novo array (o rótulo `count`):
 
 ```swift
 var threeDoubles = Array(repeating: 0.0, count: 3)
@@ -155,11 +125,10 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
   ```
 -->
 
-### Creating an Array by Adding Two Arrays Together
+### Criando um Array Somando Dois Arrays
 
-You can create a new array by adding together two existing arrays with compatible types
-with the addition operator (`+`).
-The new array's type is inferred from the type of the two arrays you add together:
+Você pode criar um novo array somando dois arrays existentes com tipos compatíveis usando o operador de adição (`+`).
+O tipo do novo array é inferido a partir do tipo dos dois arrays somados:
 
 ```swift
 var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
@@ -196,18 +165,16 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   Likewise I'm holding off writing about it until NewArray lands.
 -->
 
-### Creating an Array with an Array Literal
+### Criando um Array com um Literal de Array
 
-You can also initialize an array with an *array literal*,
-which is a shorthand way to write one or more values as an array collection.
-An array literal is written as a list of values, separated by commas,
-surrounded by a pair of square brackets:
+Você também pode inicializar um array com um *literal de array*, que é uma forma abreviada de escrever um ou mais valores como uma coleção do tipo array.
+Um literal de array é escrito como uma lista de valores, separados por vírgulas e envoltos por um par de colchetes:
 
 ```swift
 [<#value 1#>, <#value 2#>, <#value 3#>]
 ```
 
-The example below creates an array called `shoppingList` to store `String` values:
+O exemplo abaixo cria um array chamado `shoppingList` para armazenar valores `String`:
 
 ```swift
 var shoppingList: [String] = ["Eggs", "Milk"]
@@ -223,27 +190,18 @@ var shoppingList: [String] = ["Eggs", "Milk"]
   ```
 -->
 
-The `shoppingList` variable is declared as
-“an array of string values”, written as `[String]`.
-Because this particular array has specified a value type of `String`,
-it's allowed to store `String` values only.
-Here, the `shoppingList` array is initialized with two `String` values
-(`"Eggs"` and `"Milk"`), written within an array literal.
+A variável `shoppingList` é declarada como “um array de valores string”, escrito como `[String]`.
+Como esse array em particular especificou um tipo de valor `String`, ele só pode armazenar valores `String`.
+Aqui, o array `shoppingList` é inicializado com dois valores `String` (`"Eggs"` e `"Milk"`), escritos dentro de um literal de array.
 
-> Note: The `shoppingList` array is declared as a variable (with the `var` introducer)
-> and not a constant (with the `let` introducer)
-> because more items are added to the shopping list in the examples below.
+> Nota: A variável `shoppingList` é declarada como variável (com a palavra-chave `var`) e não como constante (com a palavra-chave `let`),
+> porque mais itens são adicionados à lista de compras nos exemplos a seguir.
 
-In this case, the array literal contains two `String` values and nothing else.
-This matches the type of the `shoppingList` variable's declaration
-(an array that can only contain `String` values),
-and so the assignment of the array literal is permitted
-as a way to initialize `shoppingList` with two initial items.
+Nesse caso, o literal de array contém dois valores `String` e nada mais.
+Isso corresponde ao tipo da declaração da variável `shoppingList` (um array que só pode conter valores `String`), e por isso a atribuição do literal de array é permitida como forma de inicializar `shoppingList` com dois itens iniciais.
 
-Thanks to Swift's type inference,
-you don't have to write the type of the array
-if you're initializing it with an array literal containing values of the same type.
-The initialization of `shoppingList` could have been written in a shorter form instead:
+Graças à inferência de tipos do Swift, você não precisa escrever o tipo do array se estiver inicializando-o com um literal de array que contém valores do mesmo tipo.
+A inicialização de `shoppingList` poderia ter sido escrita de forma mais curta:
 
 ```swift
 var shoppingList = ["Eggs", "Milk"]
@@ -257,12 +215,9 @@ var shoppingList = ["Eggs", "Milk"]
   ```
 -->
 
-Because all values in the array literal are of the same type,
-Swift can infer that `[String]` is
-the correct type to use for the `shoppingList` variable.
+Como todos os valores no literal de array são do mesmo tipo, o Swift pode inferir que `[String]` é o tipo correto para a variável `shoppingList`.
 
-You can include a comma after last value in an array literal,
-which is known as a *trailing comma*:
+Você pode incluir uma vírgula depois do último valor em um literal de array, que é conhecida como *vírgula final*:
 
 ```swift
 var shoppingList = [
@@ -271,19 +226,14 @@ var shoppingList = [
 ]
 ```
 
-Because the trailing comma makes every line end the same way,
-it's a useful way to write arrays like the one above
-that have one value per line.
-When you change the array,
-you only need to add, remove, or reorder values ---
-you don't have to add or remove commas.
+Como a vírgula final faz com que todas as linhas terminem da mesma forma, ela é uma forma útil de escrever arrays como o acima, que têm um valor por linha.
+Ao alterar o array, você só precisa adicionar, remover ou reordenar valores; não precisa adicionar nem remover vírgulas.
 
-### Accessing and Modifying an Array
+### Acessando e Modificando um Array
 
-You access and modify an array through its methods and properties,
-or by using subscript syntax.
+Você acessa e modifica um array por meio de seus métodos e propriedades, ou usando a sintaxe de *subscript*.
 
-To find out the number of items in an array, check its read-only `count` property:
+Para descobrir o número de itens em um array, consulte a propriedade somente leitura `count`:
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
@@ -299,8 +249,7 @@ print("The shopping list contains \(shoppingList.count) items.")
   ```
 -->
 
-Use the Boolean `isEmpty` property
-as a shortcut for checking whether the `count` property is equal to `0`:
+Use a propriedade booleana `isEmpty` como atalho para verificar se a propriedade `count` é igual a `0`:
 
 ```swift
 if shoppingList.isEmpty {
@@ -324,7 +273,7 @@ if shoppingList.isEmpty {
   ```
 -->
 
-You can add a new item to the end of an array by calling the array's `append(_:)` method:
+Você pode adicionar um novo item ao final de um array chamando o método `append(_:)` do array:
 
 ```swift
 shoppingList.append("Flour")
@@ -341,8 +290,7 @@ shoppingList.append("Flour")
   ```
 -->
 
-Alternatively, append an array of one or more compatible items
-with the addition assignment operator (`+=`):
+Alternativamente, anexe um array de um ou mais itens compatíveis com o operador de atribuição por adição (`+=`):
 
 ```swift
 shoppingList += ["Baking Powder"]
@@ -364,9 +312,7 @@ shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
   ```
 -->
 
-Retrieve a value from the array by using *subscript syntax*,
-passing the index of the value you want to retrieve within square brackets
-immediately after the name of the array:
+Recupere um valor do array usando *sintaxe de subscript*, passando o índice do valor que você quer recuperar entre colchetes, logo após o nome do array:
 
 ```swift
 var firstItem = shoppingList[0]
@@ -383,10 +329,10 @@ var firstItem = shoppingList[0]
   ```
 -->
 
-> Note: The first item in the array has an index of `0`, not `1`.
-> Arrays in Swift are always zero-indexed.
+> Nota: O primeiro item do array tem índice `0`, não `1`.
+> Arrays no Swift sempre são indexados a partir de zero.
 
-You can use subscript syntax to change an existing value at a given index:
+Você pode usar a sintaxe de subscript para alterar um valor existente em determinado índice:
 
 ```swift
 shoppingList[0] = "Six eggs"
@@ -403,11 +349,8 @@ shoppingList[0] = "Six eggs"
   ```
 -->
 
-When you use subscript syntax,
-the index you specify needs to be valid.
-For example, writing `shoppingList[shoppingList.count] = "Salt"`
-to try to append an item to the end of the array
-results in a runtime error.
+Ao usar a sintaxe de subscript, o índice especificado precisa ser válido.
+Por exemplo, escrever `shoppingList[shoppingList.count] = "Salt"` para tentar adicionar um item ao final do array resulta em um erro em tempo de execução.
 
 <!--
   Unlike Ruby and Javascript, where accessing an invalid index
@@ -415,10 +358,8 @@ results in a runtime error.
   to make that index become valid.
 -->
 
-You can also use subscript syntax to change a range of values at once,
-even if the replacement set of values has a different length than the range you are replacing.
-The following example replaces `"Chocolate Spread"`, `"Cheese"`, and `"Butter"`
-with `"Bananas"` and `"Apples"`:
+Você também pode usar a sintaxe de subscript para alterar um intervalo de valores de uma só vez, mesmo que o conjunto de valores de substituição tenha um tamanho diferente do intervalo que está sendo substituído.
+O exemplo a seguir substitui `"Chocolate Spread"`, `"Cheese"` e `"Butter"` por `"Bananas"` e `"Apples"`:
 
 ```swift
 shoppingList[4...6] = ["Bananas", "Apples"]
@@ -435,8 +376,7 @@ shoppingList[4...6] = ["Bananas", "Apples"]
   ```
 -->
 
-To insert an item into the array at a specified index,
-call the array's `insert(_:at:)` method:
+Para inserir um item no array em um índice especificado, chame o método `insert(_:at:)` do array:
 
 ```swift
 shoppingList.insert("Maple Syrup", at: 0)
@@ -456,13 +396,10 @@ shoppingList.insert("Maple Syrup", at: 0)
   ```
 -->
 
-This call to the `insert(_:at:)` method inserts a new item with a value of `"Maple Syrup"`
-at the very beginning of the shopping list,
-indicated by an index of `0`.
+Essa chamada ao método `insert(_:at:)` insere um novo item com o valor `"Maple Syrup"` no início da lista de compras, indicado por um índice de `0`.
 
-Similarly, you remove an item from the array with the `remove(at:)` method.
-This method removes the item at the specified index and returns the removed item
-(although you can ignore the returned value if you don't need it):
+De forma semelhante, você remove um item do array com o método `remove(at:)`.
+Esse método remove o item no índice especificado e retorna o item removido (embora você possa ignorar o valor retornado se não precisar dele):
 
 ```swift
 let mapleSyrup = shoppingList.remove(at: 0)
@@ -484,18 +421,12 @@ let mapleSyrup = shoppingList.remove(at: 0)
   ```
 -->
 
-> Note: If you try to access or modify a value for an index
-> that's outside of an array's existing bounds,
-> you will trigger a runtime error.
-> You can check that an index is valid before using it
-> by comparing it to the array's `count` property.
-> The largest valid index in an array is `count - 1`
-> because arrays are indexed from zero ---
-> however, when `count` is `0` (meaning the array is empty),
-> there are no valid indexes.
+> Nota: Se você tentar acessar ou modificar um valor para um índice que esteja fora dos limites existentes de um array, causará um erro em tempo de execução.
+> Você pode verificar se um índice é válido antes de usá-lo, comparando-o com a propriedade `count` do array.
+> O maior índice válido em um array é `count - 1`, porque os arrays são indexados a partir de zero;
+> no entanto, quando `count` é `0` (o que significa que o array está vazio), não existe nenhum índice válido.
 
-Any gaps in an array are closed when an item is removed,
-and so the value at index `0` is once again equal to `"Six eggs"`:
+Quaisquer lacunas em um array são fechadas quando um item é removido, e por isso o valor no índice `0` volta a ser igual a `"Six eggs"`:
 
 ```swift
 firstItem = shoppingList[0]
@@ -512,10 +443,8 @@ firstItem = shoppingList[0]
   ```
 -->
 
-If you want to remove the final item from an array,
-use the `removeLast()` method rather than the `remove(at:)` method
-to avoid the need to query the array's `count` property.
-Like the `remove(at:)` method, `removeLast()` returns the removed item:
+Se você quiser remover o último item de um array, use o método `removeLast()` em vez do método `remove(at:)`, para evitar a necessidade de consultar a propriedade `count` do array.
+Assim como o método `remove(at:)`, `removeLast()` retorna o item removido:
 
 ```swift
 let apples = shoppingList.removeLast()
@@ -537,9 +466,9 @@ let apples = shoppingList.removeLast()
   ```
 -->
 
-### Iterating Over an Array
+### Iterando Sobre um Array
 
-You can iterate over the entire set of values in an array with the `for`-`in` loop:
+Você pode percorrer todo o conjunto de valores de um array com o laço `for`-`in`:
 
 ```swift
 for item in shoppingList {
@@ -567,16 +496,10 @@ for item in shoppingList {
   ```
 -->
 
-If you need the integer index of each item as well as its value,
-use the `enumerated()` method to iterate over the array instead.
-For each item in the array,
-the `enumerated()` method returns a tuple
-composed of an integer and the item.
-The integers start at zero and count up by one for each item;
-if you enumerate over a whole array,
-these integers match the items' indices.
-You can decompose the tuple into temporary constants or variables
-as part of the iteration:
+Se você precisar do índice inteiro de cada item, além do seu valor, use o método `enumerated()` para percorrer o array.
+Para cada item do array, o método `enumerated()` retorna uma tupla composta de um inteiro e do item.
+Os inteiros começam em zero e aumentam uma unidade para cada item; se você enumerar um array inteiro, esses inteiros correspondem aos índices dos itens.
+Você pode decompor a tupla em constantes ou variáveis temporárias como parte da iteração:
 
 ```swift
 for (index, value) in shoppingList.enumerated() {
@@ -604,55 +527,41 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
 
-## Sets
+## Conjuntos
 
-A *set* stores distinct values of the same type
-in a collection with no defined ordering.
-You can use a set instead of an array when the order of items isn't important,
-or when you need to ensure that an item only appears once.
+Um *conjunto* armazena valores distintos do mesmo tipo em uma coleção sem ordem definida.
+Você pode usar um conjunto no lugar de um array quando a ordem dos itens não for importante, ou quando precisar garantir que um item apareça apenas uma vez.
 
-> Note: Swift's `Set` type is bridged to Foundation's `NSSet` class.
+> Nota: O tipo `Set` do Swift tem ponte com a classe `NSSet` do Foundation.
 >
-> For more information about using `Set` with Foundation and Cocoa,
-> see [Bridging Between Set and NSSet](https://developer.apple.com/documentation/swift/set#Bridging-Between-Set-and-NSSet).
+> Para mais informações sobre como usar `Set` com Foundation e Cocoa, consulte [Ponte entre Set e NSSet](https://developer.apple.com/documentation/swift/set#Bridging-Between-Set-and-NSSet).
 
 <!--
   TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 -->
 
-### Hash Values for Set Types
+### Valores de Hash para Tipos de Conjunto
 
-A type must be *hashable* in order to be stored in a set ---
-that is, the type must provide a way to compute a *hash value* for itself.
-A hash value is an `Int` value that's the same for all objects that compare equally,
-such that if `a == b`,
-the hash value of `a` is equal to the hash value of `b`.
+Um tipo precisa ser *hashable* para poder ser armazenado em um conjunto. Ou seja, o tipo precisa fornecer uma forma de calcular um *valor de hash* para si mesmo.
+Um valor de hash é um valor `Int` que é igual para todos os objetos considerados iguais, de modo que, se `a == b`, o valor de hash de `a` é igual ao valor de hash de `b`.
 
-All of Swift's basic types (such as `String`, `Int`, `Double`, and `Bool`)
-are hashable by default, and can be used as set value types or dictionary key types.
-Enumeration case values without associated values
-(as described in <doc:Enumerations>)
-are also hashable by default.
+Todos os tipos básicos do Swift (como `String`, `Int`, `Double` e `Bool`) são hashable por padrão, e podem ser usados como tipos de valor de conjunto ou tipos de chave de dicionário.
+Valores de casos de enum sem valores associados (como descrito em <doc:Enumerations>) também são hashable por padrão.
 
-> Note: You can use your own custom types as set value types or dictionary key types
-> by making them conform to the `Hashable` protocol
-> from the Swift standard library.
-> For information about implementing the required `hash(into:)` method,
-> see [`Hashable`](https://developer.apple.com/documentation/swift/hashable).
-> For information about conforming to protocols, see <doc:Protocols>.
+> Nota: Você pode usar seus próprios tipos personalizados como tipos de valor de conjunto ou tipos de chave de dicionário, fazendo-os adotar o protocolo `Hashable` da biblioteca padrão do Swift.
+> Para informações sobre como implementar o método obrigatório `hash(into:)`, consulte [`Hashable`](https://developer.apple.com/documentation/swift/hashable).
+> Para informações sobre como adotar protocolos, consulte <doc:Protocols>.
 
-### Set Type Syntax
+### Sintaxe do Tipo Set
 
-The type of a Swift set is written as `Set<Element>`,
-where `Element` is the type that the set is allowed to store.
-Unlike arrays, sets don't have an equivalent shorthand form.
+O tipo de um conjunto do Swift é escrito como `Set<Element>`, em que `Element` é o tipo que o conjunto pode armazenar.
+Diferentemente dos arrays, os conjuntos não têm uma forma abreviada equivalente.
 
-### Creating and Initializing an Empty Set
+### Criando e Inicializando um Conjunto Vazio
 
-You can create an empty set of a certain type
-using initializer syntax:
+Você pode criar um conjunto vazio de determinado tipo usando a sintaxe de inicializador:
 
 ```swift
 var letters = Set<Character>()
@@ -670,12 +579,9 @@ print("letters is of type Set<Character> with \(letters.count) items.")
   ```
 -->
 
-> Note: The type of the `letters` variable is inferred to be `Set<Character>`,
-> from the type of the initializer.
+> Nota: O tipo da variável `letters` é inferido como `Set<Character>` a partir do tipo do inicializador.
 
-Alternatively, if the context already provides type information,
-such as a function argument or an already typed variable or constant,
-you can create an empty set with an empty array literal:
+Alternativamente, se o contexto já fornecer informação de tipo, como um argumento de função ou uma variável ou constante já tipada, você pode criar um conjunto vazio com um literal de array vazio:
 
 ```swift
 letters.insert("a")
@@ -696,12 +602,11 @@ letters = []
   ```
 -->
 
-### Creating a Set with an Array Literal
+### Criando um Conjunto com um Literal de Array
 
-You can also initialize a set with an array literal,
-as a shorthand way to write one or more values as a set collection.
+Você também pode inicializar um conjunto com um literal de array, como uma forma abreviada de escrever um ou mais valores como uma coleção do tipo conjunto.
 
-The example below creates a set called `favoriteGenres` to store `String` values:
+O exemplo abaixo cria um conjunto chamado `favoriteGenres` para armazenar valores `String`:
 
 ```swift
 var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
@@ -717,24 +622,16 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
   ```
 -->
 
-The `favoriteGenres` variable is declared as
-“a set of `String` values”, written as `Set<String>`.
-Because this particular set has specified a value type of `String`,
-it's *only* allowed to store `String` values.
-Here, the `favoriteGenres` set is initialized with three `String` values
-(`"Rock"`, `"Classical"`, and `"Hip hop"`), written within an array literal.
+A variável `favoriteGenres` é declarada como “um conjunto de valores `String`”, escrito como `Set<String>`.
+Como esse conjunto em particular especificou um tipo de valor `String`, ele *só* pode armazenar valores `String`.
+Aqui, o conjunto `favoriteGenres` é inicializado com três valores `String` (`"Rock"`, `"Classical"` e `"Hip hop"`), escritos dentro de um literal de array.
 
-> Note: The `favoriteGenres` set is declared as a variable (with the `var` introducer)
-> and not a constant (with the `let` introducer)
-> because items are added and removed in the examples below.
+> Nota: O conjunto `favoriteGenres` é declarado como variável (com a palavra-chave `var`) e não como constante (com a palavra-chave `let`),
+> porque itens são adicionados e removidos nos exemplos a seguir.
 
-A set type can't be inferred from an array literal alone,
-so the type `Set` must be explicitly declared.
-However, because of Swift's type inference,
-you don't have to write the type of the set's elements
-if you're initializing it with an array literal
-that contains values of just one type.
-The initialization of `favoriteGenres` could have been written in a shorter form instead:
+Um tipo de conjunto não pode ser inferido apenas a partir de um literal de array, por isso o tipo `Set` precisa ser declarado explicitamente.
+No entanto, graças à inferência de tipos do Swift, você não precisa escrever o tipo dos elementos do conjunto se estiver inicializando-o com um literal de array que contém valores de apenas um tipo.
+A inicialização de `favoriteGenres` poderia ter sido escrita de forma mais curta:
 
 ```swift
 var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
@@ -748,16 +645,13 @@ var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
   ```
 -->
 
-Because all values in the array literal are of the same type,
-Swift can infer that `Set<String>` is
-the correct type to use for the `favoriteGenres` variable.
+Como todos os valores no literal de array são do mesmo tipo, o Swift pode inferir que `Set<String>` é o tipo correto para a variável `favoriteGenres`.
 
-### Accessing and Modifying a Set
+### Acessando e Modificando um Conjunto
 
-You access and modify a set through its methods and properties.
+Você acessa e modifica um conjunto por meio de seus métodos e propriedades.
 
-To find out the number of items in a set,
-check its read-only `count` property:
+Para descobrir o número de itens em um conjunto, consulte sua propriedade somente leitura `count`:
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
@@ -774,8 +668,7 @@ print("I have \(favoriteGenres.count) favorite music genres.")
   ```
 -->
 
-Use the Boolean `isEmpty` property
-as a shortcut for checking whether the `count` property is equal to `0`:
+Use a propriedade booleana `isEmpty` como atalho para verificar se a propriedade `count` é igual a `0`:
 
 ```swift
 if favoriteGenres.isEmpty {
@@ -799,7 +692,7 @@ if favoriteGenres.isEmpty {
   ```
 -->
 
-You can add a new item into a set by calling the set's `insert(_:)` method:
+Você pode adicionar um novo item a um conjunto chamando o método `insert(_:)` do conjunto:
 
 ```swift
 favoriteGenres.insert("Jazz")
@@ -816,11 +709,8 @@ favoriteGenres.insert("Jazz")
   ```
 -->
 
-You can remove an item from a set by calling the set's `remove(_:)` method,
-which removes the item if it's a member of the set,
-and returns the removed value,
-or returns `nil` if the set didn't contain it.
-Alternatively, all items in a set can be removed with its `removeAll()` method.
+Você pode remover um item de um conjunto chamando o método `remove(_:)` do conjunto, que remove o item se ele for membro do conjunto e retorna o valor removido, ou retorna `nil` se o conjunto não o continha.
+Alternativamente, todos os itens de um conjunto podem ser removidos com o método `removeAll()`.
 
 ```swift
 if let removedGenre = favoriteGenres.remove("Rock") {
@@ -844,7 +734,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
   ```
 -->
 
-To check whether a set contains a particular item, use the `contains(_:)` method.
+Para verificar se um conjunto contém determinado item, use o método `contains(_:)`.
 
 ```swift
 if favoriteGenres.contains("Funk") {
@@ -868,9 +758,9 @@ if favoriteGenres.contains("Funk") {
   ```
 -->
 
-### Iterating Over a Set
+### Iterando Sobre um Conjunto
 
-You can iterate over the values in a set with a `for`-`in` loop.
+Você pode percorrer os valores de um conjunto com um laço `for`-`in`.
 
 ```swift
 for genre in favoriteGenres {
@@ -894,13 +784,10 @@ for genre in favoriteGenres {
   ```
 -->
 
-For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
 
-Swift's `Set` type doesn't have a defined ordering.
-To iterate over the values of a set in a specific order,
-use the `sorted()` method,
-which returns the set's elements as an array
-sorted using the `<` operator.
+O tipo `Set` do Swift não tem uma ordem definida.
+Para percorrer os valores de um conjunto em uma ordem específica, use o método `sorted()`, que retorna os elementos do conjunto como um array ordenado usando o operador `<`.
 
 ```swift
 for genre in favoriteGenres.sorted() {
@@ -924,24 +811,20 @@ for genre in favoriteGenres.sorted() {
   ```
 -->
 
-## Performing Set Operations
+## Realizando Operações de Conjunto
 
-You can efficiently perform fundamental set operations,
-such as combining two sets together,
-determining which values two sets have in common,
-or determining whether two sets contain all, some, or none of the same values.
+Você pode executar com eficiência operações fundamentais de conjunto, como combinar dois conjuntos, determinar quais valores dois conjuntos têm em comum, ou determinar se dois conjuntos contêm todos, alguns ou nenhum dos mesmos valores.
 
-### Fundamental Set Operations
+### Operações Fundamentais de Conjunto
 
-The illustration below depicts two sets --- `a` and `b` ---
-with the results of various set operations represented by the shaded regions.
+A ilustração abaixo mostra dois conjuntos, `a` e `b`, com os resultados de várias operações de conjunto representados pelas regiões sombreadas.
 
 ![](setVennDiagram)
 
-- Use the `intersection(_:)` method to create a new set with only the values common to both sets.
-- Use the `symmetricDifference(_:)` method to create a new set with values in either set, but not both.
-- Use the `union(_:)` method to create a new set with all of the values in both sets.
-- Use the `subtracting(_:)` method to create a new set with values not in the specified set.
+- Use o método `intersection(_:)` para criar um novo conjunto apenas com os valores que são comuns aos dois conjuntos.
+- Use o método `symmetricDifference(_:)` para criar um novo conjunto com os valores que estão em um dos conjuntos, mas não nos dois.
+- Use o método `union(_:)` para criar um novo conjunto com todos os valores dos dois conjuntos.
+- Use o método `subtracting(_:)` para criar um novo conjunto com os valores que não estão no conjunto especificado.
 
 ```swift
 let oddDigits: Set = [1, 3, 5, 7, 9]
@@ -990,24 +873,20 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   Tracking bug is <rdar://problem/35301593>
 -->
 
-### Set Membership and Equality
+### Pertinência e Igualdade de Conjuntos
 
-The illustration below depicts three sets --- `a`, `b` and `c` ---
-with overlapping regions representing elements shared among sets.
-Set `a` is a *superset* of set `b`,
-because `a` contains all elements in `b`.
-Conversely, set `b` is a *subset* of set `a`,
-because all elements in `b` are also contained by `a`.
-Set `b` and set `c` are *disjoint* with one another,
-because they share no elements in common.
+A ilustração abaixo mostra três conjuntos, `a`, `b` e `c`, com regiões sobrepostas representando elementos compartilhados entre os conjuntos.
+O conjunto `a` é um *superconjunto* do conjunto `b`, porque `a` contém todos os elementos de `b`.
+Por outro lado, o conjunto `b` é um *subconjunto* do conjunto `a`, porque todos os elementos de `b` também estão contidos em `a`.
+Os conjuntos `b` e `c` são *disjuntos* entre si, porque não compartilham nenhum elemento em comum.
 
 ![](setEulerDiagram)
 
-- Use the “is equal” operator (`==`) to determine whether two sets contain all of the same values.
-- Use the `isSubset(of:)` method to determine whether all of the values of a set are contained in the specified set.
-- Use the `isSuperset(of:)` method to determine whether a set contains all of the values in a specified set.
-- Use the `isStrictSubset(of:)` or `isStrictSuperset(of:)` methods to determine whether a set is a subset or superset, but not equal to, a specified set.
-- Use the `isDisjoint(with:)` method to determine whether two sets have no values in common.
+- Use o operador de “igual a” (`==`) para determinar se dois conjuntos contêm exatamente os mesmos valores.
+- Use o método `isSubset(of:)` para determinar se todos os valores de um conjunto estão contidos no conjunto especificado.
+- Use o método `isSuperset(of:)` para determinar se um conjunto contém todos os valores de um conjunto especificado.
+- Use os métodos `isStrictSubset(of:)` ou `isStrictSuperset(of:)` para determinar se um conjunto é subconjunto ou superconjunto de outro conjunto especificado, mas não igual a ele.
+- Use o método `isDisjoint(with:)` para determinar se dois conjuntos não têm valores em comum.
 
 ```swift
 let houseAnimals: Set = ["🐶", "🐱"]
@@ -1050,41 +929,29 @@ farmAnimals.isDisjoint(with: cityAnimals)
   Tracking bug is <rdar://problem/35301593>
 -->
 
-## Dictionaries
+## Dicionários
 
-A *dictionary* stores associations between
-keys of the same type and values of the same type
-in a collection with no defined ordering.
-Each value is associated with a unique *key*,
-which acts as an identifier for that value within the dictionary.
-Unlike items in an array, items in a dictionary don't have a specified order.
-You use a dictionary when you need to look up values based on their identifier,
-in much the same way that a real-world dictionary is used to look up
-the definition for a particular word.
+Um *dicionário* armazena associações entre chaves do mesmo tipo e valores do mesmo tipo, em uma coleção sem ordem definida.
+Cada valor está associado a uma *chave* única, que funciona como um identificador desse valor dentro do dicionário.
+Diferentemente dos itens de um array, os itens de um dicionário não têm uma ordem especificada.
+Você usa um dicionário quando precisa buscar valores com base em seu identificador, de modo semelhante a como um dicionário do mundo real é usado para buscar a definição de uma palavra específica.
 
-> Note: Swift's `Dictionary` type is bridged to Foundation's `NSDictionary` class.
+> Nota: O tipo `Dictionary` do Swift tem ponte com a classe `NSDictionary` do Foundation.
 >
-> For more information about using `Dictionary` with Foundation and Cocoa,
-> see [Bridging Between Dictionary and NSDictionary](https://developer.apple.com/documentation/swift/dictionary#Bridging-Between-Dictionary-and-NSDictionary).
+> Para mais informações sobre como usar `Dictionary` com Foundation e Cocoa, consulte [Ponte entre Dictionary e NSDictionary](https://developer.apple.com/documentation/swift/dictionary#Bridging-Between-Dictionary-and-NSDictionary).
 
-### Dictionary Type Shorthand Syntax
+### Sintaxe Abreviada do Tipo Dictionary
 
-The type of a Swift dictionary is written in full as `Dictionary<Key, Value>`,
-where `Key` is the type of value that can be used as a dictionary key,
-and `Value` is the type of value that the dictionary stores for those keys.
+O tipo de um dicionário do Swift é escrito por extenso como `Dictionary<Key, Value>`, em que `Key` é o tipo de valor que pode ser usado como chave do dicionário, e `Value` é o tipo de valor que o dicionário armazena para essas chaves.
 
-> Note: A dictionary `Key` type must conform to the `Hashable` protocol,
-> like a set's value type.
+> Nota: O tipo de chave de um dicionário precisa adotar o protocolo `Hashable`, assim como o tipo de valor de um conjunto.
 
-You can also write the type of a dictionary in shorthand form as `[Key: Value]`.
-Although the two forms are functionally identical,
-the shorthand form is preferred
-and is used throughout this guide when referring to the type of a dictionary.
+Você também pode escrever o tipo de um dicionário em forma abreviada, como `[Key: Value]`.
+Embora as duas formas sejam funcionalmente idênticas, a forma abreviada é preferida e é usada ao longo deste guia ao se referir ao tipo de um dicionário.
 
-### Creating an Empty Dictionary
+### Criando um Dicionário Vazio
 
-As with arrays,
-you can create an empty `Dictionary` of a certain type by using initializer syntax:
+Assim como com os arrays, você pode criar um `Dictionary` vazio de determinado tipo usando a sintaxe de inicializador:
 
 ```swift
 var namesOfIntegers: [Int: String] = [:]
@@ -1100,14 +967,10 @@ var namesOfIntegers: [Int: String] = [:]
   ```
 -->
 
-This example creates an empty dictionary of type `[Int: String]`
-to store human-readable names of integer values.
-Its keys are of type `Int`, and its values are of type `String`.
+Este exemplo cria um dicionário vazio do tipo `[Int: String]` para armazenar nomes legíveis de valores inteiros.
+Suas chaves são do tipo `Int`, e seus valores são do tipo `String`.
 
-If the context already provides type information,
-you can create an empty dictionary with an empty dictionary literal,
-which is written as `[:]`
-(a colon inside a pair of square brackets):
+Se o contexto já fornecer informação de tipo, você pode criar um dicionário vazio com um literal de dicionário vazio, que é escrito como `[:]` (dois-pontos dentro de um par de colchetes):
 
 ```swift
 namesOfIntegers[16] = "sixteen"
@@ -1128,26 +991,21 @@ namesOfIntegers = [:]
   ```
 -->
 
-### Creating a Dictionary with a Dictionary Literal
+### Criando um Dicionário com um Literal de Dicionário
 
-You can also initialize a dictionary with a *dictionary literal*,
-which has a similar syntax to the array literal seen earlier.
-A dictionary literal is a shorthand way to write
-one or more key-value pairs as a `Dictionary` collection.
+Você também pode inicializar um dicionário com um *literal de dicionário*, que tem uma sintaxe semelhante à do literal de array visto antes.
+Um literal de dicionário é uma forma abreviada de escrever um ou mais pares chave-valor como uma coleção `Dictionary`.
 
-A *key-value pair* is a combination of a key and a value.
-In a dictionary literal,
-the key and value in each key-value pair are separated by a colon.
-The key-value pairs are written as a list, separated by commas,
-surrounded by a pair of square brackets:
+Um *par chave-valor* é uma combinação de uma chave e um valor.
+Em um literal de dicionário, a chave e o valor de cada par chave-valor são separados por dois-pontos.
+Os pares chave-valor são escritos como uma lista, separados por vírgulas e envoltos por um par de colchetes:
 
 ```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#key 3#>: <#value 3#>]
 ```
 
-The example below creates a dictionary to store the names of international airports.
-In this dictionary, the keys are three-letter International Air Transport Association codes,
-and the values are airport names:
+O exemplo abaixo cria um dicionário para armazenar os nomes de aeroportos internacionais.
+Neste dicionário, as chaves são códigos de três letras da International Air Transport Association, e os valores são os nomes dos aeroportos:
 
 ```swift
 var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
@@ -1161,29 +1019,20 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
 -->
 
-The `airports` dictionary is declared as having a type of `[String: String]`,
-which means “a `Dictionary` whose keys are of type `String`,
-and whose values are also of type `String`”.
+O dicionário `airports` é declarado como tendo o tipo `[String: String]`, o que significa “um `Dictionary` cujas chaves são do tipo `String`, e cujos valores também são do tipo `String`”.
 
-> Note: The `airports` dictionary is declared as a variable (with the `var` introducer),
-> and not a constant (with the `let` introducer),
-> because more airports are added to the dictionary in the examples below.
+> Nota: O dicionário `airports` é declarado como variável (com a palavra-chave `var`) e não como constante (com a palavra-chave `let`),
+> porque mais aeroportos são adicionados ao dicionário nos exemplos a seguir.
 
-The `airports` dictionary is initialized with
-a dictionary literal containing two key-value pairs.
-The first pair has a key of `"YYZ"` and a value of `"Toronto Pearson"`.
-The second pair has a key of `"DUB"` and a value of `"Dublin"`.
+O dicionário `airports` é inicializado com um literal de dicionário contendo dois pares chave-valor.
+O primeiro par tem a chave `"YYZ"` e o valor `"Toronto Pearson"`.
+O segundo par tem a chave `"DUB"` e o valor `"Dublin"`.
 
-This dictionary literal contains two `String: String` pairs.
-This key-value type matches the type of the `airports` variable declaration
-(a dictionary with only `String` keys, and only `String` values),
-and so the assignment of the dictionary literal is permitted
-as a way to initialize the `airports` dictionary with two initial items.
+Este literal de dicionário contém dois pares `String: String`.
+Esse tipo chave-valor corresponde à declaração de tipo da variável `airports` (um dicionário com apenas chaves `String` e apenas valores `String`), e por isso a atribuição do literal de dicionário é permitida como forma de inicializar o dicionário `airports` com dois itens iniciais.
 
-As with arrays,
-you don't have to write the type of the dictionary
-if you're initializing it with a dictionary literal whose keys and values have consistent types.
-The initialization of `airports` could have been written in a shorter form instead:
+Assim como com os arrays, você não precisa escrever o tipo do dicionário se estiver inicializando-o com um literal de dicionário cujas chaves e valores têm tipos consistentes.
+A inicialização de `airports` poderia ter sido escrita de forma mais curta:
 
 ```swift
 var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
@@ -1197,14 +1046,9 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
   ```
 -->
 
-Because all keys in the literal are of the same type as each other,
-and likewise all values are of the same type as each other,
-Swift can infer that `[String: String]` is
-the correct type to use for the `airports` dictionary.
+Como todas as chaves do literal são do mesmo tipo entre si, e da mesma forma todos os valores são do mesmo tipo entre si, o Swift pode inferir que `[String: String]` é o tipo correto para o dicionário `airports`.
 
-Like array literals,
-dictionary literals can include a trailing comma
-after the last key-value pair:
+Assim como os literais de array, os literais de dicionário podem incluir uma vírgula final depois do último par chave-valor:
 
 ```swift
 var airports = [
@@ -1213,13 +1057,11 @@ var airports = [
 ]
 ```
 
-### Accessing and Modifying a Dictionary
+### Acessando e Modificando um Dicionário
 
-You access and modify a dictionary through its methods and properties,
-or by using subscript syntax.
+Você acessa e modifica um dicionário por meio de seus métodos e propriedades, ou usando a sintaxe de *subscript*.
 
-As with an array, you find out the number of items in a `Dictionary`
-by checking its read-only `count` property:
+Assim como com um array, você descobre o número de itens em um `Dictionary` consultando a propriedade somente leitura `count`:
 
 ```swift
 print("The airports dictionary contains \(airports.count) items.")
@@ -1235,8 +1077,7 @@ print("The airports dictionary contains \(airports.count) items.")
   ```
 -->
 
-Use the Boolean `isEmpty` property
-as a shortcut for checking whether the `count` property is equal to `0`:
+Use a propriedade booleana `isEmpty` como atalho para verificar se a propriedade `count` é igual a `0`:
 
 ```swift
 if airports.isEmpty {
@@ -1260,9 +1101,8 @@ if airports.isEmpty {
   ```
 -->
 
-You can add a new item to a dictionary with subscript syntax.
-Use a new key of the appropriate type as the subscript index,
-and assign a new value of the appropriate type:
+Você pode adicionar um novo item a um dicionário com a sintaxe de subscript.
+Use uma nova chave do tipo apropriado como índice de subscript, e atribua um novo valor do tipo apropriado:
 
 ```swift
 airports["LHR"] = "London"
@@ -1279,7 +1119,7 @@ airports["LHR"] = "London"
   ```
 -->
 
-You can also use subscript syntax to change the value associated with a particular key:
+Você também pode usar a sintaxe de subscript para alterar o valor associado a uma chave específica:
 
 ```swift
 airports["LHR"] = "London Heathrow"
@@ -1296,23 +1136,14 @@ airports["LHR"] = "London Heathrow"
   ```
 -->
 
-As an alternative to subscripting,
-use a dictionary's `updateValue(_:forKey:)` method
-to set or update the value for a particular key.
-Like the subscript examples above, the `updateValue(_:forKey:)` method
-sets a value for a key if none exists,
-or updates the value if that key already exists.
-Unlike a subscript, however,
-the `updateValue(_:forKey:)` method returns the *old* value after performing an update.
-This enables you to check whether or not an update took place.
+Como alternativa à sintaxe de subscript, use o método `updateValue(_:forKey:)` do dicionário para definir ou atualizar o valor de uma chave específica.
+Assim como nos exemplos de subscript acima, o método `updateValue(_:forKey:)` define um valor para a chave se nenhum existir, ou atualiza o valor se a chave já existir.
+Diferentemente da sintaxe de subscript, porém, o método `updateValue(_:forKey:)` retorna o valor *antigo* depois de realizar uma atualização.
+Isso permite verificar se houve ou não uma atualização.
 
-The `updateValue(_:forKey:)` method returns an optional value
-of the dictionary's value type.
-For a dictionary that stores `String` values, for example,
-the method returns a value of type `String?`,
-or “optional `String`”.
-This optional value contains the old value for that key if one existed before the update,
-or `nil` if no value existed:
+O método `updateValue(_:forKey:)` retorna um valor optional do tipo de valor do dicionário.
+Para um dicionário que armazena valores `String`, por exemplo, o método retorna um valor do tipo `String?`, ou “`String` optional”.
+Esse valor optional contém o valor antigo daquela chave, caso ele existisse antes da atualização, ou `nil` se não existia nenhum valor:
 
 ```swift
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
@@ -1332,12 +1163,10 @@ if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
   ```
 -->
 
-You can also use subscript syntax to retrieve a value from the dictionary for a particular key.
-Because it's possible to request a key for which no value exists,
-a dictionary's subscript returns an optional value of the dictionary's value type.
-If the dictionary contains a value for the requested key,
-the subscript returns an optional value containing the existing value for that key.
-Otherwise, the subscript returns `nil`:
+Você também pode usar a sintaxe de subscript para recuperar um valor do dicionário para uma chave específica.
+Como é possível consultar uma chave para a qual não existe valor, a subscript de um dicionário retorna um valor optional do tipo de valor do dicionário.
+Se o dicionário contiver um valor para a chave consultada, a subscript retorna um valor optional contendo o valor existente para aquela chave.
+Caso contrário, a subscript retorna `nil`:
 
 ```swift
 if let airportName = airports["DUB"] {
@@ -1361,8 +1190,7 @@ if let airportName = airports["DUB"] {
   ```
 -->
 
-You can use subscript syntax to remove a key-value pair from a dictionary
-by assigning a value of `nil` for that key:
+Você pode usar a sintaxe de subscript para remover um par chave-valor de um dicionário, atribuindo o valor `nil` a essa chave:
 
 ```swift
 airports["APL"] = "Apple International"
@@ -1389,11 +1217,8 @@ airports["APL"] = nil
   ```
 -->
 
-Alternatively, remove a key-value pair from a dictionary
-with the `removeValue(forKey:)` method.
-This method removes the key-value pair if it exists
-and returns the removed value,
-or returns `nil` if no value existed:
+Alternativamente, remova um par chave-valor de um dicionário com o método `removeValue(forKey:)`.
+Esse método remove o par chave-valor se ele existir e retorna o valor removido, ou retorna `nil` se não existia nenhum valor:
 
 ```swift
 if let removedValue = airports.removeValue(forKey: "DUB") {
@@ -1417,12 +1242,10 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
   ```
 -->
 
-### Iterating Over a Dictionary
+### Iterando Sobre um Dicionário
 
-You can iterate over the key-value pairs in a dictionary with a `for`-`in` loop.
-Each item in the dictionary is returned as a `(key, value)` tuple,
-and you can decompose the tuple's members into temporary constants or variables
-as part of the iteration:
+Você pode percorrer os pares chave-valor de um dicionário com um laço `for`-`in`.
+Cada item do dicionário é retornado como uma tupla `(key, value)`, e você pode decompor os membros da tupla em constantes ou variáveis temporárias como parte da iteração:
 
 ```swift
 for (airportCode, airportName) in airports {
@@ -1444,10 +1267,9 @@ for (airportCode, airportName) in airports {
   ```
 -->
 
-For more about the `for`-`in` loop, see <doc:ControlFlow#For-In-Loops>.
+Para mais informações sobre o laço `for`-`in`, consulte <doc:ControlFlow#Laços-for-in>.
 
-You can also retrieve an iterable collection of a dictionary's keys or values
-by accessing its `keys` and `values` properties:
+Você também pode obter uma coleção iterável com as chaves ou os valores de um dicionário, acessando suas propriedades `keys` e `values`:
 
 ```swift
 for airportCode in airports.keys {
@@ -1481,9 +1303,7 @@ for airportName in airports.values {
   ```
 -->
 
-If you need to use a dictionary's keys or values
-with an API that takes an `Array` instance, initialize a new array
-with the `keys` or `values` property:
+Se você precisar usar as chaves ou os valores de um dicionário com uma API que recebe uma instância de `Array`, inicialize um novo array com a propriedade `keys` ou `values`:
 
 ```swift
 let airportCodes = [String](airports.keys)
@@ -1507,9 +1327,8 @@ let airportNames = [String](airports.values)
   ```
 -->
 
-Swift's `Dictionary` type doesn't have a defined ordering.
-To iterate over the keys or values of a dictionary in a specific order,
-use the `sorted()` method on its `keys` or `values` property.
+O tipo `Dictionary` do Swift não tem uma ordem definida.
+Para percorrer as chaves ou os valores de um dicionário em uma ordem específica, use o método `sorted()` sobre sua propriedade `keys` ou `values`.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -1520,3 +1339,4 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+<!-- ia-translate: true -->

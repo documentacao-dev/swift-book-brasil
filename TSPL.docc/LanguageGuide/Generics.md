@@ -45,7 +45,7 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 -->
 
 This function makes use of in-out parameters to swap the values of `a` and `b`,
-as described in <doc:Functions#In-Out-Parameters>.
+as described in <doc:Functions#Parâmetros-in-out>.
 
 The `swapTwoInts(_:_:)` function swaps the original value of `b` into `a`,
 and the original value of `a` into `b`.
@@ -574,7 +574,7 @@ or conform to a particular protocol or protocol composition.
 For example,
 Swift's `Dictionary` type places a limitation on
 the types that can be used as keys for a dictionary.
-As described in <doc:CollectionTypes#Dictionaries>,
+As described in <doc:CollectionTypes#Dicionários>,
 the type of a dictionary's keys must be *hashable*.
 That is, it must provide a way to make itself uniquely representable.
 `Dictionary` needs its keys to be hashable so that it can

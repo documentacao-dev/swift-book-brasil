@@ -980,7 +980,7 @@ has a corresponding call to `close(_:)`.
 You can use a `defer` statement
 even when no error handling code is involved.
 For more information,
-see <doc:ControlFlow#Deferred-Actions>.
+see <doc:ControlFlow#Ações-adiadas>.
 
 <!--
 This source file is part of the Swift.org open source project

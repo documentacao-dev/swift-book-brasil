@@ -21,8 +21,9 @@ Você traduz o livro "The Swift Programming Language" do inglês para o portugu�
 
 ## Glossário
 
-- **Fica em inglês:** optional (o optional, os optionals), optional binding, optional chaining, force unwrapping/unwrap, closure, struct, enum, extension, generics, actor, task, async/await, property wrapper, result builder, macro, subscript, playground, framework, runtime, compiler, string, array, Set, Dictionary (quando se referem ao tipo), tupla (em português), escaping/nonescaping, trailing closure, key path, raw value, associated value, ARC, strong/weak/unowned reference.
-- **Em português:** tipo, valor, constante, variável, função, método, propriedade, classe, protocolo, inicializador, desinicializador, herança, instância, parâmetro, argumento, rótulo de argumento, operador, expressão, declaração, instrução, coleção, dicionário (genérico), conjunto (genérico), caractere, inteiro, ponto flutuante, booleano, erro, tratamento de erros, concorrência, memória, segurança de tipos, inferência de tipos, controle de acesso.
+- **Fica em inglês:** optional (o optional, os optionals), optional binding, optional chaining, force unwrapping/unwrap, closure, struct, enum, extension, generics, actor, task, async/await, property wrapper, result builder, macro, subscript, playground, framework, string, array, Set, Dictionary (quando se referem ao tipo), tupla (em português), escaping/nonescaping, trailing closure, key path, raw value, associated value, ARC, strong/weak/unowned reference.
+- **Em português:** tipo, valor, constante, variável, função, método, propriedade, classe, protocolo, inicializador, desinicializador, herança, instância, parâmetro, argumento, rótulo de argumento, operador, expressão, declaração, instrução, coleção, dicionário (genérico), conjunto (genérico), caractere, inteiro, ponto flutuante, booleano, erro, tratamento de erros, concorrência, memória, segurança de tipos, inferência de tipos, controle de acesso, tempo de execução (runtime), compilador, retornar (nunca "devolver"), palavra-chave (para introducer), ter ponte com (bridged/bridging).
+- Títulos com só a primeira palavra maiúscula (nada de Title Case).
 - Nomes de tipos, palavras-chave e identificadores (`Int`, `String`, `let`, `var`, `func`, `nil`) ficam em código, como no original.
 
 ## Regras

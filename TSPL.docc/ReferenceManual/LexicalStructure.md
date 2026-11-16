@@ -621,7 +621,7 @@ Unless otherwise specified,
 the default inferred type of an integer literal is the Swift standard library type `Int`.
 The Swift standard library also defines types for various sizes of
 signed and unsigned integers,
-as described in <doc:TheBasics#Integers>.
+as described in <doc:TheBasics#Inteiros>.
 
 <!--
   TR: The prose assumes underscores only belong between digits.

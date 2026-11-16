@@ -1,32 +1,33 @@
-# Control Flow
+# Controle de fluxo
 
-Structure code with branches, loops, and early exits.
+Estruture o código com ramos, laços e saídas antecipadas.
 
-Swift provides a variety of control flow statements.
-These include `while` loops to perform a task multiple times;
-`if`, `guard`, and `switch` statements
-to execute different branches of code based on certain conditions;
-and statements such as `break` and `continue`
-to transfer the flow of execution to another point in your code.
-Swift provides a `for`-`in` loop that makes it easy to iterate over
-arrays, dictionaries, ranges, strings, and other sequences.
-Swift also provides `defer` statements,
-which wrap code to be executed when leaving the current scope.
+O Swift oferece uma variedade de instruções de controle de fluxo.
+Entre elas estão os laços `while`, para executar uma tarefa várias vezes;
+as instruções `if`, `guard` e `switch`, para executar ramos diferentes de código
+de acordo com certas condições;
+e instruções como `break` e `continue`, para transferir o fluxo de execução
+para outro ponto do seu código.
+O Swift oferece um laço `for`-`in` que facilita percorrer
+arrays, dicionários, intervalos, strings e outras sequências.
+O Swift também oferece instruções `defer`,
+que envolvem código a ser executado ao sair do escopo atual.
 
-Swift's `switch` statement is considerably more powerful
-than its counterpart in many C-like languages.
-Cases can match many different patterns,
-including interval matches, tuples, and casts to a specific type.
-Matched values in a `switch` case can be bound to temporary constants or variables
-for use within the case's body,
-and complex matching conditions can be expressed with a `where` clause for each case.
+A instrução `switch` do Swift é bem mais poderosa
+do que a equivalente em muitas linguagens da família C.
+Os casos podem corresponder a muitos padrões diferentes,
+incluindo correspondências em intervalos, tuplas e conversões para um tipo específico.
+Os valores correspondidos em um caso do `switch` podem ser vinculados a constantes
+ou variáveis temporárias para uso no corpo do caso,
+e condições de correspondência complexas podem ser expressas
+com uma cláusula `where` em cada caso.
 
-## For-In Loops
+## Laços for-in
 
-You use the `for`-`in` loop to iterate over a sequence,
-such as items in an array, ranges of numbers, or characters in a string.
+Use o laço `for`-`in` para percorrer uma sequência,
+como os itens de um array, intervalos de números ou caracteres de uma string.
 
-This example uses a `for`-`in` loop to iterate over the items in an array:
+Este exemplo usa um laço `for`-`in` para percorrer os itens de um array:
 
 ```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
@@ -54,13 +55,13 @@ for name in names {
   ```
 -->
 
-You can also iterate over a dictionary to access its key-value pairs.
-Each item in the dictionary is returned as a `(key, value)` tuple
-when the dictionary is iterated,
-and you can decompose the `(key, value)` tuple's members as explicitly named constants
-for use within the body of the `for`-`in` loop.
-In the code example below, the dictionary's keys are decomposed into a constant called `animalName`,
-and the dictionary's values are decomposed into a constant called `legCount`.
+Você também pode percorrer um dicionário para acessar seus pares chave-valor.
+Cada item do dicionário é retornado como uma tupla `(key, value)` durante a iteração,
+e você pode decompor os membros da tupla `(key, value)` em constantes
+com nomes explícitos para uso no corpo do laço `for`-`in`.
+No exemplo de código abaixo, as chaves do dicionário são decompostas
+em uma constante chamada `animalName`,
+e os valores do dicionário são decompostos em uma constante chamada `legCount`.
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -86,21 +87,19 @@ for (animalName, legCount) in numberOfLegs {
   ```
 -->
 
-The contents of a `Dictionary` are inherently unordered,
-and iterating over them doesn't guarantee the order
-in which they will be retrieved.
-In particular,
-the order you insert items into a `Dictionary`
-doesn't define the order they're iterated.
-For more about arrays and dictionaries, see <doc:CollectionTypes>.
+O conteúdo de um `Dictionary` é, por natureza, desordenado,
+e percorrê-lo não garante a ordem em que os itens serão recuperados.
+Em especial, a ordem em que você insere itens em um `Dictionary`
+não define a ordem em que eles são percorridos.
+Para saber mais sobre arrays e dicionários, veja <doc:CollectionTypes>.
 
 <!--
   TODO: provide some advice on how to iterate over a Dictionary in order
   (perhaps sorted by key), using a predicate or array sort or some kind.
 -->
 
-You can also use `for`-`in` loops with numeric ranges.
-This example prints the first few entries in a five-times table:
+Você também pode usar laços `for`-`in` com intervalos numéricos.
+Este exemplo imprime as primeiras entradas da tabuada do cinco:
 
 ```swift
 for index in 1...5 {
@@ -128,26 +127,25 @@ for index in 1...5 {
   ```
 -->
 
-The sequence being iterated over is
-a range of numbers from `1` to `5`, inclusive,
-as indicated by the use of the closed range operator (`...`).
-The value of `index` is set to the first number in the range (`1`),
-and the statements inside the loop are executed.
-In this case, the loop contains only one statement,
-which prints an entry from the five-times table for the current value of `index`.
-After the statement is executed,
-the value of `index` is updated to contain the second value in the range (`2`),
-and the `print(_:separator:terminator:)` function is called again.
-This process continues until the end of the range is reached.
+A sequência percorrida é um intervalo de números de `1` a `5`, inclusive,
+como indica o uso do operador de intervalo fechado (`...`).
+O valor de `index` é definido como o primeiro número do intervalo (`1`),
+e as instruções dentro do laço são executadas.
+Neste caso, o laço contém apenas uma instrução,
+que imprime uma entrada da tabuada do cinco para o valor atual de `index`.
+Depois que a instrução é executada, o valor de `index` é atualizado
+para o segundo valor do intervalo (`2`),
+e a função `print(_:separator:terminator:)` é chamada novamente.
+Esse processo continua até chegar ao fim do intervalo.
 
-In the example above, `index` is a constant whose value is automatically set
-at the start of each iteration of the loop.
-As such, `index` doesn't have to be declared before it's used.
-It's implicitly declared simply by its inclusion in the loop declaration,
-without the need for a `let` declaration keyword.
+No exemplo acima, `index` é uma constante cujo valor é definido automaticamente
+no início de cada iteração do laço.
+Por isso, `index` não precisa ser declarado antes de ser usado.
+Ele é declarado implicitamente apenas por aparecer na declaração do laço,
+sem a necessidade da palavra-chave `let`.
 
-If you don't need each value from a sequence,
-you can ignore the values by using an underscore in place of a variable name.
+Se você não precisar de cada valor de uma sequência,
+pode ignorar esses valores usando um sublinhado no lugar do nome de uma variável.
 
 ```swift
 let base = 3
@@ -175,26 +173,24 @@ print("\(base) to the power of \(power) is \(answer)")
   ```
 -->
 
-The example above calculates the value of one number to the power of another
-(in this case, `3` to the power of `10`).
-It multiplies a starting value of `1`
-(that is, `3` to the power of `0`)
-by `3`, ten times,
-using a closed range that starts with `1` and ends with `10`.
-For this calculation, the individual counter values each time through the loop are unnecessary ---
-the code simply executes the loop the correct number of times.
-The underscore character (`_`)
-used in place of a loop variable
-causes the individual values to be ignored
-and doesn't provide access to the current value during each iteration of the loop.
+O exemplo acima calcula o valor de um número elevado a outro
+(neste caso, `3` elevado a `10`).
+Ele multiplica um valor inicial de `1`
+(ou seja, `3` elevado a `0`) por `3`, dez vezes,
+usando um intervalo fechado que começa em `1` e termina em `10`.
+Para esse cálculo, os valores individuais do contador a cada passagem pelo laço
+são desnecessários: o código simplesmente executa o laço o número certo de vezes.
+O caractere sublinhado (`_`) usado no lugar de uma variável do laço
+faz com que os valores individuais sejam ignorados
+e não dá acesso ao valor atual em cada iteração do laço.
 
-In some situations, you might not want to use closed ranges,
-which include both endpoints.
-Consider drawing the tick marks for every minute on a watch face.
-You want to draw `60` tick marks, starting with the `0` minute.
-Use the half-open range operator (`..<`) to include the
-lower bound but not the upper bound.
-For more about ranges, see <doc:BasicOperators#Range-Operators>.
+Em algumas situações, você pode não querer usar intervalos fechados,
+que incluem os dois extremos.
+Pense em desenhar as marcas de cada minuto em um mostrador de relógio.
+Você quer desenhar `60` marcas, começando pelo minuto `0`.
+Use o operador de intervalo semiaberto (`..<`) para incluir o limite inferior,
+mas não o superior.
+Para saber mais sobre intervalos, veja <doc:BasicOperators#Operadores-de-intervalo>.
 
 ```swift
 let minutes = 60
@@ -218,9 +214,9 @@ for tickMark in 0..<minutes {
   ```
 -->
 
-Some users might want fewer tick marks in their UI.
-They could prefer one mark every `5` minutes instead.
-Use the `stride(from:to:by:)` function to skip the unwanted marks.
+Alguns usuários podem preferir menos marcas na interface.
+Eles podem preferir uma marca a cada `5` minutos.
+Use a função `stride(from:to:by:)` para pular as marcas indesejadas.
 
 ```swift
 let minuteInterval = 5
@@ -244,7 +240,7 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
   ```
 -->
 
-Closed ranges are also available, by using `stride(from:through:by:)` instead:
+Intervalos fechados também estão disponíveis, usando `stride(from:through:by:)` no lugar:
 
 ```swift
 let hours = 12
@@ -271,34 +267,35 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
   ```
 -->
 
-The examples above use a `for`-`in` loop to iterate
-ranges, arrays, dictionaries, and strings.
-However, you can use this syntax to iterate *any* collection,
-including your own classes and collection types,
-as long as those types conform to the [`Sequence`](https://developer.apple.com/documentation/swift/sequence) protocol.
+Os exemplos acima usam um laço `for`-`in` para percorrer
+intervalos, arrays, dicionários e strings.
+No entanto, você pode usar essa sintaxe para percorrer *qualquer* coleção,
+incluindo suas próprias classes e tipos de coleção,
+desde que esses tipos estejam em conformidade com o protocolo
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence).
 
 <!--
   TODO: for (index, object) in enumerate(collection)
   and also for i in indices(collection) { collection[i] }
 -->
 
-## While Loops
+## Laços while
 
-A `while` loop performs a set of statements until a condition becomes `false`.
-These kinds of loops are best used when
-the number of iterations isn't known before the first iteration begins.
-Swift provides two kinds of `while` loops:
+Um laço `while` executa um conjunto de instruções até que uma condição se torne `false`.
+Esses laços são mais indicados quando o número de iterações não é conhecido
+antes da primeira iteração começar.
+O Swift oferece dois tipos de laços `while`:
 
-- `while` evaluates its condition at the start of each pass through the loop.
-- `repeat`-`while` evaluates its condition at the end of each pass through the loop.
+- `while` avalia sua condição no início de cada passagem pelo laço.
+- `repeat`-`while` avalia sua condição no fim de cada passagem pelo laço.
 
 ### While
 
-A `while` loop starts by evaluating a single condition.
-If the condition is `true`,
-a set of statements is repeated until the condition becomes `false`.
+Um laço `while` começa avaliando uma única condição.
+Se a condição for `true`, um conjunto de instruções é repetido
+até que a condição se torne `false`.
 
-Here's the general form of a `while` loop:
+Esta é a forma geral de um laço `while`:
 
 ```swift
 while <#condition#> {
@@ -306,29 +303,28 @@ while <#condition#> {
 }
 ```
 
-This example plays a simple game of *Snakes and Ladders*
-(also known as *Chutes and Ladders*):
+Este exemplo simula uma partida simples de *Cobras e Escadas*
+(também conhecido como *Chutes and Ladders*):
 
 <!-- Apple Books screenshot begins here. -->
 
 ![](snakesAndLadders)
 
-The rules of the game are as follows:
+As regras do jogo são as seguintes:
 
-- The board has 25 squares, and the aim is to land on or beyond square 25.
-- The player's starting square is “square zero”,
-  which is just off the bottom-left corner of the board.
-- Each turn, you roll a six-sided dice and move by that number of squares,
-  following the horizontal path indicated by the dotted arrow above.
-- If your turn ends at the bottom of a ladder, you move up that ladder.
-- If your turn ends at the head of a snake, you move down that snake.
+- O tabuleiro tem 25 casas, e o objetivo é cair na casa 25 ou além dela.
+- A casa inicial do jogador é a “casa zero”, logo fora do canto inferior esquerdo do tabuleiro.
+- A cada turno, você lança um dado de seis faces e avança esse número de casas,
+  seguindo o caminho horizontal indicado pela seta pontilhada acima.
+- Se o turno terminar na base de uma escada, você sobe por essa escada.
+- Se o turno terminar na cabeça de uma cobra, você desce por essa cobra.
 
-The game board is represented by an array of `Int` values.
-Its size is based on a constant called `finalSquare`,
-which is used to initialize the array
-and also to check for a win condition later in the example.
-Because the players start off the board, on "square zero",
-the board is initialized with 26 zero `Int` values, not 25.
+O tabuleiro do jogo é representado por um array de valores `Int`.
+Seu tamanho é baseado em uma constante chamada `finalSquare`,
+usada para inicializar o array e também para verificar a condição de vitória
+mais adiante no exemplo.
+Como os jogadores começam fora do tabuleiro, na “casa zero”,
+o tabuleiro é inicializado com 26 valores `Int` zero, e não 25.
 
 ```swift
 let finalSquare = 25
@@ -345,9 +341,10 @@ var board = [Int](repeating: 0, count: finalSquare + 1)
   ```
 -->
 
-Some squares are then set to have more specific values for the snakes and ladders.
-Squares with a ladder base have a positive number to move you up the board,
-whereas squares with a snake head have a negative number to move you back down the board.
+Em seguida, algumas casas recebem valores mais específicos para as cobras e escadas.
+As casas com a base de uma escada têm um número positivo, que faz você subir no tabuleiro,
+enquanto as casas com a cabeça de uma cobra têm um número negativo,
+que faz você descer no tabuleiro.
 
 ```swift
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
@@ -365,16 +362,14 @@ board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 
 <!-- Apple Books screenshot ends here. -->
 
-Square 3 contains the bottom of a ladder that moves you up to square 11.
-To represent this, `board[03]` is equal to `+08`,
-which is equivalent to an integer value of `8`
-(the difference between `3` and `11`).
-To align the values and statements,
-the unary plus operator (`+i`) is explicitly used with
-the unary minus operator (`-i`)
-and numbers lower than `10` are padded with zeros.
-(Neither stylistic technique is strictly necessary,
-but they lead to neater code.)
+A casa 3 contém a base de uma escada que leva você até a casa 11.
+Para representar isso, `board[03]` é igual a `+08`,
+o que equivale ao valor inteiro `8` (a diferença entre `3` e `11`).
+Para alinhar os valores e as instruções, o operador de sinal positivo unário (`+i`)
+é usado explicitamente junto com o operador de sinal negativo unário (`-i`),
+e os números menores que `10` são preenchidos com zeros.
+(Nenhuma dessas técnicas de estilo é estritamente necessária,
+mas elas deixam o código mais organizado.)
 
 ```swift
 var square = 0
@@ -447,51 +442,48 @@ print("Game over!")
   ```
 -->
 
-The example above uses a very simple approach to dice rolling.
-Instead of generating a random number,
-it starts with a `diceRoll` value of `0`.
-Each time through the `while` loop,
-`diceRoll` is incremented by one
-and is then checked to see whether it has become too large.
-Whenever this return value equals `7`,
-the dice roll has become too large and is reset to a value of `1`.
-The result is a sequence of `diceRoll` values that's always
-`1`, `2`, `3`, `4`, `5`, `6`, `1`, `2` and so on.
+O exemplo acima usa uma abordagem bem simples para o lançamento do dado.
+Em vez de gerar um número aleatório, ele começa com o valor `diceRoll` igual a `0`.
+A cada passagem pelo laço `while`, `diceRoll` é incrementado em um
+e depois é verificado para ver se ficou grande demais.
+Sempre que esse valor chega a `7`, o lançamento ficou grande demais
+e é reiniciado com o valor `1`.
+O resultado é uma sequência de valores de `diceRoll` que é sempre
+`1`, `2`, `3`, `4`, `5`, `6`, `1`, `2` e assim por diante.
 
-After rolling the dice, the player moves forward by `diceRoll` squares.
-It's possible that the dice roll may have moved the player beyond square 25,
-in which case the game is over.
-To cope with this scenario,
-the code checks that `square` is less than the `board` array's `count` property.
-If `square` is valid, the value stored in `board[square]` is added
-to the current `square` value
-to move the player up or down any ladders or snakes.
+Depois de lançar o dado, o jogador avança `diceRoll` casas.
+É possível que o lançamento tenha levado o jogador além da casa 25,
+caso em que o jogo termina.
+Para lidar com esse cenário, o código verifica se `square`
+é menor que a propriedade `count` do array `board`.
+Se `square` for válido, o valor armazenado em `board[square]`
+é somado ao valor atual de `square`
+para fazer o jogador subir ou descer qualquer escada ou cobra.
 
-> Note: If this check isn't performed,
-> `board[square]` might try to access a value outside the bounds of the `board` array,
-> which would trigger a runtime error.
+> Nota: Se essa verificação não for feita,
+> `board[square]` pode tentar acessar um valor fora dos limites do array `board`,
+> o que dispararia um erro de tempo de execução.
 
-The current `while` loop execution then ends,
-and the loop's condition is checked to see if the loop should be executed again.
-If the player has moved on or beyond square number `25`,
-the loop's condition evaluates to `false` and the game ends.
+A execução atual do laço `while` então termina,
+e a condição do laço é verificada para ver se ele deve ser executado de novo.
+Se o jogador tiver chegado à casa `25` ou além,
+a condição do laço é avaliada como `false` e o jogo termina.
 
-A `while` loop is appropriate in this case,
-because the length of the game isn't clear at the start of the `while` loop.
-Instead, the loop is executed until a particular condition is satisfied.
+Um laço `while` é adequado neste caso,
+porque a duração do jogo não está clara no início do laço.
+Em vez disso, o laço é executado até que determinada condição seja satisfeita.
 
-### Repeat-While
+### Repeat-while
 
-The other variation of the `while` loop,
-known as the `repeat`-`while` loop,
-performs a single pass through the loop block first,
-*before* considering the loop's condition.
-It then continues to repeat the loop until the condition is `false`.
+A outra variação do laço `while`, conhecida como laço `repeat`-`while`,
+executa primeiro uma única passagem pelo bloco do laço,
+*antes* de considerar a condição do laço.
+Em seguida, continua repetindo o laço até que a condição seja `false`.
 
-> Note: The `repeat`-`while` loop in Swift is analogous to
-> a `do`-`while` loop in other languages.
+> Nota: O laço `repeat`-`while` do Swift é análogo
+> a um laço `do`-`while` de outras linguagens.
 
-Here's the general form of a `repeat`-`while` loop:
+Esta é a forma geral de um laço `repeat`-`while`:
 
 ```swift
 repeat {
@@ -499,10 +491,10 @@ repeat {
 } while <#condition#>
 ```
 
-Here's the *Snakes and Ladders* example again,
-written as a `repeat`-`while` loop rather than a `while` loop.
-The values of `finalSquare`, `board`, `square`, and `diceRoll`
-are initialized in exactly the same way as with a `while` loop.
+Aqui está o exemplo de *Cobras e Escadas* de novo,
+escrito como um laço `repeat`-`while` em vez de um laço `while`.
+Os valores de `finalSquare`, `board`, `square` e `diceRoll`
+são inicializados exatamente da mesma forma que no laço `while`.
 
 ```swift
 let finalSquare = 25
@@ -527,14 +519,13 @@ var diceRoll = 0
   ```
 -->
 
-In this version of the game,
-the *first* action in the loop is to check for a ladder or a snake.
-No ladder on the board takes the player straight to square 25,
-and so it isn't possible to win the game by moving up a ladder.
-Therefore, it's safe to check for a snake or a ladder as the first action in the loop.
+Nesta versão do jogo, a *primeira* ação do laço é verificar se há uma escada ou uma cobra.
+Nenhuma escada do tabuleiro leva o jogador direto até a casa 25,
+e por isso não é possível vencer o jogo subindo por uma escada.
+Portanto, é seguro verificar uma cobra ou uma escada como a primeira ação do laço.
 
-At the start of the game, the player is on “square zero”.
-`board[0]` always equals `0` and has no effect.
+No início do jogo, o jogador está na “casa zero”.
+`board[0]` é sempre igual a `0` e não tem efeito.
 
 ```swift
 repeat {
@@ -600,41 +591,40 @@ print("Game over!")
   ```
 -->
 
-After the code checks for snakes and ladders,
-the dice is rolled and the player is moved forward by `diceRoll` squares.
-The current loop execution then ends.
+Depois que o código verifica cobras e escadas,
+o dado é lançado e o jogador avança `diceRoll` casas.
+A execução atual do laço então termina.
 
-The loop's condition (`while square < finalSquare`) is the same as before,
-but this time it's not evaluated until the *end* of the first run through the loop.
-The structure of the `repeat`-`while` loop is better suited to this game
-than the `while` loop in the previous example.
-In the `repeat`-`while` loop above,
-`square += board[square]` is always executed *immediately after*
-the loop's `while` condition confirms that `square` is still on the board.
-This behavior removes the need for the array bounds check
-seen in the `while` loop version of the game described earlier.
+A condição do laço (`while square < finalSquare`) é a mesma de antes,
+mas desta vez ela só é avaliada no *fim* da primeira passagem pelo laço.
+A estrutura do laço `repeat`-`while` se adapta melhor a este jogo
+do que o laço `while` do exemplo anterior.
+No laço `repeat`-`while` acima,
+`square += board[square]` é sempre executado *logo depois*
+de a condição `while` confirmar que `square` ainda está no tabuleiro.
+Esse comportamento elimina a necessidade da verificação de limites do array
+vista na versão com `while` do jogo, descrita antes.
 
-## Conditional Statements
+## Instruções condicionais
 
-It's often useful to execute different pieces of code based on certain conditions.
-You might want to run an extra piece of code when an error occurs,
-or to display a message when a value becomes too high or too low.
-To do this, you make parts of your code *conditional*.
+Muitas vezes é útil executar trechos diferentes de código com base em certas condições.
+Você pode querer executar um trecho extra de código quando ocorre um erro,
+ou exibir uma mensagem quando um valor fica alto ou baixo demais.
+Para isso, você torna partes do seu código *condicionais*.
 
-Swift provides two ways to add conditional branches to your code:
-the `if` statement and the `switch` statement.
-Typically, you use the `if` statement
-to evaluate simple conditions with only a few possible outcomes.
-The `switch` statement is better suited to
-more complex conditions with multiple possible permutations
-and is useful in situations where pattern matching can help select
-an appropriate code branch to execute.
+O Swift oferece duas formas de adicionar ramos condicionais ao seu código:
+a instrução `if` e a instrução `switch`.
+Normalmente, use a instrução `if` para avaliar condições simples,
+com poucos resultados possíveis.
+A instrução `switch` é mais indicada para condições mais complexas,
+com várias combinações possíveis,
+e é útil em situações em que a correspondência de padrões
+pode ajudar a escolher o ramo de código adequado a executar.
 
 ### If
 
-In its simplest form,
-the `if` statement has a single `if` condition.
-It executes a set of statements only if that condition is `true`.
+Em sua forma mais simples, a instrução `if` tem uma única condição `if`.
+Ela executa um conjunto de instruções somente se essa condição for `true`.
 
 ```swift
 var temperatureInFahrenheit = 30
@@ -656,17 +646,15 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-The example above checks whether the temperature
-is less than or equal to 32 degrees Fahrenheit
-(the freezing point of water).
-If it is, a message is printed.
-Otherwise, no message is printed,
-and code execution continues after the `if` statement's closing brace.
+O exemplo acima verifica se a temperatura é menor ou igual a 32 graus Fahrenheit
+(o ponto de congelamento da água).
+Se for, uma mensagem é impressa.
+Caso contrário, nenhuma mensagem é impressa,
+e a execução do código continua depois da chave de fechamento da instrução `if`.
 
-The `if` statement can provide an alternative set of statements,
-known as an *else clause*,
-for situations when the `if` condition is `false`.
-These statements are indicated by the `else` keyword.
+A instrução `if` pode fornecer um conjunto alternativo de instruções,
+conhecido como *cláusula else*, para situações em que a condição `if` é `false`.
+Essas instruções são indicadas pela palavra-chave `else`.
 
 ```swift
 temperatureInFahrenheit = 40
@@ -692,13 +680,12 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-One of these two branches is always executed.
-Because the temperature has increased to `40` degrees Fahrenheit,
-it's no longer cold enough to advise wearing a scarf
-and so the `else` branch is triggered instead.
+Um desses dois ramos é sempre executado.
+Como a temperatura subiu para `40` graus Fahrenheit,
+já não está frio o bastante para recomendar um cachecol,
+e por isso o ramo `else` é acionado.
 
-You can chain multiple `if` statements together
-to consider additional clauses.
+Você pode encadear várias instruções `if` para considerar cláusulas adicionais.
 
 ```swift
 temperatureInFahrenheit = 90
@@ -728,12 +715,14 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-Here, an additional `if` statement was added to respond to particularly warm temperatures.
-The final `else` clause remains,
-and it prints a response for any temperatures that aren't too warm or too cold.
+Aqui, foi adicionada uma instrução `if` extra para responder a temperaturas
+especialmente altas.
+A cláusula `else` final permanece,
+e imprime uma resposta para qualquer temperatura
+que não seja nem muito alta nem muito baixa.
 
-The final `else` clause is optional, however,
-and can be excluded if the set of conditions doesn't need to be complete.
+A cláusula `else` final é opcional, porém,
+e pode ser omitida se o conjunto de condições não precisar ser completo.
 
 ```swift
 temperatureInFahrenheit = 72
@@ -757,14 +746,12 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-Because the temperature isn't cold enough to trigger the `if` condition
-or warm enough to trigger the `else if` condition,
-no message is printed.
+Como a temperatura não está fria o bastante para acionar a condição `if`
+nem quente o bastante para acionar a condição `else if`,
+nenhuma mensagem é impressa.
 
-Swift provides a shorthand spelling of `if`
-that you can use when setting values.
-For example,
-consider the following code:
+O Swift oferece uma forma abreviada de `if` que você pode usar ao definir valores.
+Por exemplo, considere o código a seguir:
 
 ```swift
 let temperatureInCelsius = 25
@@ -782,12 +769,11 @@ print(weatherAdvice)
 // Prints "It's not that cold. Wear a T-shirt."
 ```
 
-Here, each of the branches sets a value for the `weatherAdvice` constant,
-which is printed after the `if` statement.
+Aqui, cada um dos ramos define um valor para a constante `weatherAdvice`,
+que é impresso depois da instrução `if`.
 
-Using the alternate syntax,
-known as an `if` expression,
-you can write this code more concisely:
+Usando a sintaxe alternativa, conhecida como expressão `if`,
+você pode escrever este código de forma mais concisa:
 
 ```swift
 let weatherAdvice = if temperatureInCelsius <= 0 {
@@ -802,30 +788,25 @@ print(weatherAdvice)
 // Prints "It's not that cold. Wear a T-shirt."
 ```
 
-In this `if` expression version,
-each branch contains a single value.
-If a branch's condition is true,
-then that branch's value is used as the value for the whole `if` expression
-in the assignment of `weatherAdvice`.
-Every `if` branch has a corresponding `else if` branch or `else` branch,
-ensuring that one of the branches always matches
-and that the `if` expression always produces a value,
-regardless of which conditions are true.
+Nesta versão com expressão `if`, cada ramo contém um único valor.
+Se a condição de um ramo for verdadeira,
+o valor desse ramo é usado como valor da expressão `if` inteira
+na atribuição de `weatherAdvice`.
+Todo ramo `if` tem um ramo `else if` ou `else` correspondente,
+o que garante que um dos ramos sempre seja escolhido
+e que a expressão `if` sempre produza um valor,
+independentemente de quais condições sejam verdadeiras.
 
-Because the syntax for the assignment starts outside the `if` expression,
-there's no need to repeat `weatherAdvice =` inside each branch.
-Instead,
-each branch of the `if` expression
-produces one of the three possible values for `weatherAdvice`,
-and the assignment uses that value.
+Como a sintaxe da atribuição começa fora da expressão `if`,
+não é preciso repetir `weatherAdvice =` dentro de cada ramo.
+Em vez disso, cada ramo da expressão `if` produz um dos três valores possíveis
+para `weatherAdvice`, e a atribuição usa esse valor.
 
-All of the branches of an `if` expression
-need to contain values of the same type.
-Because Swift checks the type of each branch separately,
-values like `nil` that can be used with more than one type
-prevent Swift from determining the `if` expression's type automatically.
-Instead, you need to specify the type explicitly ---
-for example:
+Todos os ramos de uma expressão `if` precisam conter valores do mesmo tipo.
+Como o Swift verifica o tipo de cada ramo separadamente,
+valores como `nil`, que podem ser usados com mais de um tipo,
+impedem que o Swift determine automaticamente o tipo da expressão `if`.
+Por isso, é preciso especificar o tipo explicitamente, por exemplo:
 
 ```swift
 let freezeWarning: String? = if temperatureInCelsius <= 0 {
@@ -835,16 +816,15 @@ let freezeWarning: String? = if temperatureInCelsius <= 0 {
 }
 ```
 
-In the code above,
-one branch of the `if` expression has a string value
-and the other branch has a `nil` value.
-The `nil` value could be used as a value for any optional type,
-so you have to explicitly write that `freezeWarning` is an optional string,
-as described in <doc:TheBasics#Type-Annotations>.
+No código acima, um ramo da expressão `if` tem um valor de string
+e o outro ramo tem o valor `nil`.
+O valor `nil` poderia ser usado como valor de qualquer tipo opcional,
+então você precisa escrever explicitamente que `freezeWarning` é uma string opcional,
+como descrito em <doc:TheBasics#Anotações-de-tipo>.
 
-An alternate way to provide this type information
-is to provide an explicit type for `nil`,
-instead of providing an explicit type for `freezeWarning`:
+Uma forma alternativa de fornecer essa informação de tipo
+é indicar um tipo explícito para `nil`,
+em vez de indicar um tipo explícito para `freezeWarning`:
 
 ```swift
 let freezeWarning = if temperatureInCelsius <= 0 {
@@ -854,9 +834,9 @@ let freezeWarning = if temperatureInCelsius <= 0 {
 }
 ```
 
-An `if` expression can respond to unexpected failures by throwing an error
-or calling a function like `fatalError(_:file:line:)` that never returns.
-For example:
+Uma expressão `if` pode responder a falhas inesperadas lançando um erro
+ou chamando uma função como `fatalError(_:file:line:)`, que nunca retorna.
+Por exemplo:
 
 ```swift
 let weatherAdvice = if temperatureInCelsius > 100 {
@@ -866,31 +846,27 @@ let weatherAdvice = if temperatureInCelsius > 100 {
 }
 ```
 
-In this example,
-the `if` expression checks whether the forecast temperature
-is hotter than 100° C --- the boiling point of water.
-A temperature this hot causes the `if` expression to throw a `.boiling` error
-instead of returning a textual summary.
-Even though this `if` expression can throw an error,
-you don't write `try` before it.
-For information about working with errors, see <doc:ErrorHandling>.
+Neste exemplo, a expressão `if` verifica se a temperatura prevista
+é maior que 100 °C, o ponto de ebulição da água.
+Uma temperatura tão alta faz a expressão `if` lançar um erro `.boiling`,
+em vez de retornar um resumo em texto.
+Mesmo que essa expressão `if` possa lançar um erro,
+você não escreve `try` antes dela.
+Para informações sobre como trabalhar com erros, veja <doc:ErrorHandling>.
 
-In addition to using `if` expressions
-on the right-hand side of an assignment,
-as shown in the examples above,
-you can also use them as the value that a function or closure returns.
+Além de usar expressões `if` do lado direito de uma atribuição,
+como nos exemplos acima,
+você também pode usá-las como o valor que uma função ou closure retorna.
 
 ### Switch
 
-A `switch` statement considers a value
-and compares it against several possible matching patterns.
-It then executes an appropriate block of code,
-based on the first pattern that matches successfully.
-A `switch` statement provides an alternative to the `if` statement
-for responding to multiple potential states.
+Uma instrução `switch` considera um valor e o compara com vários padrões de correspondência possíveis.
+Em seguida, executa o bloco de código adequado, com base no primeiro padrão que corresponder com sucesso.
+Uma instrução `switch` é uma alternativa à instrução `if`
+para responder a vários estados possíveis.
 
-In its simplest form, a `switch` statement compares a value against
-one or more values of the same type.
+Em sua forma mais simples, uma instrução `switch` compara um valor
+com um ou mais valores do mesmo tipo.
 
 ```swift
 switch <#some value to consider#> {
@@ -904,27 +880,24 @@ default:
 }
 ```
 
-Every `switch` statement consists of multiple possible *cases*,
-each of which begins with the `case` keyword.
-In addition to comparing against specific values,
-Swift provides several ways for each case to specify
-more complex matching patterns.
-These options are described later in this chapter.
+Toda instrução `switch` é composta por vários *casos* possíveis,
+cada um começando com a palavra-chave `case`.
+Além de comparar com valores específicos,
+o Swift oferece várias formas de cada caso especificar
+padrões de correspondência mais complexos.
+Essas opções são descritas mais adiante neste capítulo.
 
-Like the body of an `if` statement, each `case` is a separate branch of code execution.
-The `switch` statement determines which branch should be selected.
-This procedure is known as *switching* on the value that's being considered.
+Assim como o corpo de uma instrução `if`, cada `case` é um ramo separado de execução do código.
+A instrução `switch` determina qual ramo deve ser selecionado.
+Esse procedimento é conhecido como *fazer o switch* sobre o valor analisado.
 
-Every `switch` statement must be *exhaustive*.
-That is, every possible value of the type being considered
-must be matched by one of the `switch` cases.
-If it's not appropriate to provide a case for every possible value,
-you can define a default case to cover any values that aren't addressed explicitly.
-This default case is indicated by the `default` keyword,
-and must always appear last.
+Toda instrução `switch` precisa ser *exaustiva*.
+Ou seja, cada valor possível do tipo considerado deve ser coberto por um dos casos do `switch`.
+Se não for apropriado criar um caso para cada valor possível,
+você pode definir um caso `default` para cobrir os valores que não foram tratados explicitamente.
+Esse caso é indicado pela palavra-chave `default` e deve sempre aparecer por último.
 
-This example uses a `switch` statement to consider
-a single lowercase character called `someCharacter`:
+Este exemplo usa uma instrução `switch` para analisar um único caractere minúsculo chamado `someCharacter`:
 
 ```swift
 let someCharacter: Character = "z"
@@ -956,17 +929,15 @@ default:
   ```
 -->
 
-The `switch` statement's first case matches
-the first letter of the English alphabet, `a`,
-and its second case matches the last letter, `z`.
-Because the `switch` must have a case for every possible character,
-not just every alphabetic character,
-this `switch` statement uses a `default` case
-to match all characters other than `a` and `z`.
-This provision ensures that the `switch` statement is exhaustive.
+O primeiro caso da instrução `switch` corresponde à primeira letra do alfabeto inglês, `a`,
+e o segundo caso corresponde à última letra, `z`.
+Como o `switch` precisa ter um caso para cada caractere possível,
+e não apenas para cada letra,
+esta instrução usa um caso `default` para corresponder a todos os caracteres
+diferentes de `a` e `z`.
+Esse caso `default` garante que a instrução `switch` seja exaustiva.
 
-Like `if` statements,
-`switch` statements also have an expression form:
+Assim como as instruções `if`, as instruções `switch` também têm uma forma de expressão:
 
 ```swift
 let anotherCharacter: Character = "a"
@@ -983,40 +954,35 @@ print(message)
 // Prints "The first letter of the Latin alphabet".
 ```
 
-In this example,
-each case in the `switch` expression
-contains the value for `message`
-to be used when that case matches `anotherCharacter`.
-Because `switch` is always exhaustive,
-there is always a value to assign.
+Neste exemplo, cada caso da expressão `switch` contém o valor de `message`
+a ser usado quando esse caso corresponder a `anotherCharacter`.
+Como o `switch` é sempre exaustivo, sempre há um valor para atribuir.
 
-As with `if` expressions,
-you can throw an error
-or call a function like `fatalError(_:file:line:)` that never returns
-instead of providing a value for a given case.
-You can use `switch` expressions
-on the right-hand side of an assignment,
-as shown in the example above,
-and as the value that a function or closure returns.
+Assim como nas expressões `if`, você pode lançar um erro
+ou chamar uma função como `fatalError(_:file:line:)`, que nunca retorna,
+em vez de fornecer um valor para um determinado caso.
+Você pode usar expressões `switch` do lado direito de uma atribuição,
+como no exemplo acima,
+e como o valor que uma função ou closure retorna.
 
-#### No Implicit Fallthrough
+#### Sem fallthrough implícito
 
-In contrast with `switch` statements in C and Objective-C,
-`switch` statements in Swift don't
-fall through the bottom of each case and into the next one by default.
-Instead, the entire `switch` statement finishes its execution
-as soon as the first matching `switch` case is completed,
-without requiring an explicit `break` statement.
-This makes the `switch` statement safer and easier to use than the one in C
-and avoids executing more than one `switch` case by mistake.
+Diferentemente das instruções `switch` em C e Objective-C,
+as instruções `switch` do Swift não passam, por padrão,
+da parte de baixo de cada caso para o seguinte.
+Em vez disso, a instrução `switch` inteira termina sua execução
+assim que o primeiro caso correspondente é concluído,
+sem exigir uma instrução `break` explícita.
+Isso torna a instrução `switch` mais segura e mais fácil de usar do que a de C,
+e evita executar mais de um caso do `switch` por engano.
 
-> Note: Although `break` isn't required in Swift,
-> you can use a `break` statement to match and ignore a particular case
-> or to break out of a matched case before that case has completed its execution.
-> For details, see <doc:ControlFlow#Break-in-a-Switch-Statement>.
+> Nota: Embora `break` não seja obrigatório no Swift,
+> você pode usar uma instrução `break` para corresponder e ignorar um caso específico
+> ou para sair de um caso correspondido antes que esse caso termine sua execução.
+> Para detalhes, veja <doc:ControlFlow#Break-em-uma-instrução-switch>.
 
-The body of each case *must* contain at least one executable statement.
-It isn't valid to write the following code, because the first case is empty:
+O corpo de cada caso *deve* conter pelo menos uma instrução executável.
+Não é válido escrever o código a seguir, porque o primeiro caso está vazio:
 
 ```swift
 let anotherCharacter: Character = "a"
@@ -1050,17 +1016,16 @@ default:
   ```
 -->
 
-Unlike a `switch` statement in C,
-this `switch` statement doesn't match both `"a"` and `"A"`.
-Rather, it reports a compile-time error that `case "a":`
-doesn't contain any executable statements.
-This approach avoids accidental fallthrough from one case to another
-and makes for safer code that's clearer in its intent.
+Diferentemente de uma instrução `switch` em C,
+este `switch` não corresponde a `"a"` e `"A"` ao mesmo tempo.
+Em vez disso, ele reporta um erro de compilação informando que `case "a":`
+não contém nenhuma instrução executável.
+Essa abordagem evita passagens acidentais de um caso para outro
+e torna o código mais seguro e com intenção mais clara.
 
-To make a `switch` with a single case that
-matches both `"a"` and `"A"`,
-combine the two values into a compound case,
-separating the values with commas.
+Para fazer um `switch` com um único caso que corresponda a `"a"` e a `"A"`,
+combine os dois valores em um caso composto,
+separando os valores com vírgulas.
 
 ```swift
 let anotherCharacter: Character = "a"
@@ -1088,20 +1053,18 @@ default:
   ```
 -->
 
-For readability,
-a compound case can also be written over multiple lines.
-For more information about compound cases,
-see <doc:ControlFlow#Compound-Cases>.
+Para facilitar a leitura, um caso composto também pode ser escrito em várias linhas.
+Para mais informações sobre casos compostos, veja <doc:ControlFlow#Casos-compostos>.
 
-> Note: To explicitly fall through at the end of a particular `switch` case,
-> use the `fallthrough` keyword,
-> as described in <doc:ControlFlow#Fallthrough>.
+> Nota: Para passar explicitamente ao caso seguinte no fim de um caso específico do `switch`,
+> use a palavra-chave `fallthrough`,
+> como descrito em <doc:ControlFlow#Fallthrough>.
 
-#### Interval Matching
+#### Correspondência por intervalo
 
-Values in `switch` cases can be checked for their inclusion in an interval.
-This example uses number intervals
-to provide a natural-language count for numbers of any size:
+Os valores nos casos do `switch` podem ser verificados quanto à sua inclusão em um intervalo.
+Este exemplo usa intervalos numéricos para produzir uma contagem em linguagem natural
+para números de qualquer tamanho:
 
 <!--
   REFERENCE
@@ -1156,23 +1119,21 @@ print("There are \(naturalCount) \(countedThings).")
   ```
 -->
 
-In the above example, `approximateCount` is evaluated in a `switch` statement.
-Each `case` compares that value to a number or interval.
-Because the value of `approximateCount` falls between 12 and 100,
-`naturalCount` is assigned the value `"dozens of"`,
-and execution is transferred out of the `switch` statement.
+No exemplo acima, `approximateCount` é avaliado em uma instrução `switch`.
+Cada `case` compara esse valor com um número ou intervalo.
+Como o valor de `approximateCount` está entre 12 e 100,
+`naturalCount` recebe o valor `"dozens of"`,
+e a execução sai da instrução `switch`.
 
-#### Tuples
+#### Tuplas
 
-You can use tuples to test multiple values in the same `switch` statement.
-Each element of the tuple can be tested against a different value or interval of values.
-Alternatively, use the underscore character (`_`),
-also known as the wildcard pattern,
-to match any possible value.
+Você pode usar tuplas para testar vários valores na mesma instrução `switch`.
+Cada elemento da tupla pode ser testado com um valor ou intervalo de valores diferente.
+Como alternativa, use o caractere sublinhado (`_`),
+também conhecido como padrão curinga, para corresponder a qualquer valor possível.
 
-The example below takes an (x, y) point,
-expressed as a simple tuple of type `(Int, Int)`,
-and categorizes it on the graph that follows the example.
+O exemplo abaixo recebe um ponto (x, y), expresso como uma tupla simples do tipo `(Int, Int)`,
+e o classifica no gráfico que vem após o exemplo.
 
 ```swift
 let somePoint = (1, 1)
@@ -1214,30 +1175,28 @@ default:
 
 ![](coordinateGraphSimple)
 
-The `switch` statement determines whether the point is
-at the origin (0, 0),
-on the red x-axis,
-on the green y-axis,
-inside the blue 4-by-4 box centered on the origin,
-or outside of the box.
+A instrução `switch` determina se o ponto está na origem (0, 0),
+no eixo x vermelho, no eixo y verde,
+dentro da caixa azul de 4 por 4 centralizada na origem, ou fora da caixa.
 
-Unlike C, Swift allows multiple `switch` cases to consider the same value or values.
-In fact, the point (0, 0) could match all *four* of the cases in this example.
-However, if multiple matches are possible,
-the first matching case is always used.
-The point (0, 0) would match `case (0, 0)` first,
-and so all other matching cases would be ignored.
+Diferentemente de C, o Swift permite que vários casos do `switch`
+considerem o mesmo valor ou valores.
+Na verdade, o ponto (0, 0) poderia corresponder a *todos os quatro* casos deste exemplo.
+No entanto, se houver várias correspondências possíveis,
+o primeiro caso correspondente é sempre usado.
+O ponto (0, 0) corresponderia primeiro a `case (0, 0)`,
+e por isso todos os outros casos correspondentes seriam ignorados.
 
-#### Value Bindings
+#### Vinculações de valor
 
-A `switch` case can name the value or values it matches to temporary constants or variables,
-for use in the body of the case.
-This behavior is known as *value binding*,
-because the values are bound to temporary constants or variables within the case's body.
+Um caso do `switch` pode associar o valor ou os valores com que ele corresponde
+a constantes ou variáveis temporárias, para uso no corpo do caso.
+Esse comportamento é conhecido como *vinculação de valor*,
+porque os valores ficam vinculados a constantes ou variáveis temporárias
+dentro do corpo do caso.
 
-The example below takes an (x, y) point,
-expressed as a tuple of type `(Int, Int)`,
-and categorizes it on the graph that follows:
+O exemplo abaixo recebe um ponto (x, y), expresso como uma tupla do tipo `(Int, Int)`,
+e o classifica no gráfico que segue:
 
 ```swift
 let anotherPoint = (2, 0)
@@ -1271,36 +1230,31 @@ case let (x, y):
 
 ![](coordinateGraphMedium)
 
-The `switch` statement determines whether the point is
-on the red x-axis,
-on the green y-axis,
-or elsewhere (on neither axis).
+A instrução `switch` determina se o ponto está no eixo x vermelho,
+no eixo y verde, ou em outro lugar (em nenhum dos dois eixos).
 
-The three `switch` cases declare placeholder constants `x` and `y`,
-which temporarily take on one or both tuple values from `anotherPoint`.
-The first case, `case (let x, 0)`,
-matches any point with a `y` value of `0`
-and assigns the point's `x` value to the temporary constant `x`.
-Similarly, the second case, `case (0, let y)`,
-matches any point with an `x` value of `0`
-and assigns the point's `y` value to the temporary constant `y`.
+Os três casos do `switch` declaram constantes de espaço reservado `x` e `y`,
+que assumem temporariamente um ou os dois valores da tupla de `anotherPoint`.
+O primeiro caso, `case (let x, 0)`, corresponde a qualquer ponto com valor `y` igual a `0`
+e atribui o valor `x` do ponto à constante temporária `x`.
+Da mesma forma, o segundo caso, `case (0, let y)`, corresponde a qualquer ponto
+com valor `x` igual a `0` e atribui o valor `y` do ponto à constante temporária `y`.
 
-After the temporary constants are declared,
-they can be used within the case's code block.
-Here, they're used to print the categorization of the point.
+Depois que as constantes temporárias são declaradas, elas podem ser usadas dentro do bloco de código do caso.
+Aqui, são usadas para imprimir a classificação do ponto.
 
-This `switch` statement doesn't have a `default` case.
-The final case, `case let (x, y)`,
-declares a tuple of two placeholder constants that can match any value.
-Because `anotherPoint` is always a tuple of two values,
-this case matches all possible remaining values,
-and a `default` case isn't needed to make the `switch` statement exhaustive.
+Esta instrução `switch` não tem um caso `default`.
+O caso final, `case let (x, y)`, declara uma tupla de duas constantes de espaço reservado
+que podem corresponder a qualquer valor.
+Como `anotherPoint` é sempre uma tupla de dois valores,
+este caso corresponde a todos os valores restantes possíveis,
+e um caso `default` não é necessário para tornar a instrução `switch` exaustiva.
 
 #### Where
 
-A `switch` case can use a `where` clause to check for additional conditions.
+Um caso do `switch` pode usar uma cláusula `where` para verificar condições adicionais.
 
-The example below categorizes an (x, y) point on the following graph:
+O exemplo abaixo classifica um ponto (x, y) no gráfico a seguir:
 
 ```swift
 let yetAnotherPoint = (1, -1)
@@ -1334,29 +1288,25 @@ case let (x, y):
 
 ![](coordinateGraphComplex)
 
-The `switch` statement determines whether the point is
-on the green diagonal line where `x == y`,
-on the purple diagonal line where `x == -y`,
-or neither.
+A instrução `switch` determina se o ponto está na diagonal verde onde `x == y`,
+na diagonal roxa onde `x == -y`, ou em nenhuma delas.
 
-The three `switch` cases declare placeholder constants `x` and `y`,
-which temporarily take on the two tuple values from `yetAnotherPoint`.
-These constants are used as part of a `where` clause,
-to create a dynamic filter.
-The `switch` case matches the current value of `point`
-only if the `where` clause's condition evaluates to `true` for that value.
+Os três casos do `switch` declaram constantes de espaço reservado `x` e `y`,
+que assumem temporariamente os dois valores da tupla de `yetAnotherPoint`.
+Essas constantes são usadas como parte de uma cláusula `where`, para criar um filtro dinâmico.
+O caso do `switch` corresponde ao valor atual de `point` somente
+se a condição da cláusula `where` for avaliada como `true` para esse valor.
 
-As in the previous example, the final case matches all possible remaining values,
-and so a `default` case isn't needed to make the `switch` statement exhaustive.
+Como no exemplo anterior, o caso final corresponde a todos os valores restantes possíveis,
+e por isso um caso `default` não é necessário para tornar a instrução `switch` exaustiva.
 
-#### Compound Cases
+#### Casos compostos
 
-Multiple switch cases that share the same body
-can be combined by writing several patterns after `case`,
-with a comma between each of the patterns.
-If any of the patterns match, then the case is considered to match.
-The patterns can be written over multiple lines if the list is long.
-For example:
+Vários casos do `switch` que compartilham o mesmo corpo podem ser combinados
+escrevendo vários padrões depois de `case`, com uma vírgula entre cada padrão.
+Se algum dos padrões corresponder, o caso é considerado correspondente.
+Os padrões podem ser escritos em várias linhas se a lista for longa.
+Por exemplo:
 
 ```swift
 let someCharacter: Character = "e"
@@ -1390,21 +1340,16 @@ default:
   ```
 -->
 
-The `switch` statement's first case matches
-all five lowercase vowels in the English language.
-Similarly, its second case matches all lowercase English consonants.
-Finally, the `default` case matches any other character.
+O primeiro caso da instrução `switch` corresponde às cinco vogais minúsculas do idioma inglês.
+Da mesma forma, o segundo caso corresponde a todas as consoantes minúsculas do inglês.
+Por fim, o caso `default` corresponde a qualquer outro caractere.
 
-Compound cases can also include value bindings.
-All of the patterns of a compound case
-have to include the same set of value bindings,
-and each binding has to get a value of the same type
-from all of the patterns in the compound case.
-This ensures that,
-no matter which part of the compound case matched,
-the code in the body of the case
-can always access a value for the bindings
-and that the value always has the same type.
+Casos compostos também podem incluir vinculações de valor.
+Todos os padrões de um caso composto precisam incluir o mesmo conjunto de vinculações de valor,
+e cada vinculação precisa receber um valor do mesmo tipo de todos os padrões do caso composto.
+Isso garante que, qualquer que seja a parte do caso composto que correspondeu,
+o código no corpo do caso sempre possa acessar um valor para as vinculações,
+e que esse valor sempre tenha o mesmo tipo.
 
 ```swift
 let stillAnotherPoint = (9, 0)
@@ -1432,20 +1377,20 @@ default:
   ```
 -->
 
-The `case` above has two patterns:
-`(let distance, 0)` matches points on the x-axis
-and `(0, let distance)` matches points on the y-axis.
-Both patterns include a binding for `distance`
-and `distance` is an integer in both patterns ---
-which means that the code in the body of the `case`
-can always access a value for `distance`.
+O `case` acima tem dois padrões:
+`(let distance, 0)` corresponde a pontos no eixo x,
+e `(0, let distance)` corresponde a pontos no eixo y.
+Os dois padrões incluem uma vinculação para `distance`,
+e `distance` é um inteiro nos dois,
+o que significa que o código no corpo do `case`
+sempre pode acessar um valor para `distance`.
 
-## Patterns
+## Padrões
 
-In the previous examples, each switch case includes a pattern
-that indicates what values match that case.
-You can also use a pattern as the condition for an `if` statement.
-Here's what that looks like:
+Nos exemplos anteriores, cada caso do switch inclui um padrão
+que indica quais valores correspondem a esse caso.
+Você também pode usar um padrão como condição de uma instrução `if`.
+Veja como fica:
 
 ```swift
 let somePoint = (12, 100)
@@ -1455,18 +1400,15 @@ if case (let x, 100) = somePoint {
 // Prints "Found a point on the y=100 line, at 12".
 ```
 
-In this code,
-the condition for the `if` statement starts with `case`,
-indicating that the condition is a pattern instead of a Boolean value.
-If the pattern matches,
-then the condition for the `if` is considered to be true,
-and so the code in the body of the `if` statement runs.
-The patterns you can write after `if case`
-are the same as the patterns you can write in a switch case.
+Neste código, a condição da instrução `if` começa com `case`,
+indicando que a condição é um padrão em vez de um valor booleano.
+Se o padrão corresponder, a condição do `if` é considerada verdadeira,
+e então o código no corpo da instrução `if` é executado.
+Os padrões que você pode escrever depois de `if case`
+são os mesmos que você pode escrever em um caso do switch.
 
-In a `for`-`in` loop,
-you can give names to parts of the value using a value binding pattern,
-even without writing `case` in your code:
+Em um laço `for`-`in`, você pode dar nomes a partes do valor
+usando um padrão de vinculação de valor, mesmo sem escrever `case` no seu código:
 
 ```swift
 let points = [(10, 0), (30, -30), (-20, 0)]
@@ -1480,15 +1422,13 @@ for (x, y) in points {
 // Prints "Found a point on the x-axis at -20".
 ```
 
-The `for`-`in` loop above iterates over an array of tuples,
-binding the first and second elements of the tuples
-to the `x` and `y` constants.
-The statements inside the loop can use those constants,
-such as the `if` statement that checks whether the point lies on the x-axis.
-A more concise way to write this code
-is to combine the value bindings and condition
-using a `for`-`case`-`in` loop.
-The code below has the same behavior as the `for`-`in` loop above:
+O laço `for`-`in` acima percorre um array de tuplas,
+vinculando o primeiro e o segundo elementos das tuplas às constantes `x` e `y`.
+As instruções dentro do laço podem usar essas constantes,
+como a instrução `if` que verifica se o ponto está no eixo x.
+Uma forma mais concisa de escrever esse código é combinar a vinculação de valores
+e a condição usando um laço `for`-`case`-`in`.
+O código abaixo tem o mesmo comportamento do laço `for`-`in` acima:
 
 ```swift
 for case (let x, 0) in points {
@@ -1498,19 +1438,16 @@ for case (let x, 0) in points {
 // Prints "Found a point on the x-axis at -20".
 ```
 
-In this code,
-the condition is integrated into the `for`-`case`-`in` loop
-as part of the pattern.
-The statements in the `for`-`case`-`in` loop run only for points on the x-axis.
-This code produces the same result as the `for`-`in` loop above,
-but is a more compact way to iterate
-over only certain elements in a collection.
+Neste código, a condição está integrada ao laço `for`-`case`-`in` como parte do padrão.
+As instruções do laço `for`-`case`-`in` são executadas somente para pontos no eixo x.
+Este código produz o mesmo resultado do laço `for`-`in` acima,
+mas é uma forma mais compacta de percorrer somente certos elementos de uma coleção.
 
-A `for`-`case`-`in` loop can also include a `where` clause,
-to check for an additional condition.
-The statements inside the loop run
-only when `where` clause matches the current element.
-For example:
+Um laço `for`-`case`-`in` também pode incluir uma cláusula `where`,
+para verificar uma condição adicional.
+As instruções dentro do laço são executadas somente quando a cláusula `where`
+corresponde ao elemento atual.
+Por exemplo:
 
 ```swift
 for case let (x, y) in points where x == y || x == -y  {
@@ -1519,23 +1456,21 @@ for case let (x, y) in points where x == y || x == -y  {
 // Prints "Found (30, -30) along a line through the origin".
 ```
 
-This code binds the first and second elements of the tuple
-to `x` and `y` as constants,
-and then checks their values in the `where` clause.
-If the `where` clause is `true`,
-then the code in the body of the `for` loop runs;
-otherwise, iteration continues with the next element.
+Este código vincula o primeiro e o segundo elementos da tupla
+a `x` e `y` como constantes, e depois verifica seus valores na cláusula `where`.
+Se a cláusula `where` for `true`, o código no corpo do laço `for` é executado;
+caso contrário, a iteração continua com o próximo elemento.
 
-Because patterns can bind values,
-`if`-`case` statements and `for`-`case`-`in` loops
-are useful for working with enumerations that have associated values,
-as described in <doc:Enumerations#Associated-Values>.
+Como os padrões podem vincular valores,
+as instruções `if`-`case` e os laços `for`-`case`-`in`
+são úteis para trabalhar com enums que têm associated values,
+como descrito em <doc:Enumerations#Associated-Values>.
 
-## Control Transfer Statements
+## Instruções de transferência de controle
 
-*Control transfer statements* change the order in which your code is executed,
-by transferring control from one piece of code to another.
-Swift has five control transfer statements:
+*Instruções de transferência de controle* mudam a ordem em que o seu código é executado,
+transferindo o controle de um trecho de código para outro.
+O Swift tem cinco instruções de transferência de controle:
 
 - `continue`
 - `break`
@@ -1543,19 +1478,19 @@ Swift has five control transfer statements:
 - `return`
 - `throw`
 
-The `continue`, `break`, and `fallthrough` statements are described below.
-The `return` statement is described in <doc:Functions>,
-and the `throw` statement is described in <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>.
+As instruções `continue`, `break` e `fallthrough` são descritas a seguir.
+A instrução `return` é descrita em <doc:Functions>,
+e a instrução `throw` é descrita em <doc:ErrorHandling#Propagating-Errors-Using-Throwing-Functions>.
 
 ### Continue
 
-The `continue` statement tells a loop to stop what it's doing
-and start again at the beginning of the next iteration through the loop.
-It says “I am done with the current loop iteration”
-without leaving the loop altogether.
+A instrução `continue` diz a um laço para parar o que está fazendo
+e recomeçar no início da próxima iteração.
+Ela diz “terminei a iteração atual do laço”
+sem sair do laço por completo.
 
-The following example removes all vowels and spaces from a lowercase string
-to create a cryptic puzzle phrase:
+O exemplo a seguir remove todas as vogais e espaços de uma string em letras minúsculas
+para criar uma frase enigmática de quebra-cabeça:
 
 ```swift
 let puzzleInput = "great minds think alike"
@@ -1589,52 +1524,49 @@ print(puzzleOutput)
   ```
 -->
 
-The code above calls the `continue` keyword whenever it matches a vowel or a space,
-causing the current iteration of the loop to end immediately
-and to jump straight to the start of the next iteration.
+O código acima chama a palavra-chave `continue` sempre que encontra uma vogal ou um espaço,
+fazendo a iteração atual do laço terminar imediatamente
+e pular direto para o início da próxima iteração.
 
 ### Break
 
-The `break` statement ends execution of an entire control flow statement immediately.
-The `break` statement can be used inside a `switch` or loop statement
-when you want to terminate the execution of the `switch` or loop statement
-earlier than would otherwise be the case.
+A instrução `break` encerra imediatamente a execução de uma instrução de controle de fluxo inteira.
+A instrução `break` pode ser usada dentro de uma instrução `switch` ou de laço
+quando você quer encerrar a execução dessa instrução
+antes do que aconteceria normalmente.
 
-#### Break in a Loop Statement
+#### Break em um laço
 
-When used inside a loop statement,
-`break` ends the loop's execution immediately
-and transfers control to the code after the loop's closing brace (`}`).
-No further code from the current iteration of the loop is executed,
-and no further iterations of the loop are started.
+Quando usada dentro de um laço, `break` encerra a execução do laço imediatamente
+e transfere o controle para o código depois da chave de fechamento (`}`) do laço.
+Nenhum código restante da iteração atual do laço é executado,
+e nenhuma iteração adicional do laço é iniciada.
 
 <!--
   TODO: I need an example here.
 -->
 
-#### Break in a Switch Statement
+#### Break em uma instrução switch
 
-When used inside a `switch` statement,
-`break` causes the `switch` statement to end its execution immediately
-and to transfer control to the code after
-the `switch` statement's closing brace (`}`).
+Quando usada dentro de uma instrução `switch`, `break` faz a instrução `switch`
+encerrar sua execução imediatamente
+e transferir o controle para o código depois da chave de fechamento (`}`) da instrução `switch`.
 
-This behavior can be used to match and ignore one or more cases in a `switch` statement.
-Because Swift's `switch` statement is exhaustive
-and doesn't allow empty cases,
-it's sometimes necessary to deliberately match and ignore a case
-in order to make your intentions explicit.
-You do this by writing the `break` statement as the entire body of the case you want to ignore.
-When that case is matched by the `switch` statement,
-the `break` statement inside the case ends the `switch` statement's execution immediately.
+Esse comportamento pode ser usado para corresponder e ignorar um ou mais casos em uma instrução `switch`.
+Como a instrução `switch` do Swift é exaustiva e não permite casos vazios,
+às vezes é necessário corresponder e ignorar um caso deliberadamente,
+para deixar a sua intenção explícita.
+Você faz isso escrevendo a instrução `break` como o corpo inteiro do caso que quer ignorar.
+Quando esse caso é correspondido pela instrução `switch`,
+a instrução `break` dentro do caso encerra imediatamente a execução da instrução `switch`.
 
-> Note: A `switch` case that contains only a comment is reported as a compile-time error.
-> Comments aren't statements and don't cause a `switch` case to be ignored.
-> Always use a `break` statement to ignore a `switch` case.
+> Nota: Um caso do `switch` que contém apenas um comentário é apontado como erro de compilação.
+> Comentários não são instruções e não fazem um caso do `switch` ser ignorado.
+> Sempre use uma instrução `break` para ignorar um caso do `switch`.
 
-The following example switches on a `Character` value
-and determines whether it represents a number symbol in one of four languages.
-For brevity, multiple values are covered in a single `switch` case.
+O exemplo a seguir faz um `switch` sobre um valor `Character`
+e determina se ele representa um símbolo numérico em um de quatro idiomas.
+Por brevidade, vários valores são cobertos em um único caso do `switch`.
 
 ```swift
 let numberSymbol: Character = "三"  // Chinese symbol for the number 3
@@ -1686,43 +1618,41 @@ if let integerValue = possibleIntegerValue {
   ```
 -->
 
-This example checks `numberSymbol` to determine whether it's
-a Latin, Arabic, Chinese, or Thai symbol for
-the numbers `1` to `4`.
-If a match is found,
-one of the `switch` statement's cases sets
-an optional `Int?` variable called `possibleIntegerValue`
-to an appropriate integer value.
+Este exemplo verifica `numberSymbol` para determinar se ele é
+um símbolo latino, árabe, chinês ou tailandês para os números de `1` a `4`.
+Se houver correspondência, um dos casos da instrução `switch`
+define uma variável optional `Int?` chamada `possibleIntegerValue`
+com o valor inteiro adequado.
 
-After the `switch` statement completes its execution,
-the example uses optional binding to determine whether a value was found.
-The `possibleIntegerValue` variable has an implicit initial value of `nil`
-by virtue of being an optional type,
-and so the optional binding will succeed only
-if `possibleIntegerValue` was set to an actual value
-by one of the `switch` statement's first four cases.
+Depois que a instrução `switch` termina sua execução,
+o exemplo usa optional binding para determinar se um valor foi encontrado.
+A variável `possibleIntegerValue` tem valor inicial implícito de `nil`,
+por ser um tipo optional,
+e por isso o optional binding só será bem-sucedido
+se `possibleIntegerValue` tiver sido definida com um valor real
+por um dos quatro primeiros casos da instrução `switch`.
 
-Because it's not practical to list every possible `Character` value in the example above,
-a `default` case handles any characters that aren't matched.
-This `default` case doesn't need to perform any action,
-and so it's written with a single `break` statement as its body.
-As soon as the `default` case is matched,
-the `break` statement ends the `switch` statement's execution,
-and code execution continues from the `if let` statement.
+Como não é prático listar todos os valores `Character` possíveis no exemplo acima,
+um caso `default` trata quaisquer caracteres que não foram correspondidos.
+Esse caso `default` não precisa executar nenhuma ação,
+e por isso é escrito com uma única instrução `break` como corpo.
+Assim que o caso `default` é correspondido, a instrução `break` encerra a execução da instrução `switch`,
+e a execução do código continua a partir da instrução `if let`.
 
 ### Fallthrough
 
-In Swift, `switch` statements don't fall through the bottom of each case and into the next one.
-That is, the entire `switch` statement completes its execution as soon as the first matching case is completed.
-By contrast, C requires you to insert an explicit `break` statement
-at the end of every `switch` case to prevent fallthrough.
-Avoiding default fallthrough means that Swift `switch` statements are
-much more concise and predictable than their counterparts in C,
-and thus they avoid executing multiple `switch` cases by mistake.
+No Swift, as instruções `switch` não passam da parte de baixo de cada caso para o seguinte.
+Ou seja, a instrução `switch` inteira termina sua execução
+assim que o primeiro caso correspondente é concluído.
+Já em C, é preciso inserir uma instrução `break` explícita no fim de cada caso do `switch`
+para evitar o `fallthrough`.
+Evitar o `fallthrough` padrão faz com que as instruções `switch` do Swift
+sejam bem mais concisas e previsíveis do que as equivalentes em C,
+e assim evitam executar vários casos do `switch` por engano.
 
-If you need C-style fallthrough behavior,
-you can opt in to this behavior on a case-by-case basis with the `fallthrough` keyword.
-The example below uses `fallthrough` to create a textual description of a number.
+Se você precisar do comportamento de `fallthrough` no estilo C,
+pode optar por ele caso a caso com a palavra-chave `fallthrough`.
+O exemplo abaixo usa `fallthrough` para criar uma descrição textual de um número.
 
 ```swift
 let integerToDescribe = 5
@@ -1756,58 +1686,53 @@ print(description)
   ```
 -->
 
-This example declares a new `String` variable called `description`
-and assigns it an initial value.
-The function then considers the value of `integerToDescribe` using a `switch` statement.
-If the value of `integerToDescribe` is one of the prime numbers in the list,
-the function appends text to the end of `description`,
-to note that the number is prime.
-It then uses the `fallthrough` keyword to “fall into” the `default` case as well.
-The `default` case adds some extra text to the end of the description,
-and the `switch` statement is complete.
+Este exemplo declara uma nova variável `String` chamada `description`
+e atribui a ela um valor inicial.
+Em seguida, a instrução `switch` analisa o valor de `integerToDescribe`.
+Se o valor de `integerToDescribe` for um dos números primos da lista,
+o exemplo acrescenta texto ao fim de `description`, para indicar que o número é primo.
+Depois, usa a palavra-chave `fallthrough` para também “cair” no caso `default`.
+O caso `default` acrescenta um texto extra ao fim da descrição,
+e a instrução `switch` está concluída.
 
-Unless the value of `integerToDescribe` is in the list of known prime numbers,
-it isn't matched by the first `switch` case at all.
-Because there are no other specific cases,
-`integerToDescribe` is matched by the `default` case.
+A menos que o valor de `integerToDescribe` esteja na lista de números primos conhecidos,
+ele não é correspondido pelo primeiro caso do `switch`.
+Como não há outros casos específicos,
+`integerToDescribe` é correspondido pelo caso `default`.
 
-After the `switch` statement has finished executing,
-the number's description is printed using the `print(_:separator:terminator:)` function.
-In this example,
-the number `5` is correctly identified as a prime number.
+Depois que a instrução `switch` termina de executar,
+a descrição do número é impressa usando a função `print(_:separator:terminator:)`.
+Neste exemplo, o número `5` é corretamente identificado como primo.
 
-> Note: The `fallthrough` keyword doesn't check the case conditions
-> for the `switch` case that it causes execution to fall into.
-> The `fallthrough` keyword simply causes code execution to move
-> directly to the statements inside the next case (or `default` case) block,
-> as in C's standard `switch` statement behavior.
+> Nota: A palavra-chave `fallthrough` não verifica as condições do caso
+> para o qual ela faz a execução cair.
+> A palavra-chave `fallthrough` apenas faz a execução do código passar
+> diretamente para as instruções dentro do bloco do próximo caso (ou do caso `default`),
+> como no comportamento padrão da instrução `switch` de C.
 
-### Labeled Statements
+### Instruções rotuladas
 
-In Swift, you can nest loops and conditional statements
-inside other loops and conditional statements
-to create complex control flow structures.
-However, loops and conditional statements can both use the `break` statement
-to end their execution prematurely.
-Therefore, it's sometimes useful to be explicit about
-which loop or conditional statement you want a `break` statement to terminate.
-Similarly, if you have multiple nested loops,
-it can be useful to be explicit about which loop the `continue` statement
-should affect.
+No Swift, você pode aninhar laços e instruções condicionais
+dentro de outros laços e instruções condicionais
+para criar estruturas de fluxo de controle complexas.
+No entanto, tanto laços quanto instruções condicionais podem usar a instrução `break`
+para encerrar sua execução antes do previsto.
+Por isso, às vezes é útil deixar explícito qual laço ou instrução condicional
+você quer que uma instrução `break` encerre.
+Da mesma forma, se você tiver vários laços aninhados,
+pode ser útil deixar explícito qual laço a instrução `continue` deve afetar.
 
-To achieve these aims,
-you can mark a loop statement or conditional statement with a *statement label*.
-With a conditional statement,
-you can use a statement label with the `break` statement
-to end the execution of the labeled statement.
-With a loop statement,
-you can use a statement label with the `break` or `continue` statement
-to end or continue the execution of the labeled statement.
+Para atingir esses objetivos, você pode marcar um laço ou uma instrução condicional
+com um *rótulo de instrução*.
+Com uma instrução condicional, você pode usar um rótulo de instrução com a instrução `break`
+para encerrar a execução da instrução rotulada.
+Com um laço, você pode usar um rótulo de instrução com as instruções `break` ou `continue`
+para encerrar ou continuar a execução da instrução rotulada.
 
-A labeled statement is indicated by placing
-a label on the same line as the statement's introducer keyword, followed by a colon.
-Here's an example of this syntax for a `while` loop,
-although the principle is the same for all loops and `switch` statements:
+Uma instrução rotulada é indicada colocando um rótulo na mesma linha da palavra-chave
+que introduz a instrução, seguido de dois-pontos.
+Aqui está um exemplo dessa sintaxe para um laço `while`,
+embora o princípio seja o mesmo para todos os laços e instruções `switch`:
 
 ```swift
 <#label name#>: while <#condition#> {
@@ -1815,22 +1740,21 @@ although the principle is the same for all loops and `switch` statements:
 }
 ```
 
-The following example uses the `break` and `continue` statements
-with a labeled `while` loop for an adapted version of the *Snakes and Ladders* game
-that you saw earlier in this chapter.
-This time around, the game has an extra rule:
+O exemplo a seguir usa as instruções `break` e `continue` com um laço `while` rotulado,
+para uma versão adaptada do jogo *Cobras e Escadas* que você viu antes neste capítulo.
+Desta vez, o jogo tem uma regra extra:
 
-- To win, you must land *exactly* on square 25.
+- Para vencer, você deve cair *exatamente* na casa 25.
 
-If a particular dice roll would take you beyond square 25,
-you must roll again until you roll the exact number needed to land on square 25.
+Se um lançamento de dado específico levar você além da casa 25,
+você deve lançar de novo até tirar o número exato necessário para cair na casa 25.
 
-The game board is the same as before.
+O tabuleiro do jogo é o mesmo de antes.
 
 ![](snakesAndLadders)
 
-The values of `finalSquare`, `board`, `square`, and `diceRoll`
-are initialized in the same way as before:
+Os valores de `finalSquare`, `board`, `square` e `diceRoll`
+são inicializados da mesma forma que antes:
 
 ```swift
 let finalSquare = 25
@@ -1855,13 +1779,12 @@ var diceRoll = 0
   ```
 -->
 
-This version of the game uses a `while` loop and a `switch` statement
-to implement the game's logic.
-The `while` loop has a statement label called `gameLoop`
-to indicate that it's the main game loop for the Snakes and Ladders game.
+Esta versão do jogo usa um laço `while` e uma instrução `switch` para implementar a lógica do jogo.
+O laço `while` tem um rótulo de instrução chamado `gameLoop`,
+para indicar que ele é o laço principal do jogo Cobras e Escadas.
 
-The `while` loop's condition is `while square != finalSquare`,
-to reflect that you must land exactly on square 25.
+A condição do laço `while` é `while square != finalSquare`,
+para refletir que você precisa cair exatamente na casa 25.
 
 ```swift
 gameLoop: while square != finalSquare {
@@ -1957,46 +1880,42 @@ print("Game over!")
   ```
 -->
 
-The dice is rolled at the start of each loop.
-Rather than moving the player immediately,
-the loop uses a `switch` statement to consider the result of the move
-and to determine whether the move is allowed:
+O dado é lançado no início de cada laço.
+Em vez de mover o jogador imediatamente,
+o laço usa uma instrução `switch` para analisar o resultado do movimento
+e determinar se ele é permitido:
 
-- If the dice roll will move the player onto the final square,
-  the game is over.
-  The `break gameLoop` statement transfers control to
-  the first line of code outside of the `while` loop, which ends the game.
-- If the dice roll will move the player *beyond* the final square,
-  the move is invalid and the player needs to roll again.
-  The `continue gameLoop` statement ends the current `while` loop iteration
-  and begins the next iteration of the loop.
-- In all other cases, the dice roll is a valid move.
-  The player moves forward by `diceRoll` squares,
-  and the game logic checks for any snakes and ladders.
-  The loop then ends, and control returns to the `while` condition
-  to decide whether another turn is required.
+- Se o lançamento do dado vai levar o jogador à casa final, o jogo termina.
+  A instrução `break gameLoop` transfere o controle para a primeira linha de código
+  fora do laço `while`, o que encerra o jogo.
+- Se o lançamento do dado vai levar o jogador *além* da casa final,
+  o movimento é inválido e o jogador precisa lançar de novo.
+  A instrução `continue gameLoop` encerra a iteração atual do laço `while`
+  e começa a próxima iteração do laço.
+- Em todos os outros casos, o lançamento do dado é um movimento válido.
+  O jogador avança `diceRoll` casas, e a lógica do jogo verifica se há cobras e escadas.
+  O laço então termina, e o controle volta para a condição do `while`
+  para decidir se é preciso outro turno.
 
-> Note: If the `break` statement above didn't use the `gameLoop` label,
-> it would break out of the `switch` statement, not the `while` statement.
-> Using the `gameLoop` label makes it clear which control statement should be terminated.
+> Nota: Se a instrução `break` acima não usasse o rótulo `gameLoop`,
+> ela sairia da instrução `switch`, e não da instrução `while`.
+> Usar o rótulo `gameLoop` deixa claro qual instrução de controle deve ser encerrada.
 >
-> It isn't strictly necessary to use the `gameLoop` label
-> when calling `continue gameLoop` to jump to the next iteration of the loop.
-> There's only one loop in the game,
-> and therefore no ambiguity as to which loop the `continue` statement will affect.
-> However, there's no harm in using the `gameLoop` label with the `continue` statement.
-> Doing so is consistent with the label's use alongside the `break` statement
-> and helps make the game's logic clearer to read and understand.
+> Não é estritamente necessário usar o rótulo `gameLoop`
+> ao chamar `continue gameLoop` para pular para a próxima iteração do laço.
+> Só há um laço no jogo, e portanto não há ambiguidade sobre qual laço a instrução `continue` vai afetar.
+> No entanto, não há problema em usar o rótulo `gameLoop` com a instrução `continue`.
+> Isso é coerente com o uso do rótulo junto com a instrução `break`
+> e ajuda a tornar a lógica do jogo mais clara de ler e entender.
 
-## Early Exit
+## Saída antecipada
 
-A `guard` statement, like an `if` statement,
-executes statements depending on the Boolean value of an expression.
-You use a `guard` statement to require that a condition must be true
-in order for the code after the `guard` statement to be executed.
-Unlike an `if` statement,
-a `guard` statement always has an `else` clause ---
-the code inside the `else` clause is executed if the condition isn't true.
+Uma instrução `guard`, assim como uma instrução `if`, executa instruções
+dependendo do valor booleano de uma expressão.
+Você usa uma instrução `guard` para exigir que uma condição seja verdadeira
+para que o código depois da instrução `guard` seja executado.
+Diferentemente de uma instrução `if`, uma instrução `guard` sempre tem uma cláusula `else`:
+o código dentro da cláusula `else` é executado se a condição não for verdadeira.
 
 ```swift
 func greet(person: [String: String]) {
@@ -2050,39 +1969,33 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
   ```
 -->
 
-If the `guard` statement's condition is met,
-code execution continues after the `guard` statement's closing brace.
-Any variables or constants that were assigned values
-using an optional binding as part of the condition
-are available for the rest of the code block
-that the `guard` statement appears in.
+Se a condição da instrução `guard` for atendida,
+a execução do código continua depois da chave de fechamento da instrução `guard`.
+Quaisquer variáveis ou constantes que receberam valores por meio de um optional binding
+como parte da condição ficam disponíveis para o restante do bloco de código
+em que a instrução `guard` aparece.
 
-If that condition isn't met,
-the code inside the `else` branch is executed.
-That branch must transfer control to exit the code block
-in which the `guard` statement appears.
-It can do this with a control transfer statement
-such as `return`, `break`, `continue`, or `throw`,
-or it can call a function or method
-that doesn't return, such as `fatalError(_:file:line:)`.
+Se essa condição não for atendida, o código dentro do ramo `else` é executado.
+Esse ramo precisa transferir o controle para sair do bloco de código
+em que a instrução `guard` aparece.
+Ele pode fazer isso com uma instrução de transferência de controle,
+como `return`, `break`, `continue` ou `throw`,
+ou pode chamar uma função ou método que não retorna, como `fatalError(_:file:line:)`.
 
-Using a `guard` statement for requirements
-improves the readability of your code,
-compared to doing the same check with an `if` statement.
-It lets you write the code that's typically executed
-without wrapping it in an `else` block,
-and it lets you keep the code that handles a violated requirement
-next to the requirement.
+Usar uma instrução `guard` para requisitos melhora a legibilidade do código,
+em comparação com fazer a mesma verificação com uma instrução `if`.
+Ela permite escrever o código que normalmente é executado sem envolvê-lo em um bloco `else`,
+e permite manter o código que trata um requisito não atendido perto do próprio requisito.
 
-## Deferred Actions
+## Ações adiadas
 
-Unlike control-flow constructs like `if` and `while`,
-which let you control whether part of your code is executed
-or how many times it gets executed,
-`defer` controls *when* a piece of code is executed.
-You use a `defer` block to write code that will be executed later,
-when your program reaches the end of the current scope.
-For example:
+Diferentemente de construções de controle de fluxo como `if` e `while`,
+que permitem controlar se parte do código é executada
+ou quantas vezes ela é executada,
+`defer` controla *quando* um trecho de código é executado.
+Você usa um bloco `defer` para escrever código que será executado mais tarde,
+quando o programa chegar ao fim do escopo atual.
+Por exemplo:
 
 ```swift
 var score = 1
@@ -2110,28 +2023,22 @@ if score < 10 {
   ```
 -->
 
-In the example above,
-the code inside of the `defer` block is executed
-before exiting the body of the `if` statement.
-First, the code in the `if` statement runs,
-which increments `score` by five.
-Then, before exiting the `if` statement's scope,
-the deferred code is run, which prints `score`.
+No exemplo acima, o código dentro do bloco `defer` é executado
+antes de sair do corpo da instrução `if`.
+Primeiro, o código da instrução `if` é executado, o que incrementa `score` em cinco.
+Depois, antes de sair do escopo da instrução `if`, o código adiado é executado,
+o que imprime `score`.
 
-The code inside of the `defer` always runs,
-regardless of how the program exits that scope.
-That includes code like an early exit from a function,
-breaking out of a `for` loop,
-or throwing an error.
-This behavior makes `defer` useful for operations
-where you need to guarantee a pair of actions happen ---
-like manually allocating and freeing memory,
-opening and closing low-level file descriptors,
-and beginning and ending transactions in a database ---
-because you can write both actions next to each other in your code.
-For example,
-the following code gives a temporary bonus to the score,
-by adding and subtracting 100 inside a chunk of code:
+O código dentro do `defer` sempre é executado, independentemente de como o programa sai desse escopo.
+Isso inclui casos como uma saída antecipada de uma função, a saída de um laço `for`
+ou o lançamento de um erro.
+Esse comportamento torna `defer` útil para operações em que você precisa garantir
+que um par de ações aconteça, como alocar e liberar memória manualmente,
+abrir e fechar descritores de arquivo de baixo nível
+e iniciar e encerrar transações em um banco de dados,
+porque você pode escrever as duas ações lado a lado no seu código.
+Por exemplo, o código a seguir dá um bônus temporário à pontuação,
+somando e subtraindo 100 dentro de um trecho de código:
 
 ```swift
 var score = 3
@@ -2163,8 +2070,8 @@ if score < 100 {
   ```
 -->
 
-If you write more than one `defer` block in the same scope,
-the first one you specify is the last one to run.
+Se você escrever mais de um bloco `defer` no mesmo escopo,
+o primeiro que você especificar será o último a ser executado.
 
 ```swift
 if score < 10 {
@@ -2197,30 +2104,29 @@ if score < 10 {
   ```
 -->
 
-If your program stops running ---
-for example, because of a runtime error or a crash ---
-deferred code doesn't execute.
-However, deferred code does execute after an error is thrown;
-for information about using `defer` with error handling,
-see <doc:ErrorHandling#Specifying-Cleanup-Actions>.
+Se o seu programa parar de executar, por exemplo por causa de um erro de tempo de execução
+ou de uma falha, o código adiado não é executado.
+No entanto, o código adiado é executado depois que um erro é lançado;
+para informações sobre como usar `defer` com tratamento de erros,
+veja <doc:ErrorHandling#Specifying-Cleanup-Actions>.
 
-## Checking API Availability
+## Verificando a disponibilidade de APIs
 
-Swift has built-in support for checking API availability,
-which ensures that you don't accidentally use APIs that are unavailable
-on a given deployment target.
+O Swift tem suporte nativo para verificar a disponibilidade de APIs,
+o que garante que você não use por engano APIs indisponíveis
+em um determinado alvo de implantação.
 
-The compiler uses availability information in the SDK
-to verify that all of the APIs used in your code
-are available on the deployment target specified by your project.
-Swift reports an error at compile time
-if you try to use an API that isn't available.
+O compilador usa as informações de disponibilidade do SDK
+para verificar se todas as APIs usadas no seu código
+estão disponíveis no alvo de implantação especificado pelo seu projeto.
+O Swift reporta um erro em tempo de compilação
+se você tentar usar uma API que não está disponível.
 
-You use an *availability condition* in an `if` or `guard` statement
-to conditionally execute a block of code,
-depending on whether the APIs you want to use are available at runtime.
-The compiler uses the information from the availability condition
-when it verifies that the APIs in that block of code are available.
+Você usa uma *condição de disponibilidade* em uma instrução `if` ou `guard`
+para executar condicionalmente um bloco de código,
+dependendo de as APIs que você quer usar estarem disponíveis em tempo de execução.
+O compilador usa as informações da condição de disponibilidade
+ao verificar se as APIs naquele bloco de código estão disponíveis.
 
 ```swift
 if #available(iOS 10, macOS 10.12, *) {
@@ -2242,18 +2148,17 @@ if #available(iOS 10, macOS 10.12, *) {
   ```
 -->
 
-The availability condition above specifies that in iOS,
-the body of the `if` statement executes only in iOS 10 and later;
-in macOS, only in macOS 10.12 and later.
-The last argument, `*`, is required and specifies that on any other platform,
-the body of the `if` executes on the minimum deployment target specified by your target.
+A condição de disponibilidade acima especifica que, no iOS,
+o corpo da instrução `if` é executado somente no iOS 10 ou posterior;
+no macOS, somente no macOS 10.12 ou posterior.
+O último argumento, `*`, é obrigatório e especifica que, em qualquer outra plataforma,
+o corpo do `if` é executado no alvo de implantação mínimo especificado pelo seu target.
 
-In its general form,
-the availability condition takes a list of platform names and versions.
-You use platform names such as `iOS`, `macOS`, `watchOS`, `tvOS`, and `visionOS` ---
-for the full list, see <doc:Attributes#Declaration-Attributes>.
-In addition to specifying major version numbers like iOS 8 or macOS 10.10,
-you can specify minor versions numbers like iOS 11.2.6 and macOS 10.13.3.
+Em sua forma geral, a condição de disponibilidade recebe uma lista de nomes de plataformas e versões.
+Você usa nomes de plataformas como `iOS`, `macOS`, `watchOS`, `tvOS` e `visionOS`.
+Para a lista completa, veja <doc:Attributes#Declaration-Attributes>.
+Além de especificar números de versão principal, como iOS 8 ou macOS 10.10,
+você pode especificar números de versão secundária, como iOS 11.2.6 e macOS 10.13.3.
 
 ```swift
 if #available(<#platform name#> <#version#>, <#...#>, *) {
@@ -2263,9 +2168,8 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 }
 ```
 
-When you use an availability condition with a `guard` statement,
-it refines the availability information that’s used
-for the rest of the code in that code block.
+Quando você usa uma condição de disponibilidade com uma instrução `guard`,
+ela refina as informações de disponibilidade usadas no restante do código desse bloco.
 
 ```swift
 @available(macOS 10.12, *)
@@ -2303,17 +2207,15 @@ func chooseBestColor() -> String {
   ```
 -->
 
-In the example above,
-the `ColorPreference` structure requires macOS 10.12 or later.
-The `chooseBestColor()` function begins with an availability guard.
-If the platform version is too old to use `ColorPreference`,
-it falls back to behavior that's always available.
-After the `guard` statement,
-you can use APIs that require macOS 10.12 or later.
+No exemplo acima, a struct `ColorPreference` exige macOS 10.12 ou posterior.
+A função `chooseBestColor()` começa com uma instrução `guard` de disponibilidade.
+Se a versão da plataforma for antiga demais para usar `ColorPreference`,
+ela recorre a um comportamento que está sempre disponível.
+Depois da instrução `guard`, você pode usar APIs que exigem macOS 10.12 ou posterior.
 
-In addition to `#available`,
-Swift also supports the opposite check using an unavailability condition.
-For example, the following two checks do the same thing:
+Além de `#available`, o Swift também oferece suporte à verificação oposta,
+usando uma condição de indisponibilidade.
+Por exemplo, as duas verificações a seguir fazem a mesma coisa:
 
 ```swift
 if #available(iOS 10, *) {
@@ -2341,8 +2243,8 @@ if #unavailable(iOS 10) {
   ```
 -->
 
-Using the `#unavailable` form helps make your code more readable
-when the check contains only fallback code.
+Usar a forma `#unavailable` ajuda a tornar o código mais legível
+quando a verificação contém apenas código alternativo.
 
 <!--
   FIXME
@@ -2359,3 +2261,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

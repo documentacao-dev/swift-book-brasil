@@ -1,6 +1,6 @@
-# The Swift Programming Language (6.4)
+# A linguagem de programação Swift (6.4)
 
-Write safe, fast, expressive code with a modern, general-purpose language.
+Escreva código seguro, rápido e expressivo com uma linguagem moderna de propósito geral.
 
 @Metadata {
   @TechnologyRoot
@@ -14,13 +14,13 @@ Write safe, fast, expressive code with a modern, general-purpose language.
 
 ## Topics
 
-### Welcome to Swift
+### Bem-vindo ao Swift
 
 - <doc:AboutSwift>
 - <doc:Compatibility>
 - <doc:GuidedTour>
 
-### Language Guide
+### Guia da linguagem
 
 - <doc:TheBasics>
 - <doc:BasicOperators>
@@ -52,7 +52,7 @@ Write safe, fast, expressive code with a modern, general-purpose language.
 - <doc:AccessControl>
 - <doc:AdvancedOperators>
 
-### Language Reference
+### Referência da linguagem
 
 - <doc:AboutTheLanguageReference>
 - <doc:LexicalStructure>
@@ -71,7 +71,7 @@ also update bin/publish-book to summarize that chapter's formal grammar
 in the chapter at the end of the book.
 -->
 
-### Revision History
+### Histórico de revisões
 
 - <doc:RevisionHistory>
 
@@ -84,3 +84,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

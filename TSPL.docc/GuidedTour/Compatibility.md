@@ -1,47 +1,47 @@
-# Version Compatibility
+# Compatibilidade de versões
 
-Learn what functionality is available in older language modes.
+Saiba quais funcionalidades estão disponíveis nos modos de linguagem mais antigos.
 
-This book describes Swift 6.4,
-the default version of Swift that's included in Xcode 27.
-You can use the Swift 6.4 compiler to build code
-that's written in Swift 6.4, Swift 5, Swift 4.2, or Swift 4.
+Este livro descreve o Swift 6.4,
+a versão padrão do Swift incluída no Xcode 27.
+Você pode usar o compilador do Swift 6.4 para compilar código
+escrito em Swift 6.4, Swift 5, Swift 4.2 ou Swift 4.
 
-When you use the Swift 6.4 compiler
-to build code that uses the Swift 5 language mode,
-you can use the new features from Swift 6.4 ---
-they're enabled either by default or by an upcoming feature flag.
-However, to enable strict concurrency checking,
-you need to upgrade to the Swift 6.4 language mode.
+Quando você usa o compilador do Swift 6.4
+para compilar código que usa o modo de linguagem Swift 5,
+pode usar os novos recursos do Swift 6.4:
+eles ficam habilitados por padrão ou por uma upcoming feature flag.
+No entanto, para habilitar a verificação estrita de concorrência,
+é preciso migrar para o modo de linguagem Swift 6.4.
 
-In addition,
-when you use Xcode 15.3 to build Swift 4 and Swift 4.2 code,
-most Swift 5 functionality is still available.
-That said,
-the following changes are available only to code
-that uses the Swift 5 language mode or later:
+Além disso,
+quando você usa o Xcode 15.3 para compilar código Swift 4 e Swift 4.2,
+a maioria das funcionalidades do Swift 5 ainda está disponível.
+Dito isso,
+as alterações a seguir estão disponíveis apenas para código
+que usa o modo de linguagem Swift 5 ou posterior:
 
-- Functions that return an opaque type require the Swift 5.1 runtime.
-- The `try?` expression doesn't introduce an extra level of optionality
-  to expressions that already return optionals.
-- Large integer literal initialization expressions are inferred
-  to be of the correct integer type.
-  For example, `UInt64(0xffff_ffff_ffff_ffff)` evaluates to the correct value
-  rather than overflowing.
+- Funções que retornam um tipo opaco exigem o runtime do Swift 5.1.
+- A expressão `try?` não introduz um nível extra de optional
+  em expressões que já retornam optionals.
+- Expressões de inicialização com literais inteiros grandes são inferidas
+  como do tipo inteiro correto.
+  Por exemplo, `UInt64(0xffff_ffff_ffff_ffff)` resulta no valor correto
+  em vez de estourar.
 
-Concurrency requires the Swift 5 language mode
-and a version of the Swift standard library
-that provides the corresponding concurrency types.
-On Apple platforms, set a deployment target
-of at least iOS 13, macOS 10.15, tvOS 13, watchOS 6, or visionOS 1.
+Concorrência exige o modo de linguagem Swift 5
+e uma versão da biblioteca padrão do Swift
+que forneça os tipos de concorrência correspondentes.
+Nas plataformas da Apple, defina um deployment target
+de pelo menos iOS 13, macOS 10.15, tvOS 13, watchOS 6 ou visionOS 1.
 
-A target written in Swift 6.4 can depend on
-a target that's written in Swift 5, Swift 4.2 or Swift 4,
-and vice versa.
-This means, if you have a large project
-that's divided into multiple frameworks,
-you can migrate your code to a newer language version
-one framework at a time.
+Um target escrito em Swift 6.4 pode depender de
+um target escrito em Swift 5, Swift 4.2 ou Swift 4,
+e vice-versa.
+Isso significa que, se você tiver um projeto grande
+dividido em vários frameworks,
+pode migrar seu código para uma versão mais nova da linguagem
+um framework por vez.
 
 <!--
 This source file is part of the Swift.org open source project
@@ -52,3 +52,5 @@ Licensed under Apache License v2.0 with Runtime Library Exception
 See https://swift.org/LICENSE.txt for license information
 See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 -->
+
+<!-- ia-translate: true -->

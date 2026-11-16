@@ -3,12 +3,12 @@
 Adicione funcionalidades a um tipo existente.
 
 Uma *extension* adiciona novas funcionalidades a um tipo existente,
-seja ele uma class, uma struct, um enum ou um protocolo.
+seja ele uma classe, uma struct, um enum ou um protocolo.
 Isso inclui a possibilidade de estender tipos
 para os quais você não tem acesso ao código-fonte original
 (conhecido como *modelagem retroativa*).
-Extensions são parecidas com as categories do Objective-C.
-(Diferentemente das categories do Objective-C, as extensions do Swift não têm nome.)
+Extensions são parecidas com as categorias do Objective-C.
+(Diferentemente das categorias do Objective-C, as extensions do Swift não têm nome.)
 
 Extensions em Swift podem:
 
@@ -97,9 +97,9 @@ extension SomeType {
 -->
 
 Uma extension pode estender um tipo existente para fazê-lo adotar um ou mais protocolos.
-Para adicionar a conformância a um protocolo,
+Para adicionar conformidade a um protocolo,
 você escreve os nomes dos protocolos
-da mesma forma que escreveria para uma class ou struct:
+da mesma forma que escreveria para uma classe ou struct:
 
 ```swift
 extension SomeType: SomeProtocol, AnotherProtocol {
@@ -119,7 +119,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
   ```
 -->
 
-Adicionar a conformância a um protocolo dessa forma é descrito em
+Adicionar conformidade a um protocolo dessa forma é descrito em
 <doc:Protocols#Adding-Protocol-Conformance-with-an-Extension>.
 
 Uma extension pode ser usada para estender um tipo genérico existente,
@@ -240,10 +240,10 @@ seus próprios tipos personalizados como parâmetros de inicialização,
 ou para oferecer opções adicionais de inicialização
 que não faziam parte da implementação original do tipo.
 
-Extensions podem adicionar novos inicializadores de conveniência a uma class,
-mas não podem adicionar novos inicializadores designados nem desinicializadores a uma class.
+Extensions podem adicionar novos inicializadores de conveniência a uma classe,
+mas não podem adicionar novos inicializadores designados nem desinicializadores a uma classe.
 Inicializadores designados e desinicializadores
-precisam sempre ser fornecidos pela implementação original da class.
+precisam sempre ser fornecidos pela implementação original da classe.
 
 Se você usar uma extension para adicionar um inicializador a um tipo de valor que fornece
 valores padrão para todas as suas propriedades armazenadas
@@ -463,7 +463,7 @@ someInt.square()
   ```
 -->
 
-## Acessando valores com subscript
+## Subscripts
 
 Extensions podem adicionar novos subscripts a um tipo existente.
 Este exemplo adiciona um subscript de inteiro ao tipo `Int` embutido do Swift.
@@ -677,7 +677,7 @@ Para cada inteiro do array,
 a função considera a propriedade computada `kind` desse inteiro
 e imprime uma descrição apropriada.
 
-> Nota: `number.kind` já é conhecido como sendo do tipo `Int.Kind`.
+> Nota: `number.kind` já é sabidamente do tipo `Int.Kind`.
 > Por isso, todos os valores de caso de `Int.Kind`
 > podem ser escritos na forma abreviada dentro da instrução `switch`,
 > como `.negative` em vez de `Int.Kind.negative`.

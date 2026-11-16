@@ -13,11 +13,11 @@ O Swift também garante que vários acessos
 exigindo que o código que modifica um local da memória
 tenha acesso exclusivo a essa memória.
 Como o Swift gerencia a memória automaticamente,
-na maior parte do tempo você não precisa pensar em acessar memória.
+na maior parte do tempo você não precisa pensar em acesso à memória de forma alguma.
 No entanto,
 é importante entender onde podem ocorrer conflitos,
 para que você evite escrever código com acesso conflitante à memória.
-Se o seu código contiver conflitos,
+Se seu código contiver conflitos,
 você receberá um erro em tempo de compilação ou em tempo de execução.
 
 <!--
@@ -102,7 +102,7 @@ e nem sempre é óbvio qual resposta está correta.
 Neste exemplo,
 dependendo de você querer o valor total original
 ou o valor total atualizado,
-tanto $5 quanto $320 podem ser a resposta correta.
+$5 ou $320 podem ser a resposta correta.
 Antes de corrigir o acesso conflitante,
 você precisa determinar o que ele deveria fazer.
 
@@ -480,7 +480,7 @@ oscar.shareHealth(with: &maria)  // OK
 
 No exemplo acima,
 chamar o método `shareHealth(with:)`
-para que o jogador da Oscar compartilhe vida com o jogador da Maria
+para que o jogador do Oscar compartilhe vida com o jogador da Maria
 não causa conflito.
 Há um acesso de escrita a `oscar` durante a chamada do método
 porque `oscar` é o valor de `self` em um método mutating,

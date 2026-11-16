@@ -2,10 +2,10 @@
 
 Use macros para gerar código em tempo de compilação.
 
-Macros transformam o seu código-fonte quando você compila,
+Macros transformam o código-fonte quando você compila,
 permitindo evitar escrever código repetitivo à mão.
 Durante a compilação,
-o Swift expande todas as macros do seu código
+o Swift expande todas as macros do código
 antes de construir o código normalmente.
 
 ![A diagram showing an overview of macro expansion.  On the left, a stylized representation of Swift code.  On the right, the same code with several lines added by the macro.](macro-expansion)
@@ -25,7 +25,7 @@ o compilador trata isso como um erro de compilação.
 Essas garantias facilitam raciocinar sobre código que usa macros,
 e facilitam identificar problemas,
 como usar uma macro incorretamente
-ou uma implementação de macro com bug.
+ou uma implementação de macro que tem um bug.
 
 O Swift tem dois tipos de macro:
 
@@ -94,7 +94,7 @@ struct SundaeToppings: OptionSet {
 ```
 
 Nesse código,
-cada uma das opções no tipo `SundaeToppings`
+cada uma das opções no conjunto de opções `SundaeToppings`
 inclui uma chamada ao inicializador,
 o que é repetitivo e manual.
 Seria fácil cometer um erro ao adicionar uma opção nova,
@@ -155,7 +155,7 @@ extension SundaeToppings: OptionSet { }
 Todo o código depois do enum privado
 vem da macro `@OptionSet`.
 A versão de `SundaeToppings`
-que usa uma macro para gerar todas as propriedades estáticas
+que usa uma macro para gerar todas as variáveis estáticas
 é mais fácil de ler e de manter
 do que a versão escrita manualmente, mais acima.
 
@@ -377,7 +377,7 @@ opera apenas sobre a AST parcial que recebe como entrada,
 o que significa que uma macro sempre se expande do mesmo modo,
 independentemente do código que vem antes e depois dela.
 Essa limitação ajuda a tornar a expansão de macro mais fácil de entender,
-e ajuda seu código a compilar mais rápido,
+e ajuda o código a compilar mais rápido,
 porque o Swift pode evitar expandir macros que não mudaram.
 <!-- TODO TR: Confirm -->
 O Swift ajuda os autores de macros a não ler acidentalmente outras entradas,
@@ -397,7 +397,7 @@ Por exemplo, a expansão de uma macro não pode depender da hora do dia atual.
 
 A implementação de `#fourCharacterCode`
 gera uma nova AST contendo o código expandido.
-Aqui está o que esse código devolve ao compilador:
+Aqui está o que esse código retorna ao compilador:
 
 ![A tree diagram with the integer literal 1145258561 of type UInt32.](macro-ast-output)
 
@@ -487,10 +487,10 @@ let package = Package(
 
 Em seguida, adicione um alvo para a implementação da macro
 e um alvo para a biblioteca da macro
-ao seu arquivo `Package.swift` existente.
+ao arquivo `Package.swift` existente.
 Por exemplo,
 você pode adicionar algo como o seguinte,
-trocando os nomes para combinar com o seu projeto:
+trocando os nomes para combinar com o projeto:
 
 ```swift
 targets: [
@@ -519,7 +519,7 @@ Se você criou um novo pacote de macros com o Swift Package Manager,
 o arquivo `Package.swift` gerado
 já inclui automaticamente uma dependência do SwiftSyntax.
 Se você estiver adicionando macros a um projeto existente,
-adicione uma dependência do SwiftSyntax no seu arquivo `Package.swift`:
+adicione uma dependência do SwiftSyntax no arquivo `Package.swift`:
 
 [SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
